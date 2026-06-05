@@ -9,6 +9,7 @@ const inicioSubmenu = [
   { to: "/lions-internacional", label: "Sobre o Lions Internacional" },
   { to: "/sobre", label: "Sobre o Distrito LC-11" },
   { to: "/historia", label: "Nossa História" },
+  { to: "/protocolo-leonistico", label: "Protocolo Leonístico" },
 ] as const;
 
 const lideresSubmenu = [

@@ -46,6 +46,7 @@ function RegionEditor() {
             name: data.name,
             description: data.description ?? "",
             president: (data as any).president ?? "",
+            president_photo_url: (data as any).president_photo_url ?? "",
             order_index: data.order_index ?? 0,
           });
         setLoading(false);

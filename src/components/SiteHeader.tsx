@@ -10,8 +10,13 @@ const inicioSubmenu = [
   { to: "/historia", label: "Nossa História" },
 ] as const;
 
-const nav = [
+const lideresSubmenu = [
   { to: "/governador", label: "Governador" },
+  { to: "/vice-governador-1", label: "1º Vice-Governador" },
+  { to: "/vice-governador-2", label: "2º Vice-Governador" },
+] as const;
+
+const nav = [
   { to: "/projetos", label: "Projetos" },
   { to: "/clubes", label: "Clubes" },
   { to: "/noticias", label: "Notícias" },
@@ -22,6 +27,7 @@ const nav = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [inicioOpen, setInicioOpen] = useState(false);
+  const [lideresOpen, setLideresOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur">

@@ -23,6 +23,7 @@ import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as DoarRouteImport } from './routes/doar'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ClubesRouteImport } from './routes/clubes'
+import { Route as AssessoriaRouteImport } from './routes/assessoria'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ViceGovernador2Route = ViceGovernador2RouteImport.update({
@@ -95,6 +96,11 @@ const ClubesRoute = ClubesRouteImport.update({
   path: '/clubes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AssessoriaRoute = AssessoriaRouteImport.update({
+  id: '/assessoria',
+  path: '/assessoria',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -103,6 +109,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assessoria': typeof AssessoriaRoute
   '/clubes': typeof ClubesRoute
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assessoria': typeof AssessoriaRoute
   '/clubes': typeof ClubesRoute
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
@@ -138,6 +146,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assessoria': typeof AssessoriaRoute
   '/clubes': typeof ClubesRoute
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/assessoria'
     | '/clubes'
     | '/contato'
     | '/doar'
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/assessoria'
     | '/clubes'
     | '/contato'
     | '/doar'
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/assessoria'
     | '/clubes'
     | '/contato'
     | '/doar'
@@ -209,6 +221,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssessoriaRoute: typeof AssessoriaRoute
   ClubesRoute: typeof ClubesRoute
   ContatoRoute: typeof ContatoRoute
   DoarRoute: typeof DoarRoute
@@ -325,6 +338,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClubesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/assessoria': {
+      id: '/assessoria'
+      path: '/assessoria'
+      fullPath: '/assessoria'
+      preLoaderRoute: typeof AssessoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -337,6 +357,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssessoriaRoute: AssessoriaRoute,
   ClubesRoute: ClubesRoute,
   ContatoRoute: ContatoRoute,
   DoarRoute: DoarRoute,

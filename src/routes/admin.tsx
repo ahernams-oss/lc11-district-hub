@@ -11,7 +11,7 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminLayout() {
-  const { user, isAdmin, loading } = useAuth();
+  const { user, hasPanelAccess, canViewUsers, isAdmin, isAvancado, isIntermediario, loading } = useAuth();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
@@ -22,23 +22,14 @@ function AdminLayout() {
   if (loading) return <div className="p-8 text-muted-foreground">Carregando...</div>;
   if (!user) return null;
 
-  if (!isAdmin) {
+  if (!hasPanelAccess) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-16">
         <h1 className="font-display text-2xl font-bold">Acesso negado</h1>
         <p className="mt-3 text-muted-foreground">
-          Sua conta ({user.email}) ainda não tem permissão de administrador.
+          Sua conta ({user.email}) ainda não tem permissão para acessar o painel.
+          Aguarde a aprovação de um administrador.
         </p>
-        <div className="mt-4 rounded-md bg-surface p-4 text-sm">
-          <p className="font-semibold">Para tornar esta conta administradora:</p>
-          <p className="mt-2 text-muted-foreground">
-            Abra o backend do projeto, vá em <strong>SQL Editor</strong> e execute:
-          </p>
-          <pre className="mt-2 overflow-x-auto rounded bg-background p-3 text-xs">
-{`INSERT INTO public.user_roles (user_id, role)
-VALUES ('${user.id}', 'admin');`}
-          </pre>
-        </div>
         <button
           onClick={async () => {
             await supabase.auth.signOut();
@@ -52,16 +43,24 @@ VALUES ('${user.id}', 'admin');`}
     );
   }
 
+  const roleLabel = isAdmin
+    ? "Administrador"
+    : isAvancado
+      ? "Avançado"
+      : isIntermediario
+        ? "Intermediário"
+        : "Básico";
+
   const navItems = [
-    { to: "/admin", label: "Início", icon: Home, exact: true },
-    { to: "/admin/conteudo", label: "Conteúdo das Páginas", icon: FileText },
-    { to: "/admin/lideres", label: "Líderes / Ex-Governadores", icon: Users },
-    { to: "/admin/regioes", label: "Regiões / Divisões / Clubes", icon: MapPin },
-    { to: "/admin/noticias", label: "Notícias", icon: Newspaper },
-    { to: "/admin/eventos", label: "Eventos", icon: Calendar },
-    { to: "/admin/projetos", label: "Projetos", icon: Sparkles },
-    { to: "/admin/usuarios", label: "Usuários & Acessos", icon: ShieldCheck },
-  ];
+    { to: "/admin", label: "Início", icon: Home, exact: true, show: true },
+    { to: "/admin/conteudo", label: "Conteúdo das Páginas", icon: FileText, show: true },
+    { to: "/admin/lideres", label: "Líderes / Ex-Governadores", icon: Users, show: true },
+    { to: "/admin/regioes", label: "Regiões / Divisões / Clubes", icon: MapPin, show: true },
+    { to: "/admin/noticias", label: "Notícias", icon: Newspaper, show: true },
+    { to: "/admin/eventos", label: "Eventos", icon: Calendar, show: true },
+    { to: "/admin/projetos", label: "Projetos", icon: Sparkles, show: true },
+    { to: "/admin/usuarios", label: "Usuários & Acessos", icon: ShieldCheck, show: canViewUsers },
+  ].filter((i) => i.show);
 
   return (
     <div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 lg:grid-cols-[240px_1fr]">
@@ -69,6 +68,9 @@ VALUES ('${user.id}', 'admin');`}
         <div className="mb-4">
           <div className="font-display text-lg font-bold">Painel Admin</div>
           <div className="text-xs text-muted-foreground">{user.email}</div>
+          <div className="mt-1 inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
+            {roleLabel}
+          </div>
         </div>
         {navItems.map((item) => {
           const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);

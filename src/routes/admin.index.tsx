@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/use-auth";
 import { CONTENT_LABELS, type ContentKey } from "@/lib/content";
 import {
   FileText, Users, MapPin, Newspaper, Calendar, Sparkles,
@@ -11,14 +12,14 @@ export const Route = createFileRoute("/admin/")({
   component: AdminHome,
 });
 
-const CARDS = [
-  { to: "/admin/conteudo", title: "Conteúdo das Páginas", desc: "Edite títulos, descrições e textos de cada página.", icon: FileText },
-  { to: "/admin/lideres", title: "Líderes & Ex-Governadores", desc: "Governador, Vices, GAT, Assessoria e galeria de ex-governadores.", icon: Users },
-  { to: "/admin/regioes", title: "Regiões, Divisões e Clubes", desc: "Cadastre regiões, divisões dentro de cada região e clubes de cada divisão.", icon: MapPin },
-  { to: "/admin/noticias", title: "Notícias", desc: "Publique e edite notícias do distrito.", icon: Newspaper },
-  { to: "/admin/eventos", title: "Eventos", desc: "Calendário oficial de eventos e ações.", icon: Calendar },
-  { to: "/admin/projetos", title: "Projetos", desc: "Projetos sociais e iniciativas em destaque.", icon: Sparkles },
-  { to: "/admin/usuarios", title: "Usuários & Acessos", desc: "Aprove novos logins e gerencie quem tem acesso ao painel.", icon: ShieldCheck },
+const ALL_CARDS = [
+  { to: "/admin/conteudo", title: "Conteúdo das Páginas", desc: "Edite títulos, descrições e textos de cada página.", icon: FileText, requires: "panel" as const },
+  { to: "/admin/lideres", title: "Líderes & Ex-Governadores", desc: "Governador, Vices, GAT, Assessoria e galeria de ex-governadores.", icon: Users, requires: "panel" as const },
+  { to: "/admin/regioes", title: "Regiões, Divisões e Clubes", desc: "Cadastre regiões, divisões dentro de cada região e clubes de cada divisão.", icon: MapPin, requires: "panel" as const },
+  { to: "/admin/noticias", title: "Notícias", desc: "Publique e edite notícias do distrito.", icon: Newspaper, requires: "panel" as const },
+  { to: "/admin/eventos", title: "Eventos", desc: "Calendário oficial de eventos e ações.", icon: Calendar, requires: "panel" as const },
+  { to: "/admin/projetos", title: "Projetos", desc: "Projetos sociais e iniciativas em destaque.", icon: Sparkles, requires: "panel" as const },
+  { to: "/admin/usuarios", title: "Usuários & Acessos", desc: "Aprove novos logins e gerencie quem tem acesso ao painel.", icon: ShieldCheck, requires: "users" as const },
 ] as const;
 
 function useCount(table: string, filter?: { col: string; val: string }) {

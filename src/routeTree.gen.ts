@@ -41,6 +41,10 @@ import { Route as AdminLideresIndexRouteImport } from './routes/admin.lideres.in
 import { Route as AdminEventosIndexRouteImport } from './routes/admin.eventos.index'
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
 import { Route as ClubesRegiaoLetraRouteImport } from './routes/clubes.regiao.$letra'
+import { Route as ApiPublicProjetosRouteImport } from './routes/api.public.projetos'
+import { Route as ApiPublicLcifRouteImport } from './routes/api.public.lcif'
+import { Route as ApiPublicGovernadoresRouteImport } from './routes/api.public.governadores'
+import { Route as ApiPublicEventosRouteImport } from './routes/api.public.eventos'
 import { Route as AdminRegioesIdRouteImport } from './routes/admin.regioes.$id'
 import { Route as AdminProjetosIdRouteImport } from './routes/admin.projetos.$id'
 import { Route as AdminNoticiasIdRouteImport } from './routes/admin.noticias.$id'
@@ -210,6 +214,26 @@ const ClubesRegiaoLetraRoute = ClubesRegiaoLetraRouteImport.update({
   path: '/$letra',
   getParentRoute: () => ClubesRegiaoRoute,
 } as any)
+const ApiPublicProjetosRoute = ApiPublicProjetosRouteImport.update({
+  id: '/api/public/projetos',
+  path: '/api/public/projetos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicLcifRoute = ApiPublicLcifRouteImport.update({
+  id: '/api/public/lcif',
+  path: '/api/public/lcif',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicGovernadoresRoute = ApiPublicGovernadoresRouteImport.update({
+  id: '/api/public/governadores',
+  path: '/api/public/governadores',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicEventosRoute = ApiPublicEventosRouteImport.update({
+  id: '/api/public/eventos',
+  path: '/api/public/eventos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRegioesIdRoute = AdminRegioesIdRouteImport.update({
   id: '/regioes/$id',
   path: '/regioes/$id',
@@ -285,6 +309,10 @@ export interface FileRoutesByFullPath {
   '/admin/noticias/$id': typeof AdminNoticiasIdRoute
   '/admin/projetos/$id': typeof AdminProjetosIdRoute
   '/admin/regioes/$id': typeof AdminRegioesIdRouteWithChildren
+  '/api/public/eventos': typeof ApiPublicEventosRoute
+  '/api/public/governadores': typeof ApiPublicGovernadoresRoute
+  '/api/public/lcif': typeof ApiPublicLcifRoute
+  '/api/public/projetos': typeof ApiPublicProjetosRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
   '/admin/eventos/': typeof AdminEventosIndexRoute
@@ -326,6 +354,10 @@ export interface FileRoutesByTo {
   '/admin/noticias/$id': typeof AdminNoticiasIdRoute
   '/admin/projetos/$id': typeof AdminProjetosIdRoute
   '/admin/regioes/$id': typeof AdminRegioesIdRouteWithChildren
+  '/api/public/eventos': typeof ApiPublicEventosRoute
+  '/api/public/governadores': typeof ApiPublicGovernadoresRoute
+  '/api/public/lcif': typeof ApiPublicLcifRoute
+  '/api/public/projetos': typeof ApiPublicProjetosRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
   '/admin/conteudo': typeof AdminConteudoIndexRoute
   '/admin/eventos': typeof AdminEventosIndexRoute
@@ -369,6 +401,10 @@ export interface FileRoutesById {
   '/admin/noticias/$id': typeof AdminNoticiasIdRoute
   '/admin/projetos/$id': typeof AdminProjetosIdRoute
   '/admin/regioes/$id': typeof AdminRegioesIdRouteWithChildren
+  '/api/public/eventos': typeof ApiPublicEventosRoute
+  '/api/public/governadores': typeof ApiPublicGovernadoresRoute
+  '/api/public/lcif': typeof ApiPublicLcifRoute
+  '/api/public/projetos': typeof ApiPublicProjetosRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
   '/admin/eventos/': typeof AdminEventosIndexRoute
@@ -413,6 +449,10 @@ export interface FileRouteTypes {
     | '/admin/noticias/$id'
     | '/admin/projetos/$id'
     | '/admin/regioes/$id'
+    | '/api/public/eventos'
+    | '/api/public/governadores'
+    | '/api/public/lcif'
+    | '/api/public/projetos'
     | '/clubes/regiao/$letra'
     | '/admin/conteudo/'
     | '/admin/eventos/'
@@ -454,6 +494,10 @@ export interface FileRouteTypes {
     | '/admin/noticias/$id'
     | '/admin/projetos/$id'
     | '/admin/regioes/$id'
+    | '/api/public/eventos'
+    | '/api/public/governadores'
+    | '/api/public/lcif'
+    | '/api/public/projetos'
     | '/clubes/regiao/$letra'
     | '/admin/conteudo'
     | '/admin/eventos'
@@ -496,6 +540,10 @@ export interface FileRouteTypes {
     | '/admin/noticias/$id'
     | '/admin/projetos/$id'
     | '/admin/regioes/$id'
+    | '/api/public/eventos'
+    | '/api/public/governadores'
+    | '/api/public/lcif'
+    | '/api/public/projetos'
     | '/clubes/regiao/$letra'
     | '/admin/conteudo/'
     | '/admin/eventos/'
@@ -528,6 +576,10 @@ export interface RootRouteChildren {
   SobreRoute: typeof SobreRoute
   ViceGovernador1Route: typeof ViceGovernador1Route
   ViceGovernador2Route: typeof ViceGovernador2Route
+  ApiPublicEventosRoute: typeof ApiPublicEventosRoute
+  ApiPublicGovernadoresRoute: typeof ApiPublicGovernadoresRoute
+  ApiPublicLcifRoute: typeof ApiPublicLcifRoute
+  ApiPublicProjetosRoute: typeof ApiPublicProjetosRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -756,6 +808,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClubesRegiaoLetraRouteImport
       parentRoute: typeof ClubesRegiaoRoute
     }
+    '/api/public/projetos': {
+      id: '/api/public/projetos'
+      path: '/api/public/projetos'
+      fullPath: '/api/public/projetos'
+      preLoaderRoute: typeof ApiPublicProjetosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/lcif': {
+      id: '/api/public/lcif'
+      path: '/api/public/lcif'
+      fullPath: '/api/public/lcif'
+      preLoaderRoute: typeof ApiPublicLcifRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/governadores': {
+      id: '/api/public/governadores'
+      path: '/api/public/governadores'
+      fullPath: '/api/public/governadores'
+      preLoaderRoute: typeof ApiPublicGovernadoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/eventos': {
+      id: '/api/public/eventos'
+      path: '/api/public/eventos'
+      fullPath: '/api/public/eventos'
+      preLoaderRoute: typeof ApiPublicEventosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/regioes/$id': {
       id: '/admin/regioes/$id'
       path: '/regioes/$id'
@@ -927,6 +1007,10 @@ const rootRouteChildren: RootRouteChildren = {
   SobreRoute: SobreRoute,
   ViceGovernador1Route: ViceGovernador1Route,
   ViceGovernador2Route: ViceGovernador2Route,
+  ApiPublicEventosRoute: ApiPublicEventosRoute,
+  ApiPublicGovernadoresRoute: ApiPublicGovernadoresRoute,
+  ApiPublicLcifRoute: ApiPublicLcifRoute,
+  ApiPublicProjetosRoute: ApiPublicProjetosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

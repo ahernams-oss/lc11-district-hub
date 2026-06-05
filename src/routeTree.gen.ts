@@ -30,7 +30,9 @@ import { Route as AssessoriaRouteImport } from './routes/assessoria'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as ClubesRjRouteImport } from './routes/clubes.rj'
 import { Route as ClubesRegiaoRouteImport } from './routes/clubes.regiao'
+import { Route as ClubesEsRouteImport } from './routes/clubes.es'
 import { Route as AdminRegioesIndexRouteImport } from './routes/admin.regioes.index'
 import { Route as AdminProjetosIndexRouteImport } from './routes/admin.projetos.index'
 import { Route as AdminNoticiasIndexRouteImport } from './routes/admin.noticias.index'
@@ -152,9 +154,19 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const ClubesRjRoute = ClubesRjRouteImport.update({
+  id: '/rj',
+  path: '/rj',
+  getParentRoute: () => ClubesRoute,
+} as any)
 const ClubesRegiaoRoute = ClubesRegiaoRouteImport.update({
   id: '/regiao',
   path: '/regiao',
+  getParentRoute: () => ClubesRoute,
+} as any)
+const ClubesEsRoute = ClubesEsRouteImport.update({
+  id: '/es',
+  path: '/es',
   getParentRoute: () => ClubesRoute,
 } as any)
 const AdminRegioesIndexRoute = AdminRegioesIndexRouteImport.update({
@@ -256,7 +268,9 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
+  '/clubes/es': typeof ClubesEsRoute
   '/clubes/regiao': typeof ClubesRegiaoRouteWithChildren
+  '/clubes/rj': typeof ClubesRjRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
@@ -294,7 +308,9 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
+  '/clubes/es': typeof ClubesEsRoute
   '/clubes/regiao': typeof ClubesRegiaoRouteWithChildren
+  '/clubes/rj': typeof ClubesRjRoute
   '/admin': typeof AdminIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
@@ -334,7 +350,9 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
+  '/clubes/es': typeof ClubesEsRoute
   '/clubes/regiao': typeof ClubesRegiaoRouteWithChildren
+  '/clubes/rj': typeof ClubesRjRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
@@ -375,7 +393,9 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/vice-governador-1'
     | '/vice-governador-2'
+    | '/clubes/es'
     | '/clubes/regiao'
+    | '/clubes/rj'
     | '/admin/'
     | '/admin/conteudo/$key'
     | '/admin/eventos/$id'
@@ -413,7 +433,9 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/vice-governador-1'
     | '/vice-governador-2'
+    | '/clubes/es'
     | '/clubes/regiao'
+    | '/clubes/rj'
     | '/admin'
     | '/admin/conteudo/$key'
     | '/admin/eventos/$id'
@@ -452,7 +474,9 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/vice-governador-1'
     | '/vice-governador-2'
+    | '/clubes/es'
     | '/clubes/regiao'
+    | '/clubes/rj'
     | '/admin/'
     | '/admin/conteudo/$key'
     | '/admin/eventos/$id'
@@ -643,11 +667,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/clubes/rj': {
+      id: '/clubes/rj'
+      path: '/rj'
+      fullPath: '/clubes/rj'
+      preLoaderRoute: typeof ClubesRjRouteImport
+      parentRoute: typeof ClubesRoute
+    }
     '/clubes/regiao': {
       id: '/clubes/regiao'
       path: '/regiao'
       fullPath: '/clubes/regiao'
       preLoaderRoute: typeof ClubesRegiaoRouteImport
+      parentRoute: typeof ClubesRoute
+    }
+    '/clubes/es': {
+      id: '/clubes/es'
+      path: '/es'
+      fullPath: '/clubes/es'
+      preLoaderRoute: typeof ClubesEsRouteImport
       parentRoute: typeof ClubesRoute
     }
     '/admin/regioes/': {
@@ -833,11 +871,15 @@ const ClubesRegiaoRouteWithChildren = ClubesRegiaoRoute._addFileChildren(
 )
 
 interface ClubesRouteChildren {
+  ClubesEsRoute: typeof ClubesEsRoute
   ClubesRegiaoRoute: typeof ClubesRegiaoRouteWithChildren
+  ClubesRjRoute: typeof ClubesRjRoute
 }
 
 const ClubesRouteChildren: ClubesRouteChildren = {
+  ClubesEsRoute: ClubesEsRoute,
   ClubesRegiaoRoute: ClubesRegiaoRouteWithChildren,
+  ClubesRjRoute: ClubesRjRoute,
 }
 
 const ClubesRouteWithChildren =

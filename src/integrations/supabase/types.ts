@@ -30,6 +30,7 @@ export type Database = {
           order_index: number
           phone: string | null
           president: string | null
+          state: string | null
           updated_at: string
           website: string | null
         }
@@ -48,6 +49,7 @@ export type Database = {
           order_index?: number
           phone?: string | null
           president?: string | null
+          state?: string | null
           updated_at?: string
           website?: string | null
         }
@@ -66,6 +68,7 @@ export type Database = {
           order_index?: number
           phone?: string | null
           president?: string | null
+          state?: string | null
           updated_at?: string
           website?: string | null
         }

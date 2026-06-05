@@ -13,6 +13,7 @@ export const Route = createFileRoute("/admin/regioes/$id/divisoes/$divId/clubes/
 interface Form {
   name: string;
   city: string;
+  state: string;
   email: string;
   phone: string;
   meetings: string;
@@ -27,6 +28,7 @@ interface Form {
 const EMPTY: Form = {
   name: "",
   city: "",
+  state: "",
   email: "",
   phone: "",
   meetings: "",
@@ -38,6 +40,7 @@ const EMPTY: Form = {
   logo_url: "",
   order_index: 0,
 };
+
 
 function ClubEditor() {
   const { id, divId, clubId } = useParams({
@@ -66,8 +69,10 @@ function ClubEditor() {
           setForm({
             name: data.name ?? "",
             city: data.city ?? "",
+            state: (data as any).state ?? "",
             email: data.email ?? "",
             phone: data.phone ?? "",
+
             meetings: data.meetings ?? "",
             address: data.address ?? "",
             website: data.website ?? "",
@@ -206,6 +211,18 @@ function ClubEditor() {
               className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
             />
           </Field>
+          <Field label="Estado">
+            <select
+              value={form.state}
+              onChange={(e) => setForm({ ...form, state: e.target.value })}
+              className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
+            >
+              <option value="">— Selecione —</option>
+              <option value="ES">Espírito Santo (ES)</option>
+              <option value="RJ">Rio de Janeiro (RJ)</option>
+            </select>
+          </Field>
+
           <Field label="Presidente atual">
             <input
               value={form.president}

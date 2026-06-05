@@ -112,17 +112,11 @@ function AuthPage() {
           disabled={busy}
           className="w-full rounded-md bg-primary px-4 py-2 font-semibold text-primary-foreground disabled:opacity-60"
         >
-          {busy ? "Aguarde..." : mode === "login" ? "Entrar" : "Criar conta"}
+          {busy ? "Aguarde..." : "Entrar"}
         </button>
       </form>
 
-      <button
-        onClick={() => setMode(mode === "login" ? "signup" : "login")}
-        className="mt-4 text-sm text-primary hover:underline"
-      >
-        {mode === "login" ? "Criar nova conta" : "Já tenho conta"}
-      </button>
-      <Link to="/" className="mt-2 text-sm text-muted-foreground hover:text-primary">
+      <Link to="/" className="mt-4 text-sm text-muted-foreground hover:text-primary">
         ← Voltar ao site
       </Link>
     </div>

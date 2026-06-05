@@ -44,7 +44,6 @@ import { Route as AdminNoticiasIdRouteImport } from './routes/admin.noticias.$id
 import { Route as AdminLideresIdRouteImport } from './routes/admin.lideres.$id'
 import { Route as AdminEventosIdRouteImport } from './routes/admin.eventos.$id'
 import { Route as AdminConteudoKeyRouteImport } from './routes/admin.conteudo.$key'
-import { Route as AdminRegioesIdIndexRouteImport } from './routes/admin.regioes.$id.index'
 import { Route as AdminRegioesIdDivisoesDivIdRouteImport } from './routes/admin.regioes.$id.divisoes.$divId'
 import { Route as AdminRegioesIdDivisoesDivIdClubesClubIdRouteImport } from './routes/admin.regioes.$id.divisoes.$divId.clubes.$clubId'
 
@@ -223,11 +222,6 @@ const AdminConteudoKeyRoute = AdminConteudoKeyRouteImport.update({
   path: '/conteudo/$key',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminRegioesIdIndexRoute = AdminRegioesIdIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminRegioesIdRoute,
-} as any)
 const AdminRegioesIdDivisoesDivIdRoute =
   AdminRegioesIdDivisoesDivIdRouteImport.update({
     id: '/divisoes/$divId',
@@ -277,7 +271,6 @@ export interface FileRoutesByFullPath {
   '/admin/noticias/': typeof AdminNoticiasIndexRoute
   '/admin/projetos/': typeof AdminProjetosIndexRoute
   '/admin/regioes/': typeof AdminRegioesIndexRoute
-  '/admin/regioes/$id/': typeof AdminRegioesIdIndexRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
 }
@@ -308,6 +301,7 @@ export interface FileRoutesByTo {
   '/admin/lideres/$id': typeof AdminLideresIdRoute
   '/admin/noticias/$id': typeof AdminNoticiasIdRoute
   '/admin/projetos/$id': typeof AdminProjetosIdRoute
+  '/admin/regioes/$id': typeof AdminRegioesIdRouteWithChildren
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
   '/admin/conteudo': typeof AdminConteudoIndexRoute
   '/admin/eventos': typeof AdminEventosIndexRoute
@@ -315,7 +309,6 @@ export interface FileRoutesByTo {
   '/admin/noticias': typeof AdminNoticiasIndexRoute
   '/admin/projetos': typeof AdminProjetosIndexRoute
   '/admin/regioes': typeof AdminRegioesIndexRoute
-  '/admin/regioes/$id': typeof AdminRegioesIdIndexRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
 }
@@ -356,7 +349,6 @@ export interface FileRoutesById {
   '/admin/noticias/': typeof AdminNoticiasIndexRoute
   '/admin/projetos/': typeof AdminProjetosIndexRoute
   '/admin/regioes/': typeof AdminRegioesIndexRoute
-  '/admin/regioes/$id/': typeof AdminRegioesIdIndexRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
 }
@@ -398,7 +390,6 @@ export interface FileRouteTypes {
     | '/admin/noticias/'
     | '/admin/projetos/'
     | '/admin/regioes/'
-    | '/admin/regioes/$id/'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
   fileRoutesByTo: FileRoutesByTo
@@ -429,6 +420,7 @@ export interface FileRouteTypes {
     | '/admin/lideres/$id'
     | '/admin/noticias/$id'
     | '/admin/projetos/$id'
+    | '/admin/regioes/$id'
     | '/clubes/regiao/$letra'
     | '/admin/conteudo'
     | '/admin/eventos'
@@ -436,7 +428,6 @@ export interface FileRouteTypes {
     | '/admin/noticias'
     | '/admin/projetos'
     | '/admin/regioes'
-    | '/admin/regioes/$id'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
   id:
@@ -476,7 +467,6 @@ export interface FileRouteTypes {
     | '/admin/noticias/'
     | '/admin/projetos/'
     | '/admin/regioes/'
-    | '/admin/regioes/$id/'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
   fileRoutesById: FileRoutesById
@@ -751,13 +741,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminConteudoKeyRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/regioes/$id/': {
-      id: '/admin/regioes/$id/'
-      path: '/'
-      fullPath: '/admin/regioes/$id/'
-      preLoaderRoute: typeof AdminRegioesIdIndexRouteImport
-      parentRoute: typeof AdminRegioesIdRoute
-    }
     '/admin/regioes/$id/divisoes/$divId': {
       id: '/admin/regioes/$id/divisoes/$divId'
       path: '/divisoes/$divId'
@@ -791,12 +774,10 @@ const AdminRegioesIdDivisoesDivIdRouteWithChildren =
   )
 
 interface AdminRegioesIdRouteChildren {
-  AdminRegioesIdIndexRoute: typeof AdminRegioesIdIndexRoute
   AdminRegioesIdDivisoesDivIdRoute: typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
 }
 
 const AdminRegioesIdRouteChildren: AdminRegioesIdRouteChildren = {
-  AdminRegioesIdIndexRoute: AdminRegioesIdIndexRoute,
   AdminRegioesIdDivisoesDivIdRoute:
     AdminRegioesIdDivisoesDivIdRouteWithChildren,
 }

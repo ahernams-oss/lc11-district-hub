@@ -54,8 +54,8 @@ export function useAllLeaders() {
   return useQuery({
     queryKey: ["leaders", "all"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("leaders")
+      const { data, error } = await (supabase as any)
+        .from("leaders_public")
         .select("*")
         .order("category", { ascending: true })
         .order("order_index", { ascending: true });

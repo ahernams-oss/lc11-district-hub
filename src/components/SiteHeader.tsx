@@ -12,10 +12,10 @@ const inicioSubmenu = [
 
 const lideresSubmenu = [
   { to: "/governador", label: "Governador" },
-  { to: "/gat", label: "GAT" },
-  { to: "/assessoria", label: "Assessoria" },
   { to: "/vice-governador-1", label: "1º Vice-Governador" },
   { to: "/vice-governador-2", label: "2º Vice-Governador" },
+  { to: "/gat", label: "GAT" },
+  { to: "/assessoria", label: "Assessoria" },
 ] as const;
 
 const nav = [

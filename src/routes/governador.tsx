@@ -19,7 +19,7 @@ export const Route = createFileRoute("/governador")({
 function Governador() {
   const content = useSiteContent("governador", {
     eyebrow: "Liderança 2025–2026",
-    title: "Companheiro Governador do Distrito LC-11",
+    title: "Governador ",
     description: "Liderando com servir, inspirando com exemplo.",
   });
   const { data: leaders = [] } = useLeaders("governador");

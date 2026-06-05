@@ -44,6 +44,16 @@ function AdminUsersPage() {
     return <Navigate to="/admin" />;
   }
 
+  return <UsersTable user={user} canManageUsers={canManageUsers} />;
+}
+
+function UsersTable({ user, canManageUsers }: { user: any; canManageUsers: boolean }) {
+  const qc = useQueryClient();
+  const list = useServerFn(listAuthUsers);
+  const setRole = useServerFn(setUserRole);
+  const delUser = useServerFn(deleteAuthUser);
+  const [msg, setMsg] = useState<{ type: "ok" | "err"; text: string } | null>(null);
+
   const usersQuery = useQuery({
     queryKey: ["admin-auth-users"],
     queryFn: () => list({}),

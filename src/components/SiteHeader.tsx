@@ -122,16 +122,34 @@ export function SiteHeader() {
             </button>
             {clubesOpen && (
               <div className="absolute left-0 top-full w-56 rounded-md border border-border bg-background py-2 shadow-card">
-                {clubesSubmenu.map((s) => (
-                  <Link
-                    key={s.to}
-                    to={s.to}
-                    className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
-                    activeProps={{ className: "text-primary bg-surface" }}
+                <Link
+                  to="/clubes"
+                  className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                  activeProps={{ className: "text-primary bg-surface" }}
+                  activeOptions={{ exact: true }}
+                >
+                  Geral
+                </Link>
+                <div className="group/regiao relative">
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
                   >
-                    {s.label}
-                  </Link>
-                ))}
+                    Região <ChevronDown className="h-3.5 w-3.5 -rotate-90" />
+                  </button>
+                  <div className="absolute left-full top-0 hidden w-44 rounded-md border border-border bg-background py-2 shadow-card group-hover/regiao:block">
+                    {regioesSubmenu.map((r) => (
+                      <Link
+                        key={r.to}
+                        to={r.to}
+                        className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                        activeProps={{ className: "text-primary bg-surface" }}
+                      >
+                        {r.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
           </div>

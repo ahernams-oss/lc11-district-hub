@@ -12,6 +12,8 @@ const CATEGORY_ORDER: LeaderCategory[] = [
   "governador",
   "vice1",
   "vice2",
+  "secretario",
+  "tesoureiro",
   "gat",
   "assessoria",
   "ex_governador",

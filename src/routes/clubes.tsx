@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
 import { MapPin, Mail, Search } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useAllClubs } from "@/lib/regions";
 
 export const Route = createFileRoute("/clubes")({
   head: () => ({
@@ -17,31 +18,31 @@ export const Route = createFileRoute("/clubes")({
   component: Clubes,
 });
 
-type Clube = { nome: string; cidade: string; divisao: string; reunioes: string; email: string };
-
-const CLUBES: Clube[] = [
-  { nome: "Lions Clube Centro", cidade: "São Paulo", divisao: "A", reunioes: "2ª e 4ª terça, 20h", email: "centro@distritolc11.org" },
-  { nome: "Lions Clube Norte", cidade: "São Paulo", divisao: "A", reunioes: "1ª e 3ª quinta, 20h", email: "norte@distritolc11.org" },
-  { nome: "Lions Clube Sul", cidade: "São Paulo", divisao: "B", reunioes: "Quartas-feiras, 19h30", email: "sul@distritolc11.org" },
-  { nome: "Lions Clube Leste", cidade: "Guarulhos", divisao: "B", reunioes: "1ª terça, 20h", email: "leste@distritolc11.org" },
-  { nome: "Lions Clube Oeste", cidade: "Osasco", divisao: "C", reunioes: "2ª e 4ª quarta, 20h", email: "oeste@distritolc11.org" },
-  { nome: "Lions Clube Vila Mariana", cidade: "São Paulo", divisao: "A", reunioes: "Quintas-feiras, 19h", email: "vilamariana@distritolc11.org" },
-  { nome: "Lions Clube Santo André", cidade: "Santo André", divisao: "D", reunioes: "1ª e 3ª quarta, 20h", email: "santoandre@distritolc11.org" },
-  { nome: "Lions Clube Campinas", cidade: "Campinas", divisao: "E", reunioes: "2ª terça, 20h", email: "campinas@distritolc11.org" },
-  { nome: "Lions Clube Sorocaba", cidade: "Sorocaba", divisao: "E", reunioes: "Quartas-feiras, 20h", email: "sorocaba@distritolc11.org" },
-  { nome: "Lions Clube Ribeirão Preto", cidade: "Ribeirão Preto", divisao: "F", reunioes: "1ª e 3ª segunda, 20h", email: "ribeirao@distritolc11.org" },
-  { nome: "Lions Clube São José", cidade: "São José dos Campos", divisao: "G", reunioes: "Terças-feiras, 19h30", email: "saojose@distritolc11.org" },
-  { nome: "Lions Clube Santos", cidade: "Santos", divisao: "H", reunioes: "2ª quinta, 20h", email: "santos@distritolc11.org" },
-];
-
 function Clubes() {
+  const { data: clubs = [], isLoading } = useAllClubs();
   const [q, setQ] = useState("");
   const [divisao, setDivisao] = useState<string>("Todas");
 
-  const divisoes = useMemo(() => ["Todas", ...Array.from(new Set(CLUBES.map((c) => c.divisao))).sort()], []);
+  const enriched = useMemo(
+    () =>
+      (clubs as any[]).map((c) => ({
+        ...c,
+        divisao: c.divisions?.code ?? "",
+        regiao: c.divisions?.regions?.letter ?? "",
+      })),
+    [clubs],
+  );
 
-  const filtered = CLUBES.filter((c) => {
-    const matchQ = q.trim() === "" || c.nome.toLowerCase().includes(q.toLowerCase()) || c.cidade.toLowerCase().includes(q.toLowerCase());
+  const divisoes = useMemo(
+    () => ["Todas", ...Array.from(new Set(enriched.map((c) => c.divisao).filter(Boolean))).sort()],
+    [enriched],
+  );
+
+  const filtered = enriched.filter((c) => {
+    const matchQ =
+      q.trim() === "" ||
+      c.name.toLowerCase().includes(q.toLowerCase()) ||
+      (c.city ?? "").toLowerCase().includes(q.toLowerCase());
     const matchD = divisao === "Todas" || c.divisao === divisao;
     return matchQ && matchD;
   });
@@ -51,7 +52,7 @@ function Clubes() {
       <PageHero
         eyebrow="Nossa rede"
         title="Encontre um clube perto de você."
-        description="Mais de 65 clubes ativos no Distrito LC-11, cada um com sua identidade e área de atuação."
+        description="Conheça os clubes ativos no Distrito LC-11."
       />
 
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -82,24 +83,40 @@ function Clubes() {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((c) => (
-            <article key={c.nome} className="rounded-xl border border-border bg-card p-5 shadow-card">
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="font-display text-lg font-bold text-foreground">{c.nome}</h3>
-                <span className="rounded-md bg-accent px-2 py-0.5 text-xs font-semibold text-primary">Div. {c.divisao}</span>
-              </div>
-              <div className="mt-3 space-y-2 text-sm text-muted-foreground">
-                <p className="flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" /> {c.cidade}</p>
-                <p>📅 {c.reunioes}</p>
-                <p className="flex items-center gap-2"><Mail className="h-4 w-4 text-primary" /> {c.email}</p>
-              </div>
-            </article>
-          ))}
-        </div>
+        {isLoading ? (
+          <p className="mt-10 text-muted-foreground">Carregando clubes...</p>
+        ) : (
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((c) => (
+              <article key={c.id} className="rounded-xl border border-border bg-card p-5 shadow-card">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-display text-lg font-bold text-foreground">{c.name}</h3>
+                  {c.divisao && (
+                    <span className="rounded-md bg-accent px-2 py-0.5 text-xs font-semibold text-primary">
+                      Div. {c.divisao}
+                    </span>
+                  )}
+                </div>
+                <div className="mt-3 space-y-2 text-sm text-muted-foreground">
+                  {c.city && (
+                    <p className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4 text-primary" /> {c.city}
+                    </p>
+                  )}
+                  {c.meetings && <p>📅 {c.meetings}</p>}
+                  {c.email && (
+                    <p className="flex items-center gap-2">
+                      <Mail className="h-4 w-4 text-primary" /> {c.email}
+                    </p>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
 
-        {filtered.length === 0 && (
-          <p className="mt-10 text-center text-muted-foreground">Nenhum clube encontrado para a busca.</p>
+        {!isLoading && filtered.length === 0 && (
+          <p className="mt-10 text-center text-muted-foreground">Nenhum clube encontrado.</p>
         )}
       </section>
     </>

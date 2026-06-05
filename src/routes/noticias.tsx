@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
 import { Calendar } from "lucide-react";
+import { useNews } from "@/lib/news";
 
 export const Route = createFileRoute("/noticias")({
   head: () => ({
@@ -16,16 +17,8 @@ export const Route = createFileRoute("/noticias")({
   component: Noticias,
 });
 
-const posts = [
-  { data: "20 Maio 2026", tag: "Distrito", titulo: "Convenção Distrital reúne mais de 800 Leões", resumo: "Encontro anual fortaleceu laços e celebrou os melhores projetos do ano leonístico." },
-  { data: "05 Maio 2026", tag: "Visão", titulo: "Mutirão atende 1.200 crianças em escolas públicas", resumo: "Triagem oftalmológica resultou em 380 encaminhamentos médicos e 220 óculos doados." },
-  { data: "18 Abril 2026", tag: "Meio Ambiente", titulo: "Plantio coletivo recupera área de mata ciliar", resumo: "Voluntários de 8 clubes plantaram 1.500 mudas nativas em um único final de semana." },
-  { data: "02 Abril 2026", tag: "LCIF", titulo: "Distrito atinge meta de doação à Fundação LCIF", resumo: "Recursos ampliam projetos globais nas cinco causas humanitárias do Lions." },
-  { data: "15 Março 2026", tag: "Juventude", titulo: "LEO Clubes do distrito ganham novos quadros", resumo: "Mais de 60 jovens passaram a integrar o movimento leonístico jovem." },
-  { data: "28 Fevereiro 2026", tag: "Combate à Fome", titulo: "Campanha arrecada 12 toneladas de alimentos", resumo: "Mobilização envolveu 30 clubes em ação coordenada no fim de semana." },
-];
-
 function Noticias() {
+  const { data = [], isLoading } = useNews(true);
   return (
     <>
       <PageHero
@@ -35,21 +28,52 @@ function Noticias() {
       />
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((p) => (
-            <article key={p.titulo} className="group flex flex-col rounded-xl border border-border bg-card p-6 shadow-card transition-transform hover:-translate-y-1">
-              <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                <span className="rounded-full bg-accent px-3 py-1 font-semibold uppercase tracking-wider text-primary">{p.tag}</span>
-                <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> {p.data}</span>
-              </div>
-              <h2 className="mt-4 font-display text-xl font-bold leading-snug text-foreground group-hover:text-primary">
-                {p.titulo}
-              </h2>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{p.resumo}</p>
-              <a href="#" className="mt-5 text-sm font-semibold text-primary">Ler mais →</a>
-            </article>
-          ))}
-        </div>
+        {isLoading ? (
+          <p className="text-muted-foreground">Carregando...</p>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {data.map((p) => (
+              <article
+                key={p.id}
+                className="group flex flex-col rounded-xl border border-border bg-card p-6 shadow-card transition-transform hover:-translate-y-1"
+              >
+                {p.cover_url && (
+                  <img
+                    src={p.cover_url}
+                    alt={p.title}
+                    className="mb-4 aspect-video w-full rounded-md object-cover"
+                  />
+                )}
+                <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                  {p.tag && (
+                    <span className="rounded-full bg-accent px-3 py-1 font-semibold uppercase tracking-wider text-primary">
+                      {p.tag}
+                    </span>
+                  )}
+                  <span className="flex items-center gap-1">
+                    <Calendar className="h-3 w-3" />{" "}
+                    {new Date(p.published_at).toLocaleDateString("pt-BR", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </span>
+                </div>
+                <h2 className="mt-4 font-display text-xl font-bold leading-snug text-foreground group-hover:text-primary">
+                  {p.title}
+                </h2>
+                {p.excerpt && (
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                    {p.excerpt}
+                  </p>
+                )}
+              </article>
+            ))}
+            {data.length === 0 && (
+              <p className="text-muted-foreground">Nenhuma notícia publicada ainda.</p>
+            )}
+          </div>
+        )}
       </section>
     </>
   );

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
 import { Calendar, MapPin, Clock } from "lucide-react";
+import { useEvents } from "@/lib/events";
 
 export const Route = createFileRoute("/eventos")({
   head: () => ({
@@ -16,16 +17,10 @@ export const Route = createFileRoute("/eventos")({
   component: Eventos,
 });
 
-const eventos = [
-  { mes: "JUN", dia: "14", titulo: "Reunião do Gabinete Distrital", local: "Sede do Distrito — São Paulo", hora: "14h às 18h", tag: "Reunião" },
-  { mes: "JUL", dia: "06", titulo: "Mutirão de Triagem Oftalmológica", local: "EMEF Vila Esperança", hora: "08h às 14h", tag: "Visão" },
-  { mes: "JUL", dia: "20", titulo: "Encontro de Presidentes de Clube", local: "Hotel Central", hora: "09h às 17h", tag: "Formação" },
-  { mes: "AGO", dia: "10", titulo: "Campanha Mesa Solidária", local: "Diversas praças do distrito", hora: "Dia inteiro", tag: "Fome" },
-  { mes: "AGO", dia: "23", titulo: "Plantio Distrito Verde", local: "Parque Municipal", hora: "08h às 12h", tag: "Meio Ambiente" },
-  { mes: "SET", dia: "07", titulo: "Caminhada pela Visão", local: "Av. Paulista", hora: "07h às 11h", tag: "Visão" },
-];
+const MESES = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
 
 function Eventos() {
+  const { data = [], isLoading } = useEvents();
   return (
     <>
       <PageHero
@@ -35,27 +30,60 @@ function Eventos() {
       />
 
       <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="space-y-4">
-          {eventos.map((e, i) => (
-            <article key={i} className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-card transition-colors hover:border-primary sm:flex-row sm:items-center">
-              <div className="flex h-20 w-20 flex-shrink-0 flex-col items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <div className="text-xs font-semibold uppercase tracking-wider opacity-90">{e.mes}</div>
-                <div className="font-display text-3xl font-bold leading-none">{e.dia}</div>
-              </div>
-              <div className="flex-1">
-                <span className="inline-block rounded-full bg-accent px-3 py-0.5 text-xs font-semibold uppercase tracking-wider text-primary">{e.tag}</span>
-                <h3 className="mt-2 font-display text-lg font-bold text-foreground">{e.titulo}</h3>
-                <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted-foreground">
-                  <span className="flex items-center gap-1"><MapPin className="h-4 w-4 text-primary" /> {e.local}</span>
-                  <span className="flex items-center gap-1"><Clock className="h-4 w-4 text-primary" /> {e.hora}</span>
-                </div>
-              </div>
-              <a href="#" className="inline-flex items-center gap-2 rounded-md bg-surface px-4 py-2 text-sm font-semibold text-primary hover:bg-accent">
-                <Calendar className="h-4 w-4" /> Adicionar
-              </a>
-            </article>
-          ))}
-        </div>
+        {isLoading ? (
+          <p className="text-muted-foreground">Carregando...</p>
+        ) : (
+          <div className="space-y-4">
+            {data.map((e) => {
+              const d = e.starts_at ? new Date(e.starts_at) : null;
+              const mes = d ? MESES[d.getMonth()] : "—";
+              const dia = d ? String(d.getDate()).padStart(2, "0") : "—";
+              const hora = d
+                ? d.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })
+                : "";
+              return (
+                <article
+                  key={e.id}
+                  className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-card transition-colors hover:border-primary sm:flex-row sm:items-center"
+                >
+                  <div className="flex h-20 w-20 flex-shrink-0 flex-col items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                    <div className="text-xs font-semibold uppercase tracking-wider opacity-90">
+                      {mes}
+                    </div>
+                    <div className="font-display text-3xl font-bold leading-none">{dia}</div>
+                  </div>
+                  <div className="flex-1">
+                    {e.tag && (
+                      <span className="inline-block rounded-full bg-accent px-3 py-0.5 text-xs font-semibold uppercase tracking-wider text-primary">
+                        {e.tag}
+                      </span>
+                    )}
+                    <h3 className="mt-2 font-display text-lg font-bold text-foreground">{e.title}</h3>
+                    <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted-foreground">
+                      {e.location && (
+                        <span className="flex items-center gap-1">
+                          <MapPin className="h-4 w-4 text-primary" /> {e.location}
+                        </span>
+                      )}
+                      {hora && (
+                        <span className="flex items-center gap-1">
+                          <Clock className="h-4 w-4 text-primary" /> {hora}
+                        </span>
+                      )}
+                    </div>
+                    {e.description && (
+                      <p className="mt-2 text-sm text-muted-foreground">{e.description}</p>
+                    )}
+                  </div>
+                  <Calendar className="hidden h-5 w-5 text-muted-foreground sm:block" />
+                </article>
+              );
+            })}
+            {data.length === 0 && (
+              <p className="text-muted-foreground">Nenhum evento cadastrado.</p>
+            )}
+          </div>
+        )}
       </section>
     </>
   );

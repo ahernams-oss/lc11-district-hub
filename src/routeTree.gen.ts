@@ -16,6 +16,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProjetosRouteImport } from './routes/projetos'
 import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as LionsInternacionalRouteImport } from './routes/lions-internacional'
+import { Route as LcifRouteImport } from './routes/lcif'
 import { Route as HistoriaRouteImport } from './routes/historia'
 import { Route as GovernadorRouteImport } from './routes/governador'
 import { Route as GatRouteImport } from './routes/gat'
@@ -67,6 +68,11 @@ const NoticiasRoute = NoticiasRouteImport.update({
 const LionsInternacionalRoute = LionsInternacionalRouteImport.update({
   id: '/lions-internacional',
   path: '/lions-internacional',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LcifRoute = LcifRouteImport.update({
+  id: '/lcif',
+  path: '/lcif',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HistoriaRoute = HistoriaRouteImport.update({
@@ -168,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
+  '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
   '/projetos': typeof ProjetosRoute
@@ -193,6 +200,7 @@ export interface FileRoutesByTo {
   '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
+  '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
   '/projetos': typeof ProjetosRoute
@@ -220,6 +228,7 @@ export interface FileRoutesById {
   '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
+  '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
   '/projetos': typeof ProjetosRoute
@@ -248,6 +257,7 @@ export interface FileRouteTypes {
     | '/gat'
     | '/governador'
     | '/historia'
+    | '/lcif'
     | '/lions-internacional'
     | '/noticias'
     | '/projetos'
@@ -273,6 +283,7 @@ export interface FileRouteTypes {
     | '/gat'
     | '/governador'
     | '/historia'
+    | '/lcif'
     | '/lions-internacional'
     | '/noticias'
     | '/projetos'
@@ -299,6 +310,7 @@ export interface FileRouteTypes {
     | '/gat'
     | '/governador'
     | '/historia'
+    | '/lcif'
     | '/lions-internacional'
     | '/noticias'
     | '/projetos'
@@ -326,6 +338,7 @@ export interface RootRouteChildren {
   GatRoute: typeof GatRoute
   GovernadorRoute: typeof GovernadorRoute
   HistoriaRoute: typeof HistoriaRoute
+  LcifRoute: typeof LcifRoute
   LionsInternacionalRoute: typeof LionsInternacionalRoute
   NoticiasRoute: typeof NoticiasRoute
   ProjetosRoute: typeof ProjetosRoute
@@ -384,6 +397,13 @@ declare module '@tanstack/react-router' {
       path: '/lions-internacional'
       fullPath: '/lions-internacional'
       preLoaderRoute: typeof LionsInternacionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lcif': {
+      id: '/lcif'
+      path: '/lcif'
+      fullPath: '/lcif'
+      preLoaderRoute: typeof LcifRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/historia': {
@@ -539,6 +559,7 @@ const rootRouteChildren: RootRouteChildren = {
   GatRoute: GatRoute,
   GovernadorRoute: GovernadorRoute,
   HistoriaRoute: HistoriaRoute,
+  LcifRoute: LcifRoute,
   LionsInternacionalRoute: LionsInternacionalRoute,
   NoticiasRoute: NoticiasRoute,
   ProjetosRoute: ProjetosRoute,

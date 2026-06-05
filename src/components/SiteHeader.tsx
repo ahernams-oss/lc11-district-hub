@@ -100,6 +100,13 @@ export function SiteHeader() {
             )}
           </div>
 
+          <Link
+            to="/lcif"
+            className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"
+            activeProps={{ className: "text-primary bg-surface" }}
+          >
+            LCIF
+          </Link>
 
           {nav.map((item) => (
             <Link
@@ -174,6 +181,14 @@ export function SiteHeader() {
               </Link>
             ))}
           </div>
+          <Link
+            to="/lcif"
+            onClick={() => setOpen(false)}
+            className="rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-surface"
+            activeProps={{ className: "text-primary bg-surface" }}
+          >
+            LCIF
+          </Link>
           {nav.map((item) => (
             <Link
               key={item.to}

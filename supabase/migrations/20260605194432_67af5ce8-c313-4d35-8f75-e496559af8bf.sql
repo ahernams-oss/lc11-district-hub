@@ -1,0 +1,1 @@
+ALTER TABLE public.clubs ADD COLUMN IF NOT EXISTS state TEXT CHECK (state IN ('ES','RJ'));

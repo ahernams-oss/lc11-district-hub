@@ -297,6 +297,7 @@ export type Database = {
           name: string
           order_index: number
           president: string | null
+          president_photo_url: string | null
           updated_at: string
         }
         Insert: {
@@ -307,6 +308,7 @@ export type Database = {
           name: string
           order_index?: number
           president?: string | null
+          president_photo_url?: string | null
           updated_at?: string
         }
         Update: {
@@ -317,6 +319,7 @@ export type Database = {
           name?: string
           order_index?: number
           president?: string | null
+          president_photo_url?: string | null
           updated_at?: string
         }
         Relationships: []

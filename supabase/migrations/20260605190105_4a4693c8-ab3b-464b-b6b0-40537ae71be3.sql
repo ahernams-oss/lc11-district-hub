@@ -1,0 +1,1 @@
+ALTER TABLE public.regions ADD COLUMN president_photo_url text;

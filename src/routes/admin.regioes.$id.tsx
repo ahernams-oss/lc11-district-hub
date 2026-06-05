@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDivisions } from "@/lib/regions";
-import { ArrowLeft, Plus, Trash2, ChevronRight } from "lucide-react";
+import { uploadLeaderPhoto } from "@/lib/leaders";
+import { ArrowLeft, Plus, Trash2, ChevronRight, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/admin/regioes/$id")({
   component: RegionEditor,
@@ -14,9 +15,10 @@ interface Form {
   name: string;
   description: string;
   president: string;
+  president_photo_url: string;
   order_index: number;
 }
-const EMPTY: Form = { letter: "", name: "", description: "", president: "", order_index: 0 };
+const EMPTY: Form = { letter: "", name: "", description: "", president: "", president_photo_url: "", order_index: 0 };
 
 function RegionEditor() {
   const { id } = useParams({ from: "/admin/regioes/$id" });
@@ -44,6 +46,7 @@ function RegionEditor() {
             name: data.name,
             description: data.description ?? "",
             president: (data as any).president ?? "",
+            president_photo_url: (data as any).president_photo_url ?? "",
             order_index: data.order_index ?? 0,
           });
         setLoading(false);
@@ -127,6 +130,47 @@ function RegionEditor() {
             onChange={(e) => setForm({ ...form, president: e.target.value })}
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
           />
+        </Field>
+        <Field label="Foto do Presidente">
+          <div className="mt-1 flex items-center gap-4">
+            {form.president_photo_url ? (
+              <img
+                src={form.president_photo_url}
+                alt="Presidente"
+                className="h-20 w-20 rounded-full border object-cover"
+              />
+            ) : (
+              <div className="h-20 w-20 rounded-full border border-dashed bg-muted" />
+            )}
+            <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-surface">
+              <Upload className="h-4 w-4" />
+              {form.president_photo_url ? "Trocar foto" : "Enviar foto"}
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  try {
+                    const url = await uploadLeaderPhoto(file);
+                    setForm((f) => ({ ...f, president_photo_url: url }));
+                  } catch (err: any) {
+                    alert("Erro ao enviar foto: " + err.message);
+                  }
+                }}
+              />
+            </label>
+            {form.president_photo_url && (
+              <button
+                type="button"
+                onClick={() => setForm({ ...form, president_photo_url: "" })}
+                className="text-sm text-destructive hover:underline"
+              >
+                Remover
+              </button>
+            )}
+          </div>
         </Field>
         <Field label="Ordem">
           <input

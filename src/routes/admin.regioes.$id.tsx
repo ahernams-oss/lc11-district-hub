@@ -43,6 +43,7 @@ function RegionEditor() {
             letter: data.letter,
             name: data.name,
             description: data.description ?? "",
+            president: (data as any).president ?? "",
             order_index: data.order_index ?? 0,
           });
         setLoading(false);

@@ -2,7 +2,7 @@ import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tan
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
-import { LogOut, FileText, Users, Home, MapPin, Newspaper, Calendar, Sparkles } from "lucide-react";
+import { LogOut, FileText, Users, Home, MapPin, Newspaper, Calendar, Sparkles, ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
   ssr: false,
@@ -60,6 +60,7 @@ VALUES ('${user.id}', 'admin');`}
     { to: "/admin/noticias", label: "Notícias", icon: Newspaper },
     { to: "/admin/eventos", label: "Eventos", icon: Calendar },
     { to: "/admin/projetos", label: "Projetos", icon: Sparkles },
+    { to: "/admin/usuarios", label: "Usuários & Acessos", icon: ShieldCheck },
   ];
 
   return (

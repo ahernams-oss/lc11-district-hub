@@ -21,7 +21,7 @@ interface Form {
 const EMPTY: Form = { letter: "", name: "", description: "", president: "", president_photo_url: "", order_index: 0 };
 
 function RegionEditor() {
-  const { id } = useParams({ from: "/admin/regioes/$id" });
+  const { id } = useParams({ from: "/admin/regioes/$id/" });
   const isNew = id === "novo";
   const navigate = useNavigate();
   const qc = useQueryClient();

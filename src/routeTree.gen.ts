@@ -13,6 +13,7 @@ import { Route as ViceGovernador2RouteImport } from './routes/vice-governador-2'
 import { Route as ViceGovernador1RouteImport } from './routes/vice-governador-1'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ProtocoloLeonisticoRouteImport } from './routes/protocolo-leonistico'
 import { Route as ProjetosRouteImport } from './routes/projetos'
 import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as LionsInternacionalRouteImport } from './routes/lions-internacional'
@@ -72,6 +73,11 @@ const SobreRoute = SobreRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProtocoloLeonisticoRoute = ProtocoloLeonisticoRouteImport.update({
+  id: '/protocolo-leonistico',
+  path: '/protocolo-leonistico',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjetosRoute = ProjetosRouteImport.update({
@@ -294,6 +300,7 @@ export interface FileRoutesByFullPath {
   '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
   '/projetos': typeof ProjetosRoute
+  '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/vice-governador-1': typeof ViceGovernador1Route
@@ -339,6 +346,7 @@ export interface FileRoutesByTo {
   '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
   '/projetos': typeof ProjetosRoute
+  '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/vice-governador-1': typeof ViceGovernador1Route
@@ -386,6 +394,7 @@ export interface FileRoutesById {
   '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
   '/projetos': typeof ProjetosRoute
+  '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/vice-governador-1': typeof ViceGovernador1Route
@@ -434,6 +443,7 @@ export interface FileRouteTypes {
     | '/lions-internacional'
     | '/noticias'
     | '/projetos'
+    | '/protocolo-leonistico'
     | '/sitemap.xml'
     | '/sobre'
     | '/vice-governador-1'
@@ -479,6 +489,7 @@ export interface FileRouteTypes {
     | '/lions-internacional'
     | '/noticias'
     | '/projetos'
+    | '/protocolo-leonistico'
     | '/sitemap.xml'
     | '/sobre'
     | '/vice-governador-1'
@@ -525,6 +536,7 @@ export interface FileRouteTypes {
     | '/lions-internacional'
     | '/noticias'
     | '/projetos'
+    | '/protocolo-leonistico'
     | '/sitemap.xml'
     | '/sobre'
     | '/vice-governador-1'
@@ -572,6 +584,7 @@ export interface RootRouteChildren {
   LionsInternacionalRoute: typeof LionsInternacionalRoute
   NoticiasRoute: typeof NoticiasRoute
   ProjetosRoute: typeof ProjetosRoute
+  ProtocoloLeonisticoRoute: typeof ProtocoloLeonisticoRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
   ViceGovernador1Route: typeof ViceGovernador1Route
@@ -610,6 +623,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/protocolo-leonistico': {
+      id: '/protocolo-leonistico'
+      path: '/protocolo-leonistico'
+      fullPath: '/protocolo-leonistico'
+      preLoaderRoute: typeof ProtocoloLeonisticoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projetos': {
@@ -1003,6 +1023,7 @@ const rootRouteChildren: RootRouteChildren = {
   LionsInternacionalRoute: LionsInternacionalRoute,
   NoticiasRoute: NoticiasRoute,
   ProjetosRoute: ProjetosRoute,
+  ProtocoloLeonisticoRoute: ProtocoloLeonisticoRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
   ViceGovernador1Route: ViceGovernador1Route,

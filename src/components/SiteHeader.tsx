@@ -19,9 +19,13 @@ const lideresSubmenu = [
   { to: "/ex-governadores", label: "Galeria de Ex-Governadores" },
 ] as const;
 
-const clubesSubmenu = [
-  { to: "/clubes", label: "Geral" },
-  { to: "/clubes/regiao", label: "Região" },
+const regioesSubmenu = [
+  { to: "/clubes/regiao/a", label: "Região A" },
+  { to: "/clubes/regiao/b", label: "Região B" },
+  { to: "/clubes/regiao/c", label: "Região C" },
+  { to: "/clubes/regiao/d", label: "Região D" },
+  { to: "/clubes/regiao/e", label: "Região E" },
+  { to: "/clubes/regiao/f", label: "Região F" },
 ] as const;
 
 const nav = [

@@ -24,6 +24,8 @@ export interface Club {
   division_id: string;
   name: string;
   city: string | null;
+  state: string | null;
+
   email: string | null;
   phone: string | null;
   meetings: string | null;

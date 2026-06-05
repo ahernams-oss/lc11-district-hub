@@ -72,24 +72,18 @@ export function SiteHeader() {
                 <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Governador</div>
                 <div className="font-display text-sm font-semibold text-foreground">{governador.name}</div>
               </div>
+              {governador.pin_url && (
+                <img
+                  src={governador.pin_url}
+                  alt="PIN do Governador"
+                  className="ml-2 h-10 w-10 object-contain"
+                />
+              )}
             </Link>
           )}
         </div>
 
         <nav className="hidden items-center gap-1 lg:flex">
-          {governador?.pin_url && (
-            <Link
-              to="/governador"
-              className="mr-2 flex items-center"
-              title="PIN do Governador"
-            >
-              <img
-                src={governador.pin_url}
-                alt="PIN do Governador"
-                className="h-10 w-10 object-contain"
-              />
-            </Link>
-          )}
           <div
             className="relative"
             onMouseEnter={() => setInicioOpen(true)}

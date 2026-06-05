@@ -13,9 +13,10 @@ interface Form {
   letter: string;
   name: string;
   description: string;
+  president: string;
   order_index: number;
 }
-const EMPTY: Form = { letter: "", name: "", description: "", order_index: 0 };
+const EMPTY: Form = { letter: "", name: "", description: "", president: "", order_index: 0 };
 
 function RegionEditor() {
   const { id } = useParams({ from: "/admin/regioes/$id" });
@@ -42,6 +43,7 @@ function RegionEditor() {
             letter: data.letter,
             name: data.name,
             description: data.description ?? "",
+            president: (data as any).president ?? "",
             order_index: data.order_index ?? 0,
           });
         setLoading(false);
@@ -116,6 +118,13 @@ function RegionEditor() {
             rows={3}
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
+            className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
+          />
+        </Field>
+        <Field label="Presidente da Região">
+          <input
+            value={form.president}
+            onChange={(e) => setForm({ ...form, president: e.target.value })}
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
           />
         </Field>

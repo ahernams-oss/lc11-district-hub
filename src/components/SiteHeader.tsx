@@ -19,9 +19,13 @@ const lideresSubmenu = [
   { to: "/ex-governadores", label: "Galeria de Ex-Governadores" },
 ] as const;
 
+const clubesSubmenu = [
+  { to: "/clubes", label: "Geral" },
+  { to: "/clubes/regiao", label: "Região" },
+] as const;
+
 const nav = [
   { to: "/projetos", label: "Projetos" },
-  { to: "/clubes", label: "Clubes" },
   { to: "/noticias", label: "Notícias" },
   { to: "/eventos", label: "Eventos" },
   { to: "/contato", label: "Contato" },
@@ -31,6 +35,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [inicioOpen, setInicioOpen] = useState(false);
   const [lideresOpen, setLideresOpen] = useState(false);
+  const [clubesOpen, setClubesOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur">
@@ -87,6 +92,33 @@ export function SiteHeader() {
             {lideresOpen && (
               <div className="absolute left-0 top-full w-56 rounded-md border border-border bg-background py-2 shadow-card">
                 {lideresSubmenu.map((s) => (
+                  <Link
+                    key={s.to}
+                    to={s.to}
+                    className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                    activeProps={{ className: "text-primary bg-surface" }}
+                  >
+                    {s.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div
+            className="relative"
+            onMouseEnter={() => setClubesOpen(true)}
+            onMouseLeave={() => setClubesOpen(false)}
+          >
+            <button
+              type="button"
+              className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"
+            >
+              Clubes <ChevronDown className="h-3.5 w-3.5" />
+            </button>
+            {clubesOpen && (
+              <div className="absolute left-0 top-full w-56 rounded-md border border-border bg-background py-2 shadow-card">
+                {clubesSubmenu.map((s) => (
                   <Link
                     key={s.to}
                     to={s.to}
@@ -170,6 +202,20 @@ export function SiteHeader() {
           <div className="mt-1 px-3 py-2 text-base font-medium text-foreground">Líderes</div>
           <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
             {lideresSubmenu.map((s) => (
+              <Link
+                key={s.to}
+                to={s.to}
+                onClick={() => setOpen(false)}
+                className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+                activeProps={{ className: "text-primary bg-surface" }}
+              >
+                {s.label}
+              </Link>
+            ))}
+          </div>
+          <div className="mt-1 px-3 py-2 text-base font-medium text-foreground">Clubes</div>
+          <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+            {clubesSubmenu.map((s) => (
               <Link
                 key={s.to}
                 to={s.to}

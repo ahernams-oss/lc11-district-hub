@@ -15,9 +15,10 @@ interface Form {
   name: string;
   description: string;
   president: string;
+  president_photo_url: string;
   order_index: number;
 }
-const EMPTY: Form = { letter: "", name: "", description: "", president: "", order_index: 0 };
+const EMPTY: Form = { letter: "", name: "", description: "", president: "", president_photo_url: "", order_index: 0 };
 
 function RegionEditor() {
   const { id } = useParams({ from: "/admin/regioes/$id" });

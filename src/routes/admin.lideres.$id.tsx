@@ -25,6 +25,7 @@ interface FormState {
   bio: string;
   message: string;
   photo_url: string;
+  pin_url: string;
   email: string;
   phone: string;
   year_label: string;
@@ -39,6 +40,7 @@ const EMPTY: FormState = {
   bio: "",
   message: "",
   photo_url: "",
+  pin_url: "",
   email: "",
   phone: "",
   year_label: "",
@@ -79,6 +81,7 @@ function LeaderEditor() {
             bio: data.bio ?? "",
             message: data.message ?? "",
             photo_url: data.photo_url ?? "",
+            pin_url: (data as any).pin_url ?? "",
             email: data.email ?? "",
             phone: data.phone ?? "",
             year_label: data.year_label ?? "",
@@ -123,6 +126,19 @@ function LeaderEditor() {
       const url = await uploadLeaderPhoto(file);
       setForm((f) => ({ ...f, photo_url: url }));
       setMsg("Foto enviada. Clique em Salvar.");
+    } catch (e: any) {
+      setMsg("Erro no upload: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handlePin(file: File) {
+    setSaving(true);
+    try {
+      const url = await uploadLeaderPhoto(file);
+      setForm((f) => ({ ...f, pin_url: url }));
+      setMsg("PIN enviado. Clique em Salvar.");
     } catch (e: any) {
       setMsg("Erro no upload: " + e.message);
     } finally {
@@ -178,6 +194,31 @@ function LeaderEditor() {
             </button>
           )}
         </Field>
+
+        {form.category === "governador" && (
+          <Field label="PIN do Governador (logo/imagem exibida na barra superior)">
+            {form.pin_url && (
+              <img src={form.pin_url} alt="" className="mb-2 h-20 w-20 rounded-md object-contain bg-surface p-1" />
+            )}
+            <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-surface">
+              <Upload className="h-4 w-4" /> Enviar PIN
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => e.target.files?.[0] && handlePin(e.target.files[0])}
+              />
+            </label>
+            {form.pin_url && (
+              <button
+                onClick={() => setForm({ ...form, pin_url: "" })}
+                className="ml-2 text-xs text-destructive hover:underline"
+              >
+                Remover
+              </button>
+            )}
+          </Field>
+        )}
 
         <Field label="Nome completo *">
           <input

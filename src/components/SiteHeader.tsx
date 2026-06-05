@@ -77,6 +77,19 @@ export function SiteHeader() {
         </div>
 
         <nav className="hidden items-center gap-1 lg:flex">
+          {governador?.pin_url && (
+            <Link
+              to="/governador"
+              className="mr-2 flex items-center"
+              title="PIN do Governador"
+            >
+              <img
+                src={governador.pin_url}
+                alt="PIN do Governador"
+                className="h-10 w-10 object-contain"
+              />
+            </Link>
+          )}
           <div
             className="relative"
             onMouseEnter={() => setInicioOpen(true)}

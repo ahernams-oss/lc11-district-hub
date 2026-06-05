@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useClubs, useRegion } from "@/lib/regions";
-import { ArrowLeft, Plus, Trash2, ChevronRight } from "lucide-react";
+import { uploadLeaderPhoto } from "@/lib/leaders";
+import { ArrowLeft, Plus, Trash2, ChevronRight, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/admin/regioes/$id/divisoes/$divId")({
   component: DivisionEditor,
@@ -14,8 +15,17 @@ interface Form {
   name: string;
   description: string;
   order_index: number;
+  president_name: string;
+  president_photo_url: string;
 }
-const EMPTY: Form = { code: "", name: "", description: "", order_index: 0 };
+const EMPTY: Form = {
+  code: "",
+  name: "",
+  description: "",
+  order_index: 0,
+  president_name: "",
+  president_photo_url: "",
+};
 
 function DivisionEditor() {
   const { id, divId } = useParams({ from: "/admin/regioes/$id/divisoes/$divId" });

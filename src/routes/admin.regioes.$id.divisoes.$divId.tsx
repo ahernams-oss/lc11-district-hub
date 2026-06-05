@@ -240,11 +240,11 @@ function DivisionEditor() {
           ) : (
             <ul className="mt-3 divide-y rounded-md border bg-card">
               {clubs.map((c) => (
-                <li key={c.id}>
+                <li key={c.id} className="flex items-center gap-2 p-3 hover:bg-surface">
                   <Link
                     to="/admin/regioes/$id/divisoes/$divId/clubes/$clubId"
                     params={{ id, divId, clubId: c.id }}
-                    className="flex items-center gap-3 p-3 hover:bg-surface"
+                    className="flex flex-1 items-center gap-3"
                   >
                     <div className="flex-1">
                       <div className="font-semibold">{c.name}</div>
@@ -254,6 +254,18 @@ function DivisionEditor() {
                     </div>
                     <ChevronRight className="h-4 w-4 text-muted-foreground" />
                   </Link>
+                  <button
+                    onClick={async () => {
+                      if (!confirm(`Excluir o clube "${c.name}"?`)) return;
+                      const { error } = await supabase.from("clubs").delete().eq("id", c.id);
+                      if (error) return alert("Erro: " + error.message);
+                      qc.invalidateQueries({ queryKey: ["clubs"] });
+                    }}
+                    className="rounded-md p-2 text-destructive hover:bg-destructive/10"
+                    title="Excluir clube"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
                 </li>
               ))}
             </ul>

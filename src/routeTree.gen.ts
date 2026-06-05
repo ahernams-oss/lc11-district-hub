@@ -11,8 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ViceGovernador2RouteImport } from './routes/vice-governador-2'
 import { Route as ViceGovernador1RouteImport } from './routes/vice-governador-1'
+import { Route as TesoureiroRouteImport } from './routes/tesoureiro'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SecretarioRouteImport } from './routes/secretario'
 import { Route as ProtocoloLeonisticoRouteImport } from './routes/protocolo-leonistico'
 import { Route as ProjetosRouteImport } from './routes/projetos'
 import { Route as NoticiasRouteImport } from './routes/noticias'
@@ -65,6 +67,11 @@ const ViceGovernador1Route = ViceGovernador1RouteImport.update({
   path: '/vice-governador-1',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TesoureiroRoute = TesoureiroRouteImport.update({
+  id: '/tesoureiro',
+  path: '/tesoureiro',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
@@ -73,6 +80,11 @@ const SobreRoute = SobreRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecretarioRoute = SecretarioRouteImport.update({
+  id: '/secretario',
+  path: '/secretario',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProtocoloLeonisticoRoute = ProtocoloLeonisticoRouteImport.update({
@@ -301,8 +313,10 @@ export interface FileRoutesByFullPath {
   '/noticias': typeof NoticiasRoute
   '/projetos': typeof ProjetosRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
+  '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/tesoureiro': typeof TesoureiroRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
   '/admin/usuarios': typeof AdminUsuariosRoute
@@ -347,8 +361,10 @@ export interface FileRoutesByTo {
   '/noticias': typeof NoticiasRoute
   '/projetos': typeof ProjetosRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
+  '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/tesoureiro': typeof TesoureiroRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
   '/admin/usuarios': typeof AdminUsuariosRoute
@@ -395,8 +411,10 @@ export interface FileRoutesById {
   '/noticias': typeof NoticiasRoute
   '/projetos': typeof ProjetosRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
+  '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/tesoureiro': typeof TesoureiroRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
   '/admin/usuarios': typeof AdminUsuariosRoute
@@ -444,8 +462,10 @@ export interface FileRouteTypes {
     | '/noticias'
     | '/projetos'
     | '/protocolo-leonistico'
+    | '/secretario'
     | '/sitemap.xml'
     | '/sobre'
+    | '/tesoureiro'
     | '/vice-governador-1'
     | '/vice-governador-2'
     | '/admin/usuarios'
@@ -490,8 +510,10 @@ export interface FileRouteTypes {
     | '/noticias'
     | '/projetos'
     | '/protocolo-leonistico'
+    | '/secretario'
     | '/sitemap.xml'
     | '/sobre'
+    | '/tesoureiro'
     | '/vice-governador-1'
     | '/vice-governador-2'
     | '/admin/usuarios'
@@ -537,8 +559,10 @@ export interface FileRouteTypes {
     | '/noticias'
     | '/projetos'
     | '/protocolo-leonistico'
+    | '/secretario'
     | '/sitemap.xml'
     | '/sobre'
+    | '/tesoureiro'
     | '/vice-governador-1'
     | '/vice-governador-2'
     | '/admin/usuarios'
@@ -585,8 +609,10 @@ export interface RootRouteChildren {
   NoticiasRoute: typeof NoticiasRoute
   ProjetosRoute: typeof ProjetosRoute
   ProtocoloLeonisticoRoute: typeof ProtocoloLeonisticoRoute
+  SecretarioRoute: typeof SecretarioRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
+  TesoureiroRoute: typeof TesoureiroRoute
   ViceGovernador1Route: typeof ViceGovernador1Route
   ViceGovernador2Route: typeof ViceGovernador2Route
   ApiPublicEventosRoute: typeof ApiPublicEventosRoute
@@ -611,6 +637,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ViceGovernador1RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tesoureiro': {
+      id: '/tesoureiro'
+      path: '/tesoureiro'
+      fullPath: '/tesoureiro'
+      preLoaderRoute: typeof TesoureiroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sobre': {
       id: '/sobre'
       path: '/sobre'
@@ -623,6 +656,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/secretario': {
+      id: '/secretario'
+      path: '/secretario'
+      fullPath: '/secretario'
+      preLoaderRoute: typeof SecretarioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/protocolo-leonistico': {
@@ -1024,8 +1064,10 @@ const rootRouteChildren: RootRouteChildren = {
   NoticiasRoute: NoticiasRoute,
   ProjetosRoute: ProjetosRoute,
   ProtocoloLeonisticoRoute: ProtocoloLeonisticoRoute,
+  SecretarioRoute: SecretarioRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
+  TesoureiroRoute: TesoureiroRoute,
   ViceGovernador1Route: ViceGovernador1Route,
   ViceGovernador2Route: ViceGovernador2Route,
   ApiPublicEventosRoute: ApiPublicEventosRoute,
@@ -1036,3 +1078,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

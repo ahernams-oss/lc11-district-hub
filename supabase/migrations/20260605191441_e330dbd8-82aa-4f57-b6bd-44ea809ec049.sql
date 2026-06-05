@@ -1,0 +1,1 @@
+ALTER TABLE public.divisions ADD COLUMN IF NOT EXISTS president_name text, ADD COLUMN IF NOT EXISTS president_photo_url text;

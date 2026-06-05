@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ViceGovernador2RouteImport } from './routes/vice-governador-2'
+import { Route as ViceGovernador1RouteImport } from './routes/vice-governador-1'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProjetosRouteImport } from './routes/projetos'
@@ -22,6 +24,16 @@ import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ClubesRouteImport } from './routes/clubes'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ViceGovernador2Route = ViceGovernador2RouteImport.update({
+  id: '/vice-governador-2',
+  path: '/vice-governador-2',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ViceGovernador1Route = ViceGovernador1RouteImport.update({
+  id: '/vice-governador-1',
+  path: '/vice-governador-1',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
@@ -96,6 +108,8 @@ export interface FileRoutesByFullPath {
   '/projetos': typeof ProjetosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/vice-governador-1': typeof ViceGovernador1Route
+  '/vice-governador-2': typeof ViceGovernador2Route
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -110,6 +124,8 @@ export interface FileRoutesByTo {
   '/projetos': typeof ProjetosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/vice-governador-1': typeof ViceGovernador1Route
+  '/vice-governador-2': typeof ViceGovernador2Route
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -125,6 +141,8 @@ export interface FileRoutesById {
   '/projetos': typeof ProjetosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/vice-governador-1': typeof ViceGovernador1Route
+  '/vice-governador-2': typeof ViceGovernador2Route
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,6 +159,8 @@ export interface FileRouteTypes {
     | '/projetos'
     | '/sitemap.xml'
     | '/sobre'
+    | '/vice-governador-1'
+    | '/vice-governador-2'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -155,6 +175,8 @@ export interface FileRouteTypes {
     | '/projetos'
     | '/sitemap.xml'
     | '/sobre'
+    | '/vice-governador-1'
+    | '/vice-governador-2'
   id:
     | '__root__'
     | '/'
@@ -169,6 +191,8 @@ export interface FileRouteTypes {
     | '/projetos'
     | '/sitemap.xml'
     | '/sobre'
+    | '/vice-governador-1'
+    | '/vice-governador-2'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -184,10 +208,26 @@ export interface RootRouteChildren {
   ProjetosRoute: typeof ProjetosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
+  ViceGovernador1Route: typeof ViceGovernador1Route
+  ViceGovernador2Route: typeof ViceGovernador2Route
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/vice-governador-2': {
+      id: '/vice-governador-2'
+      path: '/vice-governador-2'
+      fullPath: '/vice-governador-2'
+      preLoaderRoute: typeof ViceGovernador2RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vice-governador-1': {
+      id: '/vice-governador-1'
+      path: '/vice-governador-1'
+      fullPath: '/vice-governador-1'
+      preLoaderRoute: typeof ViceGovernador1RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sobre': {
       id: '/sobre'
       path: '/sobre'
@@ -288,7 +328,19 @@ const rootRouteChildren: RootRouteChildren = {
   ProjetosRoute: ProjetosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
+  ViceGovernador1Route: ViceGovernador1Route,
+  ViceGovernador2Route: ViceGovernador2Route,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

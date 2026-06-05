@@ -11,7 +11,8 @@ export type ContentKey =
   | "ex-governadores"
   | "governador"
   | "vice-governador-1"
-  | "vice-governador-2";
+  | "vice-governador-2"
+  | "lcif";
 
 export const CONTENT_LABELS: Record<ContentKey, string> = {
   home: "Página Início (hero)",
@@ -24,6 +25,7 @@ export const CONTENT_LABELS: Record<ContentKey, string> = {
   governador: "Página Governador (textos)",
   "vice-governador-1": "Página 1º Vice (textos)",
   "vice-governador-2": "Página 2º Vice (textos)",
+  lcif: "Página LCIF",
 };
 
 export function useSiteContent<T extends Record<string, any>>(key: ContentKey, defaults: T) {

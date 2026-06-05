@@ -1,12 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Shield, ShieldOff, Trash2, RefreshCw, CheckCircle2, XCircle } from "lucide-react";
+import { Trash2, RefreshCw, CheckCircle2, XCircle, Eye } from "lucide-react";
 import {
   listAuthUsers,
-  setUserAdmin,
+  setUserRole,
   deleteAuthUser,
+  type PanelRole,
 } from "@/lib/admin-users.functions";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -16,13 +17,32 @@ export const Route = createFileRoute("/admin/usuarios")({
   component: AdminUsersPage,
 });
 
+const ROLE_OPTIONS: { value: PanelRole | "none"; label: string }[] = [
+  { value: "none", label: "Sem acesso (pendente)" },
+  { value: "basico", label: "Básico — apenas visualizar" },
+  { value: "intermediario", label: "Intermediário — editar conteúdo" },
+  { value: "avancado", label: "Avançado — editar + ver usuários" },
+  { value: "admin", label: "Administrador — controle total" },
+];
+
+const ROLE_BADGE: Record<PanelRole, { label: string; cls: string }> = {
+  admin: { label: "Administrador", cls: "bg-primary text-primary-foreground" },
+  avancado: { label: "Avançado", cls: "bg-amber-500/15 text-amber-700 dark:text-amber-400" },
+  intermediario: { label: "Intermediário", cls: "bg-blue-500/15 text-blue-700 dark:text-blue-400" },
+  basico: { label: "Básico", cls: "bg-muted text-muted-foreground" },
+};
+
 function AdminUsersPage() {
-  const { user } = useAuth();
+  const { user, canViewUsers, canManageUsers } = useAuth();
   const qc = useQueryClient();
   const list = useServerFn(listAuthUsers);
-  const setRole = useServerFn(setUserAdmin);
+  const setRole = useServerFn(setUserRole);
   const delUser = useServerFn(deleteAuthUser);
   const [msg, setMsg] = useState<{ type: "ok" | "err"; text: string } | null>(null);
+
+  if (!canViewUsers) {
+    return <Navigate to="/admin" />;
+  }
 
   const usersQuery = useQuery({
     queryKey: ["admin-auth-users"],
@@ -30,13 +50,10 @@ function AdminUsersPage() {
   });
 
   const roleMut = useMutation({
-    mutationFn: (vars: { userId: string; isAdmin: boolean }) =>
+    mutationFn: (vars: { userId: string; role: PanelRole | "none" }) =>
       setRole({ data: vars }),
-    onSuccess: (_d, vars) => {
-      setMsg({
-        type: "ok",
-        text: vars.isAdmin ? "Acesso de admin concedido." : "Acesso de admin revogado.",
-      });
+    onSuccess: () => {
+      setMsg({ type: "ok", text: "Perfil atualizado." });
       qc.invalidateQueries({ queryKey: ["admin-auth-users"] });
     },
     onError: (e: any) => setMsg({ type: "err", text: e?.message ?? "Erro" }),
@@ -57,8 +74,9 @@ function AdminUsersPage() {
         <div>
           <h1 className="font-display text-2xl font-bold">Usuários & Acessos</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Aprove o acesso ao painel concedendo a função <strong>administrador</strong> a quem já se cadastrou.
-            Qualquer pessoa pode criar uma conta em <code>/auth</code>, mas só verá o painel após ser aprovada aqui.
+            {canManageUsers
+              ? "Aprove o acesso ao painel e defina o perfil de cada usuário. Qualquer pessoa pode se cadastrar em /auth, mas só verá o painel após receber um perfil aqui."
+              : "Você tem perfil Avançado: pode visualizar os usuários cadastrados, mas não pode aprovar, alterar ou excluir. Peça a um administrador caso precise."}
           </p>
         </div>
         <button
@@ -68,6 +86,12 @@ function AdminUsersPage() {
           <RefreshCw className="h-4 w-4" /> Atualizar
         </button>
       </div>
+
+      {!canManageUsers && (
+        <div className="mt-4 inline-flex items-center gap-2 rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-800 dark:text-amber-300">
+          <Eye className="h-4 w-4" /> Modo apenas leitura
+        </div>
+      )}
 
       {msg && (
         <div
@@ -96,8 +120,9 @@ function AdminUsersPage() {
                 <th className="px-4 py-3">Email</th>
                 <th className="px-4 py-3">Cadastro</th>
                 <th className="px-4 py-3">Último acesso</th>
-                <th className="px-4 py-3">Status</th>
-                <th className="px-4 py-3 text-right">Ações</th>
+                <th className="px-4 py-3">Perfil atual</th>
+                {canManageUsers && <th className="px-4 py-3">Alterar perfil</th>}
+                {canManageUsers && <th className="px-4 py-3 text-right">Ações</th>}
               </tr>
             </thead>
             <tbody>
@@ -106,8 +131,10 @@ function AdminUsersPage() {
                 const busy =
                   (roleMut.isPending && roleMut.variables?.userId === u.id) ||
                   (delMut.isPending && delMut.variables === u.id);
+                const currentRole = (u.highest_role ?? null) as PanelRole | null;
+                const badge = currentRole ? ROLE_BADGE[currentRole] : null;
                 return (
-                  <tr key={u.id} className="border-t">
+                  <tr key={u.id} className="border-t align-middle">
                     <td className="px-4 py-3">
                       <div className="font-medium text-foreground">{u.email ?? "—"}</div>
                       {isSelf && (
@@ -123,60 +150,65 @@ function AdminUsersPage() {
                         : "—"}
                     </td>
                     <td className="px-4 py-3">
-                      {u.is_admin ? (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
-                          <Shield className="h-3 w-3" /> Aprovado (admin)
+                      {badge ? (
+                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold ${badge.cls}`}>
+                          {badge.label}
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
+                        <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
                           Pendente
                         </span>
                       )}
                     </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center justify-end gap-2">
-                        {u.is_admin ? (
+                    {canManageUsers && (
+                      <td className="px-4 py-3">
+                        <select
+                          disabled={busy}
+                          value={currentRole ?? "none"}
+                          onChange={(e) =>
+                            roleMut.mutate({
+                              userId: u.id,
+                              role: e.target.value as PanelRole | "none",
+                            })
+                          }
+                          className="rounded-md border bg-background px-2 py-1 text-xs disabled:opacity-50"
+                        >
+                          {ROLE_OPTIONS.map((opt) => (
+                            <option
+                              key={opt.value}
+                              value={opt.value}
+                              disabled={isSelf && opt.value !== "admin"}
+                            >
+                              {opt.label}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                    )}
+                    {canManageUsers && (
+                      <td className="px-4 py-3">
+                        <div className="flex items-center justify-end gap-2">
                           <button
                             disabled={busy || isSelf}
-                            onClick={() =>
-                              roleMut.mutate({ userId: u.id, isAdmin: false })
-                            }
-                            className="inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs hover:bg-surface disabled:opacity-50"
-                            title={isSelf ? "Você não pode revogar seu próprio acesso" : "Revogar acesso"}
+                            onClick={() => {
+                              if (confirm(`Excluir usuário ${u.email}? Esta ação não pode ser desfeita.`)) {
+                                delMut.mutate(u.id);
+                              }
+                            }}
+                            className="inline-flex items-center gap-1 rounded-md border border-destructive/30 px-2 py-1 text-xs text-destructive hover:bg-destructive/10 disabled:opacity-50"
+                            title={isSelf ? "Você não pode excluir sua própria conta" : "Excluir usuário"}
                           >
-                            <ShieldOff className="h-3 w-3" /> Revogar
+                            <Trash2 className="h-3 w-3" />
                           </button>
-                        ) : (
-                          <button
-                            disabled={busy}
-                            onClick={() =>
-                              roleMut.mutate({ userId: u.id, isAdmin: true })
-                            }
-                            className="inline-flex items-center gap-1 rounded-md bg-primary px-2 py-1 text-xs font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-50"
-                          >
-                            <Shield className="h-3 w-3" /> Aprovar
-                          </button>
-                        )}
-                        <button
-                          disabled={busy || isSelf}
-                          onClick={() => {
-                            if (confirm(`Excluir usuário ${u.email}? Esta ação não pode ser desfeita.`)) {
-                              delMut.mutate(u.id);
-                            }
-                          }}
-                          className="inline-flex items-center gap-1 rounded-md border border-destructive/30 px-2 py-1 text-xs text-destructive hover:bg-destructive/10 disabled:opacity-50"
-                          title={isSelf ? "Você não pode excluir sua própria conta" : "Excluir usuário"}
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </button>
-                      </div>
-                    </td>
+                        </div>
+                      </td>
+                    )}
                   </tr>
                 );
               })}
               {(usersQuery.data ?? []).length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">
+                  <td colSpan={canManageUsers ? 6 : 4} className="px-4 py-8 text-center text-muted-foreground">
                     Nenhum usuário cadastrado.
                   </td>
                 </tr>

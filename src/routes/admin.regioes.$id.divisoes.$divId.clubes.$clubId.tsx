@@ -70,8 +70,9 @@ function ClubEditor() {
             name: data.name ?? "",
             city: data.city ?? "",
             state: (data as any).state ?? "",
-
+            email: data.email ?? "",
             phone: data.phone ?? "",
+
             meetings: data.meetings ?? "",
             address: data.address ?? "",
             website: data.website ?? "",

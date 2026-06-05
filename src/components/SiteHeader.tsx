@@ -19,9 +19,13 @@ const lideresSubmenu = [
   { to: "/ex-governadores", label: "Galeria de Ex-Governadores" },
 ] as const;
 
-const clubesSubmenu = [
-  { to: "/clubes", label: "Geral" },
-  { to: "/clubes/regiao", label: "Região" },
+const regioesSubmenu = [
+  { to: "/clubes/regiao/a", label: "Região A" },
+  { to: "/clubes/regiao/b", label: "Região B" },
+  { to: "/clubes/regiao/c", label: "Região C" },
+  { to: "/clubes/regiao/d", label: "Região D" },
+  { to: "/clubes/regiao/e", label: "Região E" },
+  { to: "/clubes/regiao/f", label: "Região F" },
 ] as const;
 
 const nav = [
@@ -118,16 +122,34 @@ export function SiteHeader() {
             </button>
             {clubesOpen && (
               <div className="absolute left-0 top-full w-56 rounded-md border border-border bg-background py-2 shadow-card">
-                {clubesSubmenu.map((s) => (
-                  <Link
-                    key={s.to}
-                    to={s.to}
-                    className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
-                    activeProps={{ className: "text-primary bg-surface" }}
+                <Link
+                  to="/clubes"
+                  className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                  activeProps={{ className: "text-primary bg-surface" }}
+                  activeOptions={{ exact: true }}
+                >
+                  Geral
+                </Link>
+                <div className="group/regiao relative">
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
                   >
-                    {s.label}
-                  </Link>
-                ))}
+                    Região <ChevronDown className="h-3.5 w-3.5 -rotate-90" />
+                  </button>
+                  <div className="absolute left-full top-0 hidden w-44 rounded-md border border-border bg-background py-2 shadow-card group-hover/regiao:block">
+                    {regioesSubmenu.map((r) => (
+                      <Link
+                        key={r.to}
+                        to={r.to}
+                        className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                        activeProps={{ className: "text-primary bg-surface" }}
+                      >
+                        {r.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -215,17 +237,29 @@ export function SiteHeader() {
           </div>
           <div className="mt-1 px-3 py-2 text-base font-medium text-foreground">Clubes</div>
           <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
-            {clubesSubmenu.map((s) => (
-              <Link
-                key={s.to}
-                to={s.to}
-                onClick={() => setOpen(false)}
-                className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
-                activeProps={{ className: "text-primary bg-surface" }}
-              >
-                {s.label}
-              </Link>
-            ))}
+            <Link
+              to="/clubes"
+              onClick={() => setOpen(false)}
+              className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+              activeProps={{ className: "text-primary bg-surface" }}
+              activeOptions={{ exact: true }}
+            >
+              Geral
+            </Link>
+            <div className="mt-1 px-3 py-1 text-sm font-medium text-foreground/70">Região</div>
+            <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+              {regioesSubmenu.map((r) => (
+                <Link
+                  key={r.to}
+                  to={r.to}
+                  onClick={() => setOpen(false)}
+                  className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+                  activeProps={{ className: "text-primary bg-surface" }}
+                >
+                  {r.label}
+                </Link>
+              ))}
+            </div>
           </div>
           <Link
             to="/lcif"

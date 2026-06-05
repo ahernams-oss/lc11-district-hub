@@ -1,13 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, ExternalLink } from "lucide-react";
+import { Menu, X, ExternalLink, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import lionsLogo from "@/assets/lions-logo.png.asset.json";
 
+const inicioSubmenu = [
+  { to: "/lions-internacional", label: "Sobre o Lions Internacional" },
+  { to: "/sobre", label: "Sobre o Distrito LC-11" },
+  { to: "/historia", label: "Nossa História" },
+] as const;
 
 const nav = [
-  { to: "/", label: "Início" },
-  { to: "/sobre", label: "Sobre" },
   { to: "/governador", label: "Governador" },
   { to: "/projetos", label: "Projetos" },
   { to: "/clubes", label: "Clubes" },
@@ -18,13 +21,13 @@ const nav = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [inicioOpen, setInicioOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
           <img src={lionsLogo.url} alt="Lions Clubs International" className="h-11 w-11 object-contain" />
-
           <div className="leading-tight">
             <div className="font-display text-base font-bold text-foreground">Distrito LC-11</div>
             <div className="text-[11px] uppercase tracking-wider text-muted-foreground">Lions Clubs International</div>
@@ -32,13 +35,41 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
+          <div
+            className="relative"
+            onMouseEnter={() => setInicioOpen(true)}
+            onMouseLeave={() => setInicioOpen(false)}
+          >
+            <Link
+              to="/"
+              className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"
+              activeProps={{ className: "text-primary bg-surface" }}
+              activeOptions={{ exact: true }}
+            >
+              Início <ChevronDown className="h-3.5 w-3.5" />
+            </Link>
+            {inicioOpen && (
+              <div className="absolute left-0 top-full w-64 rounded-md border border-border bg-background py-2 shadow-card">
+                {inicioSubmenu.map((s) => (
+                  <Link
+                    key={s.to}
+                    to={s.to}
+                    className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                    activeProps={{ className: "text-primary bg-surface" }}
+                  >
+                    {s.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
           {nav.map((item) => (
             <Link
               key={item.to}
               to={item.to}
               className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"
               activeProps={{ className: "text-primary bg-surface" }}
-              activeOptions={{ exact: item.to === "/" }}
             >
               {item.label}
             </Link>
@@ -70,6 +101,28 @@ export function SiteHeader() {
 
       <div className={cn("border-t border-border lg:hidden", open ? "block" : "hidden")}>
         <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6">
+          <Link
+            to="/"
+            onClick={() => setOpen(false)}
+            className="rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-surface"
+            activeProps={{ className: "text-primary bg-surface" }}
+            activeOptions={{ exact: true }}
+          >
+            Início
+          </Link>
+          <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+            {inicioSubmenu.map((s) => (
+              <Link
+                key={s.to}
+                to={s.to}
+                onClick={() => setOpen(false)}
+                className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+                activeProps={{ className: "text-primary bg-surface" }}
+              >
+                {s.label}
+              </Link>
+            ))}
+          </div>
           {nav.map((item) => (
             <Link
               key={item.to}
@@ -77,7 +130,6 @@ export function SiteHeader() {
               onClick={() => setOpen(false)}
               className="rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-surface"
               activeProps={{ className: "text-primary bg-surface" }}
-              activeOptions={{ exact: item.to === "/" }}
             >
               {item.label}
             </Link>

@@ -8,7 +8,6 @@ const inicioSubmenu = [
   { to: "/lions-internacional", label: "Sobre o Lions Internacional" },
   { to: "/sobre", label: "Sobre o Distrito LC-11" },
   { to: "/historia", label: "Nossa História" },
-  { to: "/ex-governadores", label: "Galeria de Ex-Governadores" },
 ] as const;
 
 const lideresSubmenu = [
@@ -17,6 +16,7 @@ const lideresSubmenu = [
   { to: "/vice-governador-2", label: "2º Vice-Governador" },
   { to: "/gat", label: "GAT" },
   { to: "/assessoria", label: "Assessoria" },
+  { to: "/ex-governadores", label: "Galeria de Ex-Governadores" },
 ] as const;
 
 const nav = [

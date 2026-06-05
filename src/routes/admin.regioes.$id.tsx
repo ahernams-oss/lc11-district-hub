@@ -1,4 +1,11 @@
-import { createFileRoute, Link, useNavigate, useParams } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  Outlet,
+  useChildMatches,
+  useNavigate,
+  useParams,
+} from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
@@ -7,8 +14,14 @@ import { uploadLeaderPhoto } from "@/lib/leaders";
 import { ArrowLeft, Plus, Trash2, ChevronRight, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/admin/regioes/$id")({
-  component: RegionEditor,
+  component: RegionRoute,
 });
+
+function RegionRoute() {
+  const childMatches = useChildMatches();
+  if (childMatches.length > 0) return <Outlet />;
+  return <RegionEditor />;
+}
 
 interface Form {
   letter: string;
@@ -18,7 +31,14 @@ interface Form {
   president_photo_url: string;
   order_index: number;
 }
-const EMPTY: Form = { letter: "", name: "", description: "", president: "", president_photo_url: "", order_index: 0 };
+const EMPTY: Form = {
+  letter: "",
+  name: "",
+  description: "",
+  president: "",
+  president_photo_url: "",
+  order_index: 0,
+};
 
 function RegionEditor() {
   const { id } = useParams({ from: "/admin/regioes/$id" });

@@ -46,21 +46,27 @@ function LeadersList() {
         <div className="mt-6 space-y-6">
           {CATEGORY_ORDER.map((cat) => {
             const list = leaders.filter((l) => l.category === cat);
+            const multi = cat === "gat" || cat === "assessoria" || cat === "ex_governador";
             return (
               <section key={cat}>
-                <h2 className="font-display text-lg font-bold text-foreground">
-                  {CATEGORY_LABELS[cat]}
-                </h2>
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="font-display text-lg font-bold text-foreground">
+                    {CATEGORY_LABELS[cat]}
+                    {multi && (
+                      <span className="ml-2 text-xs font-normal text-muted-foreground">
+                        ({list.length} {list.length === 1 ? "membro" : "membros"})
+                      </span>
+                    )}
+                  </h2>
+                  <a
+                    href={`/admin/lideres/novo?category=${cat}`}
+                    className="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-xs font-semibold hover:bg-surface"
+                  >
+                    <Plus className="h-3.5 w-3.5" /> Adicionar {multi ? "membro" : ""}
+                  </a>
+                </div>
                 {list.length === 0 ? (
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Nenhum cadastro.{" "}
-                    <a
-                      href={`/admin/lideres/novo?category=${cat}`}
-                      className="text-primary hover:underline"
-                    >
-                      Adicionar
-                    </a>
-                  </p>
+                  <p className="mt-2 text-sm text-muted-foreground">Nenhum cadastro ainda.</p>
                 ) : (
                   <ul className="mt-2 divide-y rounded-md border bg-card">
                     {list.map((l) => (

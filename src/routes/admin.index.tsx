@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { CONTENT_LABELS, type ContentKey } from "@/lib/content";
 import {
   FileText, Users, MapPin, Newspaper, Calendar, Sparkles,
-  Building2, ExternalLink,
+  Building2, ExternalLink, ShieldCheck,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin/")({
@@ -18,6 +18,7 @@ const CARDS = [
   { to: "/admin/noticias", title: "Notícias", desc: "Publique e edite notícias do distrito.", icon: Newspaper },
   { to: "/admin/eventos", title: "Eventos", desc: "Calendário oficial de eventos e ações.", icon: Calendar },
   { to: "/admin/projetos", title: "Projetos", desc: "Projetos sociais e iniciativas em destaque.", icon: Sparkles },
+  { to: "/admin/usuarios", title: "Usuários & Acessos", desc: "Aprove novos logins e gerencie quem tem acesso ao painel.", icon: ShieldCheck },
 ] as const;
 
 function useCount(table: string, filter?: { col: string; val: string }) {

@@ -299,7 +299,28 @@ export function SiteHeader() {
           </div>
           <div className="mt-1 px-3 py-2 text-base font-medium text-foreground">Líderes</div>
           <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
-            {lideresSubmenu.map((s) => (
+            <Link
+              to="/governador"
+              onClick={() => setOpen(false)}
+              className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 hover:bg-surface"
+              activeProps={{ className: "text-primary bg-surface" }}
+            >
+              Governador
+            </Link>
+            <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+              {equipeGovernadorSubmenu.map((s) => (
+                <Link
+                  key={s.to}
+                  to={s.to}
+                  onClick={() => setOpen(false)}
+                  className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+                  activeProps={{ className: "text-primary bg-surface" }}
+                >
+                  {s.label}
+                </Link>
+              ))}
+            </div>
+            {lideresSubmenu.slice(1).map((s) => (
               <Link
                 key={s.to}
                 to={s.to}

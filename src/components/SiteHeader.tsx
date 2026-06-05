@@ -33,8 +33,8 @@ const nav = [
   { to: "/projetos", label: "Projetos" },
   { to: "/noticias", label: "Notícias" },
   { to: "/eventos", label: "Eventos" },
-  { to: "/contato", label: "Contato" },
 ] as const;
+
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);

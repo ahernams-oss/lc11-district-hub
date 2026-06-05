@@ -195,6 +195,31 @@ function LeaderEditor() {
           )}
         </Field>
 
+        {form.category === "governador" && (
+          <Field label="PIN do Governador (logo/imagem exibida na barra superior)">
+            {form.pin_url && (
+              <img src={form.pin_url} alt="" className="mb-2 h-20 w-20 rounded-md object-contain bg-surface p-1" />
+            )}
+            <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-surface">
+              <Upload className="h-4 w-4" /> Enviar PIN
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => e.target.files?.[0] && handlePin(e.target.files[0])}
+              />
+            </label>
+            {form.pin_url && (
+              <button
+                onClick={() => setForm({ ...form, pin_url: "" })}
+                className="ml-2 text-xs text-destructive hover:underline"
+              >
+                Remover
+              </button>
+            )}
+          </Field>
+        )}
+
         <Field label="Nome completo *">
           <input
             type="text"

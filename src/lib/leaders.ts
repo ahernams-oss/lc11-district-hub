@@ -26,6 +26,7 @@ export interface Leader {
   bio: string | null;
   message: string | null;
   photo_url: string | null;
+  pin_url: string | null;
   email: string | null;
   phone: string | null;
   year_label: string | null;

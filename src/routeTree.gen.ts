@@ -31,11 +31,16 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ClubesRegiaoRouteImport } from './routes/clubes.regiao'
+import { Route as AdminRegioesIndexRouteImport } from './routes/admin.regioes.index'
+import { Route as AdminNoticiasIndexRouteImport } from './routes/admin.noticias.index'
 import { Route as AdminLideresIndexRouteImport } from './routes/admin.lideres.index'
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
 import { Route as ClubesRegiaoLetraRouteImport } from './routes/clubes.regiao.$letra'
+import { Route as AdminRegioesIdRouteImport } from './routes/admin.regioes.$id'
 import { Route as AdminLideresIdRouteImport } from './routes/admin.lideres.$id'
 import { Route as AdminConteudoKeyRouteImport } from './routes/admin.conteudo.$key'
+import { Route as AdminRegioesIdDivisoesDivIdRouteImport } from './routes/admin.regioes.$id.divisoes.$divId'
+import { Route as AdminRegioesIdDivisoesDivIdClubesClubIdRouteImport } from './routes/admin.regioes.$id.divisoes.$divId.clubes.$clubId'
 
 const ViceGovernador2Route = ViceGovernador2RouteImport.update({
   id: '/vice-governador-2',
@@ -147,6 +152,16 @@ const ClubesRegiaoRoute = ClubesRegiaoRouteImport.update({
   path: '/regiao',
   getParentRoute: () => ClubesRoute,
 } as any)
+const AdminRegioesIndexRoute = AdminRegioesIndexRouteImport.update({
+  id: '/regioes/',
+  path: '/regioes/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminNoticiasIndexRoute = AdminNoticiasIndexRouteImport.update({
+  id: '/noticias/',
+  path: '/noticias/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminLideresIndexRoute = AdminLideresIndexRouteImport.update({
   id: '/lideres/',
   path: '/lideres/',
@@ -162,6 +177,11 @@ const ClubesRegiaoLetraRoute = ClubesRegiaoLetraRouteImport.update({
   path: '/$letra',
   getParentRoute: () => ClubesRegiaoRoute,
 } as any)
+const AdminRegioesIdRoute = AdminRegioesIdRouteImport.update({
+  id: '/regioes/$id',
+  path: '/regioes/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminLideresIdRoute = AdminLideresIdRouteImport.update({
   id: '/lideres/$id',
   path: '/lideres/$id',
@@ -172,6 +192,18 @@ const AdminConteudoKeyRoute = AdminConteudoKeyRouteImport.update({
   path: '/conteudo/$key',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminRegioesIdDivisoesDivIdRoute =
+  AdminRegioesIdDivisoesDivIdRouteImport.update({
+    id: '/divisoes/$divId',
+    path: '/divisoes/$divId',
+    getParentRoute: () => AdminRegioesIdRoute,
+  } as any)
+const AdminRegioesIdDivisoesDivIdClubesClubIdRoute =
+  AdminRegioesIdDivisoesDivIdClubesClubIdRouteImport.update({
+    id: '/clubes/$clubId',
+    path: '/clubes/$clubId',
+    getParentRoute: () => AdminRegioesIdDivisoesDivIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -198,9 +230,14 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
+  '/admin/regioes/$id': typeof AdminRegioesIdRouteWithChildren
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
   '/admin/lideres/': typeof AdminLideresIndexRoute
+  '/admin/noticias/': typeof AdminNoticiasIndexRoute
+  '/admin/regioes/': typeof AdminRegioesIndexRoute
+  '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
+  '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -226,9 +263,14 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
+  '/admin/regioes/$id': typeof AdminRegioesIdRouteWithChildren
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
   '/admin/conteudo': typeof AdminConteudoIndexRoute
   '/admin/lideres': typeof AdminLideresIndexRoute
+  '/admin/noticias': typeof AdminNoticiasIndexRoute
+  '/admin/regioes': typeof AdminRegioesIndexRoute
+  '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
+  '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -256,9 +298,14 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
+  '/admin/regioes/$id': typeof AdminRegioesIdRouteWithChildren
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
   '/admin/lideres/': typeof AdminLideresIndexRoute
+  '/admin/noticias/': typeof AdminNoticiasIndexRoute
+  '/admin/regioes/': typeof AdminRegioesIndexRoute
+  '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
+  '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -287,9 +334,14 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/admin/conteudo/$key'
     | '/admin/lideres/$id'
+    | '/admin/regioes/$id'
     | '/clubes/regiao/$letra'
     | '/admin/conteudo/'
     | '/admin/lideres/'
+    | '/admin/noticias/'
+    | '/admin/regioes/'
+    | '/admin/regioes/$id/divisoes/$divId'
+    | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -315,9 +367,14 @@ export interface FileRouteTypes {
     | '/admin'
     | '/admin/conteudo/$key'
     | '/admin/lideres/$id'
+    | '/admin/regioes/$id'
     | '/clubes/regiao/$letra'
     | '/admin/conteudo'
     | '/admin/lideres'
+    | '/admin/noticias'
+    | '/admin/regioes'
+    | '/admin/regioes/$id/divisoes/$divId'
+    | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
   id:
     | '__root__'
     | '/'
@@ -344,9 +401,14 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/admin/conteudo/$key'
     | '/admin/lideres/$id'
+    | '/admin/regioes/$id'
     | '/clubes/regiao/$letra'
     | '/admin/conteudo/'
     | '/admin/lideres/'
+    | '/admin/noticias/'
+    | '/admin/regioes/'
+    | '/admin/regioes/$id/divisoes/$divId'
+    | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -528,6 +590,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClubesRegiaoRouteImport
       parentRoute: typeof ClubesRoute
     }
+    '/admin/regioes/': {
+      id: '/admin/regioes/'
+      path: '/regioes'
+      fullPath: '/admin/regioes/'
+      preLoaderRoute: typeof AdminRegioesIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/noticias/': {
+      id: '/admin/noticias/'
+      path: '/noticias'
+      fullPath: '/admin/noticias/'
+      preLoaderRoute: typeof AdminNoticiasIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/lideres/': {
       id: '/admin/lideres/'
       path: '/lideres'
@@ -549,6 +625,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClubesRegiaoLetraRouteImport
       parentRoute: typeof ClubesRegiaoRoute
     }
+    '/admin/regioes/$id': {
+      id: '/admin/regioes/$id'
+      path: '/regioes/$id'
+      fullPath: '/admin/regioes/$id'
+      preLoaderRoute: typeof AdminRegioesIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/lideres/$id': {
       id: '/admin/lideres/$id'
       path: '/lideres/$id'
@@ -563,23 +646,71 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminConteudoKeyRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/regioes/$id/divisoes/$divId': {
+      id: '/admin/regioes/$id/divisoes/$divId'
+      path: '/divisoes/$divId'
+      fullPath: '/admin/regioes/$id/divisoes/$divId'
+      preLoaderRoute: typeof AdminRegioesIdDivisoesDivIdRouteImport
+      parentRoute: typeof AdminRegioesIdRoute
+    }
+    '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': {
+      id: '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
+      path: '/clubes/$clubId'
+      fullPath: '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
+      preLoaderRoute: typeof AdminRegioesIdDivisoesDivIdClubesClubIdRouteImport
+      parentRoute: typeof AdminRegioesIdDivisoesDivIdRoute
+    }
   }
 }
+
+interface AdminRegioesIdDivisoesDivIdRouteChildren {
+  AdminRegioesIdDivisoesDivIdClubesClubIdRoute: typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
+}
+
+const AdminRegioesIdDivisoesDivIdRouteChildren: AdminRegioesIdDivisoesDivIdRouteChildren =
+  {
+    AdminRegioesIdDivisoesDivIdClubesClubIdRoute:
+      AdminRegioesIdDivisoesDivIdClubesClubIdRoute,
+  }
+
+const AdminRegioesIdDivisoesDivIdRouteWithChildren =
+  AdminRegioesIdDivisoesDivIdRoute._addFileChildren(
+    AdminRegioesIdDivisoesDivIdRouteChildren,
+  )
+
+interface AdminRegioesIdRouteChildren {
+  AdminRegioesIdDivisoesDivIdRoute: typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
+}
+
+const AdminRegioesIdRouteChildren: AdminRegioesIdRouteChildren = {
+  AdminRegioesIdDivisoesDivIdRoute:
+    AdminRegioesIdDivisoesDivIdRouteWithChildren,
+}
+
+const AdminRegioesIdRouteWithChildren = AdminRegioesIdRoute._addFileChildren(
+  AdminRegioesIdRouteChildren,
+)
 
 interface AdminRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
   AdminConteudoKeyRoute: typeof AdminConteudoKeyRoute
   AdminLideresIdRoute: typeof AdminLideresIdRoute
+  AdminRegioesIdRoute: typeof AdminRegioesIdRouteWithChildren
   AdminConteudoIndexRoute: typeof AdminConteudoIndexRoute
   AdminLideresIndexRoute: typeof AdminLideresIndexRoute
+  AdminNoticiasIndexRoute: typeof AdminNoticiasIndexRoute
+  AdminRegioesIndexRoute: typeof AdminRegioesIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
   AdminConteudoKeyRoute: AdminConteudoKeyRoute,
   AdminLideresIdRoute: AdminLideresIdRoute,
+  AdminRegioesIdRoute: AdminRegioesIdRouteWithChildren,
   AdminConteudoIndexRoute: AdminConteudoIndexRoute,
   AdminLideresIndexRoute: AdminLideresIndexRoute,
+  AdminNoticiasIndexRoute: AdminNoticiasIndexRoute,
+  AdminRegioesIndexRoute: AdminRegioesIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
@@ -632,3 +763,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

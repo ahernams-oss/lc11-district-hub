@@ -8,7 +8,6 @@ const inicioSubmenu = [
   { to: "/lions-internacional", label: "Sobre o Lions Internacional" },
   { to: "/sobre", label: "Sobre o Distrito LC-11" },
   { to: "/historia", label: "Nossa História" },
-  { to: "/ex-governadores", label: "Galeria de Ex-Governadores" },
 ] as const;
 
 const lideresSubmenu = [

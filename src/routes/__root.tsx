@@ -77,14 +77,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Distrito LC-11 — Lions Clubs International" },
+      { name: "description", content: "Distrito LC-11 do Lions Clubs International. Conheça nossos clubes, projetos de serviço e como participar." },
+      { property: "og:title", content: "Distrito LC-11 — Lions Clubs International" },
+      { property: "og:description", content: "Servindo comunidades com compaixão, integridade e união." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { property: "og:site_name", content: "Distrito LC-11" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       {
@@ -101,9 +100,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <HeadContent />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body>
         {children}

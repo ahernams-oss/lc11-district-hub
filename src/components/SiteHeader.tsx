@@ -70,6 +70,34 @@ export function SiteHeader() {
             )}
           </div>
 
+          <div
+            className="relative"
+            onMouseEnter={() => setLideresOpen(true)}
+            onMouseLeave={() => setLideresOpen(false)}
+          >
+            <button
+              type="button"
+              className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"
+            >
+              Líderes <ChevronDown className="h-3.5 w-3.5" />
+            </button>
+            {lideresOpen && (
+              <div className="absolute left-0 top-full w-56 rounded-md border border-border bg-background py-2 shadow-card">
+                {lideresSubmenu.map((s) => (
+                  <Link
+                    key={s.to}
+                    to={s.to}
+                    className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                    activeProps={{ className: "text-primary bg-surface" }}
+                  >
+                    {s.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+
           {nav.map((item) => (
             <Link
               key={item.to}
@@ -118,6 +146,20 @@ export function SiteHeader() {
           </Link>
           <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
             {inicioSubmenu.map((s) => (
+              <Link
+                key={s.to}
+                to={s.to}
+                onClick={() => setOpen(false)}
+                className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+                activeProps={{ className: "text-primary bg-surface" }}
+              >
+                {s.label}
+              </Link>
+            ))}
+          </div>
+          <div className="mt-1 px-3 py-2 text-base font-medium text-foreground">Líderes</div>
+          <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+            {lideresSubmenu.map((s) => (
               <Link
                 key={s.to}
                 to={s.to}

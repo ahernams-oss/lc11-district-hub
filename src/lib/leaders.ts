@@ -37,8 +37,8 @@ export function useLeaders(category: LeaderCategory) {
   return useQuery({
     queryKey: ["leaders", category],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("leaders")
+      const { data, error } = await (supabase as any)
+        .from("leaders_public")
         .select("*")
         .eq("category", category)
         .order("order_index", { ascending: true })

@@ -35,6 +35,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [inicioOpen, setInicioOpen] = useState(false);
   const [lideresOpen, setLideresOpen] = useState(false);
+  const [clubesOpen, setClubesOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur">

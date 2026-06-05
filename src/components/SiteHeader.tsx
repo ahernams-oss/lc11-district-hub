@@ -366,6 +366,16 @@ export function SiteHeader() {
           </a>
         </nav>
       </div>
+
+      {governador?.motto && (
+        <div className="border-t border-primary/20 bg-gradient-to-r from-primary/90 via-primary to-primary/90">
+          <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
+            <p className="text-center font-display text-sm font-semibold italic tracking-wide text-primary-foreground sm:text-base">
+              “{governador.motto}”
+            </p>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

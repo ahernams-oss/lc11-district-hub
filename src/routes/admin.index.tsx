@@ -48,6 +48,8 @@ function StatCard({ label, value, loading }: { label: string; value: number; loa
 }
 
 function AdminHome() {
+  const { canViewUsers } = useAuth();
+  const CARDS = ALL_CARDS.filter((c) => c.requires === "panel" || (c.requires === "users" && canViewUsers));
   const clubsTotal = useCount("clubs");
   const clubsES = useCount("clubs", { col: "state", val: "ES" });
   const clubsRJ = useCount("clubs", { col: "state", val: "RJ" });

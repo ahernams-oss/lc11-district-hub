@@ -57,7 +57,11 @@ export function SiteFooter() {
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-2 px-4 py-5 text-xs opacity-75 sm:flex-row sm:items-center sm:px-6 lg:px-8">
           <p>© {new Date().getFullYear()} Distrito LC-11 — Lions Clubs International. Todos os direitos reservados.</p>
-          <p>"Nós Servimos" — We Serve</p>
+          <div className="flex items-center gap-4">
+            <Link to="/auth" className="hover:text-gold">Painel Admin</Link>
+            <span className="opacity-50">|</span>
+            <p>"Nós Servimos" — We Serve</p>
+          </div>
         </div>
       </div>
     </footer>

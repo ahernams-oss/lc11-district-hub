@@ -16,11 +16,14 @@ const lideresSubmenu = [
   { to: "/governador", label: "Governador" },
   { to: "/vice-governador-1", label: "1º Vice-Governador" },
   { to: "/vice-governador-2", label: "2º Vice-Governador" },
+  { to: "/ex-governadores", label: "Galeria de Ex-Governadores" },
+] as const;
+
+const equipeGovernadorSubmenu = [
   { to: "/secretario", label: "Secretário Distrital" },
   { to: "/tesoureiro", label: "Tesoureiro Distrital" },
   { to: "/gat", label: "GAT" },
   { to: "/assessoria", label: "Assessoria" },
-  { to: "/ex-governadores", label: "Galeria de Ex-Governadores" },
 ] as const;
 
 const regioesSubmenu = [
@@ -132,7 +135,28 @@ export function SiteHeader() {
             </button>
             {lideresOpen && (
               <div className="absolute left-0 top-full w-56 rounded-md border border-border bg-background py-2 shadow-card">
-                {lideresSubmenu.map((s) => (
+                <div className="group/gov relative">
+                  <Link
+                    to="/governador"
+                    className="flex items-center justify-between px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                    activeProps={{ className: "text-primary bg-surface" }}
+                  >
+                    Governador <ChevronDown className="h-3.5 w-3.5 -rotate-90" />
+                  </Link>
+                  <div className="absolute left-full top-0 hidden w-56 rounded-md border border-border bg-background py-2 shadow-card group-hover/gov:block">
+                    {equipeGovernadorSubmenu.map((s) => (
+                      <Link
+                        key={s.to}
+                        to={s.to}
+                        className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                        activeProps={{ className: "text-primary bg-surface" }}
+                      >
+                        {s.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+                {lideresSubmenu.slice(1).map((s) => (
                   <Link
                     key={s.to}
                     to={s.to}
@@ -275,7 +299,28 @@ export function SiteHeader() {
           </div>
           <div className="mt-1 px-3 py-2 text-base font-medium text-foreground">Líderes</div>
           <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
-            {lideresSubmenu.map((s) => (
+            <Link
+              to="/governador"
+              onClick={() => setOpen(false)}
+              className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 hover:bg-surface"
+              activeProps={{ className: "text-primary bg-surface" }}
+            >
+              Governador
+            </Link>
+            <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+              {equipeGovernadorSubmenu.map((s) => (
+                <Link
+                  key={s.to}
+                  to={s.to}
+                  onClick={() => setOpen(false)}
+                  className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+                  activeProps={{ className: "text-primary bg-surface" }}
+                >
+                  {s.label}
+                </Link>
+              ))}
+            </div>
+            {lideresSubmenu.slice(1).map((s) => (
               <Link
                 key={s.to}
                 to={s.to}

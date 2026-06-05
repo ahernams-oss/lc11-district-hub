@@ -41,7 +41,7 @@ function LcifPage() {
           <img
             src={c.image_url}
             alt=""
-            className="mb-8 w-full max-h-80 rounded-lg object-cover"
+            className="mx-auto mb-8 max-h-[480px] w-auto max-w-full rounded-lg object-contain"
           />
         )}
         <div className="space-y-6 text-foreground/80">

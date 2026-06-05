@@ -4,6 +4,7 @@ import heroImg from "@/assets/hero-service.jpg";
 import envImg from "@/assets/project-environment.jpg";
 import visionImg from "@/assets/project-vision.jpg";
 import hungerImg from "@/assets/project-hunger.jpg";
+import { useSiteContent } from "@/lib/content";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -33,13 +34,22 @@ const stats = [
 ];
 
 function Index() {
+  const hero = useSiteContent("home", {
+    hero_eyebrow: "Lions Clubs International · Distrito LC-11",
+    hero_title: "Onde há uma necessidade, há um Leão.",
+    hero_description:
+      "Somos voluntários de mais de 65 clubes unidos por uma causa: servir nossa comunidade com integridade, compaixão e união. Junte-se a nós.",
+    hero_image_url: "",
+  });
+  const heroSrc = hero.hero_image_url || heroImg;
+
   return (
     <>
       {/* HERO */}
       <section className="relative overflow-hidden bg-primary text-primary-foreground">
         <div className="absolute inset-0">
           <img
-            src={heroImg}
+            src={heroSrc}
             alt="Voluntários do Lions Clubs servindo a comunidade"
             width={1920}
             height={1080}
@@ -49,14 +59,13 @@ function Index() {
         </div>
         <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-            Lions Clubs International · Distrito LC-11
+            {hero.hero_eyebrow}
           </p>
-          <h1 className="max-w-3xl font-display text-4xl font-bold leading-tight sm:text-6xl lg:text-7xl">
-            Onde há uma necessidade, há um <span className="text-gold">Leão</span>.
+          <h1 className="max-w-3xl font-display text-4xl font-bold leading-tight sm:text-6xl lg:text-7xl whitespace-pre-line">
+            {hero.hero_title}
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed opacity-95 sm:text-xl">
-            Somos voluntários de mais de 65 clubes unidos por uma causa: servir nossa comunidade
-            com integridade, compaixão e união. Junte-se a nós.
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed opacity-95 sm:text-xl whitespace-pre-line">
+            {hero.hero_description}
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
@@ -74,6 +83,7 @@ function Index() {
           </div>
         </div>
       </section>
+
 
       {/* STATS */}
       <section className="border-b border-border bg-surface">

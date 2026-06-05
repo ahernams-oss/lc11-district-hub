@@ -18,10 +18,12 @@ import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as LionsInternacionalRouteImport } from './routes/lions-internacional'
 import { Route as HistoriaRouteImport } from './routes/historia'
 import { Route as GovernadorRouteImport } from './routes/governador'
+import { Route as GatRouteImport } from './routes/gat'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as DoarRouteImport } from './routes/doar'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ClubesRouteImport } from './routes/clubes'
+import { Route as AssessoriaRouteImport } from './routes/assessoria'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ViceGovernador2Route = ViceGovernador2RouteImport.update({
@@ -69,6 +71,11 @@ const GovernadorRoute = GovernadorRouteImport.update({
   path: '/governador',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GatRoute = GatRouteImport.update({
+  id: '/gat',
+  path: '/gat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventosRoute = EventosRouteImport.update({
   id: '/eventos',
   path: '/eventos',
@@ -89,6 +96,11 @@ const ClubesRoute = ClubesRouteImport.update({
   path: '/clubes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AssessoriaRoute = AssessoriaRouteImport.update({
+  id: '/assessoria',
+  path: '/assessoria',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -97,10 +109,12 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assessoria': typeof AssessoriaRoute
   '/clubes': typeof ClubesRoute
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
+  '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
   '/lions-internacional': typeof LionsInternacionalRoute
@@ -113,10 +127,12 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assessoria': typeof AssessoriaRoute
   '/clubes': typeof ClubesRoute
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
+  '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
   '/lions-internacional': typeof LionsInternacionalRoute
@@ -130,10 +146,12 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assessoria': typeof AssessoriaRoute
   '/clubes': typeof ClubesRoute
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
+  '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
   '/lions-internacional': typeof LionsInternacionalRoute
@@ -148,10 +166,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/assessoria'
     | '/clubes'
     | '/contato'
     | '/doar'
     | '/eventos'
+    | '/gat'
     | '/governador'
     | '/historia'
     | '/lions-internacional'
@@ -164,10 +184,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/assessoria'
     | '/clubes'
     | '/contato'
     | '/doar'
     | '/eventos'
+    | '/gat'
     | '/governador'
     | '/historia'
     | '/lions-internacional'
@@ -180,10 +202,12 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/assessoria'
     | '/clubes'
     | '/contato'
     | '/doar'
     | '/eventos'
+    | '/gat'
     | '/governador'
     | '/historia'
     | '/lions-internacional'
@@ -197,10 +221,12 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssessoriaRoute: typeof AssessoriaRoute
   ClubesRoute: typeof ClubesRoute
   ContatoRoute: typeof ContatoRoute
   DoarRoute: typeof DoarRoute
   EventosRoute: typeof EventosRoute
+  GatRoute: typeof GatRoute
   GovernadorRoute: typeof GovernadorRoute
   HistoriaRoute: typeof HistoriaRoute
   LionsInternacionalRoute: typeof LionsInternacionalRoute
@@ -277,6 +303,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GovernadorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gat': {
+      id: '/gat'
+      path: '/gat'
+      fullPath: '/gat'
+      preLoaderRoute: typeof GatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/eventos': {
       id: '/eventos'
       path: '/eventos'
@@ -305,6 +338,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClubesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/assessoria': {
+      id: '/assessoria'
+      path: '/assessoria'
+      fullPath: '/assessoria'
+      preLoaderRoute: typeof AssessoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -317,10 +357,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssessoriaRoute: AssessoriaRoute,
   ClubesRoute: ClubesRoute,
   ContatoRoute: ContatoRoute,
   DoarRoute: DoarRoute,
   EventosRoute: EventosRoute,
+  GatRoute: GatRoute,
   GovernadorRoute: GovernadorRoute,
   HistoriaRoute: HistoriaRoute,
   LionsInternacionalRoute: LionsInternacionalRoute,
@@ -334,3 +376,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

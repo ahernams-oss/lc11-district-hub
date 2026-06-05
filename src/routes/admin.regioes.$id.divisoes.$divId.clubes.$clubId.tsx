@@ -211,6 +211,18 @@ function ClubEditor() {
               className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
             />
           </Field>
+          <Field label="Estado">
+            <select
+              value={form.state}
+              onChange={(e) => setForm({ ...form, state: e.target.value })}
+              className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
+            >
+              <option value="">— Selecione —</option>
+              <option value="ES">Espírito Santo (ES)</option>
+              <option value="RJ">Rio de Janeiro (RJ)</option>
+            </select>
+          </Field>
+
           <Field label="Presidente atual">
             <input
               value={form.president}

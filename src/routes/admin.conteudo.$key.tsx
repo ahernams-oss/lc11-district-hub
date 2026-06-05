@@ -68,6 +68,16 @@ const FIELDS: Record<ContentKey, Field[]> = {
     { name: "title", label: "Título da página", type: "textarea" },
     { name: "description", label: "Descrição (hero)", type: "textarea" },
   ],
+  lcif: [
+    { name: "eyebrow", label: "Sobre-título", type: "text" },
+    { name: "title", label: "Título", type: "textarea" },
+    { name: "description", label: "Descrição (hero)", type: "textarea" },
+    { name: "intro", label: "Texto de introdução", type: "textarea" },
+    { name: "campaigns_title", label: "Título do bloco de campanhas", type: "text" },
+    { name: "campaigns", label: "Campanhas (uma por linha)", type: "textarea" },
+    { name: "footer_text", label: "Texto final / contato", type: "textarea" },
+    { name: "image_url", label: "Imagem ilustrativa (opcional)", type: "image" },
+  ],
 };
 
 function ContentEditor() {

@@ -261,6 +261,23 @@ export function SiteHeader() {
             >
               Geral
             </Link>
+            <Link
+              to="/clubes/es"
+              onClick={() => setOpen(false)}
+              className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+              activeProps={{ className: "text-primary bg-surface" }}
+            >
+              Clubes do ES
+            </Link>
+            <Link
+              to="/clubes/rj"
+              onClick={() => setOpen(false)}
+              className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+              activeProps={{ className: "text-primary bg-surface" }}
+            >
+              Clubes do RJ
+            </Link>
+
             <div className="mt-1 px-3 py-1 text-sm font-medium text-foreground/70">Região</div>
             <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
               {regioesSubmenu.map((r) => (

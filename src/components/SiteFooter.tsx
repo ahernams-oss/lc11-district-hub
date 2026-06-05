@@ -43,7 +43,7 @@ export function SiteFooter() {
         <div>
           <h4 className="text-sm font-semibold uppercase tracking-wider">Contato</h4>
           <ul className="mt-4 space-y-2 text-sm opacity-90">
-            <li className="flex items-center gap-2"><Mail className="h-4 w-4" /> contato@distritolc11.org</li>
+            <li className="flex items-center gap-2"><Mail className="h-4 w-4" /><span>contato@distritolc11.org</span></li>
             <li>Sede do Distrito LC-11</li>
             <li>Brasil</li>
           </ul>

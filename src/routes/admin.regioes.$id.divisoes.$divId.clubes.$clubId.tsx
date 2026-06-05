@@ -13,6 +13,7 @@ export const Route = createFileRoute("/admin/regioes/$id/divisoes/$divId/clubes/
 interface Form {
   name: string;
   city: string;
+  state: string;
   email: string;
   phone: string;
   meetings: string;
@@ -27,6 +28,7 @@ interface Form {
 const EMPTY: Form = {
   name: "",
   city: "",
+  state: "",
   email: "",
   phone: "",
   meetings: "",
@@ -38,6 +40,7 @@ const EMPTY: Form = {
   logo_url: "",
   order_index: 0,
 };
+
 
 function ClubEditor() {
   const { id, divId, clubId } = useParams({

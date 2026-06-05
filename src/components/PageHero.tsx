@@ -19,7 +19,7 @@ export function PageHero({
       </div>
       <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
         {eyebrow && (
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold">{eyebrow}</p>
+          <p className="mb-3 font-semibold uppercase tracking-[0.2em] text-gold text-base">{eyebrow}</p>
         )}
         <h1 className="max-w-3xl font-display font-bold leading-tight sm:text-5xl lg:text-6xl text-8xl">
           {title}

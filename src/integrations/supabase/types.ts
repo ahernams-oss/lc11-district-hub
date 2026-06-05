@@ -87,6 +87,8 @@ export type Database = {
           id: string
           name: string
           order_index: number
+          president_name: string | null
+          president_photo_url: string | null
           region_id: string
           updated_at: string
         }
@@ -97,6 +99,8 @@ export type Database = {
           id?: string
           name: string
           order_index?: number
+          president_name?: string | null
+          president_photo_url?: string | null
           region_id: string
           updated_at?: string
         }
@@ -107,6 +111,8 @@ export type Database = {
           id?: string
           name?: string
           order_index?: number
+          president_name?: string | null
+          president_photo_url?: string | null
           region_id?: string
           updated_at?: string
         }

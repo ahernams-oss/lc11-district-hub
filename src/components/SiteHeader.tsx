@@ -19,9 +19,13 @@ const lideresSubmenu = [
   { to: "/ex-governadores", label: "Galeria de Ex-Governadores" },
 ] as const;
 
+const clubesSubmenu = [
+  { to: "/clubes", label: "Geral" },
+  { to: "/clubes/regiao", label: "Região" },
+] as const;
+
 const nav = [
   { to: "/projetos", label: "Projetos" },
-  { to: "/clubes", label: "Clubes" },
   { to: "/noticias", label: "Notícias" },
   { to: "/eventos", label: "Eventos" },
   { to: "/contato", label: "Contato" },

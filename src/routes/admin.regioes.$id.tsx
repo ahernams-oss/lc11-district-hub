@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDivisions } from "@/lib/regions";
-import { ArrowLeft, Plus, Trash2, ChevronRight } from "lucide-react";
+import { uploadLeaderPhoto } from "@/lib/leaders";
+import { ArrowLeft, Plus, Trash2, ChevronRight, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/admin/regioes/$id")({
   component: RegionEditor,

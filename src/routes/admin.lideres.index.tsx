@@ -54,13 +54,12 @@ function LeadersList() {
                 {list.length === 0 ? (
                   <p className="mt-2 text-sm text-muted-foreground">
                     Nenhum cadastro.{" "}
-                    <Link
-                      to="/admin/lideres/novo"
-                      search={{ category: cat }}
+                    <a
+                      href={`/admin/lideres/novo?category=${cat}`}
                       className="text-primary hover:underline"
                     >
                       Adicionar
-                    </Link>
+                    </a>
                   </p>
                 ) : (
                   <ul className="mt-2 divide-y rounded-md border bg-card">

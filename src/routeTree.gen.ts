@@ -24,8 +24,15 @@ import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as DoarRouteImport } from './routes/doar'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ClubesRouteImport } from './routes/clubes'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssessoriaRouteImport } from './routes/assessoria'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminLideresIndexRouteImport } from './routes/admin.lideres.index'
+import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
+import { Route as AdminLideresIdRouteImport } from './routes/admin.lideres.$id'
+import { Route as AdminConteudoKeyRouteImport } from './routes/admin.conteudo.$key'
 
 const ViceGovernador2Route = ViceGovernador2RouteImport.update({
   id: '/vice-governador-2',
@@ -102,9 +109,19 @@ const ClubesRoute = ClubesRouteImport.update({
   path: '/clubes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AssessoriaRoute = AssessoriaRouteImport.update({
   id: '/assessoria',
   path: '/assessoria',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -112,10 +129,37 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLideresIndexRoute = AdminLideresIndexRouteImport.update({
+  id: '/lideres/',
+  path: '/lideres/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminConteudoIndexRoute = AdminConteudoIndexRouteImport.update({
+  id: '/conteudo/',
+  path: '/conteudo/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLideresIdRoute = AdminLideresIdRouteImport.update({
+  id: '/lideres/$id',
+  path: '/lideres/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminConteudoKeyRoute = AdminConteudoKeyRouteImport.update({
+  id: '/conteudo/$key',
+  path: '/conteudo/$key',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/assessoria': typeof AssessoriaRoute
+  '/auth': typeof AuthRoute
   '/clubes': typeof ClubesRoute
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
@@ -131,10 +175,16 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
+  '/admin/': typeof AdminIndexRoute
+  '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
+  '/admin/lideres/$id': typeof AdminLideresIdRoute
+  '/admin/conteudo/': typeof AdminConteudoIndexRoute
+  '/admin/lideres/': typeof AdminLideresIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assessoria': typeof AssessoriaRoute
+  '/auth': typeof AuthRoute
   '/clubes': typeof ClubesRoute
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
@@ -150,11 +200,18 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
+  '/admin': typeof AdminIndexRoute
+  '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
+  '/admin/lideres/$id': typeof AdminLideresIdRoute
+  '/admin/conteudo': typeof AdminConteudoIndexRoute
+  '/admin/lideres': typeof AdminLideresIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/assessoria': typeof AssessoriaRoute
+  '/auth': typeof AuthRoute
   '/clubes': typeof ClubesRoute
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
@@ -170,12 +227,19 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
+  '/admin/': typeof AdminIndexRoute
+  '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
+  '/admin/lideres/$id': typeof AdminLideresIdRoute
+  '/admin/conteudo/': typeof AdminConteudoIndexRoute
+  '/admin/lideres/': typeof AdminLideresIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/assessoria'
+    | '/auth'
     | '/clubes'
     | '/contato'
     | '/doar'
@@ -191,10 +255,16 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/vice-governador-1'
     | '/vice-governador-2'
+    | '/admin/'
+    | '/admin/conteudo/$key'
+    | '/admin/lideres/$id'
+    | '/admin/conteudo/'
+    | '/admin/lideres/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/assessoria'
+    | '/auth'
     | '/clubes'
     | '/contato'
     | '/doar'
@@ -210,10 +280,17 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/vice-governador-1'
     | '/vice-governador-2'
+    | '/admin'
+    | '/admin/conteudo/$key'
+    | '/admin/lideres/$id'
+    | '/admin/conteudo'
+    | '/admin/lideres'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/assessoria'
+    | '/auth'
     | '/clubes'
     | '/contato'
     | '/doar'
@@ -229,11 +306,18 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/vice-governador-1'
     | '/vice-governador-2'
+    | '/admin/'
+    | '/admin/conteudo/$key'
+    | '/admin/lideres/$id'
+    | '/admin/conteudo/'
+    | '/admin/lideres/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AssessoriaRoute: typeof AssessoriaRoute
+  AuthRoute: typeof AuthRoute
   ClubesRoute: typeof ClubesRoute
   ContatoRoute: typeof ContatoRoute
   DoarRoute: typeof DoarRoute
@@ -358,11 +442,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClubesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/assessoria': {
       id: '/assessoria'
       path: '/assessoria'
       fullPath: '/assessoria'
       preLoaderRoute: typeof AssessoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -372,12 +470,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/lideres/': {
+      id: '/admin/lideres/'
+      path: '/lideres'
+      fullPath: '/admin/lideres/'
+      preLoaderRoute: typeof AdminLideresIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/conteudo/': {
+      id: '/admin/conteudo/'
+      path: '/conteudo'
+      fullPath: '/admin/conteudo/'
+      preLoaderRoute: typeof AdminConteudoIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/lideres/$id': {
+      id: '/admin/lideres/$id'
+      path: '/lideres/$id'
+      fullPath: '/admin/lideres/$id'
+      preLoaderRoute: typeof AdminLideresIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/conteudo/$key': {
+      id: '/admin/conteudo/$key'
+      path: '/conteudo/$key'
+      fullPath: '/admin/conteudo/$key'
+      preLoaderRoute: typeof AdminConteudoKeyRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminConteudoKeyRoute: typeof AdminConteudoKeyRoute
+  AdminLideresIdRoute: typeof AdminLideresIdRoute
+  AdminConteudoIndexRoute: typeof AdminConteudoIndexRoute
+  AdminLideresIndexRoute: typeof AdminLideresIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+  AdminConteudoKeyRoute: AdminConteudoKeyRoute,
+  AdminLideresIdRoute: AdminLideresIdRoute,
+  AdminConteudoIndexRoute: AdminConteudoIndexRoute,
+  AdminLideresIndexRoute: AdminLideresIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   AssessoriaRoute: AssessoriaRoute,
+  AuthRoute: AuthRoute,
   ClubesRoute: ClubesRoute,
   ContatoRoute: ContatoRoute,
   DoarRoute: DoarRoute,

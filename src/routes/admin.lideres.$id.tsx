@@ -73,7 +73,7 @@ function LeaderEditor() {
       .then(({ data }) => {
         if (data) {
           setForm({
-            category: data.category,
+            category: data.category as LeaderCategory,
             name: data.name ?? "",
             role: data.role ?? "",
             bio: data.bio ?? "",

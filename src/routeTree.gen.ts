@@ -13,6 +13,8 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProjetosRouteImport } from './routes/projetos'
 import { Route as NoticiasRouteImport } from './routes/noticias'
+import { Route as LionsInternacionalRouteImport } from './routes/lions-internacional'
+import { Route as HistoriaRouteImport } from './routes/historia'
 import { Route as GovernadorRouteImport } from './routes/governador'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as DoarRouteImport } from './routes/doar'
@@ -38,6 +40,16 @@ const ProjetosRoute = ProjetosRouteImport.update({
 const NoticiasRoute = NoticiasRouteImport.update({
   id: '/noticias',
   path: '/noticias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LionsInternacionalRoute = LionsInternacionalRouteImport.update({
+  id: '/lions-internacional',
+  path: '/lions-internacional',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoriaRoute = HistoriaRouteImport.update({
+  id: '/historia',
+  path: '/historia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GovernadorRoute = GovernadorRouteImport.update({
@@ -78,6 +90,8 @@ export interface FileRoutesByFullPath {
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
   '/governador': typeof GovernadorRoute
+  '/historia': typeof HistoriaRoute
+  '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
   '/projetos': typeof ProjetosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -90,6 +104,8 @@ export interface FileRoutesByTo {
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
   '/governador': typeof GovernadorRoute
+  '/historia': typeof HistoriaRoute
+  '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
   '/projetos': typeof ProjetosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -103,6 +119,8 @@ export interface FileRoutesById {
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
   '/governador': typeof GovernadorRoute
+  '/historia': typeof HistoriaRoute
+  '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
   '/projetos': typeof ProjetosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -117,6 +135,8 @@ export interface FileRouteTypes {
     | '/doar'
     | '/eventos'
     | '/governador'
+    | '/historia'
+    | '/lions-internacional'
     | '/noticias'
     | '/projetos'
     | '/sitemap.xml'
@@ -129,6 +149,8 @@ export interface FileRouteTypes {
     | '/doar'
     | '/eventos'
     | '/governador'
+    | '/historia'
+    | '/lions-internacional'
     | '/noticias'
     | '/projetos'
     | '/sitemap.xml'
@@ -141,6 +163,8 @@ export interface FileRouteTypes {
     | '/doar'
     | '/eventos'
     | '/governador'
+    | '/historia'
+    | '/lions-internacional'
     | '/noticias'
     | '/projetos'
     | '/sitemap.xml'
@@ -154,6 +178,8 @@ export interface RootRouteChildren {
   DoarRoute: typeof DoarRoute
   EventosRoute: typeof EventosRoute
   GovernadorRoute: typeof GovernadorRoute
+  HistoriaRoute: typeof HistoriaRoute
+  LionsInternacionalRoute: typeof LionsInternacionalRoute
   NoticiasRoute: typeof NoticiasRoute
   ProjetosRoute: typeof ProjetosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -188,6 +214,20 @@ declare module '@tanstack/react-router' {
       path: '/noticias'
       fullPath: '/noticias'
       preLoaderRoute: typeof NoticiasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lions-internacional': {
+      id: '/lions-internacional'
+      path: '/lions-internacional'
+      fullPath: '/lions-internacional'
+      preLoaderRoute: typeof LionsInternacionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/historia': {
+      id: '/historia'
+      path: '/historia'
+      fullPath: '/historia'
+      preLoaderRoute: typeof HistoriaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/governador': {
@@ -242,6 +282,8 @@ const rootRouteChildren: RootRouteChildren = {
   DoarRoute: DoarRoute,
   EventosRoute: EventosRoute,
   GovernadorRoute: GovernadorRoute,
+  HistoriaRoute: HistoriaRoute,
+  LionsInternacionalRoute: LionsInternacionalRoute,
   NoticiasRoute: NoticiasRoute,
   ProjetosRoute: ProjetosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
@@ -250,3 +292,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

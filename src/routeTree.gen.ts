@@ -30,6 +30,7 @@ import { Route as AssessoriaRouteImport } from './routes/assessoria'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as ClubesRegiaoRouteImport } from './routes/clubes.regiao'
 import { Route as AdminLideresIndexRouteImport } from './routes/admin.lideres.index'
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
 import { Route as AdminLideresIdRouteImport } from './routes/admin.lideres.$id'
@@ -140,6 +141,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const ClubesRegiaoRoute = ClubesRegiaoRouteImport.update({
+  id: '/regiao',
+  path: '/regiao',
+  getParentRoute: () => ClubesRoute,
+} as any)
 const AdminLideresIndexRoute = AdminLideresIndexRouteImport.update({
   id: '/lideres/',
   path: '/lideres/',
@@ -166,7 +172,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
-  '/clubes': typeof ClubesRoute
+  '/clubes': typeof ClubesRouteWithChildren
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
@@ -182,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
+  '/clubes/regiao': typeof ClubesRegiaoRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
@@ -192,7 +199,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
-  '/clubes': typeof ClubesRoute
+  '/clubes': typeof ClubesRouteWithChildren
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
@@ -208,6 +215,7 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
+  '/clubes/regiao': typeof ClubesRegiaoRoute
   '/admin': typeof AdminIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
@@ -220,7 +228,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
-  '/clubes': typeof ClubesRoute
+  '/clubes': typeof ClubesRouteWithChildren
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
@@ -236,6 +244,7 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
+  '/clubes/regiao': typeof ClubesRegiaoRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
@@ -265,6 +274,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/vice-governador-1'
     | '/vice-governador-2'
+    | '/clubes/regiao'
     | '/admin/'
     | '/admin/conteudo/$key'
     | '/admin/lideres/$id'
@@ -291,6 +301,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/vice-governador-1'
     | '/vice-governador-2'
+    | '/clubes/regiao'
     | '/admin'
     | '/admin/conteudo/$key'
     | '/admin/lideres/$id'
@@ -318,6 +329,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/vice-governador-1'
     | '/vice-governador-2'
+    | '/clubes/regiao'
     | '/admin/'
     | '/admin/conteudo/$key'
     | '/admin/lideres/$id'
@@ -330,7 +342,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AssessoriaRoute: typeof AssessoriaRoute
   AuthRoute: typeof AuthRoute
-  ClubesRoute: typeof ClubesRoute
+  ClubesRoute: typeof ClubesRouteWithChildren
   ContatoRoute: typeof ContatoRoute
   DoarRoute: typeof DoarRoute
   EventosRoute: typeof EventosRoute
@@ -497,6 +509,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/clubes/regiao': {
+      id: '/clubes/regiao'
+      path: '/regiao'
+      fullPath: '/clubes/regiao'
+      preLoaderRoute: typeof ClubesRegiaoRouteImport
+      parentRoute: typeof ClubesRoute
+    }
     '/admin/lideres/': {
       id: '/admin/lideres/'
       path: '/lideres'
@@ -546,12 +565,23 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
+interface ClubesRouteChildren {
+  ClubesRegiaoRoute: typeof ClubesRegiaoRoute
+}
+
+const ClubesRouteChildren: ClubesRouteChildren = {
+  ClubesRegiaoRoute: ClubesRegiaoRoute,
+}
+
+const ClubesRouteWithChildren =
+  ClubesRoute._addFileChildren(ClubesRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   AssessoriaRoute: AssessoriaRoute,
   AuthRoute: AuthRoute,
-  ClubesRoute: ClubesRoute,
+  ClubesRoute: ClubesRouteWithChildren,
   ContatoRoute: ContatoRoute,
   DoarRoute: DoarRoute,
   EventosRoute: EventosRoute,
@@ -571,3 +601,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

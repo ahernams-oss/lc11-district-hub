@@ -69,7 +69,8 @@ function ClubEditor() {
           setForm({
             name: data.name ?? "",
             city: data.city ?? "",
-            email: data.email ?? "",
+            state: (data as any).state ?? "",
+
             phone: data.phone ?? "",
             meetings: data.meetings ?? "",
             address: data.address ?? "",

@@ -181,6 +181,7 @@ export type Database = {
           order_index: number
           phone: string | null
           photo_url: string | null
+          pin_url: string | null
           role: string | null
           updated_at: string
           year_label: string | null
@@ -197,6 +198,7 @@ export type Database = {
           order_index?: number
           phone?: string | null
           photo_url?: string | null
+          pin_url?: string | null
           role?: string | null
           updated_at?: string
           year_label?: string | null
@@ -213,6 +215,7 @@ export type Database = {
           order_index?: number
           phone?: string | null
           photo_url?: string | null
+          pin_url?: string | null
           role?: string | null
           updated_at?: string
           year_label?: string | null
@@ -385,6 +388,7 @@ export type Database = {
           name: string | null
           order_index: number | null
           photo_url: string | null
+          pin_url: string | null
           role: string | null
           updated_at: string | null
           year_label: string | null
@@ -399,6 +403,7 @@ export type Database = {
           name?: string | null
           order_index?: number | null
           photo_url?: string | null
+          pin_url?: string | null
           role?: string | null
           updated_at?: string | null
           year_label?: string | null
@@ -413,6 +418,7 @@ export type Database = {
           name?: string | null
           order_index?: number | null
           photo_url?: string | null
+          pin_url?: string | null
           role?: string | null
           updated_at?: string | null
           year_label?: string | null

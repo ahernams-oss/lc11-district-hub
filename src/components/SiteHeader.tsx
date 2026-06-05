@@ -49,12 +49,12 @@ export function SiteHeader() {
             Doar
           </Link>
           <a
-            href="https://lionsclubs.org/pt/resources-for-members/member-resource-center/lion-account"
+            href="https://lovable.dev/projects/3c09d0df-b614-426e-b3c7-58ab2e837294"
             target="_blank"
             rel="noreferrer"
             className="ml-1 inline-flex items-center gap-1 rounded-md border border-border px-3 py-2 text-sm font-medium text-foreground/80 hover:border-primary hover:text-primary"
           >
-            Lions Connect <ExternalLink className="h-3.5 w-3.5" />
+            Lions Connecta <ExternalLink className="h-3.5 w-3.5" />
           </a>
         </nav>
 

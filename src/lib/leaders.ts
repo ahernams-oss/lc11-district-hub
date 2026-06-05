@@ -5,6 +5,8 @@ export type LeaderCategory =
   | "governador"
   | "vice1"
   | "vice2"
+  | "secretario"
+  | "tesoureiro"
   | "gat"
   | "assessoria"
   | "ex_governador";
@@ -13,6 +15,8 @@ export const CATEGORY_LABELS: Record<LeaderCategory, string> = {
   governador: "Governador",
   vice1: "1º Vice-Governador",
   vice2: "2º Vice-Governador",
+  secretario: "Secretário Distrital",
+  tesoureiro: "Tesoureiro Distrital",
   gat: "GAT — Grupo de Ação e Trabalho",
   assessoria: "Assessoria",
   ex_governador: "Ex-Governador",

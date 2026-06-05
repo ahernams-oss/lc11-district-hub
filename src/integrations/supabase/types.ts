@@ -374,7 +374,51 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      leaders_public: {
+        Row: {
+          bio: string | null
+          category: string | null
+          created_at: string | null
+          id: string | null
+          message: string | null
+          motto: string | null
+          name: string | null
+          order_index: number | null
+          photo_url: string | null
+          role: string | null
+          updated_at: string | null
+          year_label: string | null
+        }
+        Insert: {
+          bio?: string | null
+          category?: string | null
+          created_at?: string | null
+          id?: string | null
+          message?: string | null
+          motto?: string | null
+          name?: string | null
+          order_index?: number | null
+          photo_url?: string | null
+          role?: string | null
+          updated_at?: string | null
+          year_label?: string | null
+        }
+        Update: {
+          bio?: string | null
+          category?: string | null
+          created_at?: string | null
+          id?: string | null
+          message?: string | null
+          motto?: string | null
+          name?: string | null
+          order_index?: number | null
+          photo_url?: string | null
+          role?: string | null
+          updated_at?: string | null
+          year_label?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {

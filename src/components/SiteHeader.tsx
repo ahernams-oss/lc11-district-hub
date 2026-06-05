@@ -237,17 +237,29 @@ export function SiteHeader() {
           </div>
           <div className="mt-1 px-3 py-2 text-base font-medium text-foreground">Clubes</div>
           <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
-            {clubesSubmenu.map((s) => (
-              <Link
-                key={s.to}
-                to={s.to}
-                onClick={() => setOpen(false)}
-                className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
-                activeProps={{ className: "text-primary bg-surface" }}
-              >
-                {s.label}
-              </Link>
-            ))}
+            <Link
+              to="/clubes"
+              onClick={() => setOpen(false)}
+              className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+              activeProps={{ className: "text-primary bg-surface" }}
+              activeOptions={{ exact: true }}
+            >
+              Geral
+            </Link>
+            <div className="mt-1 px-3 py-1 text-sm font-medium text-foreground/70">Região</div>
+            <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+              {regioesSubmenu.map((r) => (
+                <Link
+                  key={r.to}
+                  to={r.to}
+                  onClick={() => setOpen(false)}
+                  className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+                  activeProps={{ className: "text-primary bg-surface" }}
+                >
+                  {r.label}
+                </Link>
+              ))}
+            </div>
           </div>
           <Link
             to="/lcif"

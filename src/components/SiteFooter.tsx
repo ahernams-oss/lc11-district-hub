@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Youtube, Mail } from "lucide-react";
+import lionsLogo from "@/assets/lions-logo.png.asset.json";
+
 
 export function SiteFooter() {
   return (
@@ -7,7 +9,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-4 lg:px-8">
         <div>
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gold font-display font-bold text-gold-foreground">L</div>
+            <img src={lionsLogo.url} alt="Lions Clubs International" className="h-11 w-11 object-contain bg-white rounded-md p-1" />
             <div>
               <div className="font-display text-lg font-bold">Distrito LC-11</div>
               <div className="text-xs uppercase tracking-wider opacity-75">Lions Clubs International</div>

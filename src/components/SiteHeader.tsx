@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Menu, X, ExternalLink, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import lionsLogo from "@/assets/lions-logo.png.asset.json";
+import { useLeaders } from "@/lib/leaders";
 
 const inicioSubmenu = [
   { to: "/lions-internacional", label: "Sobre o Lions Internacional" },
@@ -41,16 +42,39 @@ export function SiteHeader() {
   const [lideresOpen, setLideresOpen] = useState(false);
   const [clubesOpen, setClubesOpen] = useState(false);
 
+  const { data: governadores } = useLeaders("governador");
+  const governador = governadores?.[0];
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <img src={lionsLogo.url} alt="Lions Clubs International" className="h-11 w-11 object-contain" />
-          <div className="leading-tight">
-            <div className="font-display text-base font-bold text-foreground">Distrito LC-11</div>
-            <div className="text-[11px] uppercase tracking-wider text-muted-foreground">Lions Clubs International</div>
-          </div>
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+            <img src={lionsLogo.url} alt="Lions Clubs International" className="h-11 w-11 object-contain" />
+            <div className="leading-tight">
+              <div className="font-display text-base font-bold text-foreground">Distrito LC-11</div>
+              <div className="text-[11px] uppercase tracking-wider text-muted-foreground">Lions Clubs International</div>
+            </div>
+          </Link>
+          {governador?.photo_url && (
+            <Link
+              to="/governador"
+              onClick={() => setOpen(false)}
+              className="hidden items-center gap-2 border-l border-border pl-4 sm:flex"
+              title={`Governador${governador.name ? `: ${governador.name}` : ""}`}
+            >
+              <img
+                src={governador.photo_url}
+                alt={governador.name ? `Governador ${governador.name}` : "Governador"}
+                className="h-11 w-11 rounded-full object-cover ring-2 ring-primary/30"
+              />
+              <div className="hidden leading-tight md:block">
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Governador</div>
+                <div className="font-display text-sm font-semibold text-foreground">{governador.name}</div>
+              </div>
+            </Link>
+          )}
+        </div>
 
         <nav className="hidden items-center gap-1 lg:flex">
           <div

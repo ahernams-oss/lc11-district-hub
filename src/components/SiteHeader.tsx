@@ -213,6 +213,20 @@ export function SiteHeader() {
               </Link>
             ))}
           </div>
+          <div className="mt-1 px-3 py-2 text-base font-medium text-foreground">Clubes</div>
+          <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+            {clubesSubmenu.map((s) => (
+              <Link
+                key={s.to}
+                to={s.to}
+                onClick={() => setOpen(false)}
+                className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+                activeProps={{ className: "text-primary bg-surface" }}
+              >
+                {s.label}
+              </Link>
+            ))}
+          </div>
           <Link
             to="/lcif"
             onClick={() => setOpen(false)}

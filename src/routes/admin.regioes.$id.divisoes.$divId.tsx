@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate, useParams } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useChildMatches, useNavigate, useParams } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
@@ -7,8 +7,14 @@ import { uploadLeaderPhoto } from "@/lib/leaders";
 import { ArrowLeft, Plus, Trash2, ChevronRight, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/admin/regioes/$id/divisoes/$divId")({
-  component: DivisionEditor,
+  component: DivisionRoute,
 });
+
+function DivisionRoute() {
+  const childMatches = useChildMatches();
+  if (childMatches.length > 0) return <Outlet />;
+  return <DivisionEditor />;
+}
 
 interface Form {
   code: string;

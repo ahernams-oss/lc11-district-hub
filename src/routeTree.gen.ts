@@ -19,6 +19,7 @@ import { Route as LionsInternacionalRouteImport } from './routes/lions-internaci
 import { Route as HistoriaRouteImport } from './routes/historia'
 import { Route as GovernadorRouteImport } from './routes/governador'
 import { Route as GatRouteImport } from './routes/gat'
+import { Route as ExGovernadoresRouteImport } from './routes/ex-governadores'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as DoarRouteImport } from './routes/doar'
 import { Route as ContatoRouteImport } from './routes/contato'
@@ -76,6 +77,11 @@ const GatRoute = GatRouteImport.update({
   path: '/gat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExGovernadoresRoute = ExGovernadoresRouteImport.update({
+  id: '/ex-governadores',
+  path: '/ex-governadores',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventosRoute = EventosRouteImport.update({
   id: '/eventos',
   path: '/eventos',
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
+  '/ex-governadores': typeof ExGovernadoresRoute
   '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
@@ -132,6 +139,7 @@ export interface FileRoutesByTo {
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
+  '/ex-governadores': typeof ExGovernadoresRoute
   '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
+  '/ex-governadores': typeof ExGovernadoresRoute
   '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
@@ -171,6 +180,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/doar'
     | '/eventos'
+    | '/ex-governadores'
     | '/gat'
     | '/governador'
     | '/historia'
@@ -189,6 +199,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/doar'
     | '/eventos'
+    | '/ex-governadores'
     | '/gat'
     | '/governador'
     | '/historia'
@@ -207,6 +218,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/doar'
     | '/eventos'
+    | '/ex-governadores'
     | '/gat'
     | '/governador'
     | '/historia'
@@ -226,6 +238,7 @@ export interface RootRouteChildren {
   ContatoRoute: typeof ContatoRoute
   DoarRoute: typeof DoarRoute
   EventosRoute: typeof EventosRoute
+  ExGovernadoresRoute: typeof ExGovernadoresRoute
   GatRoute: typeof GatRoute
   GovernadorRoute: typeof GovernadorRoute
   HistoriaRoute: typeof HistoriaRoute
@@ -310,6 +323,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ex-governadores': {
+      id: '/ex-governadores'
+      path: '/ex-governadores'
+      fullPath: '/ex-governadores'
+      preLoaderRoute: typeof ExGovernadoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/eventos': {
       id: '/eventos'
       path: '/eventos'
@@ -362,6 +382,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContatoRoute: ContatoRoute,
   DoarRoute: DoarRoute,
   EventosRoute: EventosRoute,
+  ExGovernadoresRoute: ExGovernadoresRoute,
   GatRoute: GatRoute,
   GovernadorRoute: GovernadorRoute,
   HistoriaRoute: HistoriaRoute,
@@ -376,3 +397,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

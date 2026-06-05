@@ -105,6 +105,33 @@ export function SiteHeader() {
             )}
           </div>
 
+          <div
+            className="relative"
+            onMouseEnter={() => setClubesOpen(true)}
+            onMouseLeave={() => setClubesOpen(false)}
+          >
+            <button
+              type="button"
+              className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"
+            >
+              Clubes <ChevronDown className="h-3.5 w-3.5" />
+            </button>
+            {clubesOpen && (
+              <div className="absolute left-0 top-full w-56 rounded-md border border-border bg-background py-2 shadow-card">
+                {clubesSubmenu.map((s) => (
+                  <Link
+                    key={s.to}
+                    to={s.to}
+                    className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                    activeProps={{ className: "text-primary bg-surface" }}
+                  >
+                    {s.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
           <Link
             to="/lcif"
             className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"

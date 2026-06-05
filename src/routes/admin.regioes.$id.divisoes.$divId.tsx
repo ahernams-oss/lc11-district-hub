@@ -54,6 +54,8 @@ function DivisionEditor() {
             name: data.name,
             description: data.description ?? "",
             order_index: data.order_index ?? 0,
+            president_name: (data as any).president_name ?? "",
+            president_photo_url: (data as any).president_photo_url ?? "",
           });
         setLoading(false);
       });

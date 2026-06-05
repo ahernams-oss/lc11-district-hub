@@ -33,16 +33,10 @@ const ROLE_BADGE: Record<PanelRole, { label: string; cls: string }> = {
 };
 
 function AdminUsersPage() {
-  const { user, canViewUsers, canManageUsers } = useAuth();
-  const qc = useQueryClient();
-  const list = useServerFn(listAuthUsers);
-  const setRole = useServerFn(setUserRole);
-  const delUser = useServerFn(deleteAuthUser);
-  const [msg, setMsg] = useState<{ type: "ok" | "err"; text: string } | null>(null);
+  const { user, canViewUsers, canManageUsers, loading } = useAuth();
 
-  if (!canViewUsers) {
-    return <Navigate to="/admin" />;
-  }
+  if (loading) return <div className="p-6 text-sm text-muted-foreground">Carregando...</div>;
+  if (!canViewUsers) return <Navigate to="/admin" />;
 
   return <UsersTable user={user} canManageUsers={canManageUsers} />;
 }

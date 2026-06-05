@@ -181,6 +181,14 @@ export function SiteHeader() {
               </Link>
             ))}
           </div>
+          <Link
+            to="/lcif"
+            onClick={() => setOpen(false)}
+            className="rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-surface"
+            activeProps={{ className: "text-primary bg-surface" }}
+          >
+            LCIF
+          </Link>
           {nav.map((item) => (
             <Link
               key={item.to}

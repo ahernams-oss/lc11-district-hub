@@ -60,27 +60,28 @@ export function SiteHeader() {
             <Link
               to="/governador"
               onClick={() => setOpen(false)}
-              className="hidden items-center gap-2 border-l border-border pl-4 sm:flex"
+              className="hidden items-center gap-3 rounded-lg border border-border bg-surface/50 px-3 py-1.5 transition-colors hover:bg-surface sm:flex"
               title={`Governador${governador.name ? `: ${governador.name}` : ""}`}
             >
               <img
                 src={governador.photo_url}
                 alt={governador.name ? `Governador ${governador.name}` : "Governador"}
-                className="h-11 w-11 rounded-full object-cover ring-2 ring-primary/30"
+                className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-primary/30"
               />
               <div className="hidden leading-tight md:block">
-                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Governador</div>
-                <div className="font-display text-sm font-semibold text-foreground">{governador.name}</div>
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-primary">Governador</div>
+                <div className="whitespace-nowrap font-display text-sm font-semibold text-foreground">{governador.name}</div>
               </div>
               {governador.pin_url && (
                 <img
                   src={governador.pin_url}
                   alt="PIN do Governador"
-                  className="ml-2 h-10 w-10 object-contain"
+                  className="h-10 w-10 shrink-0 object-contain"
                 />
               )}
             </Link>
           )}
+
         </div>
 
         <nav className="hidden items-center gap-1 lg:flex">

@@ -15,7 +15,6 @@ export const Route = createFileRoute("/auth")({
 });
 
 function AuthPage() {
-  const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -32,17 +31,8 @@ function AuthPage() {
     setError(null);
     setBusy(true);
     try {
-      if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { emailRedirectTo: `${window.location.origin}/admin` },
-        });
-        if (error) throw error;
-      } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-      }
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
     } catch (e: any) {
       setError(e.message ?? "Erro ao autenticar");
     } finally {
@@ -53,11 +43,12 @@ function AuthPage() {
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16">
       <h1 className="font-display text-3xl font-bold text-foreground">
-        {mode === "login" ? "Entrar no Painel" : "Criar Conta de Admin"}
+        Entrar no Painel
       </h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        Acesso restrito à administração do Distrito LC-11.
+        Acesso restrito à administração do Distrito LC-11. Novos usuários devem ser criados pelo administrador.
       </p>
+
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">
         <button
@@ -121,17 +112,11 @@ function AuthPage() {
           disabled={busy}
           className="w-full rounded-md bg-primary px-4 py-2 font-semibold text-primary-foreground disabled:opacity-60"
         >
-          {busy ? "Aguarde..." : mode === "login" ? "Entrar" : "Criar conta"}
+          {busy ? "Aguarde..." : "Entrar"}
         </button>
       </form>
 
-      <button
-        onClick={() => setMode(mode === "login" ? "signup" : "login")}
-        className="mt-4 text-sm text-primary hover:underline"
-      >
-        {mode === "login" ? "Criar nova conta" : "Já tenho conta"}
-      </button>
-      <Link to="/" className="mt-2 text-sm text-muted-foreground hover:text-primary">
+      <Link to="/" className="mt-4 text-sm text-muted-foreground hover:text-primary">
         ← Voltar ao site
       </Link>
     </div>

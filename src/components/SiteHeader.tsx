@@ -2,6 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
+import lionsLogo from "@/assets/lions-logo.png.asset.json";
+
 
 const nav = [
   { to: "/", label: "Início" },
@@ -21,9 +23,8 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground font-display font-bold">
-            L
-          </div>
+          <img src={lionsLogo.url} alt="Lions Clubs International" className="h-11 w-11 object-contain" />
+
           <div className="leading-tight">
             <div className="font-display text-base font-bold text-foreground">Distrito LC-11</div>
             <div className="text-[11px] uppercase tracking-wider text-muted-foreground">Lions Clubs International</div>

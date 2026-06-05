@@ -47,42 +47,44 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-4">
-          <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-            <img src={lionsLogo.url} alt="Lions Clubs International" className="h-11 w-11 object-contain" />
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <div className="flex min-w-0 items-center gap-3">
+          <Link to="/" className="flex shrink-0 items-center gap-2" onClick={() => setOpen(false)}>
+            <img src={lionsLogo.url} alt="Lions Clubs International" className="h-10 w-10 object-contain" />
             <div className="leading-tight">
-              <div className="font-display text-base font-bold text-foreground">Distrito LC-11</div>
-              <div className="text-[11px] uppercase tracking-wider text-muted-foreground">Lions Clubs International</div>
+              <div className="whitespace-nowrap font-display text-sm font-bold text-foreground">Distrito LC-11</div>
+              <div className="hidden whitespace-nowrap text-[10px] uppercase tracking-wider text-muted-foreground xl:block">
+                Lions Clubs International
+              </div>
             </div>
           </Link>
           {governador?.photo_url && (
             <Link
               to="/governador"
               onClick={() => setOpen(false)}
-              className="hidden items-center gap-3 rounded-lg border border-border bg-surface/50 px-3 py-1.5 transition-colors hover:bg-surface sm:flex"
+              className="hidden shrink-0 items-center gap-2 rounded-lg border border-border bg-surface/50 px-2.5 py-1 transition-colors hover:bg-surface sm:flex"
               title={`Governador${governador.name ? `: ${governador.name}` : ""}`}
             >
               <img
                 src={governador.photo_url}
                 alt={governador.name ? `Governador ${governador.name}` : "Governador"}
-                className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-primary/30"
+                className="h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-primary/30"
               />
-              <div className="hidden leading-tight md:block">
-                <div className="text-[10px] font-semibold uppercase tracking-wider text-primary">Governador</div>
-                <div className="whitespace-nowrap font-display text-sm font-semibold text-foreground">{governador.name}</div>
+              <div className="hidden leading-tight xl:block">
+                <div className="text-[9px] font-semibold uppercase tracking-wider text-primary">Governador</div>
+                <div className="whitespace-nowrap font-display text-xs font-semibold text-foreground">{governador.name}</div>
               </div>
               {governador.pin_url && (
                 <img
                   src={governador.pin_url}
                   alt="PIN do Governador"
-                  className="h-10 w-10 shrink-0 object-contain"
+                  className="h-9 w-9 shrink-0 object-contain"
                 />
               )}
             </Link>
           )}
-
         </div>
+
 
         <nav className="hidden items-center gap-1 lg:flex">
           <div

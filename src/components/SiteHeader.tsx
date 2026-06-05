@@ -16,11 +16,14 @@ const lideresSubmenu = [
   { to: "/governador", label: "Governador" },
   { to: "/vice-governador-1", label: "1º Vice-Governador" },
   { to: "/vice-governador-2", label: "2º Vice-Governador" },
+  { to: "/ex-governadores", label: "Galeria de Ex-Governadores" },
+] as const;
+
+const equipeGovernadorSubmenu = [
   { to: "/secretario", label: "Secretário Distrital" },
   { to: "/tesoureiro", label: "Tesoureiro Distrital" },
   { to: "/gat", label: "GAT" },
   { to: "/assessoria", label: "Assessoria" },
-  { to: "/ex-governadores", label: "Galeria de Ex-Governadores" },
 ] as const;
 
 const regioesSubmenu = [

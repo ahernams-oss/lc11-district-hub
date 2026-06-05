@@ -130,6 +130,20 @@ export function SiteHeader() {
                 >
                   Geral
                 </Link>
+                <Link
+                  to="/clubes/es"
+                  className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                  activeProps={{ className: "text-primary bg-surface" }}
+                >
+                  Clubes do ES
+                </Link>
+                <Link
+                  to="/clubes/rj"
+                  className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                  activeProps={{ className: "text-primary bg-surface" }}
+                >
+                  Clubes do RJ
+                </Link>
                 <div className="group/regiao relative">
                   <button
                     type="button"
@@ -152,6 +166,7 @@ export function SiteHeader() {
                 </div>
               </div>
             )}
+
           </div>
 
           <Link

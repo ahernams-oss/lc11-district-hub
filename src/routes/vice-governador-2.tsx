@@ -11,7 +11,7 @@ export const Route = createFileRoute("/vice-governador-2")({
 
 function Page() {
   const content = useSiteContent("vice-governador-2", {
-    eyebrow: "Liderança 2025–2026",
+    eyebrow: "Liderança ano Lionistico 2026–2027",
     title: "2º Vice-Governador do Distrito LC-11",
     description: "Contribuindo com a liderança distrital e a formação de novos Leões.",
   });

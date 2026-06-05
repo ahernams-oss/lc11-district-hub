@@ -18,7 +18,7 @@ export const Route = createFileRoute("/governador")({
 
 function Governador() {
   const content = useSiteContent("governador", {
-    eyebrow: "Liderança 2025–2026",
+    eyebrow: "Liderança ano Lionistico 2026–2027",
     title: "Governador ",
     description: "Liderando com servir, inspirando com exemplo.",
   });

@@ -207,6 +207,45 @@ function ContentEditor() {
                   )}
                 </div>
               )}
+              {f.type === "images" && (() => {
+                const list: string[] = Array.isArray(values[f.name]) ? values[f.name] : [];
+                const max = f.max ?? 5;
+                return (
+                  <div className="mt-1 space-y-3">
+                    {list.length > 0 && (
+                      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                        {list.map((url, idx) => (
+                          <div key={url + idx} className="relative">
+                            <img src={url} alt="" className="h-28 w-full rounded-md object-cover" />
+                            <button
+                              type="button"
+                              onClick={() => removeImageFromList(f.name, idx)}
+                              className="absolute right-1 top-1 rounded bg-destructive px-2 py-0.5 text-xs font-semibold text-destructive-foreground"
+                            >
+                              Remover
+                            </button>
+                            <div className="absolute left-1 top-1 rounded bg-black/60 px-1.5 py-0.5 text-xs text-white">
+                              {idx + 1}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <p className="text-xs text-muted-foreground">{list.length} / {max} imagens</p>
+                    {list.length < max && (
+                      <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-surface">
+                        <Upload className="h-4 w-4" /> Adicionar imagem
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => e.target.files?.[0] && handleAddImageToList(f.name, e.target.files[0], max)}
+                        />
+                      </label>
+                    )}
+                  </div>
+                );
+              })()}
             </div>
           ))}
 

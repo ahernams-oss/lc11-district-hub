@@ -9,14 +9,14 @@ export const Route = createFileRoute("/admin/conteudo/$key")({
 });
 
 // Field definitions per content key
-type Field = { name: string; label: string; type: "text" | "textarea" | "image" };
+type Field = { name: string; label: string; type: "text" | "textarea" | "image" | "images"; max?: number };
 
 const FIELDS: Record<ContentKey, Field[]> = {
   home: [
     { name: "hero_eyebrow", label: "Sobre-título (eyebrow)", type: "text" },
     { name: "hero_title", label: "Título principal", type: "textarea" },
     { name: "hero_description", label: "Descrição", type: "textarea" },
-    { name: "hero_image_url", label: "Imagem do hero (foto principal)", type: "image" },
+    { name: "hero_images", label: "Imagens do hero (até 5 - rotação automática)", type: "images", max: 5 },
   ],
   "lions-internacional": [
     { name: "eyebrow", label: "Sobre-título", type: "text" },

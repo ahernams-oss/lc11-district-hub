@@ -123,6 +123,32 @@ function ContentEditor() {
     }
   }
 
+  async function handleAddImageToList(field: string, file: File, max: number) {
+    setSaving(true);
+    try {
+      const url = await uploadContentImage(file);
+      setValues((v) => {
+        const list = Array.isArray(v[field]) ? [...v[field]] : [];
+        if (list.length >= max) return v;
+        list.push(url);
+        return { ...v, [field]: list };
+      });
+      setMsg("Imagem adicionada. Clique em Salvar para confirmar.");
+    } catch (e: any) {
+      setMsg("Erro no upload: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  function removeImageFromList(field: string, index: number) {
+    setValues((v) => {
+      const list = Array.isArray(v[field]) ? [...v[field]] : [];
+      list.splice(index, 1);
+      return { ...v, [field]: list };
+    });
+  }
+
   if (!CONTENT_LABELS[ckey]) {
     return <p>Página desconhecida.</p>;
   }

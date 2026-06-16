@@ -96,7 +96,7 @@ function Index() {
             </div>
 
             {/* RIGHT: Dynamic banner carousel */}
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-elegant ring-1 ring-white/20 lg:aspect-[5/4]">
+            <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-2xl bg-white shadow-elegant ring-1 ring-white/20 lg:aspect-[5/4]">
               {slides.map((src, i) => (
                 <img
                   key={src + i}
@@ -104,7 +104,7 @@ function Index() {
                   alt="Banner do Distrito LC-11"
                   width={1200}
                   height={900}
-                  className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${i === current ? "opacity-100" : "opacity-0"}`}
+                  className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-1000 ${i === current ? "opacity-100" : "opacity-0"}`}
                 />
               ))}
               {slides.length > 1 && (

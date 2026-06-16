@@ -1,11 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, Heart, Eye, Leaf, Users, Calendar, Trophy } from "lucide-react";
+import { ArrowRight, Heart, Eye, Leaf, Users, Calendar, Trophy, Mail, Phone } from "lucide-react";
 import heroImg from "@/assets/hero-service.jpg";
 import envImg from "@/assets/project-environment.jpg";
 import visionImg from "@/assets/project-vision.jpg";
 import hungerImg from "@/assets/project-hunger.jpg";
 import { useSiteContent } from "@/lib/content";
+import { useLeaders } from "@/lib/leaders";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -50,6 +51,9 @@ function Index() {
     hero_images: [],
   });
 
+  const { data: leaders = [] } = useLeaders("governador");
+  const gov = leaders[0];
+
   const images = (Array.isArray(hero.hero_images) ? hero.hero_images : [])
     .filter((u) => typeof u === "string" && u.trim().length > 0)
     .slice(0, 5);
@@ -93,6 +97,34 @@ function Index() {
                   Faça uma doação
                 </Link>
               </div>
+
+              {/* Governor PIN card */}
+              {gov && (
+                <div className="mt-8 inline-flex items-center gap-4 rounded-xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm">
+                  <img
+                    src={gov.photo_url || ""}
+                    alt={gov.name}
+                    className="h-16 w-16 rounded-full object-cover ring-2 ring-gold"
+                  />
+                  <div>
+                    <p className="font-semibold text-primary-foreground">
+                      {gov.name.split(" // ").map((part, i, arr) => (
+                        <span key={i}>
+                          {part}
+                          {i < arr.length - 1 && <br />}
+                        </span>
+                      ))}
+                    </p>
+                    <p className="text-sm text-gold">{gov.role}</p>
+                    <Link
+                      to="/governador"
+                      className="mt-1 inline-block text-xs font-medium text-white/80 hover:text-white"
+                    >
+                      Ver perfil →
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* RIGHT: Dynamic banner carousel */}

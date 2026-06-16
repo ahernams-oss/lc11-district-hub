@@ -44,7 +44,14 @@ function Tesoureiro() {
                 {m.photo_url && (
                   <img src={m.photo_url} alt={m.name} className="mb-4 h-32 w-32 rounded-full object-cover" />
                 )}
-                <p className="font-semibold text-foreground">{m.name}</p>
+                <p className="font-semibold text-foreground">
+                  {m.name?.split(" // ").map((part, i, arr) => (
+                    <span key={i}>
+                      {part}
+                      {i < arr.length - 1 && <br />}
+                    </span>
+                  ))}
+                </p>
                 {m.role && <p className="mt-1 text-sm text-muted-foreground">{m.role}</p>}
                 {m.bio && <p className="mt-3 text-sm text-muted-foreground whitespace-pre-line">{m.bio}</p>}
                 <div className="mt-4 space-y-1 text-sm text-muted-foreground">

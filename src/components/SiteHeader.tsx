@@ -78,7 +78,14 @@ export function SiteHeader() {
               />
               <div className="hidden leading-tight xl:block">
                 <div className="text-[9px] font-semibold uppercase tracking-wider text-primary">Governador</div>
-                <div className="whitespace-nowrap font-display text-xs font-semibold text-foreground">{governador.name}</div>
+                <div className={cn("font-display text-xs font-semibold text-foreground", !governador.name?.includes(" // ") && "whitespace-nowrap")}>
+                  {governador.name?.split(" // ").map((part, i) => (
+                    <span key={i}>
+                      {part}
+                      {i < governador.name.split(" // ").length - 1 && <br />}
+                    </span>
+                  ))}
+                </div>
               </div>
               {governador.pin_url && (
                 <img

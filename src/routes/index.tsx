@@ -66,42 +66,61 @@ function Index() {
     <>
       {/* HERO */}
       <section className="relative overflow-hidden bg-primary text-primary-foreground">
-        <div className="absolute inset-0">
-          {slides.map((src, i) => (
-            <img
-              key={src + i}
-              src={src}
-              alt="Voluntários do Lions Clubs servindo a comunidade"
-              width={1920}
-              height={1080}
-              className={`absolute inset-0 h-full w-full object-cover opacity-30 transition-opacity duration-1000 ${i === current ? "opacity-30" : "opacity-0"}`}
-            />
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-primary/40" />
-        </div>
-        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-            {hero.hero_eyebrow}
-          </p>
-          <h1 className="max-w-3xl font-display text-4xl font-bold leading-tight sm:text-6xl lg:text-7xl whitespace-pre-line">
-            {hero.hero_title}
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed opacity-95 sm:text-xl whitespace-pre-line">
-            {hero.hero_description}
-          </p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Link
-              to="/clubes"
-              className="inline-flex items-center gap-2 rounded-md bg-gold px-6 py-3 text-base font-semibold text-gold-foreground shadow-elegant transition-transform hover:scale-105"
-            >
-              Encontre um clube <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              to="/doar"
-              className="inline-flex items-center gap-2 rounded-md border border-white/40 bg-white/10 px-6 py-3 text-base font-semibold text-primary-foreground backdrop-blur hover:bg-white/20"
-            >
-              Faça uma doação
-            </Link>
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+            {/* LEFT: Message */}
+            <div>
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-gold">
+                {hero.hero_eyebrow}
+              </p>
+              <h1 className="font-display text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl whitespace-pre-line">
+                {hero.hero_title}
+              </h1>
+              <p className="mt-6 text-lg leading-relaxed opacity-95 sm:text-xl whitespace-pre-line">
+                {hero.hero_description}
+              </p>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <Link
+                  to="/clubes"
+                  className="inline-flex items-center gap-2 rounded-md bg-gold px-6 py-3 text-base font-semibold text-gold-foreground shadow-elegant transition-transform hover:scale-105"
+                >
+                  Encontre um clube <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/doar"
+                  className="inline-flex items-center gap-2 rounded-md border border-white/40 bg-white/10 px-6 py-3 text-base font-semibold text-primary-foreground backdrop-blur hover:bg-white/20"
+                >
+                  Faça uma doação
+                </Link>
+              </div>
+            </div>
+
+            {/* RIGHT: Dynamic banner carousel */}
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-elegant ring-1 ring-white/20 lg:aspect-[5/4]">
+              {slides.map((src, i) => (
+                <img
+                  key={src + i}
+                  src={src}
+                  alt="Banner do Distrito LC-11"
+                  width={1200}
+                  height={900}
+                  className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${i === current ? "opacity-100" : "opacity-0"}`}
+                />
+              ))}
+              {slides.length > 1 && (
+                <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+                  {slides.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      aria-label={`Ir para imagem ${i + 1}`}
+                      onClick={() => setCurrent(i)}
+                      className={`h-2 rounded-full transition-all ${i === current ? "w-6 bg-gold" : "w-2 bg-white/60 hover:bg-white"}`}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>

@@ -44,7 +44,14 @@ function Governador() {
               <img src={photo} alt={name} className="h-full w-full object-cover" />
             </div>
             <div className="mt-6 rounded-xl bg-surface p-5 text-sm">
-              <p className="font-semibold text-foreground">{name}</p>
+              <p className="font-semibold text-foreground">
+                {name.split(" // ").map((part, i, arr) => (
+                  <span key={i}>
+                    {part}
+                    {i < arr.length - 1 && <br />}
+                  </span>
+                ))}
+              </p>
               <p className="mt-1 text-muted-foreground">{role}</p>
               <div className="mt-4 space-y-2 text-muted-foreground">
                 <p className="flex items-center gap-2"><Mail className="h-4 w-4 text-primary" />{email}</p>

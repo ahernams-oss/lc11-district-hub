@@ -83,7 +83,14 @@ function LeadersList() {
                           <div className="h-12 w-12 rounded-full bg-surface" />
                         )}
                         <div className="flex-1 min-w-0">
-                          <div className="font-semibold text-foreground">{l.name}</div>
+                        <div className="font-semibold text-foreground">
+                          {l.name?.split(" // ").map((part, i, arr) => (
+                            <span key={i}>
+                              {part}
+                              {i < arr.length - 1 && <br />}
+                            </span>
+                          ))}
+                        </div>
                           <div className="text-xs text-muted-foreground">
                             {l.role || l.year_label || ""}
                           </div>

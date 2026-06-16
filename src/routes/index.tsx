@@ -1,11 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, Heart, Eye, Leaf, Users, Calendar, Trophy } from "lucide-react";
+import { ArrowRight, Heart, Eye, Leaf, Users, Calendar, Trophy, Mail, Phone } from "lucide-react";
 import heroImg from "@/assets/hero-service.jpg";
 import envImg from "@/assets/project-environment.jpg";
 import visionImg from "@/assets/project-vision.jpg";
 import hungerImg from "@/assets/project-hunger.jpg";
 import { useSiteContent } from "@/lib/content";
+import { useLeaders } from "@/lib/leaders";
 
 export const Route = createFileRoute("/")({
   head: () => ({

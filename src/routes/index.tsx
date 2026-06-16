@@ -35,27 +35,48 @@ const stats = [
 ];
 
 function Index() {
-  const hero = useSiteContent("home", {
+  const hero = useSiteContent<{
+    hero_eyebrow: string;
+    hero_title: string;
+    hero_description: string;
+    hero_image_url: string;
+    hero_images: string[];
+  }>("home", {
     hero_eyebrow: "Lions Clubs International · Distrito LC-11",
     hero_title: "Onde há uma necessidade, há um Leão.",
     hero_description:
       "Somos voluntários de mais de 65 clubes unidos por uma causa: servir nossa comunidade com integridade, compaixão e união. Junte-se a nós.",
     hero_image_url: "",
+    hero_images: [],
   });
-  const heroSrc = hero.hero_image_url || heroImg;
+
+  const images = (Array.isArray(hero.hero_images) ? hero.hero_images : [])
+    .filter((u) => typeof u === "string" && u.trim().length > 0)
+    .slice(0, 5);
+  const slides = images.length > 0 ? images : [hero.hero_image_url || heroImg];
+
+  const [current, setCurrent] = useState(0);
+  useEffect(() => {
+    if (slides.length <= 1) return;
+    const id = setInterval(() => setCurrent((c) => (c + 1) % slides.length), 5000);
+    return () => clearInterval(id);
+  }, [slides.length]);
 
   return (
     <>
       {/* HERO */}
       <section className="relative overflow-hidden bg-primary text-primary-foreground">
         <div className="absolute inset-0">
-          <img
-            src={heroSrc}
-            alt="Voluntários do Lions Clubs servindo a comunidade"
-            width={1920}
-            height={1080}
-            className="h-full w-full object-cover opacity-30"
-          />
+          {slides.map((src, i) => (
+            <img
+              key={src + i}
+              src={src}
+              alt="Voluntários do Lions Clubs servindo a comunidade"
+              width={1920}
+              height={1080}
+              className={`absolute inset-0 h-full w-full object-cover opacity-30 transition-opacity duration-1000 ${i === current ? "opacity-30" : "opacity-0"}`}
+            />
+          ))}
           <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-primary/40" />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">

@@ -72,42 +72,44 @@ function Index() {
       <section className="relative overflow-hidden bg-primary text-primary-foreground">
         <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-            {/* LEFT: Message */}
-            <div>
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-                {hero.hero_eyebrow}
-              </p>
-              <h1 className="font-display text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl whitespace-pre-line">
-                {hero.hero_title}
-              </h1>
-              <p className="mt-6 text-lg leading-relaxed opacity-95 sm:text-xl whitespace-pre-line">
-                {hero.hero_description}
-              </p>
-              <div className="mt-10 flex flex-wrap gap-4">
-                <Link
-                  to="/clubes"
-                  className="inline-flex items-center gap-2 rounded-md bg-gold px-6 py-3 text-base font-semibold text-gold-foreground shadow-elegant transition-transform hover:scale-105"
-                >
-                  Encontre um clube <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  to="/doar"
-                  className="inline-flex items-center gap-2 rounded-md border border-white/40 bg-white/10 px-6 py-3 text-base font-semibold text-primary-foreground backdrop-blur hover:bg-white/20"
-                >
-                  Faça uma doação
-                </Link>
-              </div>
-
+            {/* LEFT: PIN + Message */}
+            <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-start">
               {/* Governor PIN image */}
               {gov?.pin_url && (
-                <div className="mt-8">
+                <div className="flex-shrink-0">
                   <img
                     src={gov.pin_url}
                     alt={`PIN do ${gov.name}`}
-                    className="max-h-64 w-auto rounded-xl shadow-elegant"
+                    className="max-h-72 w-auto rounded-xl shadow-elegant"
                   />
                 </div>
               )}
+
+              <div>
+                <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-gold">
+                  {hero.hero_eyebrow}
+                </p>
+                <h1 className="font-display text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl whitespace-pre-line">
+                  {hero.hero_title}
+                </h1>
+                <p className="mt-6 text-lg leading-relaxed opacity-95 sm:text-xl whitespace-pre-line">
+                  {hero.hero_description}
+                </p>
+                <div className="mt-10 flex flex-wrap gap-4">
+                  <Link
+                    to="/clubes"
+                    className="inline-flex items-center gap-2 rounded-md bg-gold px-6 py-3 text-base font-semibold text-gold-foreground shadow-elegant transition-transform hover:scale-105"
+                  >
+                    Encontre um clube <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <Link
+                    to="/doar"
+                    className="inline-flex items-center gap-2 rounded-md border border-white/40 bg-white/10 px-6 py-3 text-base font-semibold text-primary-foreground backdrop-blur hover:bg-white/20"
+                  >
+                    Faça uma doação
+                  </Link>
+                </div>
+              </div>
             </div>
 
             {/* RIGHT: Dynamic banner carousel */}

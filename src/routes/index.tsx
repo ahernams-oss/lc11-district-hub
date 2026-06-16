@@ -51,6 +51,9 @@ function Index() {
     hero_images: [],
   });
 
+  const { data: leaders = [] } = useLeaders("governador");
+  const gov = leaders[0];
+
   const images = (Array.isArray(hero.hero_images) ? hero.hero_images : [])
     .filter((u) => typeof u === "string" && u.trim().length > 0)
     .slice(0, 5);

@@ -26,7 +26,14 @@ function Page() {
           <img src={v.photo_url} alt={v.name} className="mb-6 h-48 w-48 rounded-2xl object-cover shadow-elegant" />
         )}
         <div className="rounded-xl bg-surface p-6">
-          <p className="font-semibold text-foreground">{v?.name ?? "CL Nome do 2º Vice-Governador"}</p>
+          <p className="font-semibold text-foreground">
+            {v?.name?.split(" // ").map((part, i, arr) => (
+              <span key={i}>
+                {part}
+                {i < arr.length - 1 && <br />}
+              </span>
+            )) ?? "CL Nome do 2º Vice-Governador"}
+          </p>
           <p className="mt-1 text-muted-foreground">{v?.role ?? "2º Vice-Governador do Distrito LC-11"}</p>
           <div className="mt-4 space-y-2 text-muted-foreground">
             <p className="flex items-center gap-2"><Mail className="h-4 w-4 text-primary" />{v?.email ?? "2vice@distritolc11.org"}</p>

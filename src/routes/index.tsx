@@ -97,6 +97,34 @@ function Index() {
                   Faça uma doação
                 </Link>
               </div>
+
+              {/* Governor PIN card */}
+              {gov && (
+                <div className="mt-8 inline-flex items-center gap-4 rounded-xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm">
+                  <img
+                    src={gov.photo_url || ""}
+                    alt={gov.name}
+                    className="h-16 w-16 rounded-full object-cover ring-2 ring-gold"
+                  />
+                  <div>
+                    <p className="font-semibold text-primary-foreground">
+                      {gov.name.split(" // ").map((part, i, arr) => (
+                        <span key={i}>
+                          {part}
+                          {i < arr.length - 1 && <br />}
+                        </span>
+                      ))}
+                    </p>
+                    <p className="text-sm text-gold">{gov.role}</p>
+                    <Link
+                      to="/governador"
+                      className="mt-1 inline-block text-xs font-medium text-white/80 hover:text-white"
+                    >
+                      Ver perfil →
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* RIGHT: Dynamic banner carousel */}

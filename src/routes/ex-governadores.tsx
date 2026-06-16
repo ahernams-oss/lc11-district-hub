@@ -46,7 +46,14 @@ function ExGovernadores() {
                   <User className="h-12 w-12 text-muted-foreground/60" />
                 </div>
               )}
-              <div className="mt-4 font-display text-lg font-bold text-foreground">{g.name}</div>
+              <div className="mt-4 font-display text-lg font-bold text-foreground">
+                {g.name?.split(" // ").map((part: string, i: number, arr: string[]) => (
+                  <span key={i}>
+                    {part}
+                    {i < arr.length - 1 && <br />}
+                  </span>
+                ))}
+              </div>
               {g.year_label && <div className="mt-1 text-sm font-semibold text-primary">{g.year_label}</div>}
               {g.motto && <div className="mt-2 text-sm italic text-muted-foreground">"{g.motto}"</div>}
             </div>

@@ -92,7 +92,7 @@ function ContentEditor() {
   useEffect(() => {
     setLoading(true);
     fetchSiteContent(ckey).then((d) => {
-      setValues(d as Record<string, string>);
+      setValues(d as Record<string, any>);
       setLoading(false);
     });
   }, [ckey]);

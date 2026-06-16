@@ -20,7 +20,7 @@ export const CONTENT_LABELS: Record<ContentKey, string> = {
   sobre: "Sobre o Distrito LC-11",
   historia: "Nossa História",
   gat: "GAT",
-  assessoria: "Assessoria",
+  assessoria: "Assessorias",
   "ex-governadores": "Galeria de Ex-Governadores",
   governador: "Página Governador (textos)",
   "vice-governador-1": "Página 1º Vice (textos)",

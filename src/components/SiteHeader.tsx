@@ -23,7 +23,7 @@ const equipeGovernadorSubmenu = [
   { to: "/secretario", label: "Secretário Distrital" },
   { to: "/tesoureiro", label: "Tesoureiro Distrital" },
   { to: "/gat", label: "GAT" },
-  { to: "/assessoria", label: "Assessoria" },
+  { to: "/assessoria", label: "Assessorias" },
 ] as const;
 
 const regioesSubmenu = [

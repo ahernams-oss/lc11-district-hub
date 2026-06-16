@@ -9,14 +9,14 @@ export const Route = createFileRoute("/admin/conteudo/$key")({
 });
 
 // Field definitions per content key
-type Field = { name: string; label: string; type: "text" | "textarea" | "image" };
+type Field = { name: string; label: string; type: "text" | "textarea" | "image" | "images"; max?: number };
 
 const FIELDS: Record<ContentKey, Field[]> = {
   home: [
     { name: "hero_eyebrow", label: "Sobre-título (eyebrow)", type: "text" },
     { name: "hero_title", label: "Título principal", type: "textarea" },
     { name: "hero_description", label: "Descrição", type: "textarea" },
-    { name: "hero_image_url", label: "Imagem do hero (foto principal)", type: "image" },
+    { name: "hero_images", label: "Imagens do hero (até 5 - rotação automática)", type: "images", max: 5 },
   ],
   "lions-internacional": [
     { name: "eyebrow", label: "Sobre-título", type: "text" },
@@ -84,7 +84,7 @@ function ContentEditor() {
   const { key } = useParams({ from: "/admin/conteudo/$key" });
   const ckey = key as ContentKey;
   const fields = FIELDS[ckey] ?? [];
-  const [values, setValues] = useState<Record<string, string>>({});
+  const [values, setValues] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
@@ -92,7 +92,7 @@ function ContentEditor() {
   useEffect(() => {
     setLoading(true);
     fetchSiteContent(ckey).then((d) => {
-      setValues(d as Record<string, string>);
+      setValues(d as Record<string, any>);
       setLoading(false);
     });
   }, [ckey]);
@@ -121,6 +121,32 @@ function ContentEditor() {
     } finally {
       setSaving(false);
     }
+  }
+
+  async function handleAddImageToList(field: string, file: File, max: number) {
+    setSaving(true);
+    try {
+      const url = await uploadContentImage(file);
+      setValues((v) => {
+        const list = Array.isArray(v[field]) ? [...v[field]] : [];
+        if (list.length >= max) return v;
+        list.push(url);
+        return { ...v, [field]: list };
+      });
+      setMsg("Imagem adicionada. Clique em Salvar para confirmar.");
+    } catch (e: any) {
+      setMsg("Erro no upload: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  function removeImageFromList(field: string, index: number) {
+    setValues((v) => {
+      const list = Array.isArray(v[field]) ? [...v[field]] : [];
+      list.splice(index, 1);
+      return { ...v, [field]: list };
+    });
   }
 
   if (!CONTENT_LABELS[ckey]) {
@@ -181,6 +207,45 @@ function ContentEditor() {
                   )}
                 </div>
               )}
+              {f.type === "images" && (() => {
+                const list: string[] = Array.isArray(values[f.name]) ? values[f.name] : [];
+                const max = f.max ?? 5;
+                return (
+                  <div className="mt-1 space-y-3">
+                    {list.length > 0 && (
+                      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                        {list.map((url, idx) => (
+                          <div key={url + idx} className="relative">
+                            <img src={url} alt="" className="h-28 w-full rounded-md object-cover" />
+                            <button
+                              type="button"
+                              onClick={() => removeImageFromList(f.name, idx)}
+                              className="absolute right-1 top-1 rounded bg-destructive px-2 py-0.5 text-xs font-semibold text-destructive-foreground"
+                            >
+                              Remover
+                            </button>
+                            <div className="absolute left-1 top-1 rounded bg-black/60 px-1.5 py-0.5 text-xs text-white">
+                              {idx + 1}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <p className="text-xs text-muted-foreground">{list.length} / {max} imagens</p>
+                    {list.length < max && (
+                      <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-surface">
+                        <Upload className="h-4 w-4" /> Adicionar imagem
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => e.target.files?.[0] && handleAddImageToList(f.name, e.target.files[0], max)}
+                        />
+                      </label>
+                    )}
+                  </div>
+                );
+              })()}
             </div>
           ))}
 

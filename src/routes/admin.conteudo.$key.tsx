@@ -84,7 +84,7 @@ function ContentEditor() {
   const { key } = useParams({ from: "/admin/conteudo/$key" });
   const ckey = key as ContentKey;
   const fields = FIELDS[ckey] ?? [];
-  const [values, setValues] = useState<Record<string, string>>({});
+  const [values, setValues] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);

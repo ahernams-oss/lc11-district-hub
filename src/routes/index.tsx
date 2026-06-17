@@ -76,7 +76,7 @@ function Index() {
             <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-start">
               {/* Governor PIN image */}
               {gov?.pin_url && (
-                <div className="flex-shrink-0 lg:-translate-x-[8cm]">
+                <div className="flex-shrink-0 lg:-translate-x-[4cm] lg:translate-y-[4cm]">
                   <img
                     src={gov.pin_url}
                     alt={`PIN do ${gov.name}`}

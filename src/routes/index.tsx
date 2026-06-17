@@ -113,7 +113,7 @@ function Index() {
             </div>
 
             {/* RIGHT: Dynamic banner carousel */}
-            <div className="relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-2xl bg-white shadow-elegant ring-1 ring-white/20 lg:aspect-[3/4]">
+            <div className="relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-2xl bg-white shadow-elegant ring-1 ring-white/20 lg:aspect-[3/4] lg:translate-x-[5cm]">
               {slides.map((src, i) => (
                 <img
                   key={src + i}

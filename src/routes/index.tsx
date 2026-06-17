@@ -76,7 +76,7 @@ function Index() {
             <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-start">
               {/* Governor PIN image */}
               {gov?.pin_url && (
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 lg:-translate-x-[4cm] lg:translate-y-[4cm]">
                   <img
                     src={gov.pin_url}
                     alt={`PIN do ${gov.name}`}
@@ -113,7 +113,7 @@ function Index() {
             </div>
 
             {/* RIGHT: Dynamic banner carousel */}
-            <div className="relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-2xl bg-white shadow-elegant ring-1 ring-white/20 lg:aspect-[3/4]">
+            <div className="relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-2xl bg-white shadow-elegant ring-1 ring-white/20 lg:aspect-[3/4] lg:translate-x-[5cm]">
               {slides.map((src, i) => (
                 <img
                   key={src + i}

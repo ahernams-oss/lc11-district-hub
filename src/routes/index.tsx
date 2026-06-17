@@ -70,7 +70,7 @@ function Index() {
     <>
       {/* HERO */}
       <section className="relative overflow-hidden bg-primary text-primary-foreground">
-        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
+        <div className="relative mx-auto max-w-7xl px-4 pt-4 pb-16 sm:px-6 sm:pt-6 sm:pb-24 lg:px-8 lg:pt-8 lg:pb-28">
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
             {/* LEFT: PIN + Message */}
             <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-start">

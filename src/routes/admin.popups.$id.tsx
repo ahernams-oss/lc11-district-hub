@@ -120,13 +120,64 @@ function PopupEdit() {
           />
         </div>
         <div>
-          <label className={label}>Imagem (URL)</label>
-          <input
-            className={field}
-            value={form.image_url}
-            onChange={(e) => setForm({ ...form, image_url: e.target.value })}
-            placeholder="https://..."
-          />
+          <label className={label}>Imagem</label>
+          <div className="flex items-center gap-3">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/png,image/jpeg,image/jpg,image/webp,image/gif"
+              className="hidden"
+              onChange={async (e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                setUploadingImage(true);
+                try {
+                  const reader = new FileReader();
+                  reader.readAsDataURL(file);
+                  await new Promise<void>((resolve, reject) => {
+                    reader.onload = () => resolve();
+                    reader.onerror = () => reject(reader.error);
+                  });
+                  const base64 = reader.result as string;
+                  const res = await doUpload({ data: { file: base64, filename: file.name } });
+                  setForm((prev) => ({ ...prev, image_url: res.url }));
+                } catch (err: any) {
+                  alert(err?.message || "Erro ao enviar imagem");
+                } finally {
+                  setUploadingImage(false);
+                  if (fileInputRef.current) fileInputRef.current.value = "";
+                }
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploadingImage}
+              className="inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm hover:bg-surface disabled:opacity-60"
+            >
+              <Upload className="h-4 w-4" />
+              {uploadingImage ? "Enviando..." : "Escolher imagem"}
+            </button>
+            {form.image_url && (
+              <button
+                type="button"
+                onClick={() => {
+                  setForm((prev) => ({ ...prev, image_url: "" }));
+                  if (fileInputRef.current) fileInputRef.current.value = "";
+                }}
+                className="inline-flex items-center gap-1 text-xs text-destructive hover:underline"
+              >
+                <X className="h-3 w-3" /> Remover
+              </button>
+            )}
+          </div>
+          {form.image_url && (
+            <img
+              src={form.image_url}
+              alt="Preview"
+              className="mt-3 h-32 w-auto rounded-md border object-cover"
+            />
+          )}
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div>

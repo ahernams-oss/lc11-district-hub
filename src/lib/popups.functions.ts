@@ -32,12 +32,11 @@ export const uploadPopupImage = createServerFn({ method: "POST" })
         `lovable-assets create --file "${tmpPath}" --filename "${filename}" --content-type "${mime}"`,
         { encoding: "utf-8", timeout: 30000 }
       );
-      const lines = result.trim().split("\n");
-      const urlLine = lines.find((l) => l.startsWith("http"));
-      if (!urlLine) {
+      const json = JSON.parse(result.trim().split("\n").find((l) => l.startsWith("{")) ?? "{}");
+      if (!json.url) {
         throw new Error("Falha ao obter URL do upload");
       }
-      return { url: urlLine.trim() };
+      return { url: json.url };
     } finally {
       try {
         unlinkSync(tmpPath);

@@ -264,6 +264,51 @@ export type Database = {
         }
         Relationships: []
       }
+      popups: {
+        Row: {
+          active: boolean
+          content: string | null
+          created_at: string
+          display_seconds: number
+          end_at: string
+          id: string
+          image_url: string | null
+          link_label: string | null
+          link_url: string | null
+          start_at: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          content?: string | null
+          created_at?: string
+          display_seconds?: number
+          end_at: string
+          id?: string
+          image_url?: string | null
+          link_label?: string | null
+          link_url?: string | null
+          start_at: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          content?: string | null
+          created_at?: string
+          display_seconds?: number
+          end_at?: string
+          id?: string
+          image_url?: string | null
+          link_label?: string | null
+          link_url?: string | null
+          start_at?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       projects: {
         Row: {
           content: string | null

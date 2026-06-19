@@ -39,6 +39,7 @@ import { Route as ClubesEsRouteImport } from './routes/clubes.es'
 import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
 import { Route as AdminRegioesIndexRouteImport } from './routes/admin.regioes.index'
 import { Route as AdminProjetosIndexRouteImport } from './routes/admin.projetos.index'
+import { Route as AdminPopupsIndexRouteImport } from './routes/admin.popups.index'
 import { Route as AdminNoticiasIndexRouteImport } from './routes/admin.noticias.index'
 import { Route as AdminLideresIndexRouteImport } from './routes/admin.lideres.index'
 import { Route as AdminEventosIndexRouteImport } from './routes/admin.eventos.index'
@@ -50,6 +51,7 @@ import { Route as ApiPublicGovernadoresRouteImport } from './routes/api.public.g
 import { Route as ApiPublicEventosRouteImport } from './routes/api.public.eventos'
 import { Route as AdminRegioesIdRouteImport } from './routes/admin.regioes.$id'
 import { Route as AdminProjetosIdRouteImport } from './routes/admin.projetos.$id'
+import { Route as AdminPopupsIdRouteImport } from './routes/admin.popups.$id'
 import { Route as AdminNoticiasIdRouteImport } from './routes/admin.noticias.$id'
 import { Route as AdminLideresIdRouteImport } from './routes/admin.lideres.$id'
 import { Route as AdminEventosIdRouteImport } from './routes/admin.eventos.$id'
@@ -207,6 +209,11 @@ const AdminProjetosIndexRoute = AdminProjetosIndexRouteImport.update({
   path: '/projetos/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminPopupsIndexRoute = AdminPopupsIndexRouteImport.update({
+  id: '/popups/',
+  path: '/popups/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminNoticiasIndexRoute = AdminNoticiasIndexRouteImport.update({
   id: '/noticias/',
   path: '/noticias/',
@@ -260,6 +267,11 @@ const AdminRegioesIdRoute = AdminRegioesIdRouteImport.update({
 const AdminProjetosIdRoute = AdminProjetosIdRouteImport.update({
   id: '/projetos/$id',
   path: '/projetos/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPopupsIdRoute = AdminPopupsIdRouteImport.update({
+  id: '/popups/$id',
+  path: '/popups/$id',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminNoticiasIdRoute = AdminNoticiasIdRouteImport.update({
@@ -328,6 +340,7 @@ export interface FileRoutesByFullPath {
   '/admin/eventos/$id': typeof AdminEventosIdRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
   '/admin/noticias/$id': typeof AdminNoticiasIdRoute
+  '/admin/popups/$id': typeof AdminPopupsIdRoute
   '/admin/projetos/$id': typeof AdminProjetosIdRoute
   '/admin/regioes/$id': typeof AdminRegioesIdRouteWithChildren
   '/api/public/eventos': typeof ApiPublicEventosRoute
@@ -339,6 +352,7 @@ export interface FileRoutesByFullPath {
   '/admin/eventos/': typeof AdminEventosIndexRoute
   '/admin/lideres/': typeof AdminLideresIndexRoute
   '/admin/noticias/': typeof AdminNoticiasIndexRoute
+  '/admin/popups/': typeof AdminPopupsIndexRoute
   '/admin/projetos/': typeof AdminProjetosIndexRoute
   '/admin/regioes/': typeof AdminRegioesIndexRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
@@ -376,6 +390,7 @@ export interface FileRoutesByTo {
   '/admin/eventos/$id': typeof AdminEventosIdRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
   '/admin/noticias/$id': typeof AdminNoticiasIdRoute
+  '/admin/popups/$id': typeof AdminPopupsIdRoute
   '/admin/projetos/$id': typeof AdminProjetosIdRoute
   '/admin/regioes/$id': typeof AdminRegioesIdRouteWithChildren
   '/api/public/eventos': typeof ApiPublicEventosRoute
@@ -387,6 +402,7 @@ export interface FileRoutesByTo {
   '/admin/eventos': typeof AdminEventosIndexRoute
   '/admin/lideres': typeof AdminLideresIndexRoute
   '/admin/noticias': typeof AdminNoticiasIndexRoute
+  '/admin/popups': typeof AdminPopupsIndexRoute
   '/admin/projetos': typeof AdminProjetosIndexRoute
   '/admin/regioes': typeof AdminRegioesIndexRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
@@ -426,6 +442,7 @@ export interface FileRoutesById {
   '/admin/eventos/$id': typeof AdminEventosIdRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
   '/admin/noticias/$id': typeof AdminNoticiasIdRoute
+  '/admin/popups/$id': typeof AdminPopupsIdRoute
   '/admin/projetos/$id': typeof AdminProjetosIdRoute
   '/admin/regioes/$id': typeof AdminRegioesIdRouteWithChildren
   '/api/public/eventos': typeof ApiPublicEventosRoute
@@ -437,6 +454,7 @@ export interface FileRoutesById {
   '/admin/eventos/': typeof AdminEventosIndexRoute
   '/admin/lideres/': typeof AdminLideresIndexRoute
   '/admin/noticias/': typeof AdminNoticiasIndexRoute
+  '/admin/popups/': typeof AdminPopupsIndexRoute
   '/admin/projetos/': typeof AdminProjetosIndexRoute
   '/admin/regioes/': typeof AdminRegioesIndexRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
@@ -477,6 +495,7 @@ export interface FileRouteTypes {
     | '/admin/eventos/$id'
     | '/admin/lideres/$id'
     | '/admin/noticias/$id'
+    | '/admin/popups/$id'
     | '/admin/projetos/$id'
     | '/admin/regioes/$id'
     | '/api/public/eventos'
@@ -488,6 +507,7 @@ export interface FileRouteTypes {
     | '/admin/eventos/'
     | '/admin/lideres/'
     | '/admin/noticias/'
+    | '/admin/popups/'
     | '/admin/projetos/'
     | '/admin/regioes/'
     | '/admin/regioes/$id/divisoes/$divId'
@@ -525,6 +545,7 @@ export interface FileRouteTypes {
     | '/admin/eventos/$id'
     | '/admin/lideres/$id'
     | '/admin/noticias/$id'
+    | '/admin/popups/$id'
     | '/admin/projetos/$id'
     | '/admin/regioes/$id'
     | '/api/public/eventos'
@@ -536,6 +557,7 @@ export interface FileRouteTypes {
     | '/admin/eventos'
     | '/admin/lideres'
     | '/admin/noticias'
+    | '/admin/popups'
     | '/admin/projetos'
     | '/admin/regioes'
     | '/admin/regioes/$id/divisoes/$divId'
@@ -574,6 +596,7 @@ export interface FileRouteTypes {
     | '/admin/eventos/$id'
     | '/admin/lideres/$id'
     | '/admin/noticias/$id'
+    | '/admin/popups/$id'
     | '/admin/projetos/$id'
     | '/admin/regioes/$id'
     | '/api/public/eventos'
@@ -585,6 +608,7 @@ export interface FileRouteTypes {
     | '/admin/eventos/'
     | '/admin/lideres/'
     | '/admin/noticias/'
+    | '/admin/popups/'
     | '/admin/projetos/'
     | '/admin/regioes/'
     | '/admin/regioes/$id/divisoes/$divId'
@@ -833,6 +857,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminProjetosIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/popups/': {
+      id: '/admin/popups/'
+      path: '/popups'
+      fullPath: '/admin/popups/'
+      preLoaderRoute: typeof AdminPopupsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/noticias/': {
       id: '/admin/noticias/'
       path: '/noticias'
@@ -908,6 +939,13 @@ declare module '@tanstack/react-router' {
       path: '/projetos/$id'
       fullPath: '/admin/projetos/$id'
       preLoaderRoute: typeof AdminProjetosIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/popups/$id': {
+      id: '/admin/popups/$id'
+      path: '/popups/$id'
+      fullPath: '/admin/popups/$id'
+      preLoaderRoute: typeof AdminPopupsIdRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/noticias/$id': {
@@ -990,12 +1028,14 @@ interface AdminRouteChildren {
   AdminEventosIdRoute: typeof AdminEventosIdRoute
   AdminLideresIdRoute: typeof AdminLideresIdRoute
   AdminNoticiasIdRoute: typeof AdminNoticiasIdRoute
+  AdminPopupsIdRoute: typeof AdminPopupsIdRoute
   AdminProjetosIdRoute: typeof AdminProjetosIdRoute
   AdminRegioesIdRoute: typeof AdminRegioesIdRouteWithChildren
   AdminConteudoIndexRoute: typeof AdminConteudoIndexRoute
   AdminEventosIndexRoute: typeof AdminEventosIndexRoute
   AdminLideresIndexRoute: typeof AdminLideresIndexRoute
   AdminNoticiasIndexRoute: typeof AdminNoticiasIndexRoute
+  AdminPopupsIndexRoute: typeof AdminPopupsIndexRoute
   AdminProjetosIndexRoute: typeof AdminProjetosIndexRoute
   AdminRegioesIndexRoute: typeof AdminRegioesIndexRoute
 }
@@ -1007,12 +1047,14 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminEventosIdRoute: AdminEventosIdRoute,
   AdminLideresIdRoute: AdminLideresIdRoute,
   AdminNoticiasIdRoute: AdminNoticiasIdRoute,
+  AdminPopupsIdRoute: AdminPopupsIdRoute,
   AdminProjetosIdRoute: AdminProjetosIdRoute,
   AdminRegioesIdRoute: AdminRegioesIdRouteWithChildren,
   AdminConteudoIndexRoute: AdminConteudoIndexRoute,
   AdminEventosIndexRoute: AdminEventosIndexRoute,
   AdminLideresIndexRoute: AdminLideresIndexRoute,
   AdminNoticiasIndexRoute: AdminNoticiasIndexRoute,
+  AdminPopupsIndexRoute: AdminPopupsIndexRoute,
   AdminProjetosIndexRoute: AdminProjetosIndexRoute,
   AdminRegioesIndexRoute: AdminRegioesIndexRoute,
 }

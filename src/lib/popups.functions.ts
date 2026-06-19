@@ -1,17 +1,15 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { z } from "zod";
 import { writeFileSync, unlinkSync } from "fs";
 import { execSync } from "child_process";
 
 export const uploadPopupImage = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ data }: { data: { file: string; filename: string } }) => {
+  .inputValidator(z.object({ file: z.string().min(1), filename: z.string().min(1) }))
+  .handler(async ({ data }) => {
     const base64 = data.file;
     const filename = data.filename;
-
-    if (!base64 || !filename) {
-      throw new Error("Arquivo ou nome ausente");
-    }
 
     const match = base64.match(/^data:([\w/\-+.]+);base64,(.+)$/);
     if (!match) {

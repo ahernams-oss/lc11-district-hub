@@ -1,8 +1,11 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import type { Popup } from "@/lib/popups";
+import { uploadPopupImage } from "@/lib/popups.functions";
+import { useServerFn } from "@tanstack/react-start";
+import { Upload, X } from "lucide-react";
 
 export const Route = createFileRoute("/admin/popups/$id")({
   component: PopupEdit,

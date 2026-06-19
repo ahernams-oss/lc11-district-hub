@@ -29,6 +29,9 @@ function PopupEdit() {
   const qc = useQueryClient();
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const doUpload = useServerFn(uploadPopupImage);
 
   const [form, setForm] = useState({
     title: "",

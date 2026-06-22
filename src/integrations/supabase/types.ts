@@ -425,6 +425,68 @@ export type Database = {
       }
     }
     Views: {
+      clubs_public: {
+        Row: {
+          address: string | null
+          city: string | null
+          created_at: string | null
+          division_id: string | null
+          facebook: string | null
+          id: string | null
+          instagram: string | null
+          logo_url: string | null
+          meetings: string | null
+          name: string | null
+          order_index: number | null
+          president: string | null
+          state: string | null
+          updated_at: string | null
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          created_at?: string | null
+          division_id?: string | null
+          facebook?: string | null
+          id?: string | null
+          instagram?: string | null
+          logo_url?: string | null
+          meetings?: string | null
+          name?: string | null
+          order_index?: number | null
+          president?: string | null
+          state?: string | null
+          updated_at?: string | null
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          created_at?: string | null
+          division_id?: string | null
+          facebook?: string | null
+          id?: string | null
+          instagram?: string | null
+          logo_url?: string | null
+          meetings?: string | null
+          name?: string | null
+          order_index?: number | null
+          president?: string | null
+          state?: string | null
+          updated_at?: string | null
+          website?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clubs_division_id_fkey"
+            columns: ["division_id"]
+            isOneToOne: false
+            referencedRelation: "divisions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leaders_public: {
         Row: {
           bio: string | null

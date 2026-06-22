@@ -25,9 +25,11 @@ function useRegionDetail(letra: string) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("regions")
-        .select("*, divisions(*, clubs(*))")
+        .select("*, divisions(*, clubs(id, division_id, name, city, state, address, meetings, website, instagram, facebook, president, logo_url, order_index))")
         .eq("letter", letra)
         .maybeSingle();
+
+
       if (error) throw error;
       return data;
     },

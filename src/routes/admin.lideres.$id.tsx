@@ -91,6 +91,7 @@ function LeaderEditor() {
             year_label: data.year_label ?? "",
             motto: data.motto ?? "",
             order_index: data.order_index ?? 0,
+            gallery_urls: ((data as any).gallery_urls ?? []) as string[],
           });
         }
         setLoading(false);

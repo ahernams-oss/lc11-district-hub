@@ -310,6 +310,37 @@ function LeaderEditor() {
           />
         </Field>
 
+        <Field label={`Galeria de fotos (até 5) — ${form.gallery_urls.length}/5`}>
+          {form.gallery_urls.length > 0 && (
+            <div className="mb-3 grid grid-cols-3 gap-2 sm:grid-cols-5">
+              {form.gallery_urls.map((url, i) => (
+                <div key={i} className="relative">
+                  <img src={url} alt="" className="aspect-square w-full rounded-md object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => removeGalleryAt(i)}
+                    className="absolute -right-2 -top-2 rounded-full bg-destructive px-2 py-0.5 text-xs text-destructive-foreground"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+          {form.gallery_urls.length < 5 && (
+            <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-surface">
+              <Upload className="h-4 w-4" /> Adicionar fotos
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(e) => e.target.files && e.target.files.length > 0 && handleGallery(e.target.files)}
+              />
+            </label>
+          )}
+        </Field>
+
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Email">
             <input

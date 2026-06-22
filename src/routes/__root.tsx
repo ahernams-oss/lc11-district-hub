@@ -83,10 +83,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Distrito LC-11 — Lions Clubs International" },
       { name: "description", content: "Distrito LC-11 do Lions Clubs International. Conheça nossos clubes, projetos de serviço e como participar." },
       { property: "og:title", content: "Distrito LC-11 — Lions Clubs International" },
-      { property: "og:description", content: "Servindo comunidades com compaixão, integridade e união." },
+      { property: "og:description", content: "Distrito LC-11 do Lions Clubs International. Conheça nossos clubes, projetos de serviço e como participar." },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Distrito LC-11" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Distrito LC-11 — Lions Clubs International" },
+      { name: "twitter:description", content: "Distrito LC-11 do Lions Clubs International. Conheça nossos clubes, projetos de serviço e como participar." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/51979c6b-dfde-43a0-ad48-065518e16c25" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/51979c6b-dfde-43a0-ad48-065518e16c25" },
     ],
     links: [
       {

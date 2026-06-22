@@ -36,6 +36,23 @@ export interface Leader {
   year_label: string | null;
   motto: string | null;
   order_index: number;
+  gallery_urls: string[] | null;
+}
+
+export function useLeader(id: string) {
+  return useQuery({
+    queryKey: ["leaders", "one", id],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("leaders_public")
+        .select("*")
+        .eq("id", id)
+        .maybeSingle();
+      if (error) throw error;
+      return data as Leader | null;
+    },
+    enabled: !!id,
+  });
 }
 
 export function useLeaders(category: LeaderCategory) {

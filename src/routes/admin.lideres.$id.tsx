@@ -33,6 +33,7 @@ interface FormState {
   year_label: string;
   motto: string;
   order_index: number;
+  gallery_urls: string[];
 }
 
 const EMPTY: FormState = {
@@ -48,6 +49,7 @@ const EMPTY: FormState = {
   year_label: "",
   motto: "",
   order_index: 0,
+  gallery_urls: [],
 };
 
 function LeaderEditor() {
@@ -89,6 +91,7 @@ function LeaderEditor() {
             year_label: data.year_label ?? "",
             motto: data.motto ?? "",
             order_index: data.order_index ?? 0,
+            gallery_urls: ((data as any).gallery_urls ?? []) as string[],
           });
         }
         setLoading(false);
@@ -146,6 +149,29 @@ function LeaderEditor() {
     } finally {
       setSaving(false);
     }
+  }
+
+  async function handleGallery(files: FileList) {
+    setSaving(true);
+    try {
+      const remaining = 5 - form.gallery_urls.length;
+      if (remaining <= 0) {
+        setMsg("Limite de 5 fotos atingido.");
+        return;
+      }
+      const toUpload = Array.from(files).slice(0, remaining);
+      const urls = await Promise.all(toUpload.map((f) => uploadLeaderPhoto(f)));
+      setForm((f) => ({ ...f, gallery_urls: [...f.gallery_urls, ...urls].slice(0, 5) }));
+      setMsg("Fotos enviadas. Clique em Salvar.");
+    } catch (e: any) {
+      setMsg("Erro no upload: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  function removeGalleryAt(idx: number) {
+    setForm((f) => ({ ...f, gallery_urls: f.gallery_urls.filter((_, i) => i !== idx) }));
   }
 
   if (loading) return <p>Carregando...</p>;
@@ -282,6 +308,37 @@ function LeaderEditor() {
             onChange={(e) => setForm({ ...form, bio: e.target.value })}
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
           />
+        </Field>
+
+        <Field label={`Galeria de fotos (até 5) — ${form.gallery_urls.length}/5`}>
+          {form.gallery_urls.length > 0 && (
+            <div className="mb-3 grid grid-cols-3 gap-2 sm:grid-cols-5">
+              {form.gallery_urls.map((url, i) => (
+                <div key={i} className="relative">
+                  <img src={url} alt="" className="aspect-square w-full rounded-md object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => removeGalleryAt(i)}
+                    className="absolute -right-2 -top-2 rounded-full bg-destructive px-2 py-0.5 text-xs text-destructive-foreground"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+          {form.gallery_urls.length < 5 && (
+            <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-surface">
+              <Upload className="h-4 w-4" /> Adicionar fotos
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(e) => e.target.files && e.target.files.length > 0 && handleGallery(e.target.files)}
+              />
+            </label>
+          )}
         </Field>
 
         <div className="grid gap-4 sm:grid-cols-2">

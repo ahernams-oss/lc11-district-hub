@@ -174,6 +174,7 @@ export type Database = {
           category: string
           created_at: string
           email: string | null
+          gallery_urls: string[]
           id: string
           message: string | null
           motto: string | null
@@ -191,6 +192,7 @@ export type Database = {
           category: string
           created_at?: string
           email?: string | null
+          gallery_urls?: string[]
           id?: string
           message?: string | null
           motto?: string | null
@@ -208,6 +210,7 @@ export type Database = {
           category?: string
           created_at?: string
           email?: string | null
+          gallery_urls?: string[]
           id?: string
           message?: string | null
           motto?: string | null
@@ -427,6 +430,7 @@ export type Database = {
           bio: string | null
           category: string | null
           created_at: string | null
+          gallery_urls: string[] | null
           id: string | null
           message: string | null
           motto: string | null
@@ -442,6 +446,7 @@ export type Database = {
           bio?: string | null
           category?: string | null
           created_at?: string | null
+          gallery_urls?: string[] | null
           id?: string | null
           message?: string | null
           motto?: string | null
@@ -457,6 +462,7 @@ export type Database = {
           bio?: string | null
           category?: string | null
           created_at?: string | null
+          gallery_urls?: string[] | null
           id?: string | null
           message?: string | null
           motto?: string | null

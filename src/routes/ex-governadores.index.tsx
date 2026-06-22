@@ -4,7 +4,7 @@ import { User } from "lucide-react";
 import { useSiteContent } from "@/lib/content";
 import { useLeaders } from "@/lib/leaders";
 
-export const Route = createFileRoute("/ex-governadores")({
+export const Route = createFileRoute("/ex-governadores/")({
   head: () => ({
     meta: [
       { title: "Galeria de Ex-Governadores — Distrito LC-11" },

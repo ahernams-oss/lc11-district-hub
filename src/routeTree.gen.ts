@@ -23,7 +23,6 @@ import { Route as LcifRouteImport } from './routes/lcif'
 import { Route as HistoriaRouteImport } from './routes/historia'
 import { Route as GovernadorRouteImport } from './routes/governador'
 import { Route as GatRouteImport } from './routes/gat'
-import { Route as ExGovernadoresRouteImport } from './routes/ex-governadores'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as DoarRouteImport } from './routes/doar'
 import { Route as ContatoRouteImport } from './routes/contato'
@@ -32,6 +31,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssessoriaRouteImport } from './routes/assessoria'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExGovernadoresIndexRouteImport } from './routes/ex-governadores.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ExGovernadoresIdRouteImport } from './routes/ex-governadores.$id'
 import { Route as ClubesRjRouteImport } from './routes/clubes.rj'
@@ -130,11 +130,6 @@ const GatRoute = GatRouteImport.update({
   path: '/gat',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ExGovernadoresRoute = ExGovernadoresRouteImport.update({
-  id: '/ex-governadores',
-  path: '/ex-governadores',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EventosRoute = EventosRouteImport.update({
   id: '/eventos',
   path: '/eventos',
@@ -175,15 +170,20 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExGovernadoresIndexRoute = ExGovernadoresIndexRouteImport.update({
+  id: '/ex-governadores/',
+  path: '/ex-governadores/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
 const ExGovernadoresIdRoute = ExGovernadoresIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => ExGovernadoresRoute,
+  id: '/ex-governadores/$id',
+  path: '/ex-governadores/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ClubesRjRoute = ClubesRjRouteImport.update({
   id: '/rj',
@@ -322,7 +322,6 @@ export interface FileRoutesByFullPath {
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
-  '/ex-governadores': typeof ExGovernadoresRouteWithChildren
   '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
@@ -343,6 +342,7 @@ export interface FileRoutesByFullPath {
   '/clubes/rj': typeof ClubesRjRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/ex-governadores/': typeof ExGovernadoresIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
@@ -373,7 +373,6 @@ export interface FileRoutesByTo {
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
-  '/ex-governadores': typeof ExGovernadoresRouteWithChildren
   '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
@@ -394,6 +393,7 @@ export interface FileRoutesByTo {
   '/clubes/rj': typeof ClubesRjRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/admin': typeof AdminIndexRoute
+  '/ex-governadores': typeof ExGovernadoresIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
@@ -426,7 +426,6 @@ export interface FileRoutesById {
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/eventos': typeof EventosRoute
-  '/ex-governadores': typeof ExGovernadoresRouteWithChildren
   '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
@@ -447,6 +446,7 @@ export interface FileRoutesById {
   '/clubes/rj': typeof ClubesRjRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/ex-governadores/': typeof ExGovernadoresIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
@@ -480,7 +480,6 @@ export interface FileRouteTypes {
     | '/contato'
     | '/doar'
     | '/eventos'
-    | '/ex-governadores'
     | '/gat'
     | '/governador'
     | '/historia'
@@ -501,6 +500,7 @@ export interface FileRouteTypes {
     | '/clubes/rj'
     | '/ex-governadores/$id'
     | '/admin/'
+    | '/ex-governadores/'
     | '/admin/conteudo/$key'
     | '/admin/eventos/$id'
     | '/admin/lideres/$id'
@@ -531,7 +531,6 @@ export interface FileRouteTypes {
     | '/contato'
     | '/doar'
     | '/eventos'
-    | '/ex-governadores'
     | '/gat'
     | '/governador'
     | '/historia'
@@ -552,6 +551,7 @@ export interface FileRouteTypes {
     | '/clubes/rj'
     | '/ex-governadores/$id'
     | '/admin'
+    | '/ex-governadores'
     | '/admin/conteudo/$key'
     | '/admin/eventos/$id'
     | '/admin/lideres/$id'
@@ -583,7 +583,6 @@ export interface FileRouteTypes {
     | '/contato'
     | '/doar'
     | '/eventos'
-    | '/ex-governadores'
     | '/gat'
     | '/governador'
     | '/historia'
@@ -604,6 +603,7 @@ export interface FileRouteTypes {
     | '/clubes/rj'
     | '/ex-governadores/$id'
     | '/admin/'
+    | '/ex-governadores/'
     | '/admin/conteudo/$key'
     | '/admin/eventos/$id'
     | '/admin/lideres/$id'
@@ -636,7 +636,6 @@ export interface RootRouteChildren {
   ContatoRoute: typeof ContatoRoute
   DoarRoute: typeof DoarRoute
   EventosRoute: typeof EventosRoute
-  ExGovernadoresRoute: typeof ExGovernadoresRouteWithChildren
   GatRoute: typeof GatRoute
   GovernadorRoute: typeof GovernadorRoute
   HistoriaRoute: typeof HistoriaRoute
@@ -651,6 +650,8 @@ export interface RootRouteChildren {
   TesoureiroRoute: typeof TesoureiroRoute
   ViceGovernador1Route: typeof ViceGovernador1Route
   ViceGovernador2Route: typeof ViceGovernador2Route
+  ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
+  ExGovernadoresIndexRoute: typeof ExGovernadoresIndexRoute
   ApiPublicEventosRoute: typeof ApiPublicEventosRoute
   ApiPublicGovernadoresRoute: typeof ApiPublicGovernadoresRoute
   ApiPublicLcifRoute: typeof ApiPublicLcifRoute
@@ -757,13 +758,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/ex-governadores': {
-      id: '/ex-governadores'
-      path: '/ex-governadores'
-      fullPath: '/ex-governadores'
-      preLoaderRoute: typeof ExGovernadoresRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/eventos': {
       id: '/eventos'
       path: '/eventos'
@@ -820,6 +814,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ex-governadores/': {
+      id: '/ex-governadores/'
+      path: '/ex-governadores'
+      fullPath: '/ex-governadores/'
+      preLoaderRoute: typeof ExGovernadoresIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/': {
       id: '/admin/'
       path: '/'
@@ -829,10 +830,10 @@ declare module '@tanstack/react-router' {
     }
     '/ex-governadores/$id': {
       id: '/ex-governadores/$id'
-      path: '/$id'
+      path: '/ex-governadores/$id'
       fullPath: '/ex-governadores/$id'
       preLoaderRoute: typeof ExGovernadoresIdRouteImport
-      parentRoute: typeof ExGovernadoresRoute
+      parentRoute: typeof rootRouteImport
     }
     '/clubes/rj': {
       id: '/clubes/rj'
@@ -1107,18 +1108,6 @@ const ClubesRouteChildren: ClubesRouteChildren = {
 const ClubesRouteWithChildren =
   ClubesRoute._addFileChildren(ClubesRouteChildren)
 
-interface ExGovernadoresRouteChildren {
-  ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
-}
-
-const ExGovernadoresRouteChildren: ExGovernadoresRouteChildren = {
-  ExGovernadoresIdRoute: ExGovernadoresIdRoute,
-}
-
-const ExGovernadoresRouteWithChildren = ExGovernadoresRoute._addFileChildren(
-  ExGovernadoresRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -1128,7 +1117,6 @@ const rootRouteChildren: RootRouteChildren = {
   ContatoRoute: ContatoRoute,
   DoarRoute: DoarRoute,
   EventosRoute: EventosRoute,
-  ExGovernadoresRoute: ExGovernadoresRouteWithChildren,
   GatRoute: GatRoute,
   GovernadorRoute: GovernadorRoute,
   HistoriaRoute: HistoriaRoute,
@@ -1143,6 +1131,8 @@ const rootRouteChildren: RootRouteChildren = {
   TesoureiroRoute: TesoureiroRoute,
   ViceGovernador1Route: ViceGovernador1Route,
   ViceGovernador2Route: ViceGovernador2Route,
+  ExGovernadoresIdRoute: ExGovernadoresIdRoute,
+  ExGovernadoresIndexRoute: ExGovernadoresIndexRoute,
   ApiPublicEventosRoute: ApiPublicEventosRoute,
   ApiPublicGovernadoresRoute: ApiPublicGovernadoresRoute,
   ApiPublicLcifRoute: ApiPublicLcifRoute,

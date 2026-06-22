@@ -151,6 +151,29 @@ function LeaderEditor() {
     }
   }
 
+  async function handleGallery(files: FileList) {
+    setSaving(true);
+    try {
+      const remaining = 5 - form.gallery_urls.length;
+      if (remaining <= 0) {
+        setMsg("Limite de 5 fotos atingido.");
+        return;
+      }
+      const toUpload = Array.from(files).slice(0, remaining);
+      const urls = await Promise.all(toUpload.map((f) => uploadLeaderPhoto(f)));
+      setForm((f) => ({ ...f, gallery_urls: [...f.gallery_urls, ...urls].slice(0, 5) }));
+      setMsg("Fotos enviadas. Clique em Salvar.");
+    } catch (e: any) {
+      setMsg("Erro no upload: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  function removeGalleryAt(idx: number) {
+    setForm((f) => ({ ...f, gallery_urls: f.gallery_urls.filter((_, i) => i !== idx) }));
+  }
+
   if (loading) return <p>Carregando...</p>;
 
   return (

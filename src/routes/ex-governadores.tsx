@@ -35,8 +35,10 @@ function ExGovernadores() {
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {list.map((g: any) => (
-            <div
+            <Link
               key={g.id}
+              to="/ex-governadores/$id"
+              params={{ id: String(g.id) }}
               className="group flex flex-col items-center rounded-xl border border-border bg-card p-6 text-center shadow-card transition-transform hover:-translate-y-1 hover:shadow-elegant"
             >
               {g.photo_url ? (
@@ -56,7 +58,10 @@ function ExGovernadores() {
               </div>
               {g.year_label && <div className="mt-1 text-sm font-semibold text-primary">{g.year_label}</div>}
               {g.motto && <div className="mt-2 text-sm italic text-muted-foreground">"{g.motto}"</div>}
-            </div>
+              <div className="mt-3 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                Ver biografia →
+              </div>
+            </Link>
           ))}
         </div>
       </section>

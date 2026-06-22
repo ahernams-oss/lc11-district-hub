@@ -143,7 +143,7 @@ export function useAllClubs() {
     queryKey: ["clubs", "all"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("clubs")
+        .from("clubs_public")
         .select("*, divisions(code, region_id, regions(letter, name))")
         .order("name");
       if (error) throw error;
@@ -151,3 +151,4 @@ export function useAllClubs() {
     },
   });
 }
+

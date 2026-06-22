@@ -33,6 +33,7 @@ interface FormState {
   year_label: string;
   motto: string;
   order_index: number;
+  gallery_urls: string[];
 }
 
 const EMPTY: FormState = {
@@ -48,6 +49,7 @@ const EMPTY: FormState = {
   year_label: "",
   motto: "",
   order_index: 0,
+  gallery_urls: [],
 };
 
 function LeaderEditor() {

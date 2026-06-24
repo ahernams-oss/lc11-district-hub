@@ -68,7 +68,7 @@ export function SiteHeader() {
             <Link
               to="/governador"
               onClick={() => setOpen(false)}
-              className="hidden shrink-0 items-center gap-2 rounded-lg border border-border bg-surface/50 px-[2cm] py-1 transition-colors hover:bg-surface sm:flex"
+              className="hidden shrink-0 items-center gap-2 rounded-lg border border-border bg-surface/50 px-2 py-1 transition-colors hover:bg-surface sm:flex"
               title={`Governador${governador.name ? `: ${governador.name}` : ""}`}
             >
               <img

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
-import { Mail, Phone, Quote } from "lucide-react";
+import { Mail, Phone, Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react";
 import govImg from "@/assets/governador.jpg";
 import { useSiteContent } from "@/lib/content";
 import { useLeaders } from "@/lib/leaders";
@@ -32,6 +33,16 @@ function Governador() {
   const photo = gov?.photo_url ?? govImg;
   const message = gov?.message ?? "Servir é o aluguel que pagamos pelo espaço que ocupamos.";
   const bio = gov?.bio ?? "Companheiros e companheiras Leões, é com profunda honra que assumo a Governadoria do Distrito LC-11.";
+  const gallery = (gov?.gallery_urls ?? []).filter(Boolean);
+
+  const [slide, setSlide] = useState(0);
+  useEffect(() => {
+    if (gallery.length <= 1) return;
+    const t = setInterval(() => setSlide((s) => (s + 1) % gallery.length), 4000);
+    return () => clearInterval(t);
+  }, [gallery.length]);
+
+
 
   return (
     <>
@@ -58,7 +69,54 @@ function Governador() {
                 <p className="flex items-center gap-2"><Phone className="h-4 w-4 text-primary" />{phone}</p>
               </div>
             </div>
+
+            {gallery.length > 0 && (
+              <div className="mt-6 overflow-hidden rounded-xl border border-border shadow-card">
+                <div className="relative aspect-[4/3] bg-muted">
+                  {gallery.map((url, i) => (
+                    <img
+                      key={url + i}
+                      src={url}
+                      alt={`${name} — foto ${i + 1}`}
+                      className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${i === slide ? "opacity-100" : "opacity-0"}`}
+                    />
+                  ))}
+                  {gallery.length > 1 && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setSlide((s) => (s - 1 + gallery.length) % gallery.length)}
+                        aria-label="Foto anterior"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-background/70 p-1.5 text-foreground hover:bg-background"
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setSlide((s) => (s + 1) % gallery.length)}
+                        aria-label="Próxima foto"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-background/70 p-1.5 text-foreground hover:bg-background"
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+                      <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1.5">
+                        {gallery.map((_, i) => (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={() => setSlide(i)}
+                            aria-label={`Ir para foto ${i + 1}`}
+                            className={`h-1.5 rounded-full transition-all ${i === slide ? "w-5 bg-primary" : "w-1.5 bg-background/70"}`}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
+
 
           <div>
             <div className="rounded-xl bg-primary p-6 text-primary-foreground shadow-card">

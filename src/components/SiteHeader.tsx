@@ -237,14 +237,6 @@ export function SiteHeader() {
 
           </div>
 
-          <Link
-            to="/lcif"
-            className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"
-            activeProps={{ className: "text-primary bg-surface" }}
-          >
-            LCIF
-          </Link>
-
           {nav.map((item) => (
             <Link
               key={item.to}
@@ -255,6 +247,13 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <Link
+            to="/lcif"
+            className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"
+            activeProps={{ className: "text-primary bg-surface" }}
+          >
+            LCIF
+          </Link>
           <Link
             to="/doar"
             className="ml-2 inline-flex items-center justify-center rounded-md bg-gold px-4 py-2 text-sm font-semibold text-gold-foreground shadow-card transition-transform hover:scale-105"
@@ -385,14 +384,6 @@ export function SiteHeader() {
               ))}
             </div>
           </div>
-          <Link
-            to="/lcif"
-            onClick={() => setOpen(false)}
-            className="rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-surface"
-            activeProps={{ className: "text-primary bg-surface" }}
-          >
-            LCIF
-          </Link>
           {nav.map((item) => (
             <Link
               key={item.to}
@@ -404,6 +395,14 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <Link
+            to="/lcif"
+            onClick={() => setOpen(false)}
+            className="rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-surface"
+            activeProps={{ className: "text-primary bg-surface" }}
+          >
+            LCIF
+          </Link>
           <Link
             to="/doar"
             onClick={() => setOpen(false)}

@@ -146,21 +146,14 @@ function Projetos() {
             <p className="mt-6 text-muted-foreground">Carregando...</p>
           ) : (
             <div className="mt-10 grid gap-6 lg:grid-cols-3">
-              {filtered.map((p) => (
+              {filtered.map((p) => {
+                const imgs = [p.cover_url, ...(p.gallery_urls ?? [])].filter(Boolean) as string[];
+                return (
                 <article
                   key={p.id}
                   className="overflow-hidden rounded-xl border border-border bg-card shadow-card"
                 >
-                  {p.cover_url && (
-                    <div className="aspect-[16/10] overflow-hidden">
-                      <img
-                        src={p.cover_url}
-                        alt={p.title}
-                        loading="lazy"
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                  )}
+                  {imgs.length > 0 && <ProjectImageCarousel images={imgs} alt={p.title} />}
                   <div className="p-6">
                     {p.tag && (
                       <span className="inline-block rounded-full bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">

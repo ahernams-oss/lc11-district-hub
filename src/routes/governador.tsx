@@ -78,7 +78,7 @@ function Governador() {
                       key={url + i}
                       src={url}
                       alt={`${name} — foto ${i + 1}`}
-                      className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${i === slide ? "opacity-100" : "opacity-0"}`}
+                      className={`absolute inset-0 h-full w-full object-contain object-center transition-opacity duration-700 ${i === slide ? "opacity-100" : "opacity-0"}`}
                     />
                   ))}
                   {gallery.length > 1 && (

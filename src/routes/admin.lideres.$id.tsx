@@ -388,6 +388,24 @@ function LeaderEditor() {
           {msg && <span className="text-sm text-muted-foreground">{msg}</span>}
         </div>
       </div>
+
+      {cropModal && (
+        <ImageCropModal
+          imageUrl={cropModal.url}
+          aspect={cropModal.field === "photo" ? 1 : 4 / 3}
+          cropShape={cropModal.field === "photo" ? "round" : "rect"}
+          onClose={() => {
+            URL.revokeObjectURL(cropModal.url);
+            setCropModal(null);
+          }}
+          onConfirm={(file) => {
+            URL.revokeObjectURL(cropModal.url);
+            setCropModal(null);
+            if (cropModal.field === "photo") handlePhoto(file);
+            else handlePin(file);
+          }}
+        />
+      )}
     </div>
   );
 }

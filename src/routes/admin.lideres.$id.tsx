@@ -62,6 +62,7 @@ function LeaderEditor() {
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  const [cropModal, setCropModal] = useState<{ url: string; field: "photo" | "pin" } | null>(null);
 
   useEffect(() => {
     if (isNew) {

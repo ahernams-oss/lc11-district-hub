@@ -138,8 +138,12 @@ function Projetos() {
                   </div>
                 </article>
               ))}
-              {data.length === 0 && (
-                <p className="text-muted-foreground">Nenhum projeto cadastrado ainda.</p>
+              {filtered.length === 0 && (
+                <p className="text-muted-foreground">
+                  {data.length === 0
+                    ? "Nenhum projeto cadastrado ainda."
+                    : "Nenhum projeto nesta causa ainda."}
+                </p>
               )}
             </div>
           )}

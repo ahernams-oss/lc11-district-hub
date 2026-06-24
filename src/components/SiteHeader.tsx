@@ -57,7 +57,7 @@ export function SiteHeader() {
         <div className="flex min-w-0 items-center gap-3 lg:-ml-20">
           <Link to="/" className="flex shrink-0 items-center gap-2" onClick={() => setOpen(false)}>
             <img src={lionsLogo.url} alt="Lions Clubs International" className="h-10 w-10 object-contain -translate-x-[2cm]" />
-            <div className="leading-tight">
+            <div className="leading-tight -translate-x-[2cm]">
               <div className="whitespace-nowrap font-display text-sm font-bold text-foreground">Distrito LC-11</div>
               <div className="hidden whitespace-nowrap text-[10px] uppercase tracking-wider text-muted-foreground xl:block">
                 Lions Clubs International

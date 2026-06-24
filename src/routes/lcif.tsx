@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSiteContent } from "@/lib/content";
 import { PageHero } from "@/components/PageHero";
+import { Heart } from "lucide-react";
 
 const DEFAULTS = {
   eyebrow: "Fundação",
@@ -61,6 +62,26 @@ function LcifPage() {
             </div>
           )}
           {c.footer_text && <p>{c.footer_text}</p>}
+
+          <div className="mt-10 rounded-2xl border border-border bg-primary p-8 text-primary-foreground shadow-elegant">
+            <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gold text-gold-foreground">
+                <Heart className="h-6 w-6" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-display text-xl font-bold">Apoie a LCIF</h3>
+                <p className="mt-1 text-sm opacity-90">
+                  Sua contribuição financia projetos humanitários que transformam vidas ao redor do mundo.
+                </p>
+              </div>
+              <Link
+                to="/doar"
+                className="inline-flex items-center justify-center rounded-lg bg-gold px-6 py-3 font-display font-semibold text-gold-foreground shadow-card transition-transform hover:scale-105"
+              >
+                Doar agora
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </>

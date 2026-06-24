@@ -212,7 +212,10 @@ function LeaderEditor() {
               type="file"
               accept="image/*"
               className="hidden"
-              onChange={(e) => e.target.files?.[0] && handlePhoto(e.target.files[0])}
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) setCropModal({ url: URL.createObjectURL(file), field: "photo" });
+              }}
             />
           </label>
           {form.photo_url && (

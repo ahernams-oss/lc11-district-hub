@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { CATEGORY_LABELS, uploadLeaderPhoto, type LeaderCategory } from "@/lib/leaders";
 import { useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Upload } from "lucide-react";
+import ImageCropModal from "@/components/ImageCropModal";
 
 export const Route = createFileRoute("/admin/lideres/$id")({
   component: LeaderEditor,
@@ -61,6 +62,7 @@ function LeaderEditor() {
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  const [cropModal, setCropModal] = useState<{ url: string; field: "photo" | "pin" } | null>(null);
 
   useEffect(() => {
     if (isNew) {
@@ -210,7 +212,10 @@ function LeaderEditor() {
               type="file"
               accept="image/*"
               className="hidden"
-              onChange={(e) => e.target.files?.[0] && handlePhoto(e.target.files[0])}
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) setCropModal({ url: URL.createObjectURL(file), field: "photo" });
+              }}
             />
           </label>
           {form.photo_url && (
@@ -234,7 +239,10 @@ function LeaderEditor() {
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={(e) => e.target.files?.[0] && handlePin(e.target.files[0])}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) setCropModal({ url: URL.createObjectURL(file), field: "pin" });
+                }}
               />
             </label>
             {form.pin_url && (
@@ -380,6 +388,24 @@ function LeaderEditor() {
           {msg && <span className="text-sm text-muted-foreground">{msg}</span>}
         </div>
       </div>
+
+      {cropModal && (
+        <ImageCropModal
+          imageUrl={cropModal.url}
+          aspect={cropModal.field === "photo" ? 1 : 4 / 3}
+          cropShape={cropModal.field === "photo" ? "round" : "rect"}
+          onClose={() => {
+            URL.revokeObjectURL(cropModal.url);
+            setCropModal(null);
+          }}
+          onConfirm={(file) => {
+            URL.revokeObjectURL(cropModal.url);
+            setCropModal(null);
+            if (cropModal.field === "photo") handlePhoto(file);
+            else handlePin(file);
+          }}
+        />
+      )}
     </div>
   );
 }

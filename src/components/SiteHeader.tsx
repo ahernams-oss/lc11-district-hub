@@ -54,12 +54,12 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <div className="flex min-w-0 items-center gap-3 lg:-ml-20">
+        <div className="flex min-w-0 items-center gap-3 lg:-ml-20 -translate-x-[2cm]">
           <Link to="/" className="flex shrink-0 items-center gap-2" onClick={() => setOpen(false)}>
-            <img src={lionsLogo.url} alt="Lions Clubs International" className="h-10 w-10 object-contain -translate-x-[2cm]" />
-            <div className="leading-tight -translate-x-[2cm]">
+            <img src={lionsLogo.url} alt="Lions Clubs International" className="h-10 w-10 object-contain" />
+            <div className="leading-tight">
               <div className="whitespace-nowrap font-display text-sm font-bold text-foreground">Distrito LC-11</div>
-              <div className="hidden whitespace-nowrap text-[10px] uppercase tracking-wider text-muted-foreground xl:block -translate-x-[2cm]">
+              <div className="hidden whitespace-nowrap text-[10px] uppercase tracking-wider text-muted-foreground xl:block">
                 Lions Clubs International
               </div>
             </div>

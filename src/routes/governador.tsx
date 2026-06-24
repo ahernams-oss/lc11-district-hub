@@ -33,6 +33,16 @@ function Governador() {
   const photo = gov?.photo_url ?? govImg;
   const message = gov?.message ?? "Servir é o aluguel que pagamos pelo espaço que ocupamos.";
   const bio = gov?.bio ?? "Companheiros e companheiras Leões, é com profunda honra que assumo a Governadoria do Distrito LC-11.";
+  const gallery = (gov?.gallery_urls ?? []).filter(Boolean);
+
+  const [slide, setSlide] = useState(0);
+  useEffect(() => {
+    if (gallery.length <= 1) return;
+    const t = setInterval(() => setSlide((s) => (s + 1) % gallery.length), 4000);
+    return () => clearInterval(t);
+  }, [gallery.length]);
+
+
 
   return (
     <>

@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import "react-easy-crop/react-easy-crop.css";
 import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
 

@@ -239,7 +239,10 @@ function LeaderEditor() {
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={(e) => e.target.files?.[0] && handlePin(e.target.files[0])}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) setCropModal({ url: URL.createObjectURL(file), field: "pin" });
+                }}
               />
             </label>
             {form.pin_url && (

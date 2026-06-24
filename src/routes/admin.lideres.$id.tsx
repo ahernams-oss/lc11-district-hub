@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { CATEGORY_LABELS, uploadLeaderPhoto, type LeaderCategory } from "@/lib/leaders";
 import { useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Upload } from "lucide-react";
+import ImageCropModal from "@/components/ImageCropModal";
 
 export const Route = createFileRoute("/admin/lideres/$id")({
   component: LeaderEditor,

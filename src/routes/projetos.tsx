@@ -12,14 +12,14 @@ function ProjectImageCarousel({ images, alt }: { images: string[]; alt: string }
     return () => clearInterval(id);
   }, [images.length]);
   return (
-    <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+    <div className="relative aspect-[16/10] overflow-hidden bg-white">
       {images.map((src, i) => (
         <img
           key={src + i}
           src={src}
           alt={alt}
           loading="lazy"
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+          className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-700 ${
             i === idx ? "opacity-100" : "opacity-0"
           }`}
         />

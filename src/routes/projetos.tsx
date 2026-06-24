@@ -1,8 +1,46 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PageHero } from "@/components/PageHero";
 import { Eye, Heart, Leaf, Activity, Baby } from "lucide-react";
 import { useProjects } from "@/lib/projects";
+
+function ProjectImageCarousel({ images, alt }: { images: string[]; alt: string }) {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const id = setInterval(() => setIdx((i) => (i + 1) % images.length), 3500);
+    return () => clearInterval(id);
+  }, [images.length]);
+  return (
+    <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+      {images.map((src, i) => (
+        <img
+          key={src + i}
+          src={src}
+          alt={alt}
+          loading="lazy"
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+            i === idx ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+      {images.length > 1 && (
+        <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1.5">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={(e) => { e.preventDefault(); setIdx(i); }}
+              aria-label={`Foto ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all ${
+                i === idx ? "w-5 bg-white" : "w-1.5 bg-white/60"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/projetos")({
   head: () => ({
@@ -108,21 +146,14 @@ function Projetos() {
             <p className="mt-6 text-muted-foreground">Carregando...</p>
           ) : (
             <div className="mt-10 grid gap-6 lg:grid-cols-3">
-              {filtered.map((p) => (
+              {filtered.map((p) => {
+                const imgs = [p.cover_url, ...(p.gallery_urls ?? [])].filter(Boolean) as string[];
+                return (
                 <article
                   key={p.id}
                   className="overflow-hidden rounded-xl border border-border bg-card shadow-card"
                 >
-                  {p.cover_url && (
-                    <div className="aspect-[16/10] overflow-hidden">
-                      <img
-                        src={p.cover_url}
-                        alt={p.title}
-                        loading="lazy"
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                  )}
+                  {imgs.length > 0 && <ProjectImageCarousel images={imgs} alt={p.title} />}
                   <div className="p-6">
                     {p.tag && (
                       <span className="inline-block rounded-full bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
@@ -137,7 +168,8 @@ function Projetos() {
                     )}
                   </div>
                 </article>
-              ))}
+                );
+              })}
               {filtered.length === 0 && (
                 <p className="text-muted-foreground">
                   {data.length === 0

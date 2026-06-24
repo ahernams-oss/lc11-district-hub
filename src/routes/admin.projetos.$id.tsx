@@ -15,8 +15,12 @@ interface Form {
   description: string;
   content: string;
   cover_url: string;
+  gallery_urls: string[];
   order_index: number;
 }
+
+const CAUSES = ["Visão", "Combate à Fome", "Meio Ambiente", "Diabetes", "Câncer Infantil"];
+const MAX_GALLERY = 5;
 
 function ProjectEditor() {
   const { id } = useParams({ from: "/admin/projetos/$id" });
@@ -29,6 +33,7 @@ function ProjectEditor() {
     description: "",
     content: "",
     cover_url: "",
+    gallery_urls: [],
     order_index: 0,
   });
   const [loading, setLoading] = useState(!isNew);
@@ -50,6 +55,7 @@ function ProjectEditor() {
             description: data.description ?? "",
             content: data.content ?? "",
             cover_url: data.cover_url ?? "",
+            gallery_urls: (data as any).gallery_urls ?? [],
             order_index: data.order_index ?? 0,
           });
         }
@@ -87,6 +93,22 @@ function ProjectEditor() {
     } finally {
       setSaving(false);
     }
+  }
+
+  async function handleGallery(files: FileList) {
+    setSaving(true);
+    try {
+      const remaining = MAX_GALLERY - form.gallery_urls.length;
+      const toUpload = Array.from(files).slice(0, remaining);
+      const urls = await Promise.all(toUpload.map((f) => uploadContentImage(f, "projects")));
+      setForm((f) => ({ ...f, gallery_urls: [...f.gallery_urls, ...urls].slice(0, MAX_GALLERY) }));
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  function removeGalleryImage(idx: number) {
+    setForm((f) => ({ ...f, gallery_urls: f.gallery_urls.filter((_, i) => i !== idx) }));
   }
 
   if (loading) return <p>Carregando...</p>;

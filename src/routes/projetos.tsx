@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
 import { Eye, Heart, Leaf, Activity, Baby } from "lucide-react";
 import { useProjects } from "@/lib/projects";
@@ -18,11 +18,11 @@ export const Route = createFileRoute("/projetos")({
 });
 
 const causes = [
-  { icon: Eye, title: "Visão", desc: "Triagens, doação de óculos, cirurgias de catarata e Banco de Olhos do Distrito." },
-  { icon: Heart, title: "Combate à Fome", desc: "Campanhas de arrecadação, sopões e parcerias com bancos de alimentos locais." },
-  { icon: Leaf, title: "Meio Ambiente", desc: "Plantio de árvores nativas, mutirões de limpeza e educação ambiental escolar." },
-  { icon: Activity, title: "Diabetes", desc: "Testes de glicemia comunitários, palestras e apoio a portadores e familiares." },
-  { icon: Baby, title: "Câncer Infantil", desc: "Apoio direto a hospitais, casas de apoio e famílias em tratamento." },
+  { slug: "visao", icon: Eye, title: "Visão", desc: "Triagens, doação de óculos, cirurgias de catarata e Banco de Olhos do Distrito." },
+  { slug: "combate-fome", icon: Heart, title: "Combate à Fome", desc: "Campanhas de arrecadação, sopões e parcerias com bancos de alimentos locais." },
+  { slug: "meio-ambiente", icon: Leaf, title: "Meio Ambiente", desc: "Plantio de árvores nativas, mutirões de limpeza e educação ambiental escolar." },
+  { slug: "diabetes", icon: Activity, title: "Diabetes", desc: "Testes de glicemia comunitários, palestras e apoio a portadores e familiares." },
+  { slug: "cancer-infantil", icon: Baby, title: "Câncer Infantil", desc: "Apoio direto a hospitais, casas de apoio e famílias em tratamento." },
 ];
 
 function Projetos() {
@@ -46,16 +46,21 @@ function Projetos() {
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {causes.map((c) => (
-            <div
+            <Link
               key={c.title}
-              className="rounded-xl border border-border bg-card p-6 shadow-card transition-transform hover:-translate-y-1"
+              to="/projetos/causa/$slug"
+              params={{ slug: c.slug }}
+              className="block rounded-xl border border-border bg-card p-6 shadow-card transition-transform hover:-translate-y-1 hover:border-primary"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                 <c.icon className="h-6 w-6" />
               </div>
               <h3 className="mt-4 font-display text-xl font-bold text-foreground">{c.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
-            </div>
+              <span className="mt-4 inline-block text-sm font-semibold text-primary">
+                Ver projetos →
+              </span>
+            </Link>
           ))}
         </div>
       </section>

@@ -69,7 +69,54 @@ function Governador() {
                 <p className="flex items-center gap-2"><Phone className="h-4 w-4 text-primary" />{phone}</p>
               </div>
             </div>
+
+            {gallery.length > 0 && (
+              <div className="mt-6 overflow-hidden rounded-xl border border-border shadow-card">
+                <div className="relative aspect-[4/3] bg-muted">
+                  {gallery.map((url, i) => (
+                    <img
+                      key={url + i}
+                      src={url}
+                      alt={`${name} — foto ${i + 1}`}
+                      className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${i === slide ? "opacity-100" : "opacity-0"}`}
+                    />
+                  ))}
+                  {gallery.length > 1 && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setSlide((s) => (s - 1 + gallery.length) % gallery.length)}
+                        aria-label="Foto anterior"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-background/70 p-1.5 text-foreground hover:bg-background"
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setSlide((s) => (s + 1) % gallery.length)}
+                        aria-label="Próxima foto"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-background/70 p-1.5 text-foreground hover:bg-background"
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+                      <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1.5">
+                        {gallery.map((_, i) => (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={() => setSlide(i)}
+                            aria-label={`Ir para foto ${i + 1}`}
+                            className={`h-1.5 rounded-full transition-all ${i === slide ? "w-5 bg-primary" : "w-1.5 bg-background/70"}`}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
+
 
           <div>
             <div className="rounded-xl bg-primary p-6 text-primary-foreground shadow-card">

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
-import { Mail, Phone, Quote } from "lucide-react";
+import { Mail, Phone, Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react";
 import govImg from "@/assets/governador.jpg";
 import { useSiteContent } from "@/lib/content";
 import { useLeaders } from "@/lib/leaders";

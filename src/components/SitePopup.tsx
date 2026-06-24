@@ -37,7 +37,13 @@ export function SitePopup() {
           <X className="h-4 w-4" />
         </button>
         {popup.image_url && (
-          <img src={popup.image_url} alt={popup.title} className="w-full object-cover" />
+          <div className="flex w-full items-center justify-center bg-white p-4">
+            <img
+              src={popup.image_url}
+              alt={popup.title}
+              className="max-h-72 w-full object-contain"
+            />
+          </div>
         )}
         <div className="p-5">
           <h2 className="font-display text-xl font-bold">{popup.title}</h2>

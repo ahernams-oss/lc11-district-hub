@@ -168,7 +168,8 @@ function Projetos() {
                     )}
                   </div>
                 </article>
-              ))}
+                );
+              })}
               {filtered.length === 0 && (
                 <p className="text-muted-foreground">
                   {data.length === 0

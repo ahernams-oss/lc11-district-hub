@@ -15,8 +15,12 @@ interface Form {
   description: string;
   content: string;
   cover_url: string;
+  gallery_urls: string[];
   order_index: number;
 }
+
+const CAUSES = ["Visão", "Combate à Fome", "Meio Ambiente", "Diabetes", "Câncer Infantil"];
+const MAX_GALLERY = 5;
 
 function ProjectEditor() {
   const { id } = useParams({ from: "/admin/projetos/$id" });
@@ -29,6 +33,7 @@ function ProjectEditor() {
     description: "",
     content: "",
     cover_url: "",
+    gallery_urls: [],
     order_index: 0,
   });
   const [loading, setLoading] = useState(!isNew);
@@ -50,6 +55,7 @@ function ProjectEditor() {
             description: data.description ?? "",
             content: data.content ?? "",
             cover_url: data.cover_url ?? "",
+            gallery_urls: (data as any).gallery_urls ?? [],
             order_index: data.order_index ?? 0,
           });
         }
@@ -89,6 +95,22 @@ function ProjectEditor() {
     }
   }
 
+  async function handleGallery(files: FileList) {
+    setSaving(true);
+    try {
+      const remaining = MAX_GALLERY - form.gallery_urls.length;
+      const toUpload = Array.from(files).slice(0, remaining);
+      const urls = await Promise.all(toUpload.map((f) => uploadContentImage(f, "projects")));
+      setForm((f) => ({ ...f, gallery_urls: [...f.gallery_urls, ...urls].slice(0, MAX_GALLERY) }));
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  function removeGalleryImage(idx: number) {
+    setForm((f) => ({ ...f, gallery_urls: f.gallery_urls.filter((_, i) => i !== idx) }));
+  }
+
   if (loading) return <p>Carregando...</p>;
 
   return (
@@ -124,13 +146,45 @@ function ProjectEditor() {
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
           />
         </F>
-        <F label="Categoria / tag">
-          <input
+        <F label="Causa global">
+          <select
             value={form.tag}
             onChange={(e) => setForm({ ...form, tag: e.target.value })}
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
-            placeholder="Ex.: Visão, Fome, Meio Ambiente"
-          />
+          >
+            <option value="">— Selecione —</option>
+            {CAUSES.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+        </F>
+        <F label={`Galeria de fotos (até ${MAX_GALLERY})`}>
+          <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-5">
+            {form.gallery_urls.map((url, i) => (
+              <div key={i} className="relative aspect-square overflow-hidden rounded-md border border-border">
+                <img src={url} alt="" className="h-full w-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => removeGalleryImage(i)}
+                  className="absolute right-1 top-1 rounded bg-background/90 px-2 py-0.5 text-xs font-semibold text-foreground shadow"
+                >
+                  Remover
+                </button>
+              </div>
+            ))}
+          </div>
+          {form.gallery_urls.length < MAX_GALLERY && (
+            <label className="mt-2 inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-surface">
+              <Upload className="h-4 w-4" /> Adicionar fotos ({form.gallery_urls.length}/{MAX_GALLERY})
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(e) => e.target.files && e.target.files.length > 0 && handleGallery(e.target.files)}
+              />
+            </label>
+          )}
         </F>
         <F label="Descrição curta">
           <textarea

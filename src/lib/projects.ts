@@ -8,6 +8,7 @@ export interface ProjectItem {
   description: string | null;
   content: string | null;
   cover_url: string | null;
+  gallery_urls: string[] | null;
   order_index: number;
 }
 

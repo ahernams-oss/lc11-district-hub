@@ -318,6 +318,7 @@ export type Database = {
           cover_url: string | null
           created_at: string
           description: string | null
+          gallery_urls: string[]
           id: string
           order_index: number
           tag: string | null
@@ -329,6 +330,7 @@ export type Database = {
           cover_url?: string | null
           created_at?: string
           description?: string | null
+          gallery_urls?: string[]
           id?: string
           order_index?: number
           tag?: string | null
@@ -340,6 +342,7 @@ export type Database = {
           cover_url?: string | null
           created_at?: string
           description?: string | null
+          gallery_urls?: string[]
           id?: string
           order_index?: number
           tag?: string | null

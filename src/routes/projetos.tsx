@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { PageHero } from "@/components/PageHero";
 import { Eye, Heart, Leaf, Activity, Baby } from "lucide-react";
 import { useProjects } from "@/lib/projects";
@@ -27,6 +28,11 @@ const causes = [
 
 function Projetos() {
   const { data = [], isLoading } = useProjects();
+  const [filter, setFilter] = useState<string>("todas");
+  const normalize = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+  const filtered = filter === "todas"
+    ? data
+    : data.filter((p) => p.tag && normalize(p.tag) === normalize(causes.find((c) => c.slug === filter)?.title ?? ""));
   return (
     <>
       <PageHero
@@ -70,11 +76,39 @@ function Projetos() {
           <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
             Projetos em destaque
           </h2>
+
+          <div className="mt-6 flex flex-wrap gap-2">
+            <button
+              onClick={() => setFilter("todas")}
+              className={`rounded-full px-4 py-1.5 text-sm font-semibold transition ${
+                filter === "todas"
+                  ? "bg-primary text-primary-foreground"
+                  : "border border-border bg-card text-foreground hover:border-primary"
+              }`}
+            >
+              Todas
+            </button>
+            {causes.map((c) => (
+              <button
+                key={c.slug}
+                onClick={() => setFilter(c.slug)}
+                className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-semibold transition ${
+                  filter === c.slug
+                    ? "bg-primary text-primary-foreground"
+                    : "border border-border bg-card text-foreground hover:border-primary"
+                }`}
+              >
+                <c.icon className="h-3.5 w-3.5" />
+                {c.title}
+              </button>
+            ))}
+          </div>
+
           {isLoading ? (
             <p className="mt-6 text-muted-foreground">Carregando...</p>
           ) : (
             <div className="mt-10 grid gap-6 lg:grid-cols-3">
-              {data.map((p) => (
+              {filtered.map((p) => (
                 <article
                   key={p.id}
                   className="overflow-hidden rounded-xl border border-border bg-card shadow-card"
@@ -104,8 +138,12 @@ function Projetos() {
                   </div>
                 </article>
               ))}
-              {data.length === 0 && (
-                <p className="text-muted-foreground">Nenhum projeto cadastrado ainda.</p>
+              {filtered.length === 0 && (
+                <p className="text-muted-foreground">
+                  {data.length === 0
+                    ? "Nenhum projeto cadastrado ainda."
+                    : "Nenhum projeto nesta causa ainda."}
+                </p>
               )}
             </div>
           )}

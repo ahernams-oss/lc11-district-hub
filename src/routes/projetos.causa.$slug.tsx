@@ -117,6 +117,15 @@ function CausaPage() {
                       {p.description}
                     </p>
                   )}
+                  {p.gallery_urls && p.gallery_urls.length > 0 && (
+                    <div className="mt-4 grid grid-cols-5 gap-1.5">
+                      {p.gallery_urls.slice(0, 5).map((url, i) => (
+                        <a key={i} href={url} target="_blank" rel="noreferrer" className="aspect-square overflow-hidden rounded">
+                          <img src={url} alt="" loading="lazy" className="h-full w-full object-cover transition hover:opacity-80" />
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </article>
             ))}

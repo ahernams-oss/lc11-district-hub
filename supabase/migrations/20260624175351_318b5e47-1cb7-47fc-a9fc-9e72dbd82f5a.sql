@@ -1,0 +1,2 @@
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS gallery_urls text[] NOT NULL DEFAULT '{}'::text[];
+ALTER TABLE public.projects ADD CONSTRAINT projects_gallery_max_5 CHECK (array_length(gallery_urls, 1) IS NULL OR array_length(gallery_urls, 1) <= 5);

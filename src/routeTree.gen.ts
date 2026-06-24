@@ -45,6 +45,7 @@ import { Route as AdminNoticiasIndexRouteImport } from './routes/admin.noticias.
 import { Route as AdminLideresIndexRouteImport } from './routes/admin.lideres.index'
 import { Route as AdminEventosIndexRouteImport } from './routes/admin.eventos.index'
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
+import { Route as ProjetosCausaSlugRouteImport } from './routes/projetos.causa.$slug'
 import { Route as ClubesRegiaoLetraRouteImport } from './routes/clubes.regiao.$letra'
 import { Route as ApiPublicProjetosRouteImport } from './routes/api.public.projetos'
 import { Route as ApiPublicLcifRouteImport } from './routes/api.public.lcif'
@@ -240,6 +241,11 @@ const AdminConteudoIndexRoute = AdminConteudoIndexRouteImport.update({
   path: '/conteudo/',
   getParentRoute: () => AdminRoute,
 } as any)
+const ProjetosCausaSlugRoute = ProjetosCausaSlugRouteImport.update({
+  id: '/causa/$slug',
+  path: '/causa/$slug',
+  getParentRoute: () => ProjetosRoute,
+} as any)
 const ClubesRegiaoLetraRoute = ClubesRegiaoLetraRouteImport.update({
   id: '/$letra',
   path: '/$letra',
@@ -328,7 +334,7 @@ export interface FileRoutesByFullPath {
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
-  '/projetos': typeof ProjetosRoute
+  '/projetos': typeof ProjetosRouteWithChildren
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -355,6 +361,7 @@ export interface FileRoutesByFullPath {
   '/api/public/lcif': typeof ApiPublicLcifRoute
   '/api/public/projetos': typeof ApiPublicProjetosRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
+  '/projetos/causa/$slug': typeof ProjetosCausaSlugRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
   '/admin/eventos/': typeof AdminEventosIndexRoute
   '/admin/lideres/': typeof AdminLideresIndexRoute
@@ -379,7 +386,7 @@ export interface FileRoutesByTo {
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
-  '/projetos': typeof ProjetosRoute
+  '/projetos': typeof ProjetosRouteWithChildren
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -406,6 +413,7 @@ export interface FileRoutesByTo {
   '/api/public/lcif': typeof ApiPublicLcifRoute
   '/api/public/projetos': typeof ApiPublicProjetosRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
+  '/projetos/causa/$slug': typeof ProjetosCausaSlugRoute
   '/admin/conteudo': typeof AdminConteudoIndexRoute
   '/admin/eventos': typeof AdminEventosIndexRoute
   '/admin/lideres': typeof AdminLideresIndexRoute
@@ -432,7 +440,7 @@ export interface FileRoutesById {
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
-  '/projetos': typeof ProjetosRoute
+  '/projetos': typeof ProjetosRouteWithChildren
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -459,6 +467,7 @@ export interface FileRoutesById {
   '/api/public/lcif': typeof ApiPublicLcifRoute
   '/api/public/projetos': typeof ApiPublicProjetosRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
+  '/projetos/causa/$slug': typeof ProjetosCausaSlugRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
   '/admin/eventos/': typeof AdminEventosIndexRoute
   '/admin/lideres/': typeof AdminLideresIndexRoute
@@ -513,6 +522,7 @@ export interface FileRouteTypes {
     | '/api/public/lcif'
     | '/api/public/projetos'
     | '/clubes/regiao/$letra'
+    | '/projetos/causa/$slug'
     | '/admin/conteudo/'
     | '/admin/eventos/'
     | '/admin/lideres/'
@@ -564,6 +574,7 @@ export interface FileRouteTypes {
     | '/api/public/lcif'
     | '/api/public/projetos'
     | '/clubes/regiao/$letra'
+    | '/projetos/causa/$slug'
     | '/admin/conteudo'
     | '/admin/eventos'
     | '/admin/lideres'
@@ -616,6 +627,7 @@ export interface FileRouteTypes {
     | '/api/public/lcif'
     | '/api/public/projetos'
     | '/clubes/regiao/$letra'
+    | '/projetos/causa/$slug'
     | '/admin/conteudo/'
     | '/admin/eventos/'
     | '/admin/lideres/'
@@ -642,7 +654,7 @@ export interface RootRouteChildren {
   LcifRoute: typeof LcifRoute
   LionsInternacionalRoute: typeof LionsInternacionalRoute
   NoticiasRoute: typeof NoticiasRoute
-  ProjetosRoute: typeof ProjetosRoute
+  ProjetosRoute: typeof ProjetosRouteWithChildren
   ProtocoloLeonisticoRoute: typeof ProtocoloLeonisticoRoute
   SecretarioRoute: typeof SecretarioRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -912,6 +924,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminConteudoIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/projetos/causa/$slug': {
+      id: '/projetos/causa/$slug'
+      path: '/causa/$slug'
+      fullPath: '/projetos/causa/$slug'
+      preLoaderRoute: typeof ProjetosCausaSlugRouteImport
+      parentRoute: typeof ProjetosRoute
+    }
     '/clubes/regiao/$letra': {
       id: '/clubes/regiao/$letra'
       path: '/$letra'
@@ -1108,6 +1127,18 @@ const ClubesRouteChildren: ClubesRouteChildren = {
 const ClubesRouteWithChildren =
   ClubesRoute._addFileChildren(ClubesRouteChildren)
 
+interface ProjetosRouteChildren {
+  ProjetosCausaSlugRoute: typeof ProjetosCausaSlugRoute
+}
+
+const ProjetosRouteChildren: ProjetosRouteChildren = {
+  ProjetosCausaSlugRoute: ProjetosCausaSlugRoute,
+}
+
+const ProjetosRouteWithChildren = ProjetosRoute._addFileChildren(
+  ProjetosRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -1123,7 +1154,7 @@ const rootRouteChildren: RootRouteChildren = {
   LcifRoute: LcifRoute,
   LionsInternacionalRoute: LionsInternacionalRoute,
   NoticiasRoute: NoticiasRoute,
-  ProjetosRoute: ProjetosRoute,
+  ProjetosRoute: ProjetosRouteWithChildren,
   ProtocoloLeonisticoRoute: ProtocoloLeonisticoRoute,
   SecretarioRoute: SecretarioRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
@@ -1141,13 +1172,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

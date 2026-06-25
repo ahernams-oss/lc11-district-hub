@@ -53,8 +53,8 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <div className="flex min-w-0 items-center gap-3">
+      <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 sm:px-6 lg:px-8 xl:flex xl:justify-between">
+        <div className="flex min-w-0 items-center gap-3 xl:shrink-0">
           <Link to="/" className="flex shrink-0 items-center gap-2" onClick={() => setOpen(false)}>
             <img src={lionsLogo.url} alt="Lions Clubs International" className="h-10 w-10 object-contain" />
             <div className="leading-tight">
@@ -68,7 +68,7 @@ export function SiteHeader() {
             <Link
               to="/governador"
               onClick={() => setOpen(false)}
-              className="hidden shrink-0 items-center gap-2 rounded-lg border border-border bg-surface/50 px-2 py-1 transition-colors hover:bg-surface sm:flex lg:mr-6"
+              className="hidden shrink-0 items-center gap-2 rounded-lg border border-border bg-surface/50 px-2 py-1 transition-colors hover:bg-surface sm:flex"
               title={`Governador${governador.name ? `: ${governador.name}` : ""}`}
             >
               <img
@@ -76,7 +76,7 @@ export function SiteHeader() {
                 alt={governador.name ? `Governador ${governador.name}` : "Governador"}
                 className="h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-primary/30"
               />
-              <div className="hidden leading-tight xl:block">
+              <div className="hidden max-w-36 leading-tight 2xl:block">
                 <div className="text-[9px] font-semibold uppercase tracking-wider text-primary">Governador</div>
                 <div className={cn("font-display text-xs font-semibold text-foreground", !governador.name?.includes(" // ") && "whitespace-nowrap")}>
                   {governador.name?.split(" // ").map((part, i) => (
@@ -99,7 +99,7 @@ export function SiteHeader() {
         </div>
 
 
-        <nav className="hidden items-center gap-3 lg:flex">
+        <nav className="hidden min-w-0 items-center justify-end gap-1 xl:flex 2xl:gap-3">
           <div
             className="relative"
             onMouseEnter={() => setInicioOpen(true)}
@@ -107,7 +107,7 @@ export function SiteHeader() {
           >
             <Link
               to="/"
-              className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"
+              className="inline-flex items-center gap-1 rounded-md px-2 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary 2xl:px-3"
               activeProps={{ className: "text-primary bg-surface" }}
               activeOptions={{ exact: true }}
             >
@@ -136,7 +136,7 @@ export function SiteHeader() {
           >
             <button
               type="button"
-              className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"
+              className="inline-flex items-center gap-1 rounded-md px-2 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary 2xl:px-3"
             >
               Líderes <ChevronDown className="h-3.5 w-3.5" />
             </button>
@@ -184,7 +184,7 @@ export function SiteHeader() {
           >
             <button
               type="button"
-              className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"
+              className="inline-flex items-center gap-1 rounded-md px-2 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary 2xl:px-3"
             >
               Clubes <ChevronDown className="h-3.5 w-3.5" />
             </button>
@@ -239,7 +239,7 @@ export function SiteHeader() {
 
           <Link
             to="/documentos"
-            className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"
+            className="rounded-md px-2 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary 2xl:px-3"
             activeProps={{ className: "text-primary bg-surface" }}
           >
             Documentos
@@ -249,7 +249,7 @@ export function SiteHeader() {
             <Link
               key={item.to}
               to={item.to}
-              className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"
+              className="rounded-md px-2 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary 2xl:px-3"
               activeProps={{ className: "text-primary bg-surface" }}
             >
               {item.label}
@@ -257,14 +257,14 @@ export function SiteHeader() {
           ))}
           <Link
             to="/lcif"
-            className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary"
+            className="rounded-md px-2 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary 2xl:px-3"
             activeProps={{ className: "text-primary bg-surface" }}
           >
             LCIF
           </Link>
           <Link
             to="/doar"
-            className="ml-2 inline-flex items-center justify-center rounded-md bg-gold px-4 py-2 text-sm font-semibold text-gold-foreground shadow-card transition-transform hover:scale-105"
+            className="ml-1 inline-flex items-center justify-center rounded-md bg-gold px-3 py-2 text-sm font-semibold text-gold-foreground shadow-card transition-transform hover:scale-105 2xl:ml-2 2xl:px-4"
           >
             Doar
           </Link>
@@ -272,7 +272,7 @@ export function SiteHeader() {
             href="https://lovable.dev/projects/3c09d0df-b614-426e-b3c7-58ab2e837294"
             target="_blank"
             rel="noreferrer"
-            className="ml-1 inline-flex items-center gap-1 rounded-md border border-border px-3 py-2 text-sm font-medium text-foreground/80 hover:border-primary hover:text-primary"
+            className="ml-1 inline-flex items-center gap-1 rounded-md border border-border px-2 py-2 text-sm font-medium text-foreground/80 hover:border-primary hover:text-primary 2xl:px-3"
           >
             Lions Connecta <ExternalLink className="h-3.5 w-3.5" />
           </a>
@@ -280,14 +280,14 @@ export function SiteHeader() {
 
         <button
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex items-center justify-center rounded-md p-2 text-foreground lg:hidden"
+          className="inline-flex shrink-0 items-center justify-center rounded-md p-2 text-foreground xl:hidden"
           aria-label="Abrir menu"
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
-      <div className={cn("border-t border-border lg:hidden", open ? "block" : "hidden")}>
+      <div className={cn("border-t border-border xl:hidden", open ? "block" : "hidden")}>
         <nav className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:px-6">
           <Link
             to="/"

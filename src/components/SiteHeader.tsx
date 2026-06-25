@@ -54,7 +54,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <div className="flex min-w-0 items-center gap-3 lg:-ml-20 -translate-x-[2cm]">
+        <div className="flex min-w-0 items-center gap-3">
           <Link to="/" className="flex shrink-0 items-center gap-2" onClick={() => setOpen(false)}>
             <img src={lionsLogo.url} alt="Lions Clubs International" className="h-10 w-10 object-contain" />
             <div className="leading-tight">

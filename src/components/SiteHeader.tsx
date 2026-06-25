@@ -288,7 +288,7 @@ export function SiteHeader() {
       </div>
 
       <div className={cn("border-t border-border lg:hidden", open ? "block" : "hidden")}>
-        <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6">
+        <nav className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:px-6">
           <Link
             to="/"
             onClick={() => setOpen(false)}

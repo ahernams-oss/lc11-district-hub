@@ -298,7 +298,7 @@ export function SiteHeader() {
           >
             Início
           </Link>
-          <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+          <div className="ml-3 flex flex-col gap-2 border-l border-border pl-3">
             {inicioSubmenu.map((s) => (
               <Link
                 key={s.to}
@@ -311,8 +311,8 @@ export function SiteHeader() {
               </Link>
             ))}
           </div>
-          <div className="mt-1 px-3 py-2 text-base font-medium text-foreground">Líderes</div>
-          <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+          <div className="mt-2 px-3 py-2 text-base font-medium text-foreground">Líderes</div>
+          <div className="ml-3 flex flex-col gap-2 border-l border-border pl-3">
             <Link
               to="/governador"
               onClick={() => setOpen(false)}
@@ -321,7 +321,7 @@ export function SiteHeader() {
             >
               Governador
             </Link>
-            <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+            <div className="ml-3 flex flex-col gap-2 border-l border-border pl-3">
               {equipeGovernadorSubmenu.map((s) => (
                 <Link
                   key={s.to}

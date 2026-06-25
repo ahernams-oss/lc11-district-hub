@@ -99,7 +99,7 @@ export function SiteHeader() {
         </div>
 
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-3 lg:flex">
           <div
             className="relative"
             onMouseEnter={() => setInicioOpen(true)}

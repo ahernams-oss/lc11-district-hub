@@ -392,6 +392,14 @@ export function SiteHeader() {
               ))}
             </div>
           </div>
+          <Link
+            to="/documentos"
+            onClick={() => setOpen(false)}
+            className="rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-surface"
+            activeProps={{ className: "text-primary bg-surface" }}
+          >
+            Documentos
+          </Link>
           {nav.map((item) => (
             <Link
               key={item.to}

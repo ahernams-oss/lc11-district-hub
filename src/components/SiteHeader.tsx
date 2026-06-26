@@ -61,6 +61,8 @@ export function SiteHeader() {
   const [inicioOpen, setInicioOpen] = useState(false);
   const [lideresOpen, setLideresOpen] = useState(false);
   const [clubesOpen, setClubesOpen] = useState(false);
+  const [documentosOpen, setDocumentosOpen] = useState(false);
+
 
   const { data: governadores } = useLeaders("governador");
   const governador = governadores?.[0];

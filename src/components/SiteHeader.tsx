@@ -76,7 +76,7 @@ export function SiteHeader() {
                 alt={governador.name ? `Governador ${governador.name}` : "Governador"}
                 className="h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-primary/30"
               />
-              <div className="hidden max-w-36 leading-tight 2xl:block">
+              <div className="hidden max-w-36 leading-tight min-[1800px]:block">
                 <div className="text-[9px] font-semibold uppercase tracking-wider text-primary">Governador</div>
                 <div className={cn("font-display text-xs font-semibold text-foreground", !governador.name?.includes(" // ") && "whitespace-nowrap")}>
                   {governador.name?.split(" // ").map((part, i) => (

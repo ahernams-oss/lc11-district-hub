@@ -33,6 +33,7 @@ import { Route as AssessoriaRouteImport } from './routes/assessoria'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ExGovernadoresIndexRouteImport } from './routes/ex-governadores.index'
+import { Route as DocumentosIndexRouteImport } from './routes/documentos.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ExGovernadoresIdRouteImport } from './routes/ex-governadores.$id'
 import { Route as DocumentosSplatRouteImport } from './routes/documentos.$'
@@ -184,6 +185,11 @@ const ExGovernadoresIndexRoute = ExGovernadoresIndexRouteImport.update({
   id: '/ex-governadores/',
   path: '/ex-governadores/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const DocumentosIndexRoute = DocumentosIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DocumentosRoute,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
@@ -374,6 +380,7 @@ export interface FileRoutesByFullPath {
   '/documentos/$': typeof DocumentosSplatRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/documentos/': typeof DocumentosIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
@@ -407,7 +414,6 @@ export interface FileRoutesByTo {
   '/clubes': typeof ClubesRouteWithChildren
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
-  '/documentos': typeof DocumentosRouteWithChildren
   '/eventos': typeof EventosRoute
   '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
@@ -430,6 +436,7 @@ export interface FileRoutesByTo {
   '/documentos/$': typeof DocumentosSplatRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/admin': typeof AdminIndexRoute
+  '/documentos': typeof DocumentosIndexRoute
   '/ex-governadores': typeof ExGovernadoresIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
@@ -488,6 +495,7 @@ export interface FileRoutesById {
   '/documentos/$': typeof DocumentosSplatRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/documentos/': typeof DocumentosIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
@@ -547,6 +555,7 @@ export interface FileRouteTypes {
     | '/documentos/$'
     | '/ex-governadores/$id'
     | '/admin/'
+    | '/documentos/'
     | '/ex-governadores/'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
@@ -580,7 +589,6 @@ export interface FileRouteTypes {
     | '/clubes'
     | '/contato'
     | '/doar'
-    | '/documentos'
     | '/eventos'
     | '/gat'
     | '/governador'
@@ -603,6 +611,7 @@ export interface FileRouteTypes {
     | '/documentos/$'
     | '/ex-governadores/$id'
     | '/admin'
+    | '/documentos'
     | '/ex-governadores'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
@@ -660,6 +669,7 @@ export interface FileRouteTypes {
     | '/documentos/$'
     | '/ex-governadores/$id'
     | '/admin/'
+    | '/documentos/'
     | '/ex-governadores/'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
@@ -888,6 +898,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/ex-governadores/'
       preLoaderRoute: typeof ExGovernadoresIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/documentos/': {
+      id: '/documentos/'
+      path: '/'
+      fullPath: '/documentos/'
+      preLoaderRoute: typeof DocumentosIndexRouteImport
+      parentRoute: typeof DocumentosRoute
     }
     '/admin/': {
       id: '/admin/'
@@ -1210,10 +1227,12 @@ const ClubesRouteWithChildren =
 
 interface DocumentosRouteChildren {
   DocumentosSplatRoute: typeof DocumentosSplatRoute
+  DocumentosIndexRoute: typeof DocumentosIndexRoute
 }
 
 const DocumentosRouteChildren: DocumentosRouteChildren = {
   DocumentosSplatRoute: DocumentosSplatRoute,
+  DocumentosIndexRoute: DocumentosIndexRoute,
 }
 
 const DocumentosRouteWithChildren = DocumentosRoute._addFileChildren(

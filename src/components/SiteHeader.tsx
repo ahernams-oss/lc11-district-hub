@@ -76,13 +76,12 @@ export function SiteHeader() {
                 alt={governador.name ? `Governador ${governador.name}` : "Governador"}
                 className="h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-primary/30"
               />
-              <div className="hidden min-w-0 max-w-56 leading-snug min-[1800px]:block">
-                <div className="text-[10px] font-bold uppercase tracking-wider text-primary">Governador</div>
-                <div className={cn("font-display text-sm font-semibold text-foreground", !governador.name?.includes(" // ") && "whitespace-nowrap")}>
+              <div className="hidden min-w-0 max-w-44 min-[1800px]:block">
+                <div className="text-[9px] font-bold uppercase tracking-wider leading-tight text-primary">Governador</div>
+                <div className={cn("font-display text-xs font-semibold leading-tight text-foreground mt-0.5", !governador.name?.includes(" // ") && "whitespace-nowrap")}>
                   {governador.name?.split(" // ").map((part, i) => (
-                    <span key={i}>
+                    <span key={i} className="block">
                       {part}
-                      {i < governador.name.split(" // ").length - 1 && <br />}
                     </span>
                   ))}
                 </div>

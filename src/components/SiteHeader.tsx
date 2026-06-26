@@ -68,15 +68,15 @@ export function SiteHeader() {
             <Link
               to="/governador"
               onClick={() => setOpen(false)}
-              className="hidden shrink-0 items-center gap-2 rounded-lg border border-border bg-surface/50 px-2 py-1 transition-colors hover:bg-surface sm:flex"
+              className="hidden shrink-0 items-center gap-3 rounded-lg border border-border bg-surface/50 px-3 py-2 transition-colors hover:bg-surface sm:flex"
               title={`Governador${governador.name ? `: ${governador.name}` : ""}`}
             >
               <img
                 src={governador.photo_url}
                 alt={governador.name ? `Governador ${governador.name}` : "Governador"}
-                className="h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-primary/30"
+                className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-primary/30"
               />
-              <div className="hidden min-w-0 max-w-44 min-[1800px]:block">
+              <div className="hidden min-w-0 md:block">
                 <div className="text-[9px] font-bold uppercase tracking-wider leading-tight text-primary">Governador</div>
                 <div className={cn("font-display text-xs font-semibold leading-tight text-foreground mt-0.5", !governador.name?.includes(" // ") && "whitespace-nowrap")}>
                   {governador.name?.split(" // ").map((part, i) => (
@@ -90,7 +90,7 @@ export function SiteHeader() {
                 <img
                   src={governador.pin_url}
                   alt="PIN do Governador"
-                  className="h-9 w-9 shrink-0 object-contain"
+                  className="h-10 w-auto max-w-10 shrink-0 object-contain"
                 />
               )}
             </Link>

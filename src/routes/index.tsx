@@ -135,24 +135,15 @@ function Index() {
                 );
                 if (!slide.link) return <div key={slide.src + i}>{img}</div>;
                 const isExternal = /^https?:\/\//i.test(slide.link);
-                return isExternal ? (
+                return (
                   <a
                     key={slide.src + i}
                     href={slide.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     className={`absolute inset-0 ${i === current ? "z-[1]" : "pointer-events-none"}`}
                   >
                     {img}
                   </a>
-                ) : (
-                  <Link
-                    key={slide.src + i}
-                    to={slide.link}
-                    className={`absolute inset-0 ${i === current ? "z-[1]" : "pointer-events-none"}`}
-                  >
-                    {img}
-                  </Link>
                 );
               })}
               {slides.length > 1 && (

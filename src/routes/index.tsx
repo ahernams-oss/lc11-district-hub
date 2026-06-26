@@ -123,16 +123,38 @@ function Index() {
 
             {/* RIGHT: Dynamic banner carousel */}
             <div className="relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-2xl bg-white shadow-elegant ring-1 ring-white/20 lg:aspect-[3/4] lg:translate-x-[5cm]">
-              {slides.map((src, i) => (
-                <img
-                  key={src + i}
-                  src={src}
-                  alt="Banner do Distrito LC-11"
-                  width={1200}
-                  height={900}
-                  className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-1000 ${i === current ? "opacity-100" : "opacity-0"}`}
-                />
-              ))}
+              {slides.map((slide, i) => {
+                const img = (
+                  <img
+                    src={slide.src}
+                    alt="Banner do Distrito LC-11"
+                    width={1200}
+                    height={900}
+                    className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-1000 ${i === current ? "opacity-100" : "opacity-0"}`}
+                  />
+                );
+                if (!slide.link) return <div key={slide.src + i}>{img}</div>;
+                const isExternal = /^https?:\/\//i.test(slide.link);
+                return isExternal ? (
+                  <a
+                    key={slide.src + i}
+                    href={slide.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`absolute inset-0 ${i === current ? "z-[1]" : "pointer-events-none"}`}
+                  >
+                    {img}
+                  </a>
+                ) : (
+                  <Link
+                    key={slide.src + i}
+                    to={slide.link}
+                    className={`absolute inset-0 ${i === current ? "z-[1]" : "pointer-events-none"}`}
+                  >
+                    {img}
+                  </Link>
+                );
+              })}
               {slides.length > 1 && (
                 <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-2">
                   {slides.map((_, i) => (

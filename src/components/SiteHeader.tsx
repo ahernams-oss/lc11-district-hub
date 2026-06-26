@@ -35,6 +35,19 @@ const regioesSubmenu = [
   { to: "/clubes/regiao/f", label: "Região F" },
 ] as const;
 
+const atosGovernadorSubmenu = [
+  { to: "/documentos/atos-governador/al-2026-2027", label: "AL 2026-2027" },
+  { to: "/documentos/atos-governador/al-2027-2028", label: "AL 2027-2028" },
+] as const;
+
+const documentosSubmenu = [
+  { to: "/documentos/estatuto-lions-internacional", label: "Estatuto Lions Internacional" },
+  { to: "/documentos/estatuto-dmlc", label: "Estatuto DMLC" },
+  { to: "/documentos/estatuto-distrito-lc-11", label: "Estatuto Distrito LC-11" },
+  { to: "/documentos/estatuto-padrao-clubes", label: "Estatuto Padrão dos Clubes" },
+  { to: "/documentos/regulamento-sede", label: "Regulamento da Sede" },
+] as const;
+
 const nav = [
   { to: "/projetos", label: "Projetos" },
   { to: "/noticias", label: "Notícias" },
@@ -42,11 +55,14 @@ const nav = [
 ] as const;
 
 
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [inicioOpen, setInicioOpen] = useState(false);
   const [lideresOpen, setLideresOpen] = useState(false);
   const [clubesOpen, setClubesOpen] = useState(false);
+  const [documentosOpen, setDocumentosOpen] = useState(false);
+
 
   const { data: governadores } = useLeaders("governador");
   const governador = governadores?.[0];
@@ -236,13 +252,54 @@ export function SiteHeader() {
 
           </div>
 
-          <Link
-            to="/documentos"
-            className="rounded-md px-2 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary 2xl:px-3"
-            activeProps={{ className: "text-primary bg-surface" }}
+          <div
+            className="relative"
+            onMouseEnter={() => setDocumentosOpen(true)}
+            onMouseLeave={() => setDocumentosOpen(false)}
           >
-            Documentos
-          </Link>
+            <Link
+              to="/documentos"
+              className="inline-flex items-center gap-1 rounded-md px-2 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary 2xl:px-3"
+              activeProps={{ className: "text-primary bg-surface" }}
+            >
+              Documentos <ChevronDown className="h-3.5 w-3.5" />
+            </Link>
+            {documentosOpen && (
+              <div className="absolute left-0 top-full w-72 rounded-md border border-border bg-background py-2 shadow-card">
+                <div className="group/atos relative">
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                  >
+                    Atos do(a) Governador(a) <ChevronDown className="h-3.5 w-3.5 -rotate-90" />
+                  </button>
+                  <div className="absolute left-full top-0 hidden w-56 rounded-md border border-border bg-background py-2 shadow-card group-hover/atos:block">
+                    {atosGovernadorSubmenu.map((s) => (
+                      <Link
+                        key={s.to}
+                        to={s.to}
+                        className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                        activeProps={{ className: "text-primary bg-surface" }}
+                      >
+                        {s.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+                {documentosSubmenu.map((s) => (
+                  <Link
+                    key={s.to}
+                    to={s.to}
+                    className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                    activeProps={{ className: "text-primary bg-surface" }}
+                  >
+                    {s.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
 
           {nav.map((item) => (
             <Link
@@ -399,6 +456,34 @@ export function SiteHeader() {
           >
             Documentos
           </Link>
+          <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+            <div className="px-3 py-1 text-sm font-medium text-foreground/70">Atos do(a) Governador(a)</div>
+            <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+              {atosGovernadorSubmenu.map((s) => (
+                <Link
+                  key={s.to}
+                  to={s.to}
+                  onClick={() => setOpen(false)}
+                  className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+                  activeProps={{ className: "text-primary bg-surface" }}
+                >
+                  {s.label}
+                </Link>
+              ))}
+            </div>
+            {documentosSubmenu.map((s) => (
+              <Link
+                key={s.to}
+                to={s.to}
+                onClick={() => setOpen(false)}
+                className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+                activeProps={{ className: "text-primary bg-surface" }}
+              >
+                {s.label}
+              </Link>
+            ))}
+          </div>
+
           {nav.map((item) => (
             <Link
               key={item.to}

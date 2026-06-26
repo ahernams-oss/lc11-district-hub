@@ -35,11 +35,25 @@ const regioesSubmenu = [
   { to: "/clubes/regiao/f", label: "Região F" },
 ] as const;
 
+const atosGovernadorSubmenu = [
+  { to: "/documentos/atos-governador/al-2026-2027", label: "AL 2026-2027" },
+  { to: "/documentos/atos-governador/al-2027-2028", label: "AL 2027-2028" },
+] as const;
+
+const documentosSubmenu = [
+  { to: "/documentos/estatuto-lions-internacional", label: "Estatuto Lions Internacional" },
+  { to: "/documentos/estatuto-dmlc", label: "Estatuto DMLC" },
+  { to: "/documentos/estatuto-distrito-lc-11", label: "Estatuto Distrito LC-11" },
+  { to: "/documentos/estatuto-padrao-clubes", label: "Estatuto Padrão dos Clubes" },
+  { to: "/documentos/regulamento-sede", label: "Regulamento da Sede" },
+] as const;
+
 const nav = [
   { to: "/projetos", label: "Projetos" },
   { to: "/noticias", label: "Notícias" },
   { to: "/eventos", label: "Eventos" },
 ] as const;
+
 
 
 export function SiteHeader() {

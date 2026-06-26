@@ -35,6 +35,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ExGovernadoresIndexRouteImport } from './routes/ex-governadores.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ExGovernadoresIdRouteImport } from './routes/ex-governadores.$id'
+import { Route as DocumentosSplatRouteImport } from './routes/documentos.$'
 import { Route as ClubesRjRouteImport } from './routes/clubes.rj'
 import { Route as ClubesRegiaoRouteImport } from './routes/clubes.regiao'
 import { Route as ClubesEsRouteImport } from './routes/clubes.es'
@@ -192,6 +193,11 @@ const ExGovernadoresIdRoute = ExGovernadoresIdRouteImport.update({
   path: '/ex-governadores/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocumentosSplatRoute = DocumentosSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => DocumentosRoute,
+} as any)
 const ClubesRjRoute = ClubesRjRouteImport.update({
   id: '/rj',
   path: '/rj',
@@ -333,7 +339,7 @@ export interface FileRoutesByFullPath {
   '/clubes': typeof ClubesRouteWithChildren
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
-  '/documentos': typeof DocumentosRoute
+  '/documentos': typeof DocumentosRouteWithChildren
   '/eventos': typeof EventosRoute
   '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
@@ -353,6 +359,7 @@ export interface FileRoutesByFullPath {
   '/clubes/es': typeof ClubesEsRoute
   '/clubes/regiao': typeof ClubesRegiaoRouteWithChildren
   '/clubes/rj': typeof ClubesRjRoute
+  '/documentos/$': typeof DocumentosSplatRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/admin/': typeof AdminIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
@@ -386,7 +393,7 @@ export interface FileRoutesByTo {
   '/clubes': typeof ClubesRouteWithChildren
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
-  '/documentos': typeof DocumentosRoute
+  '/documentos': typeof DocumentosRouteWithChildren
   '/eventos': typeof EventosRoute
   '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
@@ -406,6 +413,7 @@ export interface FileRoutesByTo {
   '/clubes/es': typeof ClubesEsRoute
   '/clubes/regiao': typeof ClubesRegiaoRouteWithChildren
   '/clubes/rj': typeof ClubesRjRoute
+  '/documentos/$': typeof DocumentosSplatRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/admin': typeof AdminIndexRoute
   '/ex-governadores': typeof ExGovernadoresIndexRoute
@@ -441,7 +449,7 @@ export interface FileRoutesById {
   '/clubes': typeof ClubesRouteWithChildren
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
-  '/documentos': typeof DocumentosRoute
+  '/documentos': typeof DocumentosRouteWithChildren
   '/eventos': typeof EventosRoute
   '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
@@ -461,6 +469,7 @@ export interface FileRoutesById {
   '/clubes/es': typeof ClubesEsRoute
   '/clubes/regiao': typeof ClubesRegiaoRouteWithChildren
   '/clubes/rj': typeof ClubesRjRoute
+  '/documentos/$': typeof DocumentosSplatRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/admin/': typeof AdminIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
@@ -517,6 +526,7 @@ export interface FileRouteTypes {
     | '/clubes/es'
     | '/clubes/regiao'
     | '/clubes/rj'
+    | '/documentos/$'
     | '/ex-governadores/$id'
     | '/admin/'
     | '/ex-governadores/'
@@ -570,6 +580,7 @@ export interface FileRouteTypes {
     | '/clubes/es'
     | '/clubes/regiao'
     | '/clubes/rj'
+    | '/documentos/$'
     | '/ex-governadores/$id'
     | '/admin'
     | '/ex-governadores'
@@ -624,6 +635,7 @@ export interface FileRouteTypes {
     | '/clubes/es'
     | '/clubes/regiao'
     | '/clubes/rj'
+    | '/documentos/$'
     | '/ex-governadores/$id'
     | '/admin/'
     | '/ex-governadores/'
@@ -659,7 +671,7 @@ export interface RootRouteChildren {
   ClubesRoute: typeof ClubesRouteWithChildren
   ContatoRoute: typeof ContatoRoute
   DoarRoute: typeof DoarRoute
-  DocumentosRoute: typeof DocumentosRoute
+  DocumentosRoute: typeof DocumentosRouteWithChildren
   EventosRoute: typeof EventosRoute
   GatRoute: typeof GatRoute
   GovernadorRoute: typeof GovernadorRoute
@@ -866,6 +878,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/ex-governadores/$id'
       preLoaderRoute: typeof ExGovernadoresIdRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/documentos/$': {
+      id: '/documentos/$'
+      path: '/$'
+      fullPath: '/documentos/$'
+      preLoaderRoute: typeof DocumentosSplatRouteImport
+      parentRoute: typeof DocumentosRoute
     }
     '/clubes/rj': {
       id: '/clubes/rj'
@@ -1147,6 +1166,18 @@ const ClubesRouteChildren: ClubesRouteChildren = {
 const ClubesRouteWithChildren =
   ClubesRoute._addFileChildren(ClubesRouteChildren)
 
+interface DocumentosRouteChildren {
+  DocumentosSplatRoute: typeof DocumentosSplatRoute
+}
+
+const DocumentosRouteChildren: DocumentosRouteChildren = {
+  DocumentosSplatRoute: DocumentosSplatRoute,
+}
+
+const DocumentosRouteWithChildren = DocumentosRoute._addFileChildren(
+  DocumentosRouteChildren,
+)
+
 interface ProjetosRouteChildren {
   ProjetosCausaSlugRoute: typeof ProjetosCausaSlugRoute
 }
@@ -1167,7 +1198,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClubesRoute: ClubesRouteWithChildren,
   ContatoRoute: ContatoRoute,
   DoarRoute: DoarRoute,
-  DocumentosRoute: DocumentosRoute,
+  DocumentosRoute: DocumentosRouteWithChildren,
   EventosRoute: EventosRoute,
   GatRoute: GatRoute,
   GovernadorRoute: GovernadorRoute,

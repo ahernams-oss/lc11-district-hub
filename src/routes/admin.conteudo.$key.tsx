@@ -9,14 +9,15 @@ export const Route = createFileRoute("/admin/conteudo/$key")({
 });
 
 // Field definitions per content key
-type Field = { name: string; label: string; type: "text" | "textarea" | "image" | "images"; max?: number };
+type Field = { name: string; label: string; type: "text" | "textarea" | "image" | "images" | "images_with_links" | "number"; max?: number; linksField?: string; min?: number; help?: string };
 
 const FIELDS: Record<ContentKey, Field[]> = {
   home: [
     { name: "hero_eyebrow", label: "Sobre-título (eyebrow)", type: "text" },
     { name: "hero_title", label: "Título principal", type: "textarea" },
     { name: "hero_description", label: "Descrição", type: "textarea" },
-    { name: "hero_images", label: "Imagens do hero (até 5 - rotação automática)", type: "images", max: 5 },
+    { name: "hero_images", label: "Imagens do hero (até 10 - rotação automática)", type: "images_with_links", max: 10, linksField: "hero_image_links" },
+    { name: "hero_rotation_seconds", label: "Tempo de rotação do banner (segundos)", type: "number", min: 1, help: "Quanto tempo cada imagem fica visível antes de passar para a próxima." },
   ],
   "lions-internacional": [
     { name: "eyebrow", label: "Sobre-título", type: "text" },

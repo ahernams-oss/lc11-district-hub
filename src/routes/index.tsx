@@ -42,6 +42,8 @@ function Index() {
     hero_description: string;
     hero_image_url: string;
     hero_images: string[];
+    hero_image_links: string[];
+    hero_rotation_seconds: number;
   }>("home", {
     hero_eyebrow: "Lions Clubs International · Distrito LC-11",
     hero_title: "Onde há uma necessidade, há um Leão.",
@@ -49,6 +51,8 @@ function Index() {
       "Somos voluntários de mais de 65 clubes unidos por uma causa: servir nossa comunidade com integridade, compaixão e união. Junte-se a nós.",
     hero_image_url: "",
     hero_images: [],
+    hero_image_links: [],
+    hero_rotation_seconds: 5,
   });
 
   const { data: leaders = [] } = useLeaders("governador");
@@ -56,15 +60,20 @@ function Index() {
 
   const images = (Array.isArray(hero.hero_images) ? hero.hero_images : [])
     .filter((u) => typeof u === "string" && u.trim().length > 0)
-    .slice(0, 5);
-  const slides = images.length > 0 ? images : [hero.hero_image_url || heroImg];
+    .slice(0, 10);
+  const linksArr = Array.isArray(hero.hero_image_links) ? hero.hero_image_links : [];
+  const slides = images.length > 0
+    ? images.map((src, i) => ({ src, link: (linksArr[i] || "").trim() }))
+    : [{ src: hero.hero_image_url || heroImg, link: "" }];
+
+  const rotationMs = Math.max(1, Number(hero.hero_rotation_seconds) || 5) * 1000;
 
   const [current, setCurrent] = useState(0);
   useEffect(() => {
     if (slides.length <= 1) return;
-    const id = setInterval(() => setCurrent((c) => (c + 1) % slides.length), 5000);
+    const id = setInterval(() => setCurrent((c) => (c + 1) % slides.length), rotationMs);
     return () => clearInterval(id);
-  }, [slides.length]);
+  }, [slides.length, rotationMs]);
 
   return (
     <>

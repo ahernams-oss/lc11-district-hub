@@ -165,6 +165,60 @@ export type Database = {
         }
         Relationships: []
       }
+      donations: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          customer_email: string | null
+          customer_name: string | null
+          description: string | null
+          environment: string
+          id: string
+          payment_status: string
+          raw_event: Json | null
+          receipt_number: string
+          status: string
+          stripe_payment_intent_id: string | null
+          stripe_session_id: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency: string
+          customer_email?: string | null
+          customer_name?: string | null
+          description?: string | null
+          environment: string
+          id?: string
+          payment_status: string
+          raw_event?: Json | null
+          receipt_number: string
+          status: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          customer_email?: string | null
+          customer_name?: string | null
+          description?: string | null
+          environment?: string
+          id?: string
+          payment_status?: string
+          raw_event?: Json | null
+          receipt_number?: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       events: {
         Row: {
           cover_url: string | null

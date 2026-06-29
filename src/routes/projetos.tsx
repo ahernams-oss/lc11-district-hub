@@ -149,9 +149,11 @@ function Projetos() {
               {filtered.map((p) => {
                 const imgs = [p.cover_url, ...(p.gallery_urls ?? [])].filter(Boolean) as string[];
                 return (
-                <article
+                <Link
                   key={p.id}
-                  className="overflow-hidden rounded-xl border border-border bg-card shadow-card"
+                  to="/projetos/$id"
+                  params={{ id: p.id }}
+                  className="block overflow-hidden rounded-xl border border-border bg-card shadow-card transition-transform hover:-translate-y-1 hover:border-primary"
                 >
                   {imgs.length > 0 && <ProjectImageCarousel images={imgs} alt={p.title} />}
                   <div className="p-6">
@@ -167,7 +169,7 @@ function Projetos() {
                       </p>
                     )}
                   </div>
-                </article>
+                </Link>
                 );
               })}
               {filtered.length === 0 && (

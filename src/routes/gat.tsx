@@ -7,7 +7,7 @@ export const Route = createFileRoute("/gat")({
   head: () => ({
     meta: [
       { title: "GAT — Distrito LC-11" },
-      { name: "description", content: "Grupo de Ação e Trabalho (GAT) do Distrito LC-11." },
+      { name: "description", content: "GAT — Equipe de Ação Global do Distrito LC-11." },
     ],
     links: [{ rel: "canonical", href: "/gat" }],
   }),

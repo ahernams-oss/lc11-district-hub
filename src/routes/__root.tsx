@@ -132,6 +132,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col">
+        <PaymentTestModeBanner />
         <SiteHeader />
         <main className="flex-1">
           <Outlet />

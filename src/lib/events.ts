@@ -10,6 +10,15 @@ export interface EventItem {
   ends_at: string | null;
   tag: string | null;
   cover_url: string | null;
+  place_info?: string | null;
+  host_club?: string | null;
+  organizer?: string | null;
+  gallery_urls?: string[] | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  lodging_tips?: string | null;
+  food_tips?: string | null;
+  tourism_tips?: string | null;
 }
 
 export function useEvents() {

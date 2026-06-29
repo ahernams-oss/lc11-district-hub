@@ -17,7 +17,7 @@ export const CATEGORY_LABELS: Record<LeaderCategory, string> = {
   vice2: "2º Vice-Governador",
   secretario: "Secretário Distrital",
   tesoureiro: "Tesoureiro Distrital",
-  gat: "GAT — Grupo de Ação e Trabalho",
+  gat: "GAT — Equipe de Ação Global",
   assessoria: "Assessorias",
   ex_governador: "Ex-Governador",
 };

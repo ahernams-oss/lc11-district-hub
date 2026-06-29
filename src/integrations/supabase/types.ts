@@ -531,12 +531,14 @@ export type Database = {
           bio: string | null
           category: string | null
           created_at: string | null
+          email: string | null
           gallery_urls: string[] | null
           id: string | null
           message: string | null
           motto: string | null
           name: string | null
           order_index: number | null
+          phone: string | null
           photo_url: string | null
           pin_url: string | null
           role: string | null
@@ -547,12 +549,14 @@ export type Database = {
           bio?: string | null
           category?: string | null
           created_at?: string | null
+          email?: never
           gallery_urls?: string[] | null
           id?: string | null
           message?: string | null
           motto?: string | null
           name?: string | null
           order_index?: number | null
+          phone?: never
           photo_url?: string | null
           pin_url?: string | null
           role?: string | null
@@ -563,12 +567,14 @@ export type Database = {
           bio?: string | null
           category?: string | null
           created_at?: string | null
+          email?: never
           gallery_urls?: string[] | null
           id?: string | null
           message?: string | null
           motto?: string | null
           name?: string | null
           order_index?: number | null
+          phone?: never
           photo_url?: string | null
           pin_url?: string | null
           role?: string | null

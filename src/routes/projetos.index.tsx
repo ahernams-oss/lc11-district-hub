@@ -42,7 +42,7 @@ function ProjectImageCarousel({ images, alt }: { images: string[]; alt: string }
   );
 }
 
-export const Route = createFileRoute("/projetos")({
+export const Route = createFileRoute("/projetos/")({
   head: () => ({
     meta: [
       { title: "Projetos e Causas — Distrito LC-11" },

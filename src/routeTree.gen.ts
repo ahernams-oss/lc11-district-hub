@@ -16,7 +16,6 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SecretarioRouteImport } from './routes/secretario'
 import { Route as ProtocoloLeonisticoRouteImport } from './routes/protocolo-leonistico'
-import { Route as ProjetosRouteImport } from './routes/projetos'
 import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as LionsInternacionalRouteImport } from './routes/lions-internacional'
 import { Route as LcifRouteImport } from './routes/lcif'
@@ -32,6 +31,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssessoriaRouteImport } from './routes/assessoria'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProjetosIndexRouteImport } from './routes/projetos.index'
 import { Route as ExGovernadoresIndexRouteImport } from './routes/ex-governadores.index'
 import { Route as DocumentosIndexRouteImport } from './routes/documentos.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
@@ -100,11 +100,6 @@ const SecretarioRoute = SecretarioRouteImport.update({
 const ProtocoloLeonisticoRoute = ProtocoloLeonisticoRouteImport.update({
   id: '/protocolo-leonistico',
   path: '/protocolo-leonistico',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProjetosRoute = ProjetosRouteImport.update({
-  id: '/projetos',
-  path: '/projetos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NoticiasRoute = NoticiasRouteImport.update({
@@ -182,6 +177,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjetosIndexRoute = ProjetosIndexRouteImport.update({
+  id: '/projetos/',
+  path: '/projetos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExGovernadoresIndexRoute = ExGovernadoresIndexRouteImport.update({
   id: '/ex-governadores/',
   path: '/ex-governadores/',
@@ -198,9 +198,9 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   getParentRoute: () => AdminRoute,
 } as any)
 const ProjetosIdRoute = ProjetosIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => ProjetosRoute,
+  id: '/projetos/$id',
+  path: '/projetos/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ExGovernadoresIdRoute = ExGovernadoresIdRouteImport.update({
   id: '/ex-governadores/$id',
@@ -273,9 +273,9 @@ const AdminConteudoIndexRoute = AdminConteudoIndexRouteImport.update({
   getParentRoute: () => AdminRoute,
 } as any)
 const ProjetosCausaSlugRoute = ProjetosCausaSlugRouteImport.update({
-  id: '/causa/$slug',
-  path: '/causa/$slug',
-  getParentRoute: () => ProjetosRoute,
+  id: '/projetos/causa/$slug',
+  path: '/projetos/causa/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ClubesRegiaoLetraRoute = ClubesRegiaoLetraRouteImport.update({
   id: '/$letra',
@@ -371,7 +371,6 @@ export interface FileRoutesByFullPath {
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
-  '/projetos': typeof ProjetosRouteWithChildren
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -389,6 +388,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/documentos/': typeof DocumentosIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
+  '/projetos/': typeof ProjetosIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
@@ -428,7 +428,6 @@ export interface FileRoutesByTo {
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
-  '/projetos': typeof ProjetosRouteWithChildren
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -446,6 +445,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/documentos': typeof DocumentosIndexRoute
   '/ex-governadores': typeof ExGovernadoresIndexRoute
+  '/projetos': typeof ProjetosIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
@@ -488,7 +488,6 @@ export interface FileRoutesById {
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/noticias': typeof NoticiasRoute
-  '/projetos': typeof ProjetosRouteWithChildren
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -506,6 +505,7 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/documentos/': typeof DocumentosIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
+  '/projetos/': typeof ProjetosIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
@@ -549,7 +549,6 @@ export interface FileRouteTypes {
     | '/lcif'
     | '/lions-internacional'
     | '/noticias'
-    | '/projetos'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -567,6 +566,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/documentos/'
     | '/ex-governadores/'
+    | '/projetos/'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
     | '/admin/eventos/$id'
@@ -606,7 +606,6 @@ export interface FileRouteTypes {
     | '/lcif'
     | '/lions-internacional'
     | '/noticias'
-    | '/projetos'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -624,6 +623,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/documentos'
     | '/ex-governadores'
+    | '/projetos'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
     | '/admin/eventos/$id'
@@ -665,7 +665,6 @@ export interface FileRouteTypes {
     | '/lcif'
     | '/lions-internacional'
     | '/noticias'
-    | '/projetos'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -683,6 +682,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/documentos/'
     | '/ex-governadores/'
+    | '/projetos/'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
     | '/admin/eventos/$id'
@@ -725,7 +725,6 @@ export interface RootRouteChildren {
   LcifRoute: typeof LcifRoute
   LionsInternacionalRoute: typeof LionsInternacionalRoute
   NoticiasRoute: typeof NoticiasRoute
-  ProjetosRoute: typeof ProjetosRouteWithChildren
   ProtocoloLeonisticoRoute: typeof ProtocoloLeonisticoRoute
   SecretarioRoute: typeof SecretarioRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -734,11 +733,14 @@ export interface RootRouteChildren {
   ViceGovernador1Route: typeof ViceGovernador1Route
   ViceGovernador2Route: typeof ViceGovernador2Route
   ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
+  ProjetosIdRoute: typeof ProjetosIdRoute
   ExGovernadoresIndexRoute: typeof ExGovernadoresIndexRoute
+  ProjetosIndexRoute: typeof ProjetosIndexRoute
   ApiPublicEventosRoute: typeof ApiPublicEventosRoute
   ApiPublicGovernadoresRoute: typeof ApiPublicGovernadoresRoute
   ApiPublicLcifRoute: typeof ApiPublicLcifRoute
   ApiPublicProjetosRoute: typeof ApiPublicProjetosRoute
+  ProjetosCausaSlugRoute: typeof ProjetosCausaSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -790,13 +792,6 @@ declare module '@tanstack/react-router' {
       path: '/protocolo-leonistico'
       fullPath: '/protocolo-leonistico'
       preLoaderRoute: typeof ProtocoloLeonisticoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projetos': {
-      id: '/projetos'
-      path: '/projetos'
-      fullPath: '/projetos'
-      preLoaderRoute: typeof ProjetosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/noticias': {
@@ -904,6 +899,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/projetos/': {
+      id: '/projetos/'
+      path: '/projetos'
+      fullPath: '/projetos/'
+      preLoaderRoute: typeof ProjetosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ex-governadores/': {
       id: '/ex-governadores/'
       path: '/ex-governadores'
@@ -927,10 +929,10 @@ declare module '@tanstack/react-router' {
     }
     '/projetos/$id': {
       id: '/projetos/$id'
-      path: '/$id'
+      path: '/projetos/$id'
       fullPath: '/projetos/$id'
       preLoaderRoute: typeof ProjetosIdRouteImport
-      parentRoute: typeof ProjetosRoute
+      parentRoute: typeof rootRouteImport
     }
     '/ex-governadores/$id': {
       id: '/ex-governadores/$id'
@@ -1032,10 +1034,10 @@ declare module '@tanstack/react-router' {
     }
     '/projetos/causa/$slug': {
       id: '/projetos/causa/$slug'
-      path: '/causa/$slug'
+      path: '/projetos/causa/$slug'
       fullPath: '/projetos/causa/$slug'
       preLoaderRoute: typeof ProjetosCausaSlugRouteImport
-      parentRoute: typeof ProjetosRoute
+      parentRoute: typeof rootRouteImport
     }
     '/clubes/regiao/$letra': {
       id: '/clubes/regiao/$letra'
@@ -1258,20 +1260,6 @@ const DocumentosRouteWithChildren = DocumentosRoute._addFileChildren(
   DocumentosRouteChildren,
 )
 
-interface ProjetosRouteChildren {
-  ProjetosIdRoute: typeof ProjetosIdRoute
-  ProjetosCausaSlugRoute: typeof ProjetosCausaSlugRoute
-}
-
-const ProjetosRouteChildren: ProjetosRouteChildren = {
-  ProjetosIdRoute: ProjetosIdRoute,
-  ProjetosCausaSlugRoute: ProjetosCausaSlugRoute,
-}
-
-const ProjetosRouteWithChildren = ProjetosRoute._addFileChildren(
-  ProjetosRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -1288,7 +1276,6 @@ const rootRouteChildren: RootRouteChildren = {
   LcifRoute: LcifRoute,
   LionsInternacionalRoute: LionsInternacionalRoute,
   NoticiasRoute: NoticiasRoute,
-  ProjetosRoute: ProjetosRouteWithChildren,
   ProtocoloLeonisticoRoute: ProtocoloLeonisticoRoute,
   SecretarioRoute: SecretarioRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
@@ -1297,11 +1284,14 @@ const rootRouteChildren: RootRouteChildren = {
   ViceGovernador1Route: ViceGovernador1Route,
   ViceGovernador2Route: ViceGovernador2Route,
   ExGovernadoresIdRoute: ExGovernadoresIdRoute,
+  ProjetosIdRoute: ProjetosIdRoute,
   ExGovernadoresIndexRoute: ExGovernadoresIndexRoute,
+  ProjetosIndexRoute: ProjetosIndexRoute,
   ApiPublicEventosRoute: ApiPublicEventosRoute,
   ApiPublicGovernadoresRoute: ApiPublicGovernadoresRoute,
   ApiPublicLcifRoute: ApiPublicLcifRoute,
   ApiPublicProjetosRoute: ApiPublicProjetosRoute,
+  ProjetosCausaSlugRoute: ProjetosCausaSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

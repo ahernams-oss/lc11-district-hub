@@ -171,11 +171,20 @@ export type Database = {
           created_at: string
           description: string | null
           ends_at: string | null
+          food_tips: string | null
+          gallery_urls: string[]
+          host_club: string | null
           id: string
+          latitude: number | null
           location: string | null
+          lodging_tips: string | null
+          longitude: number | null
+          organizer: string | null
+          place_info: string | null
           starts_at: string | null
           tag: string | null
           title: string
+          tourism_tips: string | null
           updated_at: string
         }
         Insert: {
@@ -183,11 +192,20 @@ export type Database = {
           created_at?: string
           description?: string | null
           ends_at?: string | null
+          food_tips?: string | null
+          gallery_urls?: string[]
+          host_club?: string | null
           id?: string
+          latitude?: number | null
           location?: string | null
+          lodging_tips?: string | null
+          longitude?: number | null
+          organizer?: string | null
+          place_info?: string | null
           starts_at?: string | null
           tag?: string | null
           title: string
+          tourism_tips?: string | null
           updated_at?: string
         }
         Update: {
@@ -195,11 +213,20 @@ export type Database = {
           created_at?: string
           description?: string | null
           ends_at?: string | null
+          food_tips?: string | null
+          gallery_urls?: string[]
+          host_club?: string | null
           id?: string
+          latitude?: number | null
           location?: string | null
+          lodging_tips?: string | null
+          longitude?: number | null
+          organizer?: string | null
+          place_info?: string | null
           starts_at?: string | null
           tag?: string | null
           title?: string
+          tourism_tips?: string | null
           updated_at?: string
         }
         Relationships: []

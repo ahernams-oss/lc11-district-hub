@@ -9,6 +9,8 @@ export const Route = createFileRoute("/admin/eventos/$id")({
   component: EventEditor,
 });
 
+const MAX_GALLERY = 10;
+
 interface Form {
   title: string;
   description: string;
@@ -17,6 +19,15 @@ interface Form {
   ends_at: string;
   tag: string;
   cover_url: string;
+  place_info: string;
+  host_club: string;
+  organizer: string;
+  gallery_urls: string[];
+  latitude: string;
+  longitude: string;
+  lodging_tips: string;
+  food_tips: string;
+  tourism_tips: string;
 }
 
 function toLocalDT(iso: string | null): string {
@@ -39,6 +50,15 @@ function EventEditor() {
     ends_at: "",
     tag: "",
     cover_url: "",
+    place_info: "",
+    host_club: "",
+    organizer: "",
+    gallery_urls: [],
+    latitude: "",
+    longitude: "",
+    lodging_tips: "",
+    food_tips: "",
+    tourism_tips: "",
   });
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
@@ -53,14 +73,24 @@ function EventEditor() {
       .maybeSingle()
       .then(({ data }) => {
         if (data) {
+          const d = data as any;
           setForm({
-            title: data.title,
-            description: data.description ?? "",
-            location: data.location ?? "",
-            starts_at: toLocalDT(data.starts_at),
-            ends_at: toLocalDT(data.ends_at),
-            tag: data.tag ?? "",
-            cover_url: data.cover_url ?? "",
+            title: d.title,
+            description: d.description ?? "",
+            location: d.location ?? "",
+            starts_at: toLocalDT(d.starts_at),
+            ends_at: toLocalDT(d.ends_at),
+            tag: d.tag ?? "",
+            cover_url: d.cover_url ?? "",
+            place_info: d.place_info ?? "",
+            host_club: d.host_club ?? "",
+            organizer: d.organizer ?? "",
+            gallery_urls: d.gallery_urls ?? [],
+            latitude: d.latitude != null ? String(d.latitude) : "",
+            longitude: d.longitude != null ? String(d.longitude) : "",
+            lodging_tips: d.lodging_tips ?? "",
+            food_tips: d.food_tips ?? "",
+            tourism_tips: d.tourism_tips ?? "",
           });
         }
         setLoading(false);
@@ -72,9 +102,22 @@ function EventEditor() {
     setMsg(null);
     try {
       const payload = {
-        ...form,
+        title: form.title,
+        description: form.description,
+        location: form.location,
+        tag: form.tag,
+        cover_url: form.cover_url,
+        place_info: form.place_info,
+        host_club: form.host_club,
+        organizer: form.organizer,
+        gallery_urls: form.gallery_urls,
+        lodging_tips: form.lodging_tips,
+        food_tips: form.food_tips,
+        tourism_tips: form.tourism_tips,
         starts_at: form.starts_at ? new Date(form.starts_at).toISOString() : null,
         ends_at: form.ends_at ? new Date(form.ends_at).toISOString() : null,
+        latitude: form.latitude ? Number(form.latitude) : null,
+        longitude: form.longitude ? Number(form.longitude) : null,
       };
       if (isNew) {
         const { data, error } = await supabase.from("events").insert(payload).select().single();
@@ -102,6 +145,22 @@ function EventEditor() {
     } finally {
       setSaving(false);
     }
+  }
+
+  async function handleGallery(files: FileList) {
+    setSaving(true);
+    try {
+      const remaining = MAX_GALLERY - form.gallery_urls.length;
+      const toUpload = Array.from(files).slice(0, remaining);
+      const urls = await Promise.all(toUpload.map((f) => uploadContentImage(f, "events")));
+      setForm((f) => ({ ...f, gallery_urls: [...f.gallery_urls, ...urls].slice(0, MAX_GALLERY) }));
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  function removeGalleryImage(idx: number) {
+    setForm((f) => ({ ...f, gallery_urls: f.gallery_urls.filter((_, i) => i !== idx) }));
   }
 
   if (loading) return <p>Carregando...</p>;
@@ -170,12 +229,102 @@ function EventEditor() {
               className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
             />
           </F>
+          <F label="Clube anfitrião">
+            <input
+              value={form.host_club}
+              onChange={(e) => setForm({ ...form, host_club: e.target.value })}
+              className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
+            />
+          </F>
+          <F label="Responsável pelo evento">
+            <input
+              value={form.organizer}
+              onChange={(e) => setForm({ ...form, organizer: e.target.value })}
+              className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
+            />
+          </F>
+          <F label="Latitude">
+            <input
+              value={form.latitude}
+              onChange={(e) => setForm({ ...form, latitude: e.target.value })}
+              placeholder="-23.5505"
+              className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
+            />
+          </F>
+          <F label="Longitude">
+            <input
+              value={form.longitude}
+              onChange={(e) => setForm({ ...form, longitude: e.target.value })}
+              placeholder="-46.6333"
+              className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
+            />
+          </F>
         </div>
         <F label="Descrição">
           <textarea
-            rows={6}
+            rows={4}
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
+            className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
+          />
+        </F>
+        <F label="Informações sobre o lugar">
+          <textarea
+            rows={4}
+            value={form.place_info}
+            onChange={(e) => setForm({ ...form, place_info: e.target.value })}
+            className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
+          />
+        </F>
+        <F label={`Fotos do lugar (até ${MAX_GALLERY})`}>
+          <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-5">
+            {form.gallery_urls.map((url, i) => (
+              <div key={i} className="relative aspect-square overflow-hidden rounded-md border border-border">
+                <img src={url} alt="" className="h-full w-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => removeGalleryImage(i)}
+                  className="absolute right-1 top-1 rounded bg-background/90 px-2 py-0.5 text-xs font-semibold text-foreground shadow"
+                >
+                  Remover
+                </button>
+              </div>
+            ))}
+          </div>
+          {form.gallery_urls.length < MAX_GALLERY && (
+            <label className="mt-2 inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-surface">
+              <Upload className="h-4 w-4" /> Adicionar fotos ({form.gallery_urls.length}/{MAX_GALLERY})
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(e) => e.target.files && e.target.files.length > 0 && handleGallery(e.target.files)}
+              />
+            </label>
+          )}
+        </F>
+        <F label="Dicas de hospedagem">
+          <textarea
+            rows={4}
+            value={form.lodging_tips}
+            onChange={(e) => setForm({ ...form, lodging_tips: e.target.value })}
+            className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
+          />
+        </F>
+        <F label="Dicas gastronômicas">
+          <textarea
+            rows={4}
+            value={form.food_tips}
+            onChange={(e) => setForm({ ...form, food_tips: e.target.value })}
+            className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
+          />
+        </F>
+        <F label="Dicas de turismo">
+          <textarea
+            rows={4}
+            value={form.tourism_tips}
+            onChange={(e) => setForm({ ...form, tourism_tips: e.target.value })}
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
           />
         </F>

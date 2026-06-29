@@ -91,9 +91,11 @@ function CausaPage() {
         ) : (
           <div className="mt-8 grid gap-6 lg:grid-cols-3">
             {items.map((p) => (
-              <article
+              <Link
                 key={p.id}
-                className="overflow-hidden rounded-xl border border-border bg-card shadow-card"
+                to="/projetos/$id"
+                params={{ id: p.id }}
+                className="block overflow-hidden rounded-xl border border-border bg-card shadow-card transition-transform hover:-translate-y-1 hover:border-primary"
               >
                 {p.cover_url && (
                   <div className="aspect-[16/10] overflow-hidden">
@@ -117,17 +119,11 @@ function CausaPage() {
                       {p.description}
                     </p>
                   )}
-                  {p.gallery_urls && p.gallery_urls.length > 0 && (
-                    <div className="mt-4 grid grid-cols-5 gap-1.5">
-                      {p.gallery_urls.slice(0, 5).map((url, i) => (
-                        <a key={i} href={url} target="_blank" rel="noreferrer" className="aspect-square overflow-hidden rounded">
-                          <img src={url} alt="" loading="lazy" className="h-full w-full object-cover transition hover:opacity-80" />
-                        </a>
-                      ))}
-                    </div>
-                  )}
+                  <span className="mt-4 inline-block text-sm font-semibold text-primary">
+                    Ver projeto →
+                  </span>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         )}

@@ -42,6 +42,7 @@ import { Route as DocumentosSplatRouteImport } from './routes/documentos.$'
 import { Route as ClubesRjRouteImport } from './routes/clubes.rj'
 import { Route as ClubesRegiaoRouteImport } from './routes/clubes.regiao'
 import { Route as ClubesEsRouteImport } from './routes/clubes.es'
+import { Route as CheckoutReturnRouteImport } from './routes/checkout/return'
 import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
 import { Route as AdminRegioesIndexRouteImport } from './routes/admin.regioes.index'
 import { Route as AdminProjetosIndexRouteImport } from './routes/admin.projetos.index'
@@ -233,6 +234,11 @@ const ClubesEsRoute = ClubesEsRouteImport.update({
   path: '/es',
   getParentRoute: () => ClubesRoute,
 } as any)
+const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
+  id: '/checkout/return',
+  path: '/checkout/return',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
   id: '/usuarios',
   path: '/usuarios',
@@ -384,6 +390,7 @@ export interface FileRoutesByFullPath {
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
   '/admin/usuarios': typeof AdminUsuariosRoute
+  '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
   '/clubes/regiao': typeof ClubesRegiaoRouteWithChildren
   '/clubes/rj': typeof ClubesRjRoute
@@ -442,6 +449,7 @@ export interface FileRoutesByTo {
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
   '/admin/usuarios': typeof AdminUsuariosRoute
+  '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
   '/clubes/regiao': typeof ClubesRegiaoRouteWithChildren
   '/clubes/rj': typeof ClubesRjRoute
@@ -503,6 +511,7 @@ export interface FileRoutesById {
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
   '/admin/usuarios': typeof AdminUsuariosRoute
+  '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
   '/clubes/regiao': typeof ClubesRegiaoRouteWithChildren
   '/clubes/rj': typeof ClubesRjRoute
@@ -565,6 +574,7 @@ export interface FileRouteTypes {
     | '/vice-governador-1'
     | '/vice-governador-2'
     | '/admin/usuarios'
+    | '/checkout/return'
     | '/clubes/es'
     | '/clubes/regiao'
     | '/clubes/rj'
@@ -623,6 +633,7 @@ export interface FileRouteTypes {
     | '/vice-governador-1'
     | '/vice-governador-2'
     | '/admin/usuarios'
+    | '/checkout/return'
     | '/clubes/es'
     | '/clubes/regiao'
     | '/clubes/rj'
@@ -683,6 +694,7 @@ export interface FileRouteTypes {
     | '/vice-governador-1'
     | '/vice-governador-2'
     | '/admin/usuarios'
+    | '/checkout/return'
     | '/clubes/es'
     | '/clubes/regiao'
     | '/clubes/rj'
@@ -743,6 +755,7 @@ export interface RootRouteChildren {
   TesoureiroRoute: typeof TesoureiroRoute
   ViceGovernador1Route: typeof ViceGovernador1Route
   ViceGovernador2Route: typeof ViceGovernador2Route
+  CheckoutReturnRoute: typeof CheckoutReturnRoute
   EventosIdRoute: typeof EventosIdRoute
   ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
   ProjetosIdRoute: typeof ProjetosIdRoute
@@ -988,6 +1001,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/clubes/es'
       preLoaderRoute: typeof ClubesEsRouteImport
       parentRoute: typeof ClubesRoute
+    }
+    '/checkout/return': {
+      id: '/checkout/return'
+      path: '/checkout/return'
+      fullPath: '/checkout/return'
+      preLoaderRoute: typeof CheckoutReturnRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/usuarios': {
       id: '/admin/usuarios'
@@ -1302,6 +1322,7 @@ const rootRouteChildren: RootRouteChildren = {
   TesoureiroRoute: TesoureiroRoute,
   ViceGovernador1Route: ViceGovernador1Route,
   ViceGovernador2Route: ViceGovernador2Route,
+  CheckoutReturnRoute: CheckoutReturnRoute,
   EventosIdRoute: EventosIdRoute,
   ExGovernadoresIdRoute: ExGovernadoresIdRoute,
   ProjetosIdRoute: ProjetosIdRoute,

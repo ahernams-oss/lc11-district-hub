@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
 import { Heart, ShieldCheck, Sparkles } from "lucide-react";
 import { useState } from "react";
+import { StripeEmbeddedCheckout } from "@/components/StripeEmbeddedCheckout";
 
 export const Route = createFileRoute("/doar")({
   head: () => ({
@@ -22,6 +23,11 @@ const valores = [50, 100, 250, 500];
 function Doar() {
   const [valor, setValor] = useState<number | null>(100);
   const [custom, setCustom] = useState("");
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+
+  const amountInCents = custom
+    ? Math.round(parseFloat(custom) * 100)
+    : (valor ?? 0) * 100;
 
   return (
     <>
@@ -52,48 +58,72 @@ function Doar() {
           </div>
 
           <div className="rounded-2xl border border-border bg-primary p-8 text-primary-foreground shadow-elegant">
-            <h2 className="font-display text-2xl font-bold">Escolha o valor da sua doação</h2>
-            <p className="mt-2 text-sm opacity-90">Apoie com o valor que fizer sentido para você.</p>
+            {!checkoutOpen ? (
+              <>
+                <h2 className="font-display text-2xl font-bold">Escolha o valor da sua doação</h2>
+                <p className="mt-2 text-sm opacity-90">Apoie com o valor que fizer sentido para você.</p>
 
-            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-              {valores.map((v) => (
+                <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {valores.map((v) => (
+                    <button
+                      key={v}
+                      onClick={() => { setValor(v); setCustom(""); }}
+                      className={`rounded-lg border-2 px-3 py-3 font-display text-lg font-bold transition-all ${
+                        valor === v ? "border-gold bg-gold text-gold-foreground" : "border-white/30 hover:border-gold"
+                      }`}
+                    >
+                      R$ {v}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="mt-4">
+                  <label className="text-xs font-semibold uppercase tracking-wider opacity-80">Outro valor</label>
+                  <div className="mt-2 flex items-center rounded-lg border-2 border-white/30 bg-white/5 px-3 focus-within:border-gold">
+                    <span className="font-semibold">R$</span>
+                    <input
+                      type="number"
+                      value={custom}
+                      onChange={(e) => { setCustom(e.target.value); setValor(null); }}
+                      placeholder="0,00"
+                      className="w-full bg-transparent px-2 py-3 text-lg outline-none placeholder:text-white/50"
+                    />
+                  </div>
+                </div>
+
                 <button
-                  key={v}
-                  onClick={() => { setValor(v); setCustom(""); }}
-                  className={`rounded-lg border-2 px-3 py-3 font-display text-lg font-bold transition-all ${
-                    valor === v ? "border-gold bg-gold text-gold-foreground" : "border-white/30 hover:border-gold"
-                  }`}
+                  type="button"
+                  onClick={() => {
+                    if (amountInCents >= 50) setCheckoutOpen(true);
+                  }}
+                  disabled={amountInCents < 50}
+                  className="mt-6 w-full rounded-lg bg-gold py-3.5 font-display text-lg font-bold text-gold-foreground shadow-card transition-transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  R$ {v}
+                  Doar R$ {custom || valor || 0}
                 </button>
-              ))}
-            </div>
 
-            <div className="mt-4">
-              <label className="text-xs font-semibold uppercase tracking-wider opacity-80">Outro valor</label>
-              <div className="mt-2 flex items-center rounded-lg border-2 border-white/30 bg-white/5 px-3 focus-within:border-gold">
-                <span className="font-semibold">R$</span>
-                <input
-                  type="number"
-                  value={custom}
-                  onChange={(e) => { setCustom(e.target.value); setValor(null); }}
-                  placeholder="0,00"
-                  className="w-full bg-transparent px-2 py-3 text-lg outline-none placeholder:text-white/50"
-                />
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => alert("Integração de pagamento será conectada em breve. Entre em contato com a tesouraria distrital.")}
-              className="mt-6 w-full rounded-lg bg-gold py-3.5 font-display text-lg font-bold text-gold-foreground shadow-card transition-transform hover:scale-[1.02]"
-            >
-              Doar R$ {custom || valor || 0}
-            </button>
-
-            <p className="mt-4 text-center text-xs opacity-80">
-              Ou faça uma transferência via PIX: <strong className="font-mono">doacao@distritolc11.org</strong>
-            </p>
+                <p className="mt-4 text-center text-xs opacity-80">
+                  Ou faça uma transferência via PIX: <strong className="font-mono">doacao@distritolc11.org</strong>
+                </p>
+              </>
+            ) : (
+              <>
+                <h2 className="font-display text-2xl font-bold">Finalizar doação</h2>
+                <p className="mt-2 text-sm opacity-90">Preencha seus dados abaixo de forma segura.</p>
+                <div className="mt-6">
+                  <StripeEmbeddedCheckout
+                    amountInCents={amountInCents}
+                    returnUrl={`${typeof window !== "undefined" ? window.location.origin : ""}/checkout/return?session_id={CHECKOUT_SESSION_ID}`}
+                  />
+                </div>
+                <button
+                  onClick={() => setCheckoutOpen(false)}
+                  className="mt-4 text-sm underline opacity-80 hover:opacity-100"
+                >
+                  Voltar e escolher outro valor
+                </button>
+              </>
+            )}
           </div>
         </div>
       </section>

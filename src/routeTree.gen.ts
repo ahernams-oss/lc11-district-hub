@@ -35,6 +35,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ExGovernadoresIndexRouteImport } from './routes/ex-governadores.index'
 import { Route as DocumentosIndexRouteImport } from './routes/documentos.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as ProjetosIdRouteImport } from './routes/projetos.$id'
 import { Route as ExGovernadoresIdRouteImport } from './routes/ex-governadores.$id'
 import { Route as DocumentosSplatRouteImport } from './routes/documentos.$'
 import { Route as ClubesRjRouteImport } from './routes/clubes.rj'
@@ -195,6 +196,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
+} as any)
+const ProjetosIdRoute = ProjetosIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ProjetosRoute,
 } as any)
 const ExGovernadoresIdRoute = ExGovernadoresIdRouteImport.update({
   id: '/ex-governadores/$id',
@@ -379,6 +385,7 @@ export interface FileRoutesByFullPath {
   '/clubes/rj': typeof ClubesRjRoute
   '/documentos/$': typeof DocumentosSplatRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
+  '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
   '/documentos/': typeof DocumentosIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
@@ -435,6 +442,7 @@ export interface FileRoutesByTo {
   '/clubes/rj': typeof ClubesRjRoute
   '/documentos/$': typeof DocumentosSplatRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
+  '/projetos/$id': typeof ProjetosIdRoute
   '/admin': typeof AdminIndexRoute
   '/documentos': typeof DocumentosIndexRoute
   '/ex-governadores': typeof ExGovernadoresIndexRoute
@@ -494,6 +502,7 @@ export interface FileRoutesById {
   '/clubes/rj': typeof ClubesRjRoute
   '/documentos/$': typeof DocumentosSplatRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
+  '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
   '/documentos/': typeof DocumentosIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
@@ -554,6 +563,7 @@ export interface FileRouteTypes {
     | '/clubes/rj'
     | '/documentos/$'
     | '/ex-governadores/$id'
+    | '/projetos/$id'
     | '/admin/'
     | '/documentos/'
     | '/ex-governadores/'
@@ -610,6 +620,7 @@ export interface FileRouteTypes {
     | '/clubes/rj'
     | '/documentos/$'
     | '/ex-governadores/$id'
+    | '/projetos/$id'
     | '/admin'
     | '/documentos'
     | '/ex-governadores'
@@ -668,6 +679,7 @@ export interface FileRouteTypes {
     | '/clubes/rj'
     | '/documentos/$'
     | '/ex-governadores/$id'
+    | '/projetos/$id'
     | '/admin/'
     | '/documentos/'
     | '/ex-governadores/'
@@ -912,6 +924,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/projetos/$id': {
+      id: '/projetos/$id'
+      path: '/$id'
+      fullPath: '/projetos/$id'
+      preLoaderRoute: typeof ProjetosIdRouteImport
+      parentRoute: typeof ProjetosRoute
     }
     '/ex-governadores/$id': {
       id: '/ex-governadores/$id'
@@ -1240,10 +1259,12 @@ const DocumentosRouteWithChildren = DocumentosRoute._addFileChildren(
 )
 
 interface ProjetosRouteChildren {
+  ProjetosIdRoute: typeof ProjetosIdRoute
   ProjetosCausaSlugRoute: typeof ProjetosCausaSlugRoute
 }
 
 const ProjetosRouteChildren: ProjetosRouteChildren = {
+  ProjetosIdRoute: ProjetosIdRoute,
   ProjetosCausaSlugRoute: ProjetosCausaSlugRoute,
 }
 

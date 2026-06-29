@@ -20,7 +20,7 @@ interface Form {
 }
 
 const CAUSES = ["Visão", "Combate à Fome", "Meio Ambiente", "Diabetes", "Câncer Infantil"];
-const MAX_GALLERY = 5;
+const MAX_GALLERY = 10;
 
 function ProjectEditor() {
   const { id } = useParams({ from: "/admin/projetos/$id" });

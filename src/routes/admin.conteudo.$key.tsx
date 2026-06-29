@@ -79,6 +79,16 @@ const FIELDS: Record<ContentKey, Field[]> = {
     { name: "footer_text", label: "Texto final / contato", type: "textarea" },
     { name: "image_url", label: "Imagem ilustrativa (opcional)", type: "image" },
   ],
+  contato: [
+    { name: "eyebrow", label: "Sobre-título (hero)", type: "text" },
+    { name: "title", label: "Título (hero)", type: "textarea" },
+    { name: "description", label: "Descrição (hero)", type: "textarea" },
+    { name: "email", label: "E-mail de contato", type: "text" },
+    { name: "phone", label: "Telefone", type: "text" },
+    { name: "address", label: "Endereço da sede", type: "textarea" },
+    { name: "form_title", label: "Título do formulário", type: "text" },
+    { name: "success_message", label: "Mensagem após envio", type: "textarea" },
+  ],
 };
 
 function ContentEditor() {

@@ -21,14 +21,14 @@ function Gat() {
     <>
       <PageHero
         eyebrow="Liderança ano Lionistico 2026–2027"
-        title="GAT — Grupo de Ação e Trabalho"
+        title="GAT — Equipe de Ação Global"
         description="Coordenação estratégica das ações de serviço do Distrito LC-11."
       />
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="prose prose-lg max-w-none text-foreground">
           <h2 className="font-display text-2xl font-bold">Sobre o GAT</h2>
           <p className="text-muted-foreground">
-            O Grupo de Ação e Trabalho (GAT) é responsável pelo planejamento e execução das atividades de serviço do Distrito LC-11. Coordena projetos, parcerias e mobiliza recursos para maximizar o impacto nas comunidades atendidas.
+            O&nbsp;(GAT) Equipe de Ação Global é responsável pelo planejamento e execução das atividades de serviço do Distrito LC-11. Coordena projetos, parcerias e mobiliza recursos para maximizar o impacto nas comunidades atendidas.
           </p>
         </div>
 

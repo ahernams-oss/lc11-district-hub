@@ -66,6 +66,7 @@ import { Route as AdminLideresIdRouteImport } from './routes/admin.lideres.$id'
 import { Route as AdminEventosIdRouteImport } from './routes/admin.eventos.$id'
 import { Route as AdminDocumentosIdRouteImport } from './routes/admin.documentos.$id'
 import { Route as AdminConteudoKeyRouteImport } from './routes/admin.conteudo.$key'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as AdminRegioesIdDivisoesDivIdRouteImport } from './routes/admin.regioes.$id.divisoes.$divId'
 import { Route as AdminRegioesIdDivisoesDivIdClubesClubIdRouteImport } from './routes/admin.regioes.$id.divisoes.$divId.clubes.$clubId'
 
@@ -354,6 +355,12 @@ const AdminConteudoKeyRoute = AdminConteudoKeyRouteImport.update({
   path: '/conteudo/$key',
   getParentRoute: () => AdminRoute,
 } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AdminRegioesIdDivisoesDivIdRoute =
   AdminRegioesIdDivisoesDivIdRouteImport.update({
     id: '/divisoes/$divId',
@@ -425,6 +432,7 @@ export interface FileRoutesByFullPath {
   '/admin/popups/': typeof AdminPopupsIndexRoute
   '/admin/projetos/': typeof AdminProjetosIndexRoute
   '/admin/regioes/': typeof AdminRegioesIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
 }
@@ -484,6 +492,7 @@ export interface FileRoutesByTo {
   '/admin/popups': typeof AdminPopupsIndexRoute
   '/admin/projetos': typeof AdminProjetosIndexRoute
   '/admin/regioes': typeof AdminRegioesIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
 }
@@ -546,6 +555,7 @@ export interface FileRoutesById {
   '/admin/popups/': typeof AdminPopupsIndexRoute
   '/admin/projetos/': typeof AdminProjetosIndexRoute
   '/admin/regioes/': typeof AdminRegioesIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
 }
@@ -609,6 +619,7 @@ export interface FileRouteTypes {
     | '/admin/popups/'
     | '/admin/projetos/'
     | '/admin/regioes/'
+    | '/api/public/payments/webhook'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
   fileRoutesByTo: FileRoutesByTo
@@ -668,6 +679,7 @@ export interface FileRouteTypes {
     | '/admin/popups'
     | '/admin/projetos'
     | '/admin/regioes'
+    | '/api/public/payments/webhook'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
   id:
@@ -729,6 +741,7 @@ export interface FileRouteTypes {
     | '/admin/popups/'
     | '/admin/projetos/'
     | '/admin/regioes/'
+    | '/api/public/payments/webhook'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
   fileRoutesById: FileRoutesById
@@ -767,6 +780,7 @@ export interface RootRouteChildren {
   ApiPublicLcifRoute: typeof ApiPublicLcifRoute
   ApiPublicProjetosRoute: typeof ApiPublicProjetosRoute
   ProjetosCausaSlugRoute: typeof ProjetosCausaSlugRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1170,6 +1184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminConteudoKeyRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/regioes/$id/divisoes/$divId': {
       id: '/admin/regioes/$id/divisoes/$divId'
       path: '/divisoes/$divId'
@@ -1334,6 +1355,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicLcifRoute: ApiPublicLcifRoute,
   ApiPublicProjetosRoute: ApiPublicProjetosRoute,
   ProjetosCausaSlugRoute: ProjetosCausaSlugRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

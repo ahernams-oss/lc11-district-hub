@@ -22,16 +22,23 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const causes = [
-  { icon: Heart, title: "Câncer infantil", desc: "Apoio a crianças com câncer e suas famílias, ampliando acesso a tratamento e qualidade de vida." },
-  { icon: Droplet, title: "Diabetes", desc: "Prevenção, conscientização e suporte a portadores de diabetes em nossas comunidades." },
-  { icon: LifeBuoy, title: "Socorro após catástrofes", desc: "Resposta rápida a emergências, ajuda humanitária e reconstrução pós-desastres." },
-  { icon: Leaf, title: "Meio ambiente", desc: "Plantio de árvores, mutirões de limpeza e educação ambiental nas escolas.", img: envImg },
-  { icon: HandHeart, title: "Esforços humanitários", desc: "Ações de solidariedade que atendem necessidades urgentes de populações vulneráveis." },
-  { icon: Utensils, title: "Fome", desc: "Distribuição de alimentos e apoio a famílias em situação de vulnerabilidade.", img: hungerImg },
-  { icon: Eye, title: "Visão", desc: "Triagens oftalmológicas, doação de óculos e prevenção da cegueira evitável.", img: visionImg },
-  { icon: Sparkles, title: "Juventude", desc: "Programas que inspiram liderança e protagonismo em crianças e jovens." },
-  { icon: Brain, title: "Saúde mental e Bem-estar", desc: "Iniciativas de acolhimento, prevenção e promoção da saúde mental." },
+export const CAUSE_ICONS = {
+  Heart, Droplet, LifeBuoy, Leaf, HandHeart, Utensils, Eye, Sparkles, Brain, Activity, Users, Calendar, Trophy,
+} as const;
+export type CauseIconKey = keyof typeof CAUSE_ICONS;
+
+type CauseItem = { icon: CauseIconKey; title: string; desc: string; img?: string };
+
+const DEFAULT_CAUSES: CauseItem[] = [
+  { icon: "Heart", title: "Câncer infantil", desc: "Apoio a crianças com câncer e suas famílias, ampliando acesso a tratamento e qualidade de vida." },
+  { icon: "Droplet", title: "Diabetes", desc: "Prevenção, conscientização e suporte a portadores de diabetes em nossas comunidades." },
+  { icon: "LifeBuoy", title: "Socorro após catástrofes", desc: "Resposta rápida a emergências, ajuda humanitária e reconstrução pós-desastres." },
+  { icon: "Leaf", title: "Meio ambiente", desc: "Plantio de árvores, mutirões de limpeza e educação ambiental nas escolas.", img: envImg },
+  { icon: "HandHeart", title: "Esforços humanitários", desc: "Ações de solidariedade que atendem necessidades urgentes de populações vulneráveis." },
+  { icon: "Utensils", title: "Fome", desc: "Distribuição de alimentos e apoio a famílias em situação de vulnerabilidade.", img: hungerImg },
+  { icon: "Eye", title: "Visão", desc: "Triagens oftalmológicas, doação de óculos e prevenção da cegueira evitável.", img: visionImg },
+  { icon: "Sparkles", title: "Juventude", desc: "Programas que inspiram liderança e protagonismo em crianças e jovens." },
+  { icon: "Brain", title: "Saúde mental e Bem-estar", desc: "Iniciativas de acolhimento, prevenção e promoção da saúde mental." },
 ];
 
 

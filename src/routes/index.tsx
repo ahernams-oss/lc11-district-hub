@@ -5,6 +5,12 @@ import heroImg from "@/assets/hero-service.jpg";
 import envImg from "@/assets/project-environment.jpg";
 import visionImg from "@/assets/project-vision.jpg";
 import hungerImg from "@/assets/project-hunger.jpg";
+import cancerImg from "@/assets/cause-cancer-infantil.jpg";
+import diabetesImg from "@/assets/cause-diabetes.jpg";
+import catastrofesImg from "@/assets/cause-catastrofes.jpg";
+import humanitariosImg from "@/assets/cause-humanitarios.jpg";
+import juventudeImg from "@/assets/cause-juventude.jpg";
+import saudeMentalImg from "@/assets/cause-saude-mental.jpg";
 import { useSiteContent } from "@/lib/content";
 import { useLeaders } from "@/lib/leaders";
 
@@ -30,15 +36,15 @@ export type CauseIconKey = keyof typeof CAUSE_ICONS;
 type CauseItem = { icon: CauseIconKey; title: string; desc: string; img?: string };
 
 const DEFAULT_CAUSES: CauseItem[] = [
-  { icon: "Heart", title: "Câncer infantil", desc: "Apoio a crianças com câncer e suas famílias, ampliando acesso a tratamento e qualidade de vida." },
-  { icon: "Droplet", title: "Diabetes", desc: "Prevenção, conscientização e suporte a portadores de diabetes em nossas comunidades." },
-  { icon: "LifeBuoy", title: "Socorro após catástrofes", desc: "Resposta rápida a emergências, ajuda humanitária e reconstrução pós-desastres." },
+  { icon: "Heart", title: "Câncer infantil", desc: "Apoio a crianças com câncer e suas famílias, ampliando acesso a tratamento e qualidade de vida.", img: cancerImg },
+  { icon: "Droplet", title: "Diabetes", desc: "Prevenção, conscientização e suporte a portadores de diabetes em nossas comunidades.", img: diabetesImg },
+  { icon: "LifeBuoy", title: "Socorro após catástrofes", desc: "Resposta rápida a emergências, ajuda humanitária e reconstrução pós-desastres.", img: catastrofesImg },
   { icon: "Leaf", title: "Meio ambiente", desc: "Plantio de árvores, mutirões de limpeza e educação ambiental nas escolas.", img: envImg },
-  { icon: "HandHeart", title: "Esforços humanitários", desc: "Ações de solidariedade que atendem necessidades urgentes de populações vulneráveis." },
+  { icon: "HandHeart", title: "Esforços humanitários", desc: "Ações de solidariedade que atendem necessidades urgentes de populações vulneráveis.", img: humanitariosImg },
   { icon: "Utensils", title: "Fome", desc: "Distribuição de alimentos e apoio a famílias em situação de vulnerabilidade.", img: hungerImg },
   { icon: "Eye", title: "Visão", desc: "Triagens oftalmológicas, doação de óculos e prevenção da cegueira evitável.", img: visionImg },
-  { icon: "Sparkles", title: "Juventude", desc: "Programas que inspiram liderança e protagonismo em crianças e jovens." },
-  { icon: "Brain", title: "Saúde mental e Bem-estar", desc: "Iniciativas de acolhimento, prevenção e promoção da saúde mental." },
+  { icon: "Sparkles", title: "Juventude", desc: "Programas que inspiram liderança e protagonismo em crianças e jovens.", img: juventudeImg },
+  { icon: "Brain", title: "Saúde mental e Bem-estar", desc: "Iniciativas de acolhimento, prevenção e promoção da saúde mental.", img: saudeMentalImg },
 ];
 
 

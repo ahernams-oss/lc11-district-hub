@@ -44,16 +44,36 @@ function Index() {
     hero_images: string[];
     hero_image_links: string[];
     hero_rotation_seconds: number;
+    stat1_value: string; stat1_label: string;
+    stat2_value: string; stat2_label: string;
+    stat3_value: string; stat3_label: string;
+    stat4_value: string; stat4_label: string;
+    mission_card1: string; mission_card2: string; mission_card3: string; mission_card4: string;
   }>("home", {
     hero_eyebrow: "Lions Clubs International · Distrito LC-11",
     hero_title: "Onde há uma necessidade, há um Leão.",
     hero_description:
-      "Somos voluntários de mais de 65 clubes unidos por uma causa: servir nossa comunidade com integridade, compaixão e união. Junte-se a nós.",
+      "Somos voluntários de mais de 40 clubes unidos por uma causa: servir nossa comunidade com integridade, compaixão e união. Junte-se a nós.",
     hero_image_url: "",
     hero_images: [],
     hero_image_links: [],
     hero_rotation_seconds: 5,
+    stat1_value: "40+", stat1_label: "Clubes ativos",
+    stat2_value: "2.400", stat2_label: "Leões servindo",
+    stat3_value: "150k", stat3_label: "Vidas impactadas/ano",
+    stat4_value: "100+", stat4_label: "Cidades atendidas",
+    mission_card1: "40+ clubes",
+    mission_card2: "5 causas",
+    mission_card3: "300+ ações/ano",
+    mission_card4: "100 anos de história",
   });
+
+  const stats = [
+    { value: hero.stat1_value, label: hero.stat1_label },
+    { value: hero.stat2_value, label: hero.stat2_label },
+    { value: hero.stat3_value, label: hero.stat3_label },
+    { value: hero.stat4_value, label: hero.stat4_label },
+  ];
 
   const { data: leaders = [] } = useLeaders("governador");
   const gov = leaders[0];

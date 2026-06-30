@@ -383,6 +383,14 @@ export function SiteHeader() {
           >
             Lions Connecta <ExternalLink className="h-3.5 w-3.5" />
           </a>
+          <a
+            href="https://lionsinternational.my.site.com/s/login/?language=pt_BR"
+            target="_blank"
+            rel="noreferrer"
+            className="ml-1 inline-flex items-center gap-1 rounded-md border border-border px-2 py-2 text-sm font-medium text-foreground/80 hover:border-primary hover:text-primary 2xl:px-3"
+          >
+            Lions International <ExternalLink className="h-3.5 w-3.5" />
+          </a>
         </nav>
 
         <button
@@ -590,6 +598,14 @@ export function SiteHeader() {
             className="inline-flex items-center justify-center gap-1 rounded-md border border-border px-4 py-2.5 text-sm font-medium"
           >
             Acessar Lions Connecta <ExternalLink className="h-4 w-4" />
+          </a>
+          <a
+            href="https://lionsinternational.my.site.com/s/login/?language=pt_BR"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center gap-1 rounded-md border border-border px-4 py-2.5 text-sm font-medium"
+          >
+            Lions International <ExternalLink className="h-4 w-4" />
           </a>
         </nav>
       </div>

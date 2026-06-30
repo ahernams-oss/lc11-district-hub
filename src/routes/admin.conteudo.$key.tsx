@@ -9,7 +9,11 @@ export const Route = createFileRoute("/admin/conteudo/$key")({
 });
 
 // Field definitions per content key
-type Field = { name: string; label: string; type: "text" | "textarea" | "image" | "images" | "images_with_links" | "number"; max?: number; linksField?: string; min?: number; help?: string };
+type Field = { name: string; label: string; type: "text" | "textarea" | "image" | "images" | "images_with_links" | "number" | "causes_list"; max?: number; linksField?: string; min?: number; help?: string };
+
+const CAUSE_ICON_OPTIONS = [
+  "Heart", "Droplet", "LifeBuoy", "Leaf", "HandHeart", "Utensils", "Eye", "Sparkles", "Brain", "Activity", "Users", "Calendar", "Trophy",
+] as const;
 
 const FIELDS: Record<ContentKey, Field[]> = {
   home: [

@@ -67,7 +67,7 @@ function Index() {
     mission_eyebrow: "Nossa missão",
     mission_title: "Servir com propósito, transformar com compromisso.",
     mission_text1: "Há mais de 100 anos, os Leões do mundo todo agem onde é necessário. No Distrito LC-11, transformamos solidariedade em ação concreta — escola por escola, bairro por bairro, cidade por cidade.",
-    mission_text2: "Atuamos nas cinco causas globais do Lions Clubs International: visão, fome, meio ambiente, câncer infantil e diabetes.",
+    mission_text2: "Atuamos nas causas globais do Lions Clubs International: câncer infantil, diabetes, socorro após catástrofes, meio ambiente, esforços humanitários, fome, visão, juventude e saúde mental e bem-estar.",
     mission_cta: "Saiba mais sobre o distrito",
     mission_card1: "40+ clubes",
     mission_card2: "5 causas",

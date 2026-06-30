@@ -28,12 +28,6 @@ const causes = [
   { icon: Leaf, title: "Meio Ambiente", desc: "Plantio de árvores, mutirões de limpeza e educação ambiental nas escolas.", img: envImg },
 ];
 
-const stats_default = [
-  { value: "40+", label: "Clubes ativos" },
-  { value: "2.400", label: "Leões servindo" },
-  { value: "150k", label: "Vidas impactadas/ano" },
-  { value: "100+", label: "Cidades atendidas" },
-];
 
 function Index() {
   const hero = useSiteContent<{

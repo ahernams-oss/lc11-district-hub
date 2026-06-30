@@ -1,5 +1,5 @@
 import { PageHero } from "@/components/PageHero";
-import { MapPin, Mail } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { useMemo } from "react";
 import { useAllClubs } from "@/lib/regions";
 
@@ -58,11 +58,6 @@ export function ClubesPorEstado({
                     </p>
                   )}
                   {c.meetings && <p>📅 {c.meetings}</p>}
-                  {c.email && (
-                    <p className="flex items-center gap-2">
-                      <Mail className="h-4 w-4 text-primary" /> {c.email}
-                    </p>
-                  )}
                 </div>
               </article>
             ))}

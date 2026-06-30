@@ -256,16 +256,22 @@ function Index() {
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {causes.map((c) => (
               <article key={c.title} className="group overflow-hidden rounded-xl border border-border bg-card shadow-card transition-transform hover:-translate-y-1">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={c.img}
-                    alt={c.title}
-                    width={1024}
-                    height={768}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
+                {c.img ? (
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={c.img}
+                      alt={c.title}
+                      width={1024}
+                      height={768}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex aspect-[4/3] items-center justify-center bg-accent/40">
+                    <c.icon className="h-16 w-16 text-primary" />
+                  </div>
+                )}
                 <div className="p-6">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-md bg-accent text-primary">

@@ -383,6 +383,14 @@ export function SiteHeader() {
           >
             Lions Connecta <ExternalLink className="h-3.5 w-3.5" />
           </a>
+          <a
+            href="https://lionsinternational.my.site.com/s/login/?language=pt_BR"
+            target="_blank"
+            rel="noreferrer"
+            className="ml-1 inline-flex items-center gap-1 rounded-md border border-border px-2 py-2 text-sm font-medium text-foreground/80 hover:border-primary hover:text-primary 2xl:px-3"
+          >
+            Lions International <ExternalLink className="h-3.5 w-3.5" />
+          </a>
         </nav>
 
         <button

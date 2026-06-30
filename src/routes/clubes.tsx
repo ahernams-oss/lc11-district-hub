@@ -99,10 +99,13 @@ function Clubes() {
                 </div>
                 <div className="mt-3 space-y-2 text-sm text-muted-foreground">
                   {c.president && (
-                    <p className="flex items-center gap-2">
-                      <User className="h-4 w-4 text-primary" />
-                      <span className="font-medium text-foreground">{c.president}</span>
-                    </p>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-primary">Presidente</p>
+                      <p className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-primary" />
+                        <span className="font-medium text-foreground">{c.president}</span>
+                      </p>
+                    </div>
                   )}
                   {c.city && (
                     <p className="flex items-center gap-2">

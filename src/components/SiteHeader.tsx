@@ -303,6 +303,38 @@ export function SiteHeader() {
                     ))}
                   </div>
                 </div>
+                <div className="group/rgd relative">
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                  >
+                    RGDs e Convenção <ChevronDown className="h-3.5 w-3.5 -rotate-90" />
+                  </button>
+                  <div className="absolute left-full top-0 hidden w-56 rounded-md border border-border bg-background py-2 shadow-card group-hover/rgd:block">
+                    {rgdsConvencaoSubmenu.map((g) => (
+                      <div key={g.label} className="group/rgdy relative">
+                        <button
+                          type="button"
+                          className="flex w-full items-center justify-between px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                        >
+                          {g.label} <ChevronDown className="h-3.5 w-3.5 -rotate-90" />
+                        </button>
+                        <div className="absolute left-full top-0 hidden w-48 rounded-md border border-border bg-background py-2 shadow-card group-hover/rgdy:block">
+                          {g.items.map((s) => (
+                            <Link
+                              key={s.to}
+                              to={s.to}
+                              className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                              activeProps={{ className: "text-primary bg-surface" }}
+                            >
+                              {s.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
                 {documentosSubmenu.map((s) => (
                   <Link
                     key={s.to}

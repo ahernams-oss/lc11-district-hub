@@ -379,9 +379,10 @@ export function SiteHeader() {
             href="https://lovable.dev/projects/3c09d0df-b614-426e-b3c7-58ab2e837294"
             target="_blank"
             rel="noreferrer"
-            className="ml-1 inline-flex items-center gap-1 rounded-md border border-border px-2 py-2 text-sm font-medium text-foreground/80 hover:border-primary hover:text-primary 2xl:px-3"
+            className="ml-1 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold tracking-wide text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary-deep hover:shadow-md active:scale-95 group 2xl:px-5"
           >
-            Lions Connecta <ExternalLink className="h-3.5 w-3.5" />
+            <span>Lions Connecta</span>
+            <ExternalLink className="h-3.5 w-3.5 opacity-90 transition-opacity group-hover:opacity-100" />
           </a>
           <a
             href="https://lionsinternational.my.site.com/s/login/?language=pt_BR"

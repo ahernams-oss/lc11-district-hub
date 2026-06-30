@@ -214,10 +214,10 @@ function Index() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { icon: Users, label: "65+ clubes" },
-              { icon: Heart, label: "5 causas" },
-              { icon: Calendar, label: "300+ ações/ano" },
-              { icon: Trophy, label: "100 anos de história" },
+              { icon: Users, label: hero.mission_card1 },
+              { icon: Heart, label: hero.mission_card2 },
+              { icon: Calendar, label: hero.mission_card3 },
+              { icon: Trophy, label: hero.mission_card4 },
             ].map((item) => (
               <div key={item.label} className="rounded-xl border border-border bg-card p-6 shadow-card">
                 <item.icon className="h-8 w-8 text-primary" />

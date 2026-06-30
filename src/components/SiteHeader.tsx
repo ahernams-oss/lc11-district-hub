@@ -387,9 +387,10 @@ export function SiteHeader() {
             href="https://lionsinternational.my.site.com/s/login/?language=pt_BR"
             target="_blank"
             rel="noreferrer"
-            className="ml-1 inline-flex items-center gap-1 rounded-md border border-border px-2 py-2 text-sm font-medium text-foreground/80 hover:border-primary hover:text-primary 2xl:px-3"
+            className="ml-1 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold tracking-wide text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary-deep hover:shadow-md active:scale-95 group 2xl:px-5"
           >
-            MyLion <ExternalLink className="h-3.5 w-3.5" />
+            <span>MyLion</span>
+            <ExternalLink className="h-3.5 w-3.5 opacity-90 transition-opacity group-hover:opacity-100" />
           </a>
         </nav>
 
@@ -603,9 +604,10 @@ export function SiteHeader() {
             href="https://lionsinternational.my.site.com/s/login/?language=pt_BR"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center justify-center gap-1 rounded-md border border-border px-4 py-2.5 text-sm font-medium"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-semibold tracking-wide text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary-deep hover:shadow-md active:scale-95 group"
           >
-            MyLion <ExternalLink className="h-4 w-4" />
+            <span>MyLion</span>
+            <ExternalLink className="h-4 w-4 opacity-90 transition-opacity group-hover:opacity-100" />
           </a>
         </nav>
       </div>

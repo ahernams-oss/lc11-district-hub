@@ -1,7 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
 import { FileText, ExternalLink, Download } from "lucide-react";
-import { useDocuments } from "@/lib/documents";
+import { useDocuments, RGD_YEARS, RGD_ITEMS } from "@/lib/documents";
 
 type DocPageMeta = {
   eyebrow: string;
@@ -9,6 +9,20 @@ type DocPageMeta = {
   description: string;
   category: string;
 };
+
+const rgdPages: Record<string, DocPageMeta> = Object.fromEntries(
+  RGD_YEARS.flatMap((y) =>
+    RGD_ITEMS.map((it) => [
+      `rgds-convencao/al-${y}/${it.suffix}`,
+      {
+        eyebrow: `RGDs e Convenção — AL ${y}`,
+        title: it.label,
+        description: `${it.label} do Ano Leonístico ${y}.`,
+        category: `rgds-convencao-al-${y}-${it.suffix}`,
+      } satisfies DocPageMeta,
+    ]),
+  ),
+);
 
 const pages: Record<string, DocPageMeta> = {
   "atos-governador/al-2026-2027": {
@@ -25,6 +39,7 @@ const pages: Record<string, DocPageMeta> = {
       "Atos oficiais do(a) Governador(a) referentes ao Ano Leonístico 2027-2028.",
     category: "atos-governador-al-2027-2028",
   },
+  ...rgdPages,
   "estatuto-lions-internacional": {
     eyebrow: "Documento oficial",
     title: "Estatuto Lions Internacional",
@@ -57,6 +72,7 @@ const pages: Record<string, DocPageMeta> = {
     category: "regulamento-sede",
   },
 };
+
 
 export const Route = createFileRoute("/documentos/$")({
   loader: ({ params }) => {

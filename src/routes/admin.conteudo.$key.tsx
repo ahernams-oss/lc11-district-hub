@@ -35,6 +35,7 @@ const FIELDS: Record<ContentKey, Field[]> = {
     { name: "mission_card2", label: "Missão — card 2 (ex: 5 causas)", type: "text" },
     { name: "mission_card3", label: "Missão — card 3 (ex: 300+ ações/ano)", type: "text" },
     { name: "mission_card4", label: "Missão — card 4 (ex: 100 anos de história)", type: "text" },
+  ],
   "lions-internacional": [
     { name: "eyebrow", label: "Sobre-título", type: "text" },
     { name: "title", label: "Título", type: "textarea" },

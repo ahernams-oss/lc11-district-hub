@@ -259,9 +259,9 @@ function Index() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Causas</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">{hero.causes_eyebrow}</p>
               <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl">
-                Onde estamos fazendo a diferença
+                {hero.causes_title}
               </h2>
             </div>
             <Link to="/projetos" className="inline-flex items-center gap-2 font-semibold text-primary hover:gap-3 transition-all">
@@ -270,8 +270,10 @@ function Index() {
           </div>
 
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {causes.map((c) => (
-              <article key={c.title} className="group overflow-hidden rounded-xl border border-border bg-card shadow-card transition-transform hover:-translate-y-1">
+            {causesList.map((c, i) => {
+              const Icon = CAUSE_ICONS[c.icon] ?? Heart;
+              return (
+              <article key={c.title + i} className="group overflow-hidden rounded-xl border border-border bg-card shadow-card transition-transform hover:-translate-y-1">
                 {c.img ? (
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
@@ -285,20 +287,21 @@ function Index() {
                   </div>
                 ) : (
                   <div className="flex aspect-[4/3] items-center justify-center bg-accent/40">
-                    <c.icon className="h-16 w-16 text-primary" />
+                    <Icon className="h-16 w-16 text-primary" />
                   </div>
                 )}
                 <div className="p-6">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-md bg-accent text-primary">
-                      <c.icon className="h-5 w-5" />
+                      <Icon className="h-5 w-5" />
                     </div>
                     <h3 className="font-display text-xl font-bold text-foreground">{c.title}</h3>
                   </div>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

@@ -22,16 +22,23 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const causes = [
-  { icon: Heart, title: "Câncer infantil", desc: "Apoio a crianças com câncer e suas famílias, ampliando acesso a tratamento e qualidade de vida." },
-  { icon: Droplet, title: "Diabetes", desc: "Prevenção, conscientização e suporte a portadores de diabetes em nossas comunidades." },
-  { icon: LifeBuoy, title: "Socorro após catástrofes", desc: "Resposta rápida a emergências, ajuda humanitária e reconstrução pós-desastres." },
-  { icon: Leaf, title: "Meio ambiente", desc: "Plantio de árvores, mutirões de limpeza e educação ambiental nas escolas.", img: envImg },
-  { icon: HandHeart, title: "Esforços humanitários", desc: "Ações de solidariedade que atendem necessidades urgentes de populações vulneráveis." },
-  { icon: Utensils, title: "Fome", desc: "Distribuição de alimentos e apoio a famílias em situação de vulnerabilidade.", img: hungerImg },
-  { icon: Eye, title: "Visão", desc: "Triagens oftalmológicas, doação de óculos e prevenção da cegueira evitável.", img: visionImg },
-  { icon: Sparkles, title: "Juventude", desc: "Programas que inspiram liderança e protagonismo em crianças e jovens." },
-  { icon: Brain, title: "Saúde mental e Bem-estar", desc: "Iniciativas de acolhimento, prevenção e promoção da saúde mental." },
+export const CAUSE_ICONS = {
+  Heart, Droplet, LifeBuoy, Leaf, HandHeart, Utensils, Eye, Sparkles, Brain, Activity, Users, Calendar, Trophy,
+} as const;
+export type CauseIconKey = keyof typeof CAUSE_ICONS;
+
+type CauseItem = { icon: CauseIconKey; title: string; desc: string; img?: string };
+
+const DEFAULT_CAUSES: CauseItem[] = [
+  { icon: "Heart", title: "Câncer infantil", desc: "Apoio a crianças com câncer e suas famílias, ampliando acesso a tratamento e qualidade de vida." },
+  { icon: "Droplet", title: "Diabetes", desc: "Prevenção, conscientização e suporte a portadores de diabetes em nossas comunidades." },
+  { icon: "LifeBuoy", title: "Socorro após catástrofes", desc: "Resposta rápida a emergências, ajuda humanitária e reconstrução pós-desastres." },
+  { icon: "Leaf", title: "Meio ambiente", desc: "Plantio de árvores, mutirões de limpeza e educação ambiental nas escolas.", img: envImg },
+  { icon: "HandHeart", title: "Esforços humanitários", desc: "Ações de solidariedade que atendem necessidades urgentes de populações vulneráveis." },
+  { icon: "Utensils", title: "Fome", desc: "Distribuição de alimentos e apoio a famílias em situação de vulnerabilidade.", img: hungerImg },
+  { icon: "Eye", title: "Visão", desc: "Triagens oftalmológicas, doação de óculos e prevenção da cegueira evitável.", img: visionImg },
+  { icon: "Sparkles", title: "Juventude", desc: "Programas que inspiram liderança e protagonismo em crianças e jovens." },
+  { icon: "Brain", title: "Saúde mental e Bem-estar", desc: "Iniciativas de acolhimento, prevenção e promoção da saúde mental." },
 ];
 
 
@@ -51,6 +58,8 @@ function Index() {
     mission_eyebrow: string; mission_title: string;
     mission_text1: string; mission_text2: string; mission_cta: string;
     mission_card1: string; mission_card2: string; mission_card3: string; mission_card4: string;
+    causes_title: string; causes_eyebrow: string;
+    causes: CauseItem[];
   }>("home", {
     hero_eyebrow: "Lions Clubs International · Distrito LC-11",
     hero_title: "Onde há uma necessidade, há um Leão.",
@@ -70,10 +79,17 @@ function Index() {
     mission_text2: "Atuamos nas causas globais do Lions Clubs International: câncer infantil, diabetes, socorro após catástrofes, meio ambiente, esforços humanitários, fome, visão, juventude e saúde mental e bem-estar.",
     mission_cta: "Saiba mais sobre o distrito",
     mission_card1: "40+ clubes",
-    mission_card2: "5 causas",
+    mission_card2: "9 causas",
     mission_card3: "300+ ações/ano",
     mission_card4: "100 anos de história",
+    causes_eyebrow: "Causas",
+    causes_title: "Onde estamos fazendo a diferença",
+    causes: DEFAULT_CAUSES,
   });
+
+  const causesList: CauseItem[] = (Array.isArray(hero.causes) && hero.causes.length > 0 ? hero.causes : DEFAULT_CAUSES)
+    .map((c) => ({ ...c, icon: (CAUSE_ICONS[c.icon as CauseIconKey] ? c.icon : "Heart") as CauseIconKey }));
+
 
   const stats = [
     { value: hero.stat1_value, label: hero.stat1_label },
@@ -243,9 +259,9 @@ function Index() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Causas</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">{hero.causes_eyebrow}</p>
               <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl">
-                Onde estamos fazendo a diferença
+                {hero.causes_title}
               </h2>
             </div>
             <Link to="/projetos" className="inline-flex items-center gap-2 font-semibold text-primary hover:gap-3 transition-all">
@@ -254,8 +270,10 @@ function Index() {
           </div>
 
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {causes.map((c) => (
-              <article key={c.title} className="group overflow-hidden rounded-xl border border-border bg-card shadow-card transition-transform hover:-translate-y-1">
+            {causesList.map((c, i) => {
+              const Icon = CAUSE_ICONS[c.icon] ?? Heart;
+              return (
+              <article key={c.title + i} className="group overflow-hidden rounded-xl border border-border bg-card shadow-card transition-transform hover:-translate-y-1">
                 {c.img ? (
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
@@ -269,20 +287,21 @@ function Index() {
                   </div>
                 ) : (
                   <div className="flex aspect-[4/3] items-center justify-center bg-accent/40">
-                    <c.icon className="h-16 w-16 text-primary" />
+                    <Icon className="h-16 w-16 text-primary" />
                   </div>
                 )}
                 <div className="p-6">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-md bg-accent text-primary">
-                      <c.icon className="h-5 w-5" />
+                      <Icon className="h-5 w-5" />
                     </div>
                     <h3 className="font-display text-xl font-bold text-foreground">{c.title}</h3>
                   </div>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

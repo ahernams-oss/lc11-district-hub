@@ -9,7 +9,11 @@ export const Route = createFileRoute("/admin/conteudo/$key")({
 });
 
 // Field definitions per content key
-type Field = { name: string; label: string; type: "text" | "textarea" | "image" | "images" | "images_with_links" | "number"; max?: number; linksField?: string; min?: number; help?: string };
+type Field = { name: string; label: string; type: "text" | "textarea" | "image" | "images" | "images_with_links" | "number" | "causes_list"; max?: number; linksField?: string; min?: number; help?: string };
+
+const CAUSE_ICON_OPTIONS = [
+  "Heart", "Droplet", "LifeBuoy", "Leaf", "HandHeart", "Utensils", "Eye", "Sparkles", "Brain", "Activity", "Users", "Calendar", "Trophy",
+] as const;
 
 const FIELDS: Record<ContentKey, Field[]> = {
   home: [
@@ -35,6 +39,9 @@ const FIELDS: Record<ContentKey, Field[]> = {
     { name: "mission_card2", label: "Missão — card 2 (ex: 5 causas)", type: "text" },
     { name: "mission_card3", label: "Missão — card 3 (ex: 300+ ações/ano)", type: "text" },
     { name: "mission_card4", label: "Missão — card 4 (ex: 100 anos de história)", type: "text" },
+    { name: "causes_eyebrow", label: "Causas — sobre-título", type: "text" },
+    { name: "causes_title", label: "Causas — título", type: "textarea" },
+    { name: "causes", label: "Causas globais (título, descrição e ordem)", type: "causes_list", help: "Arraste a ordem usando os botões ↑/↓. Suporta até 12 causas." },
   ],
   "lions-internacional": [
     { name: "eyebrow", label: "Sobre-título", type: "text" },
@@ -354,6 +361,125 @@ function ContentEditor() {
                   {f.help && <p className="mt-1 text-xs text-muted-foreground">{f.help}</p>}
                 </div>
               )}
+              {f.type === "causes_list" && (() => {
+                const list: Array<{ icon: string; title: string; desc: string; img?: string }> =
+                  Array.isArray(values[f.name]) ? values[f.name] : [];
+                const max = f.max ?? 12;
+                const update = (idx: number, patch: Partial<{ icon: string; title: string; desc: string; img: string }>) => {
+                  setValues((v) => {
+                    const arr = Array.isArray(v[f.name]) ? [...v[f.name]] : [];
+                    arr[idx] = { ...arr[idx], ...patch };
+                    return { ...v, [f.name]: arr };
+                  });
+                };
+                const move = (idx: number, dir: -1 | 1) => {
+                  setValues((v) => {
+                    const arr = Array.isArray(v[f.name]) ? [...v[f.name]] : [];
+                    const j = idx + dir;
+                    if (j < 0 || j >= arr.length) return v;
+                    [arr[idx], arr[j]] = [arr[j], arr[idx]];
+                    return { ...v, [f.name]: arr };
+                  });
+                };
+                const remove = (idx: number) => {
+                  setValues((v) => {
+                    const arr = Array.isArray(v[f.name]) ? [...v[f.name]] : [];
+                    arr.splice(idx, 1);
+                    return { ...v, [f.name]: arr };
+                  });
+                };
+                const add = () => {
+                  setValues((v) => {
+                    const arr = Array.isArray(v[f.name]) ? [...v[f.name]] : [];
+                    if (arr.length >= max) return v;
+                    arr.push({ icon: "Heart", title: "Nova causa", desc: "" });
+                    return { ...v, [f.name]: arr };
+                  });
+                };
+                return (
+                  <div className="mt-1 space-y-3">
+                    {list.map((c, idx) => (
+                      <div key={idx} className="rounded-md border border-border p-3 space-y-2">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs font-semibold text-muted-foreground">#{idx + 1}</span>
+                          <div className="flex gap-1">
+                            <button type="button" onClick={() => move(idx, -1)} disabled={idx === 0} className="rounded border px-2 py-0.5 text-xs disabled:opacity-40">↑</button>
+                            <button type="button" onClick={() => move(idx, 1)} disabled={idx === list.length - 1} className="rounded border px-2 py-0.5 text-xs disabled:opacity-40">↓</button>
+                            <button type="button" onClick={() => remove(idx)} className="rounded bg-destructive px-2 py-0.5 text-xs font-semibold text-destructive-foreground">Remover</button>
+                          </div>
+                        </div>
+                        <div className="grid gap-2 sm:grid-cols-[160px_1fr]">
+                          <div>
+                            <label className="text-xs font-medium text-muted-foreground">Ícone</label>
+                            <select
+                              value={c.icon ?? "Heart"}
+                              onChange={(e) => update(idx, { icon: e.target.value })}
+                              className="mt-1 w-full rounded-md border border-border bg-background px-2 py-1 text-sm"
+                            >
+                              {CAUSE_ICON_OPTIONS.map((k) => <option key={k} value={k}>{k}</option>)}
+                            </select>
+                          </div>
+                          <div>
+                            <label className="text-xs font-medium text-muted-foreground">Título</label>
+                            <input
+                              type="text"
+                              value={c.title ?? ""}
+                              onChange={(e) => update(idx, { title: e.target.value })}
+                              className="mt-1 w-full rounded-md border border-border bg-background px-2 py-1 text-sm"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <label className="text-xs font-medium text-muted-foreground">Descrição</label>
+                          <textarea
+                            rows={2}
+                            value={c.desc ?? ""}
+                            onChange={(e) => update(idx, { desc: e.target.value })}
+                            className="mt-1 w-full rounded-md border border-border bg-background px-2 py-1 text-sm"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-xs font-medium text-muted-foreground">Imagem (opcional)</label>
+                          <div className="mt-1 flex items-center gap-3">
+                            {c.img && <img src={c.img} alt="" className="h-16 w-24 rounded object-cover" />}
+                            <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border px-2 py-1 text-xs hover:bg-surface">
+                              <Upload className="h-3 w-3" /> Enviar
+                              <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={async (e) => {
+                                  const file = e.target.files?.[0];
+                                  if (!file) return;
+                                  setSaving(true);
+                                  try {
+                                    const url = await uploadContentImage(file);
+                                    update(idx, { img: url });
+                                  } catch (err: any) {
+                                    setMsg("Erro upload: " + err.message);
+                                  } finally {
+                                    setSaving(false);
+                                  }
+                                }}
+                              />
+                            </label>
+                            {c.img && (
+                              <button type="button" onClick={() => update(idx, { img: "" })} className="text-xs text-destructive hover:underline">Remover imagem</button>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs text-muted-foreground">{list.length} / {max} causas</p>
+                      {list.length < max && (
+                        <button type="button" onClick={add} className="rounded-md border px-3 py-1 text-sm hover:bg-surface">+ Adicionar causa</button>
+                      )}
+                    </div>
+                    {f.help && <p className="text-xs text-muted-foreground">{f.help}</p>}
+                  </div>
+                );
+              })()}
             </div>
           ))}
 

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
-import { MapPin, Mail, Search } from "lucide-react";
+import { MapPin, Mail, Search, User, Home } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useAllClubs } from "@/lib/regions";
 
@@ -98,9 +98,22 @@ function Clubes() {
                   )}
                 </div>
                 <div className="mt-3 space-y-2 text-sm text-muted-foreground">
+                  {c.president && (
+                    <p className="flex items-center gap-2">
+                      <User className="h-4 w-4 text-primary" />
+                      <span className="font-medium text-foreground">{c.president}</span>
+                    </p>
+                  )}
                   {c.city && (
                     <p className="flex items-center gap-2">
                       <MapPin className="h-4 w-4 text-primary" /> {c.city}
+                      {c.state ? ` / ${c.state}` : ""}
+                    </p>
+                  )}
+                  {c.address && (
+                    <p className="flex items-start gap-2">
+                      <Home className="h-4 w-4 shrink-0 text-primary mt-0.5" />
+                      <span>{c.address}</span>
                     </p>
                   )}
                   {c.meetings && <p>📅 {c.meetings}</p>}

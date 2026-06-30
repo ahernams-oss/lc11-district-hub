@@ -5,6 +5,12 @@ import heroImg from "@/assets/hero-service.jpg";
 import envImg from "@/assets/project-environment.jpg";
 import visionImg from "@/assets/project-vision.jpg";
 import hungerImg from "@/assets/project-hunger.jpg";
+import cancerImg from "@/assets/cause-cancer-infantil.jpg";
+import diabetesImg from "@/assets/cause-diabetes.jpg";
+import catastrofesImg from "@/assets/cause-catastrofes.jpg";
+import humanitariosImg from "@/assets/cause-humanitarios.jpg";
+import juventudeImg from "@/assets/cause-juventude.jpg";
+import saudeMentalImg from "@/assets/cause-saude-mental.jpg";
 import { useSiteContent } from "@/lib/content";
 import { useLeaders } from "@/lib/leaders";
 

@@ -58,6 +58,8 @@ function Index() {
     mission_eyebrow: string; mission_title: string;
     mission_text1: string; mission_text2: string; mission_cta: string;
     mission_card1: string; mission_card2: string; mission_card3: string; mission_card4: string;
+    causes_title: string; causes_eyebrow: string;
+    causes: CauseItem[];
   }>("home", {
     hero_eyebrow: "Lions Clubs International · Distrito LC-11",
     hero_title: "Onde há uma necessidade, há um Leão.",
@@ -77,10 +79,17 @@ function Index() {
     mission_text2: "Atuamos nas causas globais do Lions Clubs International: câncer infantil, diabetes, socorro após catástrofes, meio ambiente, esforços humanitários, fome, visão, juventude e saúde mental e bem-estar.",
     mission_cta: "Saiba mais sobre o distrito",
     mission_card1: "40+ clubes",
-    mission_card2: "5 causas",
+    mission_card2: "9 causas",
     mission_card3: "300+ ações/ano",
     mission_card4: "100 anos de história",
+    causes_eyebrow: "Causas",
+    causes_title: "Onde estamos fazendo a diferença",
+    causes: DEFAULT_CAUSES,
   });
+
+  const causesList: CauseItem[] = (Array.isArray(hero.causes) && hero.causes.length > 0 ? hero.causes : DEFAULT_CAUSES)
+    .map((c) => ({ ...c, icon: (CAUSE_ICONS[c.icon as CauseIconKey] ? c.icon : "Heart") as CauseIconKey }));
+
 
   const stats = [
     { value: hero.stat1_value, label: hero.stat1_label },

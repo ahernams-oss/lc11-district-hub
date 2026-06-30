@@ -40,6 +40,22 @@ const atosGovernadorSubmenu = [
   { to: "/documentos/atos-governador/al-2027-2028", label: "AL 2027-2028" },
 ] as const;
 
+const rgdYears = ["2026-2027", "2027-2028", "2028-2029"] as const;
+const rgdItems = [
+  { suffix: "1-rgd", label: "1ª RGD" },
+  { suffix: "2-rgd", label: "2ª RGD" },
+  { suffix: "3-rgd", label: "3ª RGD" },
+  { suffix: "4-rgd", label: "4ª RGD" },
+  { suffix: "convencao", label: "Convenção" },
+] as const;
+const rgdsConvencaoSubmenu = rgdYears.map((y) => ({
+  label: `AL ${y}`,
+  items: rgdItems.map((it) => ({
+    to: `/documentos/rgds-convencao/al-${y}/${it.suffix}`,
+    label: it.label,
+  })),
+}));
+
 const documentosSubmenu = [
   { to: "/documentos/estatuto-lions-internacional", label: "Estatuto Lions Internacional" },
   { to: "/documentos/estatuto-dmlc", label: "Estatuto DMLC" },
@@ -47,6 +63,7 @@ const documentosSubmenu = [
   { to: "/documentos/estatuto-padrao-clubes", label: "Estatuto Padrão dos Clubes" },
   { to: "/documentos/regulamento-sede", label: "Regulamento da Sede" },
 ] as const;
+
 
 const nav = [
   { to: "/projetos", label: "Projetos" },
@@ -286,6 +303,40 @@ export function SiteHeader() {
                     ))}
                   </div>
                 </div>
+                <div className="group/rgd relative">
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                  >
+                    RGDs e Convenção <ChevronDown className="h-3.5 w-3.5 -rotate-90" />
+                  </button>
+                  <div className="absolute left-full top-0 hidden w-56 rounded-md border border-border bg-background py-2 shadow-card group-hover/rgd:block">
+                    {rgdsConvencaoSubmenu.map((g) => (
+                      <div key={g.label} className="group/rgdy relative">
+                        <button
+                          type="button"
+                          className="flex w-full items-center justify-between px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                        >
+                          {g.label} <ChevronDown className="h-3.5 w-3.5 -rotate-90" />
+                        </button>
+                        <div className="absolute left-full top-0 hidden w-48 rounded-md border border-border bg-background py-2 shadow-card group-hover/rgdy:block">
+                          {g.items.map((s) => (
+                            <Link
+                              key={s.to}
+                              to={s.to}
+                              className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                              activeProps={{ className: "text-primary bg-surface" }}
+                            >
+                              {s.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+
                 {documentosSubmenu.map((s) => (
                   <Link
                     key={s.to}
@@ -471,6 +522,28 @@ export function SiteHeader() {
                 </Link>
               ))}
             </div>
+            <div className="px-3 py-1 text-sm font-medium text-foreground/70">RGDs e Convenção</div>
+            <div className="ml-3 flex flex-col gap-2 border-l border-border pl-3">
+              {rgdsConvencaoSubmenu.map((g) => (
+                <div key={g.label}>
+                  <div className="px-3 py-1 text-xs font-medium uppercase tracking-wide text-foreground/60">{g.label}</div>
+                  <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+                    {g.items.map((s) => (
+                      <Link
+                        key={s.to}
+                        to={s.to}
+                        onClick={() => setOpen(false)}
+                        className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+                        activeProps={{ className: "text-primary bg-surface" }}
+                      >
+                        {s.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
             {documentosSubmenu.map((s) => (
               <Link
                 key={s.to}

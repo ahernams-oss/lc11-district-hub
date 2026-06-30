@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { PageHero } from "@/components/PageHero";
 import { FileText, ExternalLink, Download, Search, X } from "lucide-react";
-import { useDocuments, DOCUMENT_CATEGORIES, type DocumentItem } from "@/lib/documents";
+import { useDocuments, DOCUMENT_CATEGORIES, RGD_YEARS, RGD_ITEMS, type DocumentItem } from "@/lib/documents";
 
 export const Route = createFileRoute("/documentos/")({
   component: DocumentosIndex,
@@ -20,7 +20,16 @@ const CATEGORY_TO_PATH: Record<string, string> = {
   "estatuto-distrito-lc-11": "estatuto-distrito-lc-11",
   "estatuto-padrao-clubes": "estatuto-padrao-clubes",
   "regulamento-sede": "regulamento-sede",
+  ...Object.fromEntries(
+    RGD_YEARS.flatMap((y) =>
+      RGD_ITEMS.map((it) => [
+        `rgds-convencao-al-${y}-${it.suffix}`,
+        `rgds-convencao/al-${y}/${it.suffix}`,
+      ]),
+    ),
+  ),
 };
+
 
 function getDocYear(d: DocumentItem): string | null {
   const m = d.category.match(/al-(\d{4})-(\d{4})/i);

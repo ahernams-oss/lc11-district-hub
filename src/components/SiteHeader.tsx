@@ -40,6 +40,22 @@ const atosGovernadorSubmenu = [
   { to: "/documentos/atos-governador/al-2027-2028", label: "AL 2027-2028" },
 ] as const;
 
+const rgdYears = ["2026-2027", "2027-2028", "2028-2029"] as const;
+const rgdItems = [
+  { suffix: "1-rgd", label: "1ª RGD" },
+  { suffix: "2-rgd", label: "2ª RGD" },
+  { suffix: "3-rgd", label: "3ª RGD" },
+  { suffix: "4-rgd", label: "4ª RGD" },
+  { suffix: "convencao", label: "Convenção" },
+] as const;
+const rgdsConvencaoSubmenu = rgdYears.map((y) => ({
+  label: `AL ${y}`,
+  items: rgdItems.map((it) => ({
+    to: `/documentos/rgds-convencao/al-${y}/${it.suffix}`,
+    label: it.label,
+  })),
+}));
+
 const documentosSubmenu = [
   { to: "/documentos/estatuto-lions-internacional", label: "Estatuto Lions Internacional" },
   { to: "/documentos/estatuto-dmlc", label: "Estatuto DMLC" },
@@ -47,6 +63,7 @@ const documentosSubmenu = [
   { to: "/documentos/estatuto-padrao-clubes", label: "Estatuto Padrão dos Clubes" },
   { to: "/documentos/regulamento-sede", label: "Regulamento da Sede" },
 ] as const;
+
 
 const nav = [
   { to: "/projetos", label: "Projetos" },

@@ -604,9 +604,10 @@ export function SiteHeader() {
             href="https://lionsinternational.my.site.com/s/login/?language=pt_BR"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center justify-center gap-1 rounded-md border border-border px-4 py-2.5 text-sm font-medium"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-semibold tracking-wide text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary-deep hover:shadow-md active:scale-95 group"
           >
-            MyLion <ExternalLink className="h-4 w-4" />
+            <span>MyLion</span>
+            <ExternalLink className="h-4 w-4 opacity-90 transition-opacity group-hover:opacity-100" />
           </a>
         </nav>
       </div>

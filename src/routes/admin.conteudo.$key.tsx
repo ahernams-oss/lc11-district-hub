@@ -39,6 +39,9 @@ const FIELDS: Record<ContentKey, Field[]> = {
     { name: "mission_card2", label: "Missão — card 2 (ex: 5 causas)", type: "text" },
     { name: "mission_card3", label: "Missão — card 3 (ex: 300+ ações/ano)", type: "text" },
     { name: "mission_card4", label: "Missão — card 4 (ex: 100 anos de história)", type: "text" },
+    { name: "causes_eyebrow", label: "Causas — sobre-título", type: "text" },
+    { name: "causes_title", label: "Causas — título", type: "textarea" },
+    { name: "causes", label: "Causas globais (título, descrição e ordem)", type: "causes_list", help: "Arraste a ordem usando os botões ↑/↓. Suporta até 12 causas." },
   ],
   "lions-internacional": [
     { name: "eyebrow", label: "Sobre-título", type: "text" },

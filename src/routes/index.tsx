@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, Heart, Eye, Leaf, Users, Calendar, Trophy, Mail, Phone } from "lucide-react";
+import { ArrowRight, Heart, Eye, Leaf, Users, Calendar, Trophy, Mail, Phone, Activity, Droplet, LifeBuoy, HandHeart, Utensils, Sparkles, Brain } from "lucide-react";
 import heroImg from "@/assets/hero-service.jpg";
 import envImg from "@/assets/project-environment.jpg";
 import visionImg from "@/assets/project-vision.jpg";
@@ -23,9 +23,15 @@ export const Route = createFileRoute("/")({
 });
 
 const causes = [
+  { icon: Heart, title: "Câncer infantil", desc: "Apoio a crianças com câncer e suas famílias, ampliando acesso a tratamento e qualidade de vida." },
+  { icon: Droplet, title: "Diabetes", desc: "Prevenção, conscientização e suporte a portadores de diabetes em nossas comunidades." },
+  { icon: LifeBuoy, title: "Socorro após catástrofes", desc: "Resposta rápida a emergências, ajuda humanitária e reconstrução pós-desastres." },
+  { icon: Leaf, title: "Meio ambiente", desc: "Plantio de árvores, mutirões de limpeza e educação ambiental nas escolas.", img: envImg },
+  { icon: HandHeart, title: "Esforços humanitários", desc: "Ações de solidariedade que atendem necessidades urgentes de populações vulneráveis." },
+  { icon: Utensils, title: "Fome", desc: "Distribuição de alimentos e apoio a famílias em situação de vulnerabilidade.", img: hungerImg },
   { icon: Eye, title: "Visão", desc: "Triagens oftalmológicas, doação de óculos e prevenção da cegueira evitável.", img: visionImg },
-  { icon: Heart, title: "Combate à Fome", desc: "Distribuição de alimentos e apoio a famílias em situação de vulnerabilidade.", img: hungerImg },
-  { icon: Leaf, title: "Meio Ambiente", desc: "Plantio de árvores, mutirões de limpeza e educação ambiental nas escolas.", img: envImg },
+  { icon: Sparkles, title: "Juventude", desc: "Programas que inspiram liderança e protagonismo em crianças e jovens." },
+  { icon: Brain, title: "Saúde mental e Bem-estar", desc: "Iniciativas de acolhimento, prevenção e promoção da saúde mental." },
 ];
 
 

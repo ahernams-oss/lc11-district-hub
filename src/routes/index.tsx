@@ -42,6 +42,8 @@ function Index() {
     stat2_value: string; stat2_label: string;
     stat3_value: string; stat3_label: string;
     stat4_value: string; stat4_label: string;
+    mission_eyebrow: string; mission_title: string;
+    mission_text1: string; mission_text2: string; mission_cta: string;
     mission_card1: string; mission_card2: string; mission_card3: string; mission_card4: string;
   }>("home", {
     hero_eyebrow: "Lions Clubs International · Distrito LC-11",
@@ -56,6 +58,11 @@ function Index() {
     stat2_value: "2.400", stat2_label: "Leões servindo",
     stat3_value: "150k", stat3_label: "Vidas impactadas/ano",
     stat4_value: "100+", stat4_label: "Cidades atendidas",
+    mission_eyebrow: "Nossa missão",
+    mission_title: "Servir com propósito, transformar com compromisso.",
+    mission_text1: "Há mais de 100 anos, os Leões do mundo todo agem onde é necessário. No Distrito LC-11, transformamos solidariedade em ação concreta — escola por escola, bairro por bairro, cidade por cidade.",
+    mission_text2: "Atuamos nas cinco causas globais do Lions Clubs International: visão, fome, meio ambiente, câncer infantil e diabetes.",
+    mission_cta: "Saiba mais sobre o distrito",
     mission_card1: "40+ clubes",
     mission_card2: "5 causas",
     mission_card3: "300+ ações/ano",
@@ -195,21 +202,18 @@ function Index() {
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Nossa missão</p>
-            <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl">
-              Servir com propósito, transformar com compromisso.
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">{hero.mission_eyebrow}</p>
+            <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl whitespace-pre-line">
+              {hero.mission_title}
             </h2>
-            <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-              Há mais de 100 anos, os Leões do mundo todo agem onde é necessário. No Distrito LC-11,
-              transformamos solidariedade em ação concreta — escola por escola, bairro por bairro,
-              cidade por cidade.
+            <p className="mt-5 text-lg leading-relaxed text-muted-foreground whitespace-pre-line">
+              {hero.mission_text1}
             </p>
-            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-              Atuamos nas cinco causas globais do Lions Clubs International: <strong className="text-foreground">visão,
-              fome, meio ambiente, câncer infantil e diabetes</strong>.
+            <p className="mt-4 text-lg leading-relaxed text-muted-foreground whitespace-pre-line">
+              {hero.mission_text2}
             </p>
             <Link to="/sobre" className="mt-6 inline-flex items-center gap-2 font-semibold text-primary hover:gap-3 transition-all">
-              Saiba mais sobre o distrito <ArrowRight className="h-4 w-4" />
+              {hero.mission_cta || "Saiba mais sobre o distrito"} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-4">

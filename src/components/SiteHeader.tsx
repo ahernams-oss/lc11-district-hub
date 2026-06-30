@@ -599,6 +599,14 @@ export function SiteHeader() {
           >
             Acessar Lions Connecta <ExternalLink className="h-4 w-4" />
           </a>
+          <a
+            href="https://lionsinternational.my.site.com/s/login/?language=pt_BR"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center gap-1 rounded-md border border-border px-4 py-2.5 text-sm font-medium"
+          >
+            Lions International <ExternalLink className="h-4 w-4" />
+          </a>
         </nav>
       </div>
 

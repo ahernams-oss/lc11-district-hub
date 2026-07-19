@@ -12,6 +12,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useDivisions } from "@/lib/regions";
 import { uploadLeaderPhoto } from "@/lib/leaders";
 import { ArrowLeft, Plus, Trash2, ChevronRight, Upload } from "lucide-react";
+import ImageCropModal from "@/components/ImageCropModal";
 
 export const Route = createFileRoute("/admin/regioes/$id")({
   component: RegionRoute,
@@ -46,6 +47,7 @@ function RegionEditor() {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [form, setForm] = useState<Form>(EMPTY);
+  const [cropUrl, setCropUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);

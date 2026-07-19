@@ -141,3 +141,105 @@ function RegiaoDetalhe() {
     </>
   );
 }
+
+interface OrgNode {
+  code: string;
+  name: string;
+  president: string | null;
+  photo: string | null;
+}
+
+function OrgChart({
+  regionPresident,
+  regionPhoto,
+  divisions,
+}: {
+  regionPresident: string | null;
+  regionPhoto: string | null;
+  divisions: OrgNode[];
+}) {
+  if (!regionPresident && !regionPhoto && divisions.length === 0) return null;
+
+  return (
+    <div className="rounded-2xl border border-border bg-card p-6 shadow-card sm:p-8">
+      <h2 className="mb-6 text-center font-display text-xl font-bold text-foreground">
+        Estrutura de Liderança
+      </h2>
+
+      {/* Root: President of Region */}
+      <div className="flex flex-col items-center">
+        <OrgCard
+          title="Presidente de Região"
+          name={regionPresident}
+          photo={regionPhoto}
+          highlight
+        />
+
+        {divisions.length > 0 && (
+          <>
+            {/* Vertical connector */}
+            <div className="h-6 w-px bg-primary/40" aria-hidden />
+            {/* Horizontal connector */}
+            {divisions.length > 1 && (
+              <div
+                className="h-px bg-primary/40"
+                style={{ width: `calc(${100 / divisions.length}% * ${divisions.length - 1})` }}
+                aria-hidden
+              />
+            )}
+            {/* Division cards */}
+            <div
+              className="grid w-full gap-6"
+              style={{ gridTemplateColumns: `repeat(${Math.min(divisions.length, 4)}, minmax(0, 1fr))` }}
+            >
+              {divisions.map((d) => (
+                <div key={d.code} className="flex flex-col items-center">
+                  <div className="h-6 w-px bg-primary/40" aria-hidden />
+                  <OrgCard
+                    title={`Presidente de Divisão ${d.code}`}
+                    name={d.president}
+                    photo={d.photo}
+                  />
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function OrgCard({
+  title,
+  name,
+  photo,
+  highlight,
+}: {
+  title: string;
+  name: string | null;
+  photo: string | null;
+  highlight?: boolean;
+}) {
+  return (
+    <div
+      className={`flex w-full max-w-xs flex-col items-center rounded-xl px-4 py-5 text-center shadow-md ${
+        highlight ? "bg-primary text-primary-foreground" : "bg-primary/90 text-primary-foreground"
+      }`}
+    >
+      {photo ? (
+        <img
+          src={photo}
+          alt={name ?? title}
+          className="mb-3 h-20 w-20 rounded-full object-cover ring-4 ring-white/30"
+        />
+      ) : (
+        <div className="mb-3 flex h-20 w-20 items-center justify-center rounded-full bg-white/20 ring-4 ring-white/30">
+          <User className="h-10 w-10 text-white/80" />
+        </div>
+      )}
+      <p className="font-display text-sm font-bold leading-tight">{title}</p>
+      {name && <p className="mt-1 text-xs opacity-90">{name}</p>}
+    </div>
+  );
+}

@@ -171,15 +171,13 @@ function RegionEditor() {
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={async (e) => {
+                onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (!file) return;
-                  try {
-                    const url = await uploadLeaderPhoto(file);
-                    setForm((f) => ({ ...f, president_photo_url: url }));
-                  } catch (err: any) {
-                    alert("Erro ao enviar foto: " + err.message);
-                  }
+                  const reader = new FileReader();
+                  reader.onload = () => setCropUrl(reader.result as string);
+                  reader.readAsDataURL(file);
+                  e.target.value = "";
                 }}
               />
             </label>

@@ -64,29 +64,22 @@ function RegiaoDetalhe() {
       />
 
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        {((regiao as any).president || (regiao as any).president_photo_url) && (
-          <div className="mb-10 flex items-center gap-4 rounded-xl border border-border bg-card p-5 shadow-card">
-            {(regiao as any).president_photo_url ? (
-              <img
-                src={(regiao as any).president_photo_url}
-                alt={(regiao as any).president ?? "Presidente da Região"}
-                className="h-20 w-20 rounded-full object-cover ring-2 ring-primary/20"
-              />
-            ) : (
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-surface">
-                <User className="h-10 w-10 text-muted-foreground/60" />
-              </div>
-            )}
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-primary">Presidente da Região</p>
-              {(regiao as any).president && (
-                <p className="mt-1 font-display text-lg font-bold text-foreground">{(regiao as any).president}</p>
-              )}
-            </div>
-          </div>
-        )}
+        <OrgChart
+          regionPresident={(regiao as any).president}
+          regionPhoto={(regiao as any).president_photo_url}
+          divisions={divisions
+            .slice()
+            .sort((a: any, b: any) => a.order_index - b.order_index)
+            .map((d: any) => ({
+              code: d.code,
+              name: d.name,
+              president: d.president_name,
+              photo: d.president_photo_url,
+            }))}
+        />
+
         {allCities.length > 0 && (
-          <>
+          <div className="mt-12">
             <h2 className="font-display text-2xl font-bold text-foreground">Cidades atendidas</h2>
             <div className="mt-4 flex flex-wrap gap-2">
               {allCities.map((c) => (
@@ -98,7 +91,7 @@ function RegiaoDetalhe() {
                 </span>
               ))}
             </div>
-          </>
+          </div>
         )}
 
         <div className="mt-10 space-y-10">

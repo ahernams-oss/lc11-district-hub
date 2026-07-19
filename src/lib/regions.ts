@@ -7,6 +7,7 @@ export interface Region {
   name: string;
   description: string | null;
   president: string | null;
+  president_photo_url: string | null;
   order_index: number;
 }
 

@@ -255,6 +255,24 @@ function RegionEditor() {
           )}
         </div>
       )}
+
+      {cropUrl && (
+        <ImageCropModal
+          imageUrl={cropUrl}
+          aspect={1}
+          cropShape="round"
+          onClose={() => setCropUrl(null)}
+          onConfirm={async (file) => {
+            setCropUrl(null);
+            try {
+              const url = await uploadLeaderPhoto(file);
+              setForm((f) => ({ ...f, president_photo_url: url }));
+            } catch (err: any) {
+              alert("Erro ao enviar foto: " + err.message);
+            }
+          }}
+        />
+      )}
     </div>
   );
 }

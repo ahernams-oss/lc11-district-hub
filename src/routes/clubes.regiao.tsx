@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
-import { MapPin, Users } from "lucide-react";
+import { MapPin, Users, User } from "lucide-react";
 import { useRegions } from "@/lib/regions";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -25,7 +25,7 @@ function useRegionsSummary() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("regions")
-        .select("id, letter, name, description, order_index, divisions(id, code, name, clubs(id, city))")
+        .select("id, letter, name, description, order_index, president, president_photo_url, divisions(id, code, name, clubs(id, city))")
         .order("order_index");
       if (error) throw error;
       return data ?? [];
@@ -75,6 +75,27 @@ function ClubesRegiao() {
                   </div>
                   {r.description && (
                     <p className="mt-2 text-sm text-muted-foreground">{r.description}</p>
+                  )}
+                  {(r.president || r.president_photo_url) && (
+                    <div className="mt-4 flex items-center gap-3 rounded-lg border border-border bg-surface p-3">
+                      {r.president_photo_url ? (
+                        <img
+                          src={r.president_photo_url}
+                          alt={r.president ?? "Presidente da Região"}
+                          className="h-12 w-12 rounded-full object-cover ring-2 ring-primary/20"
+                        />
+                      ) : (
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+                          <User className="h-6 w-6 text-muted-foreground/60" />
+                        </div>
+                      )}
+                      <div className="min-w-0">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-primary">Presidente da Região</p>
+                        {r.president && (
+                          <p className="truncate text-sm font-semibold text-foreground">{r.president}</p>
+                        )}
+                      </div>
+                    </div>
                   )}
                   <div className="mt-3 space-y-1">
                     {cities.map((c) => (

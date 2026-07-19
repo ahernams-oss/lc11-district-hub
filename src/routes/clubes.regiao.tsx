@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
-import { MapPin, Users } from "lucide-react";
+import { MapPin, Users, User } from "lucide-react";
 import { useRegions } from "@/lib/regions";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";

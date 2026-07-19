@@ -17,6 +17,8 @@ export interface Division {
   code: string;
   name: string;
   description: string | null;
+  president_name: string | null;
+  president_photo_url: string | null;
   order_index: number;
 }
 

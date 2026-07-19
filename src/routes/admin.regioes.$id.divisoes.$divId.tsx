@@ -5,6 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useClubs, useRegion } from "@/lib/regions";
 import { uploadLeaderPhoto } from "@/lib/leaders";
 import { ArrowLeft, Plus, Trash2, ChevronRight, Upload } from "lucide-react";
+import ImageCropModal from "@/components/ImageCropModal";
 
 export const Route = createFileRoute("/admin/regioes/$id/divisoes/$divId")({
   component: DivisionRoute,
@@ -39,6 +40,7 @@ function DivisionEditor() {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [form, setForm] = useState<Form>(EMPTY);
+  const [cropUrl, setCropUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
@@ -178,15 +180,13 @@ function DivisionEditor() {
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={async (e) => {
+                onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (!file) return;
-                  try {
-                    const url = await uploadLeaderPhoto(file);
-                    setForm((f) => ({ ...f, president_photo_url: url }));
-                  } catch (err: any) {
-                    alert("Erro ao enviar foto: " + err.message);
-                  }
+                  const reader = new FileReader();
+                  reader.onload = () => setCropUrl(reader.result as string);
+                  reader.readAsDataURL(file);
+                  e.target.value = "";
                 }}
               />
             </label>
@@ -277,6 +277,24 @@ function DivisionEditor() {
             </ul>
           )}
         </div>
+      )}
+
+      {cropUrl && (
+        <ImageCropModal
+          imageUrl={cropUrl}
+          aspect={1}
+          cropShape="round"
+          onClose={() => setCropUrl(null)}
+          onConfirm={async (file) => {
+            setCropUrl(null);
+            try {
+              const url = await uploadLeaderPhoto(file);
+              setForm((f) => ({ ...f, president_photo_url: url }));
+            } catch (err: any) {
+              alert("Erro ao enviar foto: " + err.message);
+            }
+          }}
+        />
       )}
     </div>
   );

@@ -166,80 +166,57 @@ function OrgChart({
         Estrutura de Liderança
       </h2>
 
-      {/* Root: President of Region */}
-      <div className="flex flex-col items-center">
-        <OrgCard
-          title="Presidente de Região"
+      <div className="flex justify-center">
+        <LeaderCard
+          label="Presidente da Região"
           name={regionPresident}
           photo={regionPhoto}
-          highlight
         />
+      </div>
 
-        {divisions.length > 0 && (
-          <>
-            {/* Vertical connector */}
-            <div className="h-6 w-px bg-primary/40" aria-hidden />
-            {/* Horizontal connector */}
-            {divisions.length > 1 && (
-              <div
-                className="h-px bg-primary/40"
-                style={{ width: `calc(${100 / divisions.length}% * ${divisions.length - 1})` }}
-                aria-hidden
-              />
-            )}
-            {/* Division cards */}
-            <div
-              className="grid w-full gap-6"
-              style={{ gridTemplateColumns: `repeat(${Math.min(divisions.length, 4)}, minmax(0, 1fr))` }}
-            >
-              {divisions.map((d) => (
-                <div key={d.code} className="flex flex-col items-center">
-                  <div className="h-6 w-px bg-primary/40" aria-hidden />
-                  <OrgCard
-                    title={`Presidente de Divisão ${d.code}`}
-                    name={d.president}
-                    photo={d.photo}
-                  />
-                </div>
-              ))}
-            </div>
-          </>
-        )}
+      {divisions.length > 0 && (
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {divisions.map((d) => (
+            <LeaderCard
+              key={d.code}
+              label={`Presidente da Divisão ${d.code}`}
+              name={d.president}
+              photo={d.photo}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function LeaderCard({
+  label,
+  name,
+  photo,
+}: {
+  label: string;
+  name: string | null;
+  photo: string | null;
+}) {
+  return (
+    <div className="flex w-full max-w-sm items-center gap-3 rounded-lg border border-border bg-surface p-3">
+      {photo ? (
+        <img
+          src={photo}
+          alt={name ?? label}
+          className="h-12 w-12 shrink-0 rounded-full object-cover ring-2 ring-primary/20"
+        />
+      ) : (
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-muted">
+          <User className="h-6 w-6 text-muted-foreground/60" />
+        </div>
+      )}
+      <div className="min-w-0">
+        <p className="text-xs font-semibold uppercase tracking-wide text-primary">{label}</p>
+        {name && <p className="truncate text-sm font-semibold text-foreground">{name}</p>}
       </div>
     </div>
   );
 }
 
-function OrgCard({
-  title,
-  name,
-  photo,
-  highlight,
-}: {
-  title: string;
-  name: string | null;
-  photo: string | null;
-  highlight?: boolean;
-}) {
-  return (
-    <div
-      className={`flex w-full max-w-xs flex-col items-center rounded-xl px-4 py-5 text-center shadow-md ${
-        highlight ? "bg-primary text-primary-foreground" : "bg-primary/90 text-primary-foreground"
-      }`}
-    >
-      {photo ? (
-        <img
-          src={photo}
-          alt={name ?? title}
-          className="mb-3 h-20 w-20 rounded-full object-cover ring-4 ring-white/30"
-        />
-      ) : (
-        <div className="mb-3 flex h-20 w-20 items-center justify-center rounded-full bg-white/20 ring-4 ring-white/30">
-          <User className="h-10 w-10 text-white/80" />
-        </div>
-      )}
-      <p className="font-display text-sm font-bold leading-tight">{title}</p>
-      {name && <p className="mt-1 text-xs opacity-90">{name}</p>}
-    </div>
-  );
-}

@@ -222,19 +222,19 @@ const DocumentosSplatRoute = DocumentosSplatRouteImport.update({
   getParentRoute: () => DocumentosRoute,
 } as any)
 const ClubesRjRoute = ClubesRjRouteImport.update({
-  id: '/rj',
-  path: '/rj',
-  getParentRoute: () => ClubesRoute,
+  id: '/clubes/rj',
+  path: '/clubes/rj',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ClubesRegiaoRoute = ClubesRegiaoRouteImport.update({
-  id: '/regiao',
-  path: '/regiao',
-  getParentRoute: () => ClubesRoute,
+  id: '/clubes/regiao',
+  path: '/clubes/regiao',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ClubesEsRoute = ClubesEsRouteImport.update({
-  id: '/es',
-  path: '/es',
-  getParentRoute: () => ClubesRoute,
+  id: '/clubes/es',
+  path: '/clubes/es',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
   id: '/checkout/return',
@@ -780,6 +780,9 @@ export interface RootRouteChildren {
   ViceGovernador1Route: typeof ViceGovernador1Route
   ViceGovernador2Route: typeof ViceGovernador2Route
   CheckoutReturnRoute: typeof CheckoutReturnRoute
+  ClubesEsRoute: typeof ClubesEsRoute
+  ClubesRegiaoRoute: typeof ClubesRegiaoRouteWithChildren
+  ClubesRjRoute: typeof ClubesRjRoute
   EventosIdRoute: typeof EventosIdRoute
   ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
   ProjetosIdRoute: typeof ProjetosIdRoute
@@ -1009,24 +1012,24 @@ declare module '@tanstack/react-router' {
     }
     '/clubes/rj': {
       id: '/clubes/rj'
-      path: '/rj'
+      path: '/clubes/rj'
       fullPath: '/clubes/rj'
       preLoaderRoute: typeof ClubesRjRouteImport
-      parentRoute: typeof ClubesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/clubes/regiao': {
       id: '/clubes/regiao'
-      path: '/regiao'
+      path: '/clubes/regiao'
       fullPath: '/clubes/regiao'
       preLoaderRoute: typeof ClubesRegiaoRouteImport
-      parentRoute: typeof ClubesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/clubes/es': {
       id: '/clubes/es'
-      path: '/es'
+      path: '/clubes/es'
       fullPath: '/clubes/es'
       preLoaderRoute: typeof ClubesEsRouteImport
-      parentRoute: typeof ClubesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/checkout/return': {
       id: '/checkout/return'
@@ -1315,6 +1318,18 @@ const DocumentosRouteWithChildren = DocumentosRoute._addFileChildren(
   DocumentosRouteChildren,
 )
 
+interface ClubesRegiaoRouteChildren {
+  ClubesRegiaoLetraRoute: typeof ClubesRegiaoLetraRoute
+}
+
+const ClubesRegiaoRouteChildren: ClubesRegiaoRouteChildren = {
+  ClubesRegiaoLetraRoute: ClubesRegiaoLetraRoute,
+}
+
+const ClubesRegiaoRouteWithChildren = ClubesRegiaoRoute._addFileChildren(
+  ClubesRegiaoRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -1337,6 +1352,9 @@ const rootRouteChildren: RootRouteChildren = {
   ViceGovernador1Route: ViceGovernador1Route,
   ViceGovernador2Route: ViceGovernador2Route,
   CheckoutReturnRoute: CheckoutReturnRoute,
+  ClubesEsRoute: ClubesEsRoute,
+  ClubesRegiaoRoute: ClubesRegiaoRouteWithChildren,
+  ClubesRjRoute: ClubesRjRoute,
   EventosIdRoute: EventosIdRoute,
   ExGovernadoresIdRoute: ExGovernadoresIdRoute,
   ProjetosIdRoute: ProjetosIdRoute,
@@ -1354,13 +1372,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

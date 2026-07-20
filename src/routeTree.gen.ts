@@ -222,14 +222,14 @@ const DocumentosSplatRoute = DocumentosSplatRouteImport.update({
   getParentRoute: () => DocumentosRoute,
 } as any)
 const ClubesRjRoute = ClubesRjRouteImport.update({
-  id: '/rj',
-  path: '/rj',
-  getParentRoute: () => ClubesRoute,
+  id: '/clubes/rj',
+  path: '/clubes/rj',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ClubesEsRoute = ClubesEsRouteImport.update({
-  id: '/es',
-  path: '/es',
-  getParentRoute: () => ClubesRoute,
+  id: '/clubes/es',
+  path: '/clubes/es',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
   id: '/checkout/return',
@@ -297,9 +297,9 @@ const ProjetosCausaSlugRoute = ProjetosCausaSlugRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClubesRegiaoLetraRoute = ClubesRegiaoLetraRouteImport.update({
-  id: '/$letra',
-  path: '/$letra',
-  getParentRoute: () => ClubesRegiaoRoute,
+  id: '/clubes/regiao/$letra',
+  path: '/clubes/regiao/$letra',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicProjetosRoute = ApiPublicProjetosRouteImport.update({
   id: '/api/public/projetos',
@@ -780,6 +780,8 @@ export interface RootRouteChildren {
   ViceGovernador1Route: typeof ViceGovernador1Route
   ViceGovernador2Route: typeof ViceGovernador2Route
   CheckoutReturnRoute: typeof CheckoutReturnRoute
+  ClubesEsRoute: typeof ClubesEsRoute
+  ClubesRjRoute: typeof ClubesRjRoute
   EventosIdRoute: typeof EventosIdRoute
   ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
   ProjetosIdRoute: typeof ProjetosIdRoute
@@ -791,6 +793,7 @@ export interface RootRouteChildren {
   ApiPublicGovernadoresRoute: typeof ApiPublicGovernadoresRoute
   ApiPublicLcifRoute: typeof ApiPublicLcifRoute
   ApiPublicProjetosRoute: typeof ApiPublicProjetosRoute
+  ClubesRegiaoLetraRoute: typeof ClubesRegiaoLetraRoute
   ProjetosCausaSlugRoute: typeof ProjetosCausaSlugRoute
   ClubesRegiaoIndexRoute: typeof ClubesRegiaoIndexRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
@@ -1010,17 +1013,17 @@ declare module '@tanstack/react-router' {
     }
     '/clubes/rj': {
       id: '/clubes/rj'
-      path: '/rj'
+      path: '/clubes/rj'
       fullPath: '/clubes/rj'
       preLoaderRoute: typeof ClubesRjRouteImport
-      parentRoute: typeof ClubesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/clubes/es': {
       id: '/clubes/es'
-      path: '/es'
+      path: '/clubes/es'
       fullPath: '/clubes/es'
       preLoaderRoute: typeof ClubesEsRouteImport
-      parentRoute: typeof ClubesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/checkout/return': {
       id: '/checkout/return'
@@ -1115,10 +1118,10 @@ declare module '@tanstack/react-router' {
     }
     '/clubes/regiao/$letra': {
       id: '/clubes/regiao/$letra'
-      path: '/$letra'
+      path: '/clubes/regiao/$letra'
       fullPath: '/clubes/regiao/$letra'
       preLoaderRoute: typeof ClubesRegiaoLetraRouteImport
-      parentRoute: typeof ClubesRegiaoRoute
+      parentRoute: typeof rootRouteImport
     }
     '/api/public/projetos': {
       id: '/api/public/projetos'
@@ -1338,6 +1341,8 @@ const rootRouteChildren: RootRouteChildren = {
   ViceGovernador1Route: ViceGovernador1Route,
   ViceGovernador2Route: ViceGovernador2Route,
   CheckoutReturnRoute: CheckoutReturnRoute,
+  ClubesEsRoute: ClubesEsRoute,
+  ClubesRjRoute: ClubesRjRoute,
   EventosIdRoute: EventosIdRoute,
   ExGovernadoresIdRoute: ExGovernadoresIdRoute,
   ProjetosIdRoute: ProjetosIdRoute,
@@ -1349,6 +1354,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicGovernadoresRoute: ApiPublicGovernadoresRoute,
   ApiPublicLcifRoute: ApiPublicLcifRoute,
   ApiPublicProjetosRoute: ApiPublicProjetosRoute,
+  ClubesRegiaoLetraRoute: ClubesRegiaoLetraRoute,
   ProjetosCausaSlugRoute: ProjetosCausaSlugRoute,
   ClubesRegiaoIndexRoute: ClubesRegiaoIndexRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
@@ -1356,13 +1362,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

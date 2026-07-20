@@ -4,7 +4,7 @@ import { MapPin, Mail, Search, User, Home } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useAllClubs } from "@/lib/regions";
 
-export const Route = createFileRoute("/clubes")({
+export const Route = createFileRoute("/clubes/")({
   head: () => ({
     meta: [
       { title: "Clubes — Distrito LC-11" },

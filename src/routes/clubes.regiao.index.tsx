@@ -5,7 +5,7 @@ import { useRegions } from "@/lib/regions";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/clubes/regiao")({
+export const Route = createFileRoute("/clubes/regiao/")({
   head: () => ({
     meta: [
       { title: "Clubes por Região — Distrito LC-11" },

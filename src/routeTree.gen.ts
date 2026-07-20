@@ -25,7 +25,6 @@ import { Route as GatRouteImport } from './routes/gat'
 import { Route as DocumentosRouteImport } from './routes/documentos'
 import { Route as DoarRouteImport } from './routes/doar'
 import { Route as ContatoRouteImport } from './routes/contato'
-import { Route as ClubesRouteImport } from './routes/clubes'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssessoriaRouteImport } from './routes/assessoria'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -34,17 +33,18 @@ import { Route as ProjetosIndexRouteImport } from './routes/projetos.index'
 import { Route as ExGovernadoresIndexRouteImport } from './routes/ex-governadores.index'
 import { Route as EventosIndexRouteImport } from './routes/eventos.index'
 import { Route as DocumentosIndexRouteImport } from './routes/documentos.index'
+import { Route as ClubesIndexRouteImport } from './routes/clubes.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ProjetosIdRouteImport } from './routes/projetos.$id'
 import { Route as ExGovernadoresIdRouteImport } from './routes/ex-governadores.$id'
 import { Route as EventosIdRouteImport } from './routes/eventos.$id'
 import { Route as DocumentosSplatRouteImport } from './routes/documentos.$'
 import { Route as ClubesRjRouteImport } from './routes/clubes.rj'
-import { Route as ClubesRegiaoRouteImport } from './routes/clubes.regiao'
 import { Route as ClubesEsRouteImport } from './routes/clubes.es'
 import { Route as CheckoutReturnRouteImport } from './routes/checkout/return'
 import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
 import { Route as AdminClubesRouteImport } from './routes/admin.clubes'
+import { Route as ClubesRegiaoIndexRouteImport } from './routes/clubes.regiao.index'
 import { Route as AdminRegioesIndexRouteImport } from './routes/admin.regioes.index'
 import { Route as AdminProjetosIndexRouteImport } from './routes/admin.projetos.index'
 import { Route as AdminPopupsIndexRouteImport } from './routes/admin.popups.index'
@@ -151,11 +151,6 @@ const ContatoRoute = ContatoRouteImport.update({
   path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ClubesRoute = ClubesRouteImport.update({
-  id: '/clubes',
-  path: '/clubes',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -196,6 +191,11 @@ const DocumentosIndexRoute = DocumentosIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DocumentosRoute,
 } as any)
+const ClubesIndexRoute = ClubesIndexRouteImport.update({
+  id: '/clubes/',
+  path: '/clubes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -222,19 +222,14 @@ const DocumentosSplatRoute = DocumentosSplatRouteImport.update({
   getParentRoute: () => DocumentosRoute,
 } as any)
 const ClubesRjRoute = ClubesRjRouteImport.update({
-  id: '/rj',
-  path: '/rj',
-  getParentRoute: () => ClubesRoute,
-} as any)
-const ClubesRegiaoRoute = ClubesRegiaoRouteImport.update({
-  id: '/regiao',
-  path: '/regiao',
-  getParentRoute: () => ClubesRoute,
+  id: '/clubes/rj',
+  path: '/clubes/rj',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ClubesEsRoute = ClubesEsRouteImport.update({
-  id: '/es',
-  path: '/es',
-  getParentRoute: () => ClubesRoute,
+  id: '/clubes/es',
+  path: '/clubes/es',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
   id: '/checkout/return',
@@ -250,6 +245,11 @@ const AdminClubesRoute = AdminClubesRouteImport.update({
   id: '/clubes',
   path: '/clubes',
   getParentRoute: () => AdminRoute,
+} as any)
+const ClubesRegiaoIndexRoute = ClubesRegiaoIndexRouteImport.update({
+  id: '/clubes/regiao/',
+  path: '/clubes/regiao/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRegioesIndexRoute = AdminRegioesIndexRouteImport.update({
   id: '/regioes/',
@@ -297,9 +297,9 @@ const ProjetosCausaSlugRoute = ProjetosCausaSlugRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClubesRegiaoLetraRoute = ClubesRegiaoLetraRouteImport.update({
-  id: '/$letra',
-  path: '/$letra',
-  getParentRoute: () => ClubesRegiaoRoute,
+  id: '/clubes/regiao/$letra',
+  path: '/clubes/regiao/$letra',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicProjetosRoute = ApiPublicProjetosRouteImport.update({
   id: '/api/public/projetos',
@@ -385,7 +385,6 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
-  '/clubes': typeof ClubesRouteWithChildren
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/documentos': typeof DocumentosRouteWithChildren
@@ -406,13 +405,13 @@ export interface FileRoutesByFullPath {
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
-  '/clubes/regiao': typeof ClubesRegiaoRouteWithChildren
   '/clubes/rj': typeof ClubesRjRoute
   '/documentos/$': typeof DocumentosSplatRoute
   '/eventos/$id': typeof EventosIdRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/clubes/': typeof ClubesIndexRoute
   '/documentos/': typeof DocumentosIndexRoute
   '/eventos/': typeof EventosIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
@@ -439,6 +438,7 @@ export interface FileRoutesByFullPath {
   '/admin/popups/': typeof AdminPopupsIndexRoute
   '/admin/projetos/': typeof AdminProjetosIndexRoute
   '/admin/regioes/': typeof AdminRegioesIndexRoute
+  '/clubes/regiao/': typeof ClubesRegiaoIndexRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
@@ -447,7 +447,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
-  '/clubes': typeof ClubesRouteWithChildren
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/gat': typeof GatRoute
@@ -467,13 +466,13 @@ export interface FileRoutesByTo {
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
-  '/clubes/regiao': typeof ClubesRegiaoRouteWithChildren
   '/clubes/rj': typeof ClubesRjRoute
   '/documentos/$': typeof DocumentosSplatRoute
   '/eventos/$id': typeof EventosIdRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin': typeof AdminIndexRoute
+  '/clubes': typeof ClubesIndexRoute
   '/documentos': typeof DocumentosIndexRoute
   '/eventos': typeof EventosIndexRoute
   '/ex-governadores': typeof ExGovernadoresIndexRoute
@@ -500,6 +499,7 @@ export interface FileRoutesByTo {
   '/admin/popups': typeof AdminPopupsIndexRoute
   '/admin/projetos': typeof AdminProjetosIndexRoute
   '/admin/regioes': typeof AdminRegioesIndexRoute
+  '/clubes/regiao': typeof ClubesRegiaoIndexRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
@@ -510,7 +510,6 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
-  '/clubes': typeof ClubesRouteWithChildren
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/documentos': typeof DocumentosRouteWithChildren
@@ -531,13 +530,13 @@ export interface FileRoutesById {
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
-  '/clubes/regiao': typeof ClubesRegiaoRouteWithChildren
   '/clubes/rj': typeof ClubesRjRoute
   '/documentos/$': typeof DocumentosSplatRoute
   '/eventos/$id': typeof EventosIdRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/clubes/': typeof ClubesIndexRoute
   '/documentos/': typeof DocumentosIndexRoute
   '/eventos/': typeof EventosIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
@@ -564,6 +563,7 @@ export interface FileRoutesById {
   '/admin/popups/': typeof AdminPopupsIndexRoute
   '/admin/projetos/': typeof AdminProjetosIndexRoute
   '/admin/regioes/': typeof AdminRegioesIndexRoute
+  '/clubes/regiao/': typeof ClubesRegiaoIndexRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
@@ -575,7 +575,6 @@ export interface FileRouteTypes {
     | '/admin'
     | '/assessoria'
     | '/auth'
-    | '/clubes'
     | '/contato'
     | '/doar'
     | '/documentos'
@@ -596,13 +595,13 @@ export interface FileRouteTypes {
     | '/admin/usuarios'
     | '/checkout/return'
     | '/clubes/es'
-    | '/clubes/regiao'
     | '/clubes/rj'
     | '/documentos/$'
     | '/eventos/$id'
     | '/ex-governadores/$id'
     | '/projetos/$id'
     | '/admin/'
+    | '/clubes/'
     | '/documentos/'
     | '/eventos/'
     | '/ex-governadores/'
@@ -629,6 +628,7 @@ export interface FileRouteTypes {
     | '/admin/popups/'
     | '/admin/projetos/'
     | '/admin/regioes/'
+    | '/clubes/regiao/'
     | '/api/public/payments/webhook'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
@@ -637,7 +637,6 @@ export interface FileRouteTypes {
     | '/'
     | '/assessoria'
     | '/auth'
-    | '/clubes'
     | '/contato'
     | '/doar'
     | '/gat'
@@ -657,13 +656,13 @@ export interface FileRouteTypes {
     | '/admin/usuarios'
     | '/checkout/return'
     | '/clubes/es'
-    | '/clubes/regiao'
     | '/clubes/rj'
     | '/documentos/$'
     | '/eventos/$id'
     | '/ex-governadores/$id'
     | '/projetos/$id'
     | '/admin'
+    | '/clubes'
     | '/documentos'
     | '/eventos'
     | '/ex-governadores'
@@ -690,6 +689,7 @@ export interface FileRouteTypes {
     | '/admin/popups'
     | '/admin/projetos'
     | '/admin/regioes'
+    | '/clubes/regiao'
     | '/api/public/payments/webhook'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
@@ -699,7 +699,6 @@ export interface FileRouteTypes {
     | '/admin'
     | '/assessoria'
     | '/auth'
-    | '/clubes'
     | '/contato'
     | '/doar'
     | '/documentos'
@@ -720,13 +719,13 @@ export interface FileRouteTypes {
     | '/admin/usuarios'
     | '/checkout/return'
     | '/clubes/es'
-    | '/clubes/regiao'
     | '/clubes/rj'
     | '/documentos/$'
     | '/eventos/$id'
     | '/ex-governadores/$id'
     | '/projetos/$id'
     | '/admin/'
+    | '/clubes/'
     | '/documentos/'
     | '/eventos/'
     | '/ex-governadores/'
@@ -753,6 +752,7 @@ export interface FileRouteTypes {
     | '/admin/popups/'
     | '/admin/projetos/'
     | '/admin/regioes/'
+    | '/clubes/regiao/'
     | '/api/public/payments/webhook'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
@@ -763,7 +763,6 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AssessoriaRoute: typeof AssessoriaRoute
   AuthRoute: typeof AuthRoute
-  ClubesRoute: typeof ClubesRouteWithChildren
   ContatoRoute: typeof ContatoRoute
   DoarRoute: typeof DoarRoute
   DocumentosRoute: typeof DocumentosRouteWithChildren
@@ -781,9 +780,12 @@ export interface RootRouteChildren {
   ViceGovernador1Route: typeof ViceGovernador1Route
   ViceGovernador2Route: typeof ViceGovernador2Route
   CheckoutReturnRoute: typeof CheckoutReturnRoute
+  ClubesEsRoute: typeof ClubesEsRoute
+  ClubesRjRoute: typeof ClubesRjRoute
   EventosIdRoute: typeof EventosIdRoute
   ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
   ProjetosIdRoute: typeof ProjetosIdRoute
+  ClubesIndexRoute: typeof ClubesIndexRoute
   EventosIndexRoute: typeof EventosIndexRoute
   ExGovernadoresIndexRoute: typeof ExGovernadoresIndexRoute
   ProjetosIndexRoute: typeof ProjetosIndexRoute
@@ -791,7 +793,9 @@ export interface RootRouteChildren {
   ApiPublicGovernadoresRoute: typeof ApiPublicGovernadoresRoute
   ApiPublicLcifRoute: typeof ApiPublicLcifRoute
   ApiPublicProjetosRoute: typeof ApiPublicProjetosRoute
+  ClubesRegiaoLetraRoute: typeof ClubesRegiaoLetraRoute
   ProjetosCausaSlugRoute: typeof ProjetosCausaSlugRoute
+  ClubesRegiaoIndexRoute: typeof ClubesRegiaoIndexRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
@@ -909,13 +913,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/clubes': {
-      id: '/clubes'
-      path: '/clubes'
-      fullPath: '/clubes'
-      preLoaderRoute: typeof ClubesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -972,6 +969,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocumentosIndexRouteImport
       parentRoute: typeof DocumentosRoute
     }
+    '/clubes/': {
+      id: '/clubes/'
+      path: '/clubes'
+      fullPath: '/clubes/'
+      preLoaderRoute: typeof ClubesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/': {
       id: '/admin/'
       path: '/'
@@ -1009,24 +1013,17 @@ declare module '@tanstack/react-router' {
     }
     '/clubes/rj': {
       id: '/clubes/rj'
-      path: '/rj'
+      path: '/clubes/rj'
       fullPath: '/clubes/rj'
       preLoaderRoute: typeof ClubesRjRouteImport
-      parentRoute: typeof ClubesRoute
-    }
-    '/clubes/regiao': {
-      id: '/clubes/regiao'
-      path: '/regiao'
-      fullPath: '/clubes/regiao'
-      preLoaderRoute: typeof ClubesRegiaoRouteImport
-      parentRoute: typeof ClubesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/clubes/es': {
       id: '/clubes/es'
-      path: '/es'
+      path: '/clubes/es'
       fullPath: '/clubes/es'
       preLoaderRoute: typeof ClubesEsRouteImport
-      parentRoute: typeof ClubesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/checkout/return': {
       id: '/checkout/return'
@@ -1048,6 +1045,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/clubes'
       preLoaderRoute: typeof AdminClubesRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/clubes/regiao/': {
+      id: '/clubes/regiao/'
+      path: '/clubes/regiao'
+      fullPath: '/clubes/regiao/'
+      preLoaderRoute: typeof ClubesRegiaoIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/regioes/': {
       id: '/admin/regioes/'
@@ -1114,10 +1118,10 @@ declare module '@tanstack/react-router' {
     }
     '/clubes/regiao/$letra': {
       id: '/clubes/regiao/$letra'
-      path: '/$letra'
+      path: '/clubes/regiao/$letra'
       fullPath: '/clubes/regiao/$letra'
       preLoaderRoute: typeof ClubesRegiaoLetraRouteImport
-      parentRoute: typeof ClubesRegiaoRoute
+      parentRoute: typeof rootRouteImport
     }
     '/api/public/projetos': {
       id: '/api/public/projetos'
@@ -1301,33 +1305,6 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
-interface ClubesRegiaoRouteChildren {
-  ClubesRegiaoLetraRoute: typeof ClubesRegiaoLetraRoute
-}
-
-const ClubesRegiaoRouteChildren: ClubesRegiaoRouteChildren = {
-  ClubesRegiaoLetraRoute: ClubesRegiaoLetraRoute,
-}
-
-const ClubesRegiaoRouteWithChildren = ClubesRegiaoRoute._addFileChildren(
-  ClubesRegiaoRouteChildren,
-)
-
-interface ClubesRouteChildren {
-  ClubesEsRoute: typeof ClubesEsRoute
-  ClubesRegiaoRoute: typeof ClubesRegiaoRouteWithChildren
-  ClubesRjRoute: typeof ClubesRjRoute
-}
-
-const ClubesRouteChildren: ClubesRouteChildren = {
-  ClubesEsRoute: ClubesEsRoute,
-  ClubesRegiaoRoute: ClubesRegiaoRouteWithChildren,
-  ClubesRjRoute: ClubesRjRoute,
-}
-
-const ClubesRouteWithChildren =
-  ClubesRoute._addFileChildren(ClubesRouteChildren)
-
 interface DocumentosRouteChildren {
   DocumentosSplatRoute: typeof DocumentosSplatRoute
   DocumentosIndexRoute: typeof DocumentosIndexRoute
@@ -1347,7 +1324,6 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AssessoriaRoute: AssessoriaRoute,
   AuthRoute: AuthRoute,
-  ClubesRoute: ClubesRouteWithChildren,
   ContatoRoute: ContatoRoute,
   DoarRoute: DoarRoute,
   DocumentosRoute: DocumentosRouteWithChildren,
@@ -1365,9 +1341,12 @@ const rootRouteChildren: RootRouteChildren = {
   ViceGovernador1Route: ViceGovernador1Route,
   ViceGovernador2Route: ViceGovernador2Route,
   CheckoutReturnRoute: CheckoutReturnRoute,
+  ClubesEsRoute: ClubesEsRoute,
+  ClubesRjRoute: ClubesRjRoute,
   EventosIdRoute: EventosIdRoute,
   ExGovernadoresIdRoute: ExGovernadoresIdRoute,
   ProjetosIdRoute: ProjetosIdRoute,
+  ClubesIndexRoute: ClubesIndexRoute,
   EventosIndexRoute: EventosIndexRoute,
   ExGovernadoresIndexRoute: ExGovernadoresIndexRoute,
   ProjetosIndexRoute: ProjetosIndexRoute,
@@ -1375,9 +1354,21 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicGovernadoresRoute: ApiPublicGovernadoresRoute,
   ApiPublicLcifRoute: ApiPublicLcifRoute,
   ApiPublicProjetosRoute: ApiPublicProjetosRoute,
+  ClubesRegiaoLetraRoute: ClubesRegiaoLetraRoute,
   ProjetosCausaSlugRoute: ProjetosCausaSlugRoute,
+  ClubesRegiaoIndexRoute: ClubesRegiaoIndexRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

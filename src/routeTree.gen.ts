@@ -25,7 +25,6 @@ import { Route as GatRouteImport } from './routes/gat'
 import { Route as DocumentosRouteImport } from './routes/documentos'
 import { Route as DoarRouteImport } from './routes/doar'
 import { Route as ContatoRouteImport } from './routes/contato'
-import { Route as ClubesRouteImport } from './routes/clubes'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssessoriaRouteImport } from './routes/assessoria'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -34,6 +33,7 @@ import { Route as ProjetosIndexRouteImport } from './routes/projetos.index'
 import { Route as ExGovernadoresIndexRouteImport } from './routes/ex-governadores.index'
 import { Route as EventosIndexRouteImport } from './routes/eventos.index'
 import { Route as DocumentosIndexRouteImport } from './routes/documentos.index'
+import { Route as ClubesIndexRouteImport } from './routes/clubes.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ProjetosIdRouteImport } from './routes/projetos.$id'
 import { Route as ExGovernadoresIdRouteImport } from './routes/ex-governadores.$id'
@@ -151,11 +151,6 @@ const ContatoRoute = ContatoRouteImport.update({
   path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ClubesRoute = ClubesRouteImport.update({
-  id: '/clubes',
-  path: '/clubes',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -195,6 +190,11 @@ const DocumentosIndexRoute = DocumentosIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DocumentosRoute,
+} as any)
+const ClubesIndexRoute = ClubesIndexRouteImport.update({
+  id: '/clubes/',
+  path: '/clubes/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
@@ -385,7 +385,6 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
-  '/clubes': typeof ClubesRouteWithChildren
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/documentos': typeof DocumentosRouteWithChildren
@@ -413,6 +412,7 @@ export interface FileRoutesByFullPath {
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/clubes/': typeof ClubesIndexRoute
   '/documentos/': typeof DocumentosIndexRoute
   '/eventos/': typeof EventosIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
@@ -447,7 +447,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
-  '/clubes': typeof ClubesRouteWithChildren
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/gat': typeof GatRoute
@@ -474,6 +473,7 @@ export interface FileRoutesByTo {
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin': typeof AdminIndexRoute
+  '/clubes': typeof ClubesIndexRoute
   '/documentos': typeof DocumentosIndexRoute
   '/eventos': typeof EventosIndexRoute
   '/ex-governadores': typeof ExGovernadoresIndexRoute
@@ -510,7 +510,6 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
-  '/clubes': typeof ClubesRouteWithChildren
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/documentos': typeof DocumentosRouteWithChildren
@@ -538,6 +537,7 @@ export interface FileRoutesById {
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/clubes/': typeof ClubesIndexRoute
   '/documentos/': typeof DocumentosIndexRoute
   '/eventos/': typeof EventosIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
@@ -575,7 +575,6 @@ export interface FileRouteTypes {
     | '/admin'
     | '/assessoria'
     | '/auth'
-    | '/clubes'
     | '/contato'
     | '/doar'
     | '/documentos'
@@ -603,6 +602,7 @@ export interface FileRouteTypes {
     | '/ex-governadores/$id'
     | '/projetos/$id'
     | '/admin/'
+    | '/clubes/'
     | '/documentos/'
     | '/eventos/'
     | '/ex-governadores/'
@@ -637,7 +637,6 @@ export interface FileRouteTypes {
     | '/'
     | '/assessoria'
     | '/auth'
-    | '/clubes'
     | '/contato'
     | '/doar'
     | '/gat'
@@ -664,6 +663,7 @@ export interface FileRouteTypes {
     | '/ex-governadores/$id'
     | '/projetos/$id'
     | '/admin'
+    | '/clubes'
     | '/documentos'
     | '/eventos'
     | '/ex-governadores'
@@ -699,7 +699,6 @@ export interface FileRouteTypes {
     | '/admin'
     | '/assessoria'
     | '/auth'
-    | '/clubes'
     | '/contato'
     | '/doar'
     | '/documentos'
@@ -727,6 +726,7 @@ export interface FileRouteTypes {
     | '/ex-governadores/$id'
     | '/projetos/$id'
     | '/admin/'
+    | '/clubes/'
     | '/documentos/'
     | '/eventos/'
     | '/ex-governadores/'
@@ -763,7 +763,6 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AssessoriaRoute: typeof AssessoriaRoute
   AuthRoute: typeof AuthRoute
-  ClubesRoute: typeof ClubesRouteWithChildren
   ContatoRoute: typeof ContatoRoute
   DoarRoute: typeof DoarRoute
   DocumentosRoute: typeof DocumentosRouteWithChildren
@@ -784,6 +783,7 @@ export interface RootRouteChildren {
   EventosIdRoute: typeof EventosIdRoute
   ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
   ProjetosIdRoute: typeof ProjetosIdRoute
+  ClubesIndexRoute: typeof ClubesIndexRoute
   EventosIndexRoute: typeof EventosIndexRoute
   ExGovernadoresIndexRoute: typeof ExGovernadoresIndexRoute
   ProjetosIndexRoute: typeof ProjetosIndexRoute
@@ -909,13 +909,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/clubes': {
-      id: '/clubes'
-      path: '/clubes'
-      fullPath: '/clubes'
-      preLoaderRoute: typeof ClubesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -971,6 +964,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/documentos/'
       preLoaderRoute: typeof DocumentosIndexRouteImport
       parentRoute: typeof DocumentosRoute
+    }
+    '/clubes/': {
+      id: '/clubes/'
+      path: '/clubes'
+      fullPath: '/clubes/'
+      preLoaderRoute: typeof ClubesIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/': {
       id: '/admin/'
@@ -1301,33 +1301,6 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
-interface ClubesRegiaoRouteChildren {
-  ClubesRegiaoLetraRoute: typeof ClubesRegiaoLetraRoute
-}
-
-const ClubesRegiaoRouteChildren: ClubesRegiaoRouteChildren = {
-  ClubesRegiaoLetraRoute: ClubesRegiaoLetraRoute,
-}
-
-const ClubesRegiaoRouteWithChildren = ClubesRegiaoRoute._addFileChildren(
-  ClubesRegiaoRouteChildren,
-)
-
-interface ClubesRouteChildren {
-  ClubesEsRoute: typeof ClubesEsRoute
-  ClubesRegiaoRoute: typeof ClubesRegiaoRouteWithChildren
-  ClubesRjRoute: typeof ClubesRjRoute
-}
-
-const ClubesRouteChildren: ClubesRouteChildren = {
-  ClubesEsRoute: ClubesEsRoute,
-  ClubesRegiaoRoute: ClubesRegiaoRouteWithChildren,
-  ClubesRjRoute: ClubesRjRoute,
-}
-
-const ClubesRouteWithChildren =
-  ClubesRoute._addFileChildren(ClubesRouteChildren)
-
 interface DocumentosRouteChildren {
   DocumentosSplatRoute: typeof DocumentosSplatRoute
   DocumentosIndexRoute: typeof DocumentosIndexRoute
@@ -1347,7 +1320,6 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AssessoriaRoute: AssessoriaRoute,
   AuthRoute: AuthRoute,
-  ClubesRoute: ClubesRouteWithChildren,
   ContatoRoute: ContatoRoute,
   DoarRoute: DoarRoute,
   DocumentosRoute: DocumentosRouteWithChildren,
@@ -1368,6 +1340,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventosIdRoute: EventosIdRoute,
   ExGovernadoresIdRoute: ExGovernadoresIdRoute,
   ProjetosIdRoute: ProjetosIdRoute,
+  ClubesIndexRoute: ClubesIndexRoute,
   EventosIndexRoute: EventosIndexRoute,
   ExGovernadoresIndexRoute: ExGovernadoresIndexRoute,
   ProjetosIndexRoute: ProjetosIndexRoute,

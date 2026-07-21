@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { uploadLeaderPhoto } from "@/lib/leaders";
 import { useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Upload, Loader2, Save } from "lucide-react";
+import ImageCropModal from "@/components/ImageCropModal";
 
 export const Route = createFileRoute("/admin/grandes-leoes/$id")({
   component: GrandeLeaoEditor,
@@ -36,6 +37,7 @@ function GrandeLeaoEditor() {
   const [saving, setSaving] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [cropModal, setCropModal] = useState<string | null>(null);
 
   useEffect(() => {
     supabase
@@ -88,7 +90,7 @@ function GrandeLeaoEditor() {
       name: form.name.trim(),
       role: form.role.trim() || null,
       bio: form.bio.trim() || null,
-      photo_url: form.photo_url || null,
+      photo_url: form.photo_url.trim() || null,
       year_label: form.year_label.trim() || null,
       order_index: form.order_index,
     };
@@ -137,7 +139,7 @@ function GrandeLeaoEditor() {
           <div className="grid gap-6 md:grid-cols-[140px_1fr] items-start">
             {/* Foto Upload */}
             <div className="flex flex-col items-center justify-center">
-              <span className="text-xs font-semibold text-muted-foreground mb-2 self-start md:self-center">Foto</span>
+              <span className="text-xs font-semibold text-muted-foreground mb-2 self-start md:self-center">Visualização</span>
               {form.photo_url ? (
                 <div className="relative group h-28 w-28 rounded-full overflow-hidden ring-4 ring-primary/10">
                   <img src={form.photo_url} alt="" className="h-full w-full object-cover" />
@@ -150,27 +152,28 @@ function GrandeLeaoEditor() {
                   </button>
                 </div>
               ) : (
-                <label className="flex h-28 w-28 cursor-pointer flex-col items-center justify-center rounded-full border-2 border-dashed border-border bg-surface hover:border-primary/50 hover:bg-primary/5 transition-all relative">
-                  {isUploading ? (
-                    <Loader2 className="h-6 w-6 text-primary animate-spin" />
-                  ) : (
-                    <>
-                      <Upload className="h-6 w-6 text-muted-foreground" />
-                      <span className="text-[10px] text-muted-foreground mt-1 text-center px-2">Enviar Foto</span>
-                    </>
-                  )}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    disabled={isUploading}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) handlePhotoUpload(file);
-                    }}
-                  />
-                </label>
+                <div className="h-28 w-28 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                  <span className="text-xs font-semibold">Sem foto</span>
+                </div>
               )}
+              <label className="mt-3 flex cursor-pointer items-center gap-2 rounded-md border px-3 py-1.5 text-xs hover:bg-surface w-full justify-center">
+                {isUploading ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <Upload className="h-3.5 w-3.5" />
+                )}
+                <span>Enviar arquivo</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  disabled={isUploading}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) setCropModal(URL.createObjectURL(file));
+                  }}
+                />
+              </label>
             </div>
 
             {/* Inputs */}
@@ -220,6 +223,17 @@ function GrandeLeaoEditor() {
               </div>
 
               <div>
+                <label className="text-xs font-semibold text-muted-foreground uppercase">URL da Foto (Cole um link externo ou use o botão de envio)</label>
+                <input
+                  type="text"
+                  value={form.photo_url}
+                  onChange={(e) => setForm({ ...form, photo_url: e.target.value })}
+                  placeholder="Ex: https://exemplo.com/sua-foto.jpg"
+                  className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                />
+              </div>
+
+              <div>
                 <label className="text-xs font-semibold text-muted-foreground uppercase">Biografia / Descrição</label>
                 <textarea
                   rows={4}
@@ -257,6 +271,23 @@ function GrandeLeaoEditor() {
           </button>
         </div>
       </div>
+
+      {cropModal && (
+        <ImageCropModal
+          imageUrl={cropModal}
+          aspect={1}
+          cropShape="round"
+          onClose={() => {
+            URL.revokeObjectURL(cropModal);
+            setCropModal(null);
+          }}
+          onConfirm={(file) => {
+            URL.revokeObjectURL(cropModal);
+            setCropModal(null);
+            handlePhotoUpload(file);
+          }}
+        />
+      )}
     </div>
   );
 }

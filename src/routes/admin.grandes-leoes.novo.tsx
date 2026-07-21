@@ -39,6 +39,7 @@ function BulkAddGrandesLeoes() {
     setEntries(entries.filter((e) => e.id !== id));
   }
 
+  // Allow updating individual fields on a row
   function updateEntry(id: string, field: keyof Entry, value: any) {
     setEntries(
       entries.map((e) => (e.id === id ? { ...e, [field]: value } : e))
@@ -90,7 +91,7 @@ function BulkAddGrandesLeoes() {
       name: entry.name.trim(),
       role: entry.role.trim() || null,
       bio: entry.bio.trim() || null,
-      photo_url: entry.photo_url || null,
+      photo_url: entry.photo_url.trim() || null,
       order_index: maxOrder + idx,
     }));
 
@@ -154,7 +155,7 @@ function BulkAddGrandesLeoes() {
             <div className="grid gap-6 md:grid-cols-[140px_1fr] items-start mt-4 sm:mt-0">
               {/* Upload da Foto */}
               <div className="flex flex-col items-center justify-center">
-                <span className="text-xs font-semibold text-muted-foreground mb-2 self-start md:self-center">Foto</span>
+                <span className="text-xs font-semibold text-muted-foreground mb-2 self-start md:self-center">Visualização</span>
                 {entry.photo_url ? (
                   <div className="relative group h-28 w-28 rounded-full overflow-hidden ring-4 ring-primary/10">
                     <img src={entry.photo_url} alt="" className="h-full w-full object-cover" />
@@ -167,27 +168,28 @@ function BulkAddGrandesLeoes() {
                     </button>
                   </div>
                 ) : (
-                  <label className="flex h-28 w-28 cursor-pointer flex-col items-center justify-center rounded-full border-2 border-dashed border-border bg-surface hover:border-primary/50 hover:bg-primary/5 transition-all relative">
-                    {entry.isUploading ? (
-                      <Loader2 className="h-6 w-6 text-primary animate-spin" />
-                    ) : (
-                      <>
-                        <Upload className="h-6 w-6 text-muted-foreground" />
-                        <span className="text-[10px] text-muted-foreground mt-1 text-center px-2">Enviar Foto</span>
-                      </>
-                    )}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      disabled={entry.isUploading}
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) handlePhotoUpload(entry.id, file);
-                      }}
-                    />
-                  </label>
+                  <div className="h-28 w-28 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                    <span className="text-xs font-semibold">Sem foto</span>
+                  </div>
                 )}
+                <label className="mt-3 flex cursor-pointer items-center gap-2 rounded-md border px-3 py-1.5 text-xs hover:bg-surface w-full justify-center">
+                  {entry.isUploading ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Upload className="h-3.5 w-3.5" />
+                  )}
+                  <span>Enviar arquivo</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    disabled={entry.isUploading}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) handlePhotoUpload(entry.id, file);
+                    }}
+                  />
+                </label>
               </div>
 
               {/* Campos de texto */}
@@ -214,6 +216,17 @@ function BulkAddGrandesLeoes() {
                       className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                     />
                   </div>
+                </div>
+
+                <div>
+                  <label className="text-xs font-semibold text-muted-foreground uppercase">URL da Foto (Cole um link externo ou use o botão ao lado)</label>
+                  <input
+                    type="text"
+                    value={entry.photo_url}
+                    onChange={(e) => updateEntry(entry.id, "photo_url", e.target.value)}
+                    placeholder="Ex: https://exemplo.com/foto.jpg"
+                    className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  />
                 </div>
 
                 <div>

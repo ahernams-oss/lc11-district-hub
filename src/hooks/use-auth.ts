@@ -19,7 +19,39 @@ export function useAuth() {
       setRoles(((data ?? []) as { role: AppRole }[]).map((r) => r.role));
     };
 
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
+    const handleBypass = () => {
+      setUser({
+        id: "dev-admin-id",
+        email: "admin@localhost",
+        aud: "authenticated",
+        role: "authenticated",
+        created_at: new Date().toISOString(),
+        app_metadata: {},
+        user_metadata: {},
+      } as any);
+      setRoles(["admin"]);
+      setLoading(false);
+    };
+
+    if (import.meta.env.DEV && localStorage.getItem("dev_admin_bypass") === "true") {
+      handleBypass();
+    }
+
+    const { data: sub } = supabase.auth.onAuthStateChange((event, s) => {
+      if (event === "SIGNED_OUT") {
+        localStorage.removeItem("dev_admin_bypass");
+        setSession(null);
+        setUser(null);
+        setRoles([]);
+        setLoading(false);
+        return;
+      }
+
+      if (import.meta.env.DEV && localStorage.getItem("dev_admin_bypass") === "true") {
+        handleBypass();
+        return;
+      }
+
       setSession(s);
       setUser(s?.user ?? null);
       if (s?.user) {
@@ -30,6 +62,10 @@ export function useAuth() {
     });
 
     supabase.auth.getSession().then(async ({ data: { session: s } }) => {
+      if (import.meta.env.DEV && localStorage.getItem("dev_admin_bypass") === "true") {
+        handleBypass();
+        return;
+      }
       setSession(s);
       setUser(s?.user ?? null);
       if (s?.user) await loadRoles(s.user.id);
@@ -48,6 +84,14 @@ export function useAuth() {
   const canViewUsers = isAvancado; // avancado, admin
   const canManageUsers = isAdmin;
 
+  const signOut = async () => {
+    localStorage.removeItem("dev_admin_bypass");
+    await supabase.auth.signOut();
+    setSession(null);
+    setUser(null);
+    setRoles([]);
+  };
+
   return {
     session,
     user,
@@ -60,5 +104,6 @@ export function useAuth() {
     canEditContent,
     canViewUsers,
     canManageUsers,
+    signOut,
   };
 }

@@ -40,6 +40,7 @@ import { Route as ExGovernadoresIdRouteImport } from './routes/ex-governadores.$
 import { Route as EventosIdRouteImport } from './routes/eventos.$id'
 import { Route as DocumentosSplatRouteImport } from './routes/documentos.$'
 import { Route as ClubesRjRouteImport } from './routes/clubes.rj'
+import { Route as ClubesGrandesLeoesRouteImport } from './routes/clubes.grandes-leoes'
 import { Route as ClubesEsRouteImport } from './routes/clubes.es'
 import { Route as CheckoutReturnRouteImport } from './routes/checkout/return'
 import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
@@ -50,6 +51,7 @@ import { Route as AdminProjetosIndexRouteImport } from './routes/admin.projetos.
 import { Route as AdminPopupsIndexRouteImport } from './routes/admin.popups.index'
 import { Route as AdminNoticiasIndexRouteImport } from './routes/admin.noticias.index'
 import { Route as AdminLideresIndexRouteImport } from './routes/admin.lideres.index'
+import { Route as AdminGrandesLeoesIndexRouteImport } from './routes/admin.grandes-leoes.index'
 import { Route as AdminEventosIndexRouteImport } from './routes/admin.eventos.index'
 import { Route as AdminDocumentosIndexRouteImport } from './routes/admin.documentos.index'
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
@@ -64,6 +66,8 @@ import { Route as AdminProjetosIdRouteImport } from './routes/admin.projetos.$id
 import { Route as AdminPopupsIdRouteImport } from './routes/admin.popups.$id'
 import { Route as AdminNoticiasIdRouteImport } from './routes/admin.noticias.$id'
 import { Route as AdminLideresIdRouteImport } from './routes/admin.lideres.$id'
+import { Route as AdminGrandesLeoesNovoRouteImport } from './routes/admin.grandes-leoes.novo'
+import { Route as AdminGrandesLeoesIdRouteImport } from './routes/admin.grandes-leoes.$id'
 import { Route as AdminEventosIdRouteImport } from './routes/admin.eventos.$id'
 import { Route as AdminDocumentosIdRouteImport } from './routes/admin.documentos.$id'
 import { Route as AdminConteudoKeyRouteImport } from './routes/admin.conteudo.$key'
@@ -226,6 +230,11 @@ const ClubesRjRoute = ClubesRjRouteImport.update({
   path: '/clubes/rj',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClubesGrandesLeoesRoute = ClubesGrandesLeoesRouteImport.update({
+  id: '/clubes/grandes-leoes',
+  path: '/clubes/grandes-leoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ClubesEsRoute = ClubesEsRouteImport.update({
   id: '/clubes/es',
   path: '/clubes/es',
@@ -274,6 +283,11 @@ const AdminNoticiasIndexRoute = AdminNoticiasIndexRouteImport.update({
 const AdminLideresIndexRoute = AdminLideresIndexRouteImport.update({
   id: '/lideres/',
   path: '/lideres/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminGrandesLeoesIndexRoute = AdminGrandesLeoesIndexRouteImport.update({
+  id: '/grandes-leoes/',
+  path: '/grandes-leoes/',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminEventosIndexRoute = AdminEventosIndexRouteImport.update({
@@ -346,6 +360,16 @@ const AdminLideresIdRoute = AdminLideresIdRouteImport.update({
   path: '/lideres/$id',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminGrandesLeoesNovoRoute = AdminGrandesLeoesNovoRouteImport.update({
+  id: '/grandes-leoes/novo',
+  path: '/grandes-leoes/novo',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminGrandesLeoesIdRoute = AdminGrandesLeoesIdRouteImport.update({
+  id: '/grandes-leoes/$id',
+  path: '/grandes-leoes/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminEventosIdRoute = AdminEventosIdRouteImport.update({
   id: '/eventos/$id',
   path: '/eventos/$id',
@@ -405,6 +429,7 @@ export interface FileRoutesByFullPath {
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
+  '/clubes/grandes-leoes': typeof ClubesGrandesLeoesRoute
   '/clubes/rj': typeof ClubesRjRoute
   '/documentos/$': typeof DocumentosSplatRoute
   '/eventos/$id': typeof EventosIdRoute
@@ -419,6 +444,8 @@ export interface FileRoutesByFullPath {
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
+  '/admin/grandes-leoes/$id': typeof AdminGrandesLeoesIdRoute
+  '/admin/grandes-leoes/novo': typeof AdminGrandesLeoesNovoRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
   '/admin/noticias/$id': typeof AdminNoticiasIdRoute
   '/admin/popups/$id': typeof AdminPopupsIdRoute
@@ -433,6 +460,7 @@ export interface FileRoutesByFullPath {
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
   '/admin/documentos/': typeof AdminDocumentosIndexRoute
   '/admin/eventos/': typeof AdminEventosIndexRoute
+  '/admin/grandes-leoes/': typeof AdminGrandesLeoesIndexRoute
   '/admin/lideres/': typeof AdminLideresIndexRoute
   '/admin/noticias/': typeof AdminNoticiasIndexRoute
   '/admin/popups/': typeof AdminPopupsIndexRoute
@@ -466,6 +494,7 @@ export interface FileRoutesByTo {
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
+  '/clubes/grandes-leoes': typeof ClubesGrandesLeoesRoute
   '/clubes/rj': typeof ClubesRjRoute
   '/documentos/$': typeof DocumentosSplatRoute
   '/eventos/$id': typeof EventosIdRoute
@@ -480,6 +509,8 @@ export interface FileRoutesByTo {
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
+  '/admin/grandes-leoes/$id': typeof AdminGrandesLeoesIdRoute
+  '/admin/grandes-leoes/novo': typeof AdminGrandesLeoesNovoRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
   '/admin/noticias/$id': typeof AdminNoticiasIdRoute
   '/admin/popups/$id': typeof AdminPopupsIdRoute
@@ -494,6 +525,7 @@ export interface FileRoutesByTo {
   '/admin/conteudo': typeof AdminConteudoIndexRoute
   '/admin/documentos': typeof AdminDocumentosIndexRoute
   '/admin/eventos': typeof AdminEventosIndexRoute
+  '/admin/grandes-leoes': typeof AdminGrandesLeoesIndexRoute
   '/admin/lideres': typeof AdminLideresIndexRoute
   '/admin/noticias': typeof AdminNoticiasIndexRoute
   '/admin/popups': typeof AdminPopupsIndexRoute
@@ -530,6 +562,7 @@ export interface FileRoutesById {
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
+  '/clubes/grandes-leoes': typeof ClubesGrandesLeoesRoute
   '/clubes/rj': typeof ClubesRjRoute
   '/documentos/$': typeof DocumentosSplatRoute
   '/eventos/$id': typeof EventosIdRoute
@@ -544,6 +577,8 @@ export interface FileRoutesById {
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
+  '/admin/grandes-leoes/$id': typeof AdminGrandesLeoesIdRoute
+  '/admin/grandes-leoes/novo': typeof AdminGrandesLeoesNovoRoute
   '/admin/lideres/$id': typeof AdminLideresIdRoute
   '/admin/noticias/$id': typeof AdminNoticiasIdRoute
   '/admin/popups/$id': typeof AdminPopupsIdRoute
@@ -558,6 +593,7 @@ export interface FileRoutesById {
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
   '/admin/documentos/': typeof AdminDocumentosIndexRoute
   '/admin/eventos/': typeof AdminEventosIndexRoute
+  '/admin/grandes-leoes/': typeof AdminGrandesLeoesIndexRoute
   '/admin/lideres/': typeof AdminLideresIndexRoute
   '/admin/noticias/': typeof AdminNoticiasIndexRoute
   '/admin/popups/': typeof AdminPopupsIndexRoute
@@ -595,6 +631,7 @@ export interface FileRouteTypes {
     | '/admin/usuarios'
     | '/checkout/return'
     | '/clubes/es'
+    | '/clubes/grandes-leoes'
     | '/clubes/rj'
     | '/documentos/$'
     | '/eventos/$id'
@@ -609,6 +646,8 @@ export interface FileRouteTypes {
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
     | '/admin/eventos/$id'
+    | '/admin/grandes-leoes/$id'
+    | '/admin/grandes-leoes/novo'
     | '/admin/lideres/$id'
     | '/admin/noticias/$id'
     | '/admin/popups/$id'
@@ -623,6 +662,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo/'
     | '/admin/documentos/'
     | '/admin/eventos/'
+    | '/admin/grandes-leoes/'
     | '/admin/lideres/'
     | '/admin/noticias/'
     | '/admin/popups/'
@@ -656,6 +696,7 @@ export interface FileRouteTypes {
     | '/admin/usuarios'
     | '/checkout/return'
     | '/clubes/es'
+    | '/clubes/grandes-leoes'
     | '/clubes/rj'
     | '/documentos/$'
     | '/eventos/$id'
@@ -670,6 +711,8 @@ export interface FileRouteTypes {
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
     | '/admin/eventos/$id'
+    | '/admin/grandes-leoes/$id'
+    | '/admin/grandes-leoes/novo'
     | '/admin/lideres/$id'
     | '/admin/noticias/$id'
     | '/admin/popups/$id'
@@ -684,6 +727,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo'
     | '/admin/documentos'
     | '/admin/eventos'
+    | '/admin/grandes-leoes'
     | '/admin/lideres'
     | '/admin/noticias'
     | '/admin/popups'
@@ -719,6 +763,7 @@ export interface FileRouteTypes {
     | '/admin/usuarios'
     | '/checkout/return'
     | '/clubes/es'
+    | '/clubes/grandes-leoes'
     | '/clubes/rj'
     | '/documentos/$'
     | '/eventos/$id'
@@ -733,6 +778,8 @@ export interface FileRouteTypes {
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
     | '/admin/eventos/$id'
+    | '/admin/grandes-leoes/$id'
+    | '/admin/grandes-leoes/novo'
     | '/admin/lideres/$id'
     | '/admin/noticias/$id'
     | '/admin/popups/$id'
@@ -747,6 +794,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo/'
     | '/admin/documentos/'
     | '/admin/eventos/'
+    | '/admin/grandes-leoes/'
     | '/admin/lideres/'
     | '/admin/noticias/'
     | '/admin/popups/'
@@ -781,6 +829,7 @@ export interface RootRouteChildren {
   ViceGovernador2Route: typeof ViceGovernador2Route
   CheckoutReturnRoute: typeof CheckoutReturnRoute
   ClubesEsRoute: typeof ClubesEsRoute
+  ClubesGrandesLeoesRoute: typeof ClubesGrandesLeoesRoute
   ClubesRjRoute: typeof ClubesRjRoute
   EventosIdRoute: typeof EventosIdRoute
   ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
@@ -1018,6 +1067,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClubesRjRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/clubes/grandes-leoes': {
+      id: '/clubes/grandes-leoes'
+      path: '/clubes/grandes-leoes'
+      fullPath: '/clubes/grandes-leoes'
+      preLoaderRoute: typeof ClubesGrandesLeoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/clubes/es': {
       id: '/clubes/es'
       path: '/clubes/es'
@@ -1086,6 +1142,13 @@ declare module '@tanstack/react-router' {
       path: '/lideres'
       fullPath: '/admin/lideres/'
       preLoaderRoute: typeof AdminLideresIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/grandes-leoes/': {
+      id: '/admin/grandes-leoes/'
+      path: '/grandes-leoes'
+      fullPath: '/admin/grandes-leoes/'
+      preLoaderRoute: typeof AdminGrandesLeoesIndexRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/eventos/': {
@@ -1186,6 +1249,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLideresIdRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/grandes-leoes/novo': {
+      id: '/admin/grandes-leoes/novo'
+      path: '/grandes-leoes/novo'
+      fullPath: '/admin/grandes-leoes/novo'
+      preLoaderRoute: typeof AdminGrandesLeoesNovoRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/grandes-leoes/$id': {
+      id: '/admin/grandes-leoes/$id'
+      path: '/grandes-leoes/$id'
+      fullPath: '/admin/grandes-leoes/$id'
+      preLoaderRoute: typeof AdminGrandesLeoesIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/eventos/$id': {
       id: '/admin/eventos/$id'
       path: '/eventos/$id'
@@ -1266,6 +1343,8 @@ interface AdminRouteChildren {
   AdminConteudoKeyRoute: typeof AdminConteudoKeyRoute
   AdminDocumentosIdRoute: typeof AdminDocumentosIdRoute
   AdminEventosIdRoute: typeof AdminEventosIdRoute
+  AdminGrandesLeoesIdRoute: typeof AdminGrandesLeoesIdRoute
+  AdminGrandesLeoesNovoRoute: typeof AdminGrandesLeoesNovoRoute
   AdminLideresIdRoute: typeof AdminLideresIdRoute
   AdminNoticiasIdRoute: typeof AdminNoticiasIdRoute
   AdminPopupsIdRoute: typeof AdminPopupsIdRoute
@@ -1274,6 +1353,7 @@ interface AdminRouteChildren {
   AdminConteudoIndexRoute: typeof AdminConteudoIndexRoute
   AdminDocumentosIndexRoute: typeof AdminDocumentosIndexRoute
   AdminEventosIndexRoute: typeof AdminEventosIndexRoute
+  AdminGrandesLeoesIndexRoute: typeof AdminGrandesLeoesIndexRoute
   AdminLideresIndexRoute: typeof AdminLideresIndexRoute
   AdminNoticiasIndexRoute: typeof AdminNoticiasIndexRoute
   AdminPopupsIndexRoute: typeof AdminPopupsIndexRoute
@@ -1288,6 +1368,8 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminConteudoKeyRoute: AdminConteudoKeyRoute,
   AdminDocumentosIdRoute: AdminDocumentosIdRoute,
   AdminEventosIdRoute: AdminEventosIdRoute,
+  AdminGrandesLeoesIdRoute: AdminGrandesLeoesIdRoute,
+  AdminGrandesLeoesNovoRoute: AdminGrandesLeoesNovoRoute,
   AdminLideresIdRoute: AdminLideresIdRoute,
   AdminNoticiasIdRoute: AdminNoticiasIdRoute,
   AdminPopupsIdRoute: AdminPopupsIdRoute,
@@ -1296,6 +1378,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminConteudoIndexRoute: AdminConteudoIndexRoute,
   AdminDocumentosIndexRoute: AdminDocumentosIndexRoute,
   AdminEventosIndexRoute: AdminEventosIndexRoute,
+  AdminGrandesLeoesIndexRoute: AdminGrandesLeoesIndexRoute,
   AdminLideresIndexRoute: AdminLideresIndexRoute,
   AdminNoticiasIndexRoute: AdminNoticiasIndexRoute,
   AdminPopupsIndexRoute: AdminPopupsIndexRoute,
@@ -1342,6 +1425,7 @@ const rootRouteChildren: RootRouteChildren = {
   ViceGovernador2Route: ViceGovernador2Route,
   CheckoutReturnRoute: CheckoutReturnRoute,
   ClubesEsRoute: ClubesEsRoute,
+  ClubesGrandesLeoesRoute: ClubesGrandesLeoesRoute,
   ClubesRjRoute: ClubesRjRoute,
   EventosIdRoute: EventosIdRoute,
   ExGovernadoresIdRoute: ExGovernadoresIdRoute,

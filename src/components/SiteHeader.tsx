@@ -218,10 +218,17 @@ export function SiteHeader() {
               type="button"
               className="inline-flex items-center gap-1 rounded-md px-2 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary 2xl:px-3"
             >
-              Clubes <ChevronDown className="h-3.5 w-3.5" />
+              Clubes e Leões <ChevronDown className="h-3.5 w-3.5" />
             </button>
             {clubesOpen && (
               <div className="absolute left-0 top-full w-56 rounded-md border border-border bg-background py-2 shadow-card">
+                <Link
+                  to="/clubes/grandes-leoes"
+                  className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                  activeProps={{ className: "text-primary bg-surface" }}
+                >
+                  Grandes Leões
+                </Link>
                 <Link
                   to="/clubes"
                   className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
@@ -466,8 +473,16 @@ export function SiteHeader() {
 
 
 
-          <div className="mt-1 px-3 py-2 text-base font-medium text-foreground">Clubes</div>
+          <div className="mt-1 px-3 py-2 text-base font-medium text-foreground">Clubes e Leões</div>
           <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+            <Link
+              to="/clubes/grandes-leoes"
+              onClick={() => setOpen(false)}
+              className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+              activeProps={{ className: "text-primary bg-surface" }}
+            >
+              Grandes Leões
+            </Link>
             <Link
               to="/clubes"
               onClick={() => setOpen(false)}

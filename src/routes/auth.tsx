@@ -79,6 +79,19 @@ function AuthPage() {
           Continuar com Google
         </button>
 
+        {import.meta.env.DEV && (
+          <button
+            type="button"
+            onClick={() => {
+              localStorage.setItem("dev_admin_bypass", "true");
+              window.location.href = "/admin";
+            }}
+            className="flex w-full items-center justify-center gap-2 rounded-md border border-amber-500/50 bg-amber-500/10 px-4 py-2 font-semibold text-amber-600 hover:bg-amber-500/20"
+          >
+            🔑 Entrar como Admin (Modo Dev)
+          </button>
+        )}
+
         <div className="flex items-center gap-3">
           <div className="h-px flex-1 bg-border" />
           <span className="text-xs text-muted-foreground">ou</span>

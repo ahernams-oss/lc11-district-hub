@@ -9,7 +9,8 @@ export type LeaderCategory =
   | "tesoureiro"
   | "gat"
   | "assessoria"
-  | "ex_governador";
+  | "ex_governador"
+  | "grande_leao";
 
 export const CATEGORY_LABELS: Record<LeaderCategory, string> = {
   governador: "Governador",
@@ -20,6 +21,7 @@ export const CATEGORY_LABELS: Record<LeaderCategory, string> = {
   gat: "GAT — Equipe de Ação Global",
   assessoria: "Assessorias",
   ex_governador: "Ex-Governador",
+  grande_leao: "Grandes Leões",
 };
 
 export interface Leader {

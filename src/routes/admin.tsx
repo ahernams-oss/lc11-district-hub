@@ -2,7 +2,7 @@ import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tan
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
-import { LogOut, FileText, Users, Home, MapPin, Newspaper, Calendar, Sparkles, ShieldCheck, MessageSquare, FolderArchive, Building2 } from "lucide-react";
+import { LogOut, FileText, Users, Home, MapPin, Newspaper, Calendar, Sparkles, ShieldCheck, MessageSquare, FolderArchive, Building2, Award } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
   ssr: false,
@@ -11,7 +11,7 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminLayout() {
-  const { user, hasPanelAccess, canViewUsers, isAdmin, isAvancado, isIntermediario, loading } = useAuth();
+  const { user, hasPanelAccess, canViewUsers, isAdmin, isAvancado, isIntermediario, loading, signOut } = useAuth();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
@@ -32,7 +32,7 @@ function AdminLayout() {
         </p>
         <button
           onClick={async () => {
-            await supabase.auth.signOut();
+            await signOut();
             navigate({ to: "/auth" });
           }}
           className="mt-6 inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm"
@@ -55,6 +55,7 @@ function AdminLayout() {
     { to: "/admin", label: "Início", icon: Home, exact: true, show: true },
     { to: "/admin/conteudo", label: "Conteúdo das Páginas", icon: FileText, show: true },
     { to: "/admin/lideres", label: "Líderes / Ex-Governadores", icon: Users, show: true },
+    { to: "/admin/grandes-leoes", label: "Grandes Leões", icon: Award, show: true },
     { to: "/admin/regioes", label: "Regiões / Divisões / Clubes", icon: MapPin, show: true },
     { to: "/admin/clubes", label: "Gerenciar Clubes (mover)", icon: Building2, show: true },
     { to: "/admin/noticias", label: "Notícias", icon: Newspaper, show: true },
@@ -92,7 +93,7 @@ function AdminLayout() {
         })}
         <button
           onClick={async () => {
-            await supabase.auth.signOut();
+            await signOut();
             navigate({ to: "/auth" });
           }}
           className="mt-4 flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-surface"

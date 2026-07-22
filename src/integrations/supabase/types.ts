@@ -129,6 +129,44 @@ export type Database = {
           },
         ]
       }
+      document_audit_logs: {
+        Row: {
+          action: string
+          created_at: string | null
+          document_id: string | null
+          document_title: string
+          id: string
+          user_email: string
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string | null
+          document_id?: string | null
+          document_title: string
+          id?: string
+          user_email: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          document_id?: string | null
+          document_title?: string
+          id?: string
+          user_email?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "document_audit_logs_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       documents: {
         Row: {
           category: string
@@ -137,6 +175,8 @@ export type Database = {
           external_url: string | null
           file_url: string | null
           id: string
+          is_restricted: boolean | null
+          required_role: string | null
           sort_order: number
           title: string
           updated_at: string
@@ -148,6 +188,8 @@ export type Database = {
           external_url?: string | null
           file_url?: string | null
           id?: string
+          is_restricted?: boolean | null
+          required_role?: string | null
           sort_order?: number
           title: string
           updated_at?: string
@@ -159,6 +201,8 @@ export type Database = {
           external_url?: string | null
           file_url?: string | null
           id?: string
+          is_restricted?: boolean | null
+          required_role?: string | null
           sort_order?: number
           title?: string
           updated_at?: string

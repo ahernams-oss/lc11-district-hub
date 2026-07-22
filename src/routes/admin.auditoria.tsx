@@ -19,10 +19,12 @@ import {
   Legend,
 } from "recharts";
 
+import { useSiteVisitsStats } from "@/lib/site-visits";
+
 export const Route = createFileRoute("/admin/auditoria")({
   head: () => ({
     meta: [
-      { title: "Dashboard de Auditoria — Painel Admin" },
+      { title: "Dashboard de Auditoria & Tráfego — Painel Admin" },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -36,6 +38,8 @@ const ACTION_COLORS = {
 
 function AdminAuditDashboard() {
   const { data: logs = [], isLoading, refetch } = useDocumentAuditLogs();
+  const { data: visitStats, isLoading: visitsLoading } = useSiteVisitsStats();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [actionFilter, setActionFilter] = useState<"ALL" | "VIEW" | "DOWNLOAD">("ALL");
 
@@ -45,66 +49,19 @@ function AdminAuditDashboard() {
   const totalViews = useMemo(() => logs.filter((l) => l.action === "VIEW").length, [logs]);
   const uniqueUsers = useMemo(() => new Set(logs.map((l) => l.user_email)).size, [logs]);
 
-  // Chart 1: Activity Timeline (Logs grouped by Date)
-  const timelineData = useMemo(() => {
-    const counts: Record<string, { date: string; VIEW: number; DOWNLOAD: number }> = {};
-    for (const log of logs) {
-      const dateStr = new Date(log.created_at).toLocaleDateString("pt-BR", {
-        day: "2-digit",
-        month: "2-digit",
-      });
-      if (!counts[dateStr]) {
-        counts[dateStr] = { date: dateStr, VIEW: 0, DOWNLOAD: 0 };
-      }
-      counts[dateStr][log.action]++;
-    }
-    return Object.values(counts).reverse().slice(0, 14); // Last 14 active days
-  }, [logs]);
-
-  // Chart 2: Action Distribution (Pie Chart)
-  const actionPieData = useMemo(() => [
-    { name: "Visualizações", value: totalViews, color: ACTION_COLORS.VIEW },
-    { name: "Downloads", value: totalDownloads, color: ACTION_COLORS.DOWNLOAD },
-  ], [totalViews, totalDownloads]);
-
-  // Chart 3: Top Accessed Documents
-  const topDocsData = useMemo(() => {
-    const counts: Record<string, number> = {};
-    for (const log of logs) {
-      counts[log.document_title] = (counts[log.document_title] || 0) + 1;
-    }
-    return Object.entries(counts)
-      .map(([name, total]) => ({ name: name.length > 25 ? name.substring(0, 25) + "..." : name, fullName: name, total }))
-      .sort((a, b) => b.total - a.total)
-      .slice(0, 5);
-  }, [logs]);
-
-  // Filtered Table Data
-  const filteredLogs = useMemo(() => {
-    const term = searchTerm.trim().toLowerCase();
-    return logs.filter((l) => {
-      if (actionFilter !== "ALL" && l.action !== actionFilter) return false;
-      if (term) {
-        const hay = `${l.document_title} ${l.user_email}`.toLowerCase();
-        if (!hay.includes(term)) return false;
-      }
-      return true;
-    });
-  }, [logs, searchTerm, actionFilter]);
-
   return (
     <div className="space-y-8">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-4">
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary">
-            <ShieldCheck className="h-4 w-4" /> Segurança & Auditoria
+            <ShieldCheck className="h-4 w-4" /> Segurança & Métricas
           </div>
           <h1 className="mt-1 font-display text-2xl font-bold text-foreground">
-            Dashboard de Auditoria
+            Dashboard de Auditoria & Visitas
           </h1>
           <p className="text-xs text-muted-foreground">
-            Monitoramento em tempo real do acesso e download de documentos restritos do Distrito LC-11.
+            Monitoramento de tráfego do site, acessos a documentos restritos e métricas do Distrito LC-11.
           </p>
         </div>
 
@@ -119,66 +76,75 @@ function AdminAuditDashboard() {
         </div>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-xl border bg-card p-5 shadow-xs">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Total de Acessos
-            </span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <Activity className="h-5 w-5" />
-            </div>
-          </div>
-          <div className="mt-3 font-display text-3xl font-bold text-foreground">
-            {isLoading ? "—" : totalLogs}
-          </div>
-          <p className="mt-1 text-xs text-muted-foreground">Registros computados</p>
+      {/* Visitor & Site Traffic Metrics */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-foreground flex items-center gap-2">
+            <Eye className="h-4 w-4 text-primary" /> Contador de Visitas ao Site
+          </h2>
+          <span className="text-xs text-muted-foreground">Visitas públicas e de membros</span>
         </div>
 
-        <div className="rounded-xl border bg-card p-5 shadow-xs">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Downloads Realizados
-            </span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-              <Download className="h-5 w-5" />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-xl border border-primary/20 bg-primary/5 p-5 shadow-xs">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Total de Visitas ao Site
+              </span>
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <Eye className="h-5 w-5" />
+              </div>
             </div>
+            <div className="mt-3 font-display text-3xl font-bold text-foreground">
+              {visitsLoading ? "—" : (visitStats?.totalVisits ?? 0).toLocaleString("pt-BR")}
+            </div>
+            <p className="mt-1 text-xs text-muted-foreground">Visualizações totais de páginas</p>
           </div>
-          <div className="mt-3 font-display text-3xl font-bold text-foreground">
-            {isLoading ? "—" : totalDownloads}
-          </div>
-          <p className="mt-1 text-xs text-muted-foreground">Arquivos baixados</p>
-        </div>
 
-        <div className="rounded-xl border bg-card p-5 shadow-xs">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Visualizações em Tela
-            </span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
-              <Eye className="h-5 w-5" />
+          <div className="rounded-xl border bg-card p-5 shadow-xs">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Visitas Hoje
+              </span>
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                <Activity className="h-5 w-5" />
+              </div>
             </div>
+            <div className="mt-3 font-display text-3xl font-bold text-foreground">
+              {visitsLoading ? "—" : (visitStats?.visitsToday ?? 0).toLocaleString("pt-BR")}
+            </div>
+            <p className="mt-1 text-xs text-muted-foreground">Acessos nas últimas 24h</p>
           </div>
-          <div className="mt-3 font-display text-3xl font-bold text-foreground">
-            {isLoading ? "—" : totalViews}
-          </div>
-          <p className="mt-1 text-xs text-muted-foreground">Leituras no navegador</p>
-        </div>
 
-        <div className="rounded-xl border bg-card p-5 shadow-xs">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Usuários Únicos
-            </span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400">
-              <Users className="h-5 w-5" />
+          <div className="rounded-xl border bg-card p-5 shadow-xs">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Visitantes Únicos
+              </span>
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                <Users className="h-5 w-5" />
+              </div>
             </div>
+            <div className="mt-3 font-display text-3xl font-bold text-foreground">
+              {visitsLoading ? "—" : (visitStats?.uniqueVisitors ?? 0).toLocaleString("pt-BR")}
+            </div>
+            <p className="mt-1 text-xs text-muted-foreground">Dispositivos distintos</p>
           </div>
-          <div className="mt-3 font-display text-3xl font-bold text-foreground">
-            {isLoading ? "—" : uniqueUsers}
+
+          <div className="rounded-xl border bg-card p-5 shadow-xs">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Auditoria de Documentos
+              </span>
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                <Lock className="h-5 w-5" />
+              </div>
+            </div>
+            <div className="mt-3 font-display text-3xl font-bold text-foreground">
+              {isLoading ? "—" : totalLogs}
+            </div>
+            <p className="mt-1 text-xs text-muted-foreground">Acessos restritos registrados</p>
           </div>
-          <p className="mt-1 text-xs text-muted-foreground">Membros distintos</p>
         </div>
       </div>
 

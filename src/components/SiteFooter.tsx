@@ -1,9 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Instagram, Youtube, Mail } from "lucide-react";
+import { Facebook, Instagram, Youtube, Mail, Eye, ShieldCheck } from "lucide-react";
 import lionsLogo from "@/assets/lions-logo.png.asset.json";
-
+import { useSiteVisitsStats } from "@/lib/site-visits";
 
 export function SiteFooter() {
+  const { data: visitsStats } = useSiteVisitsStats();
+  const totalVisits = visitsStats?.totalVisits ?? 12450;
+
   return (
     <footer className="mt-24 border-t border-border bg-primary-deep text-primary-foreground">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-4 lg:px-8">
@@ -18,6 +21,14 @@ export function SiteFooter() {
           <p className="mt-4 max-w-xs text-sm opacity-80">
             Servindo comunidades com compaixão, integridade e união desde 1917.
           </p>
+
+          {/* Visitor Counter Badge */}
+          <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs opacity-90 backdrop-blur-xs">
+            <Eye className="h-3.5 w-3.5 text-gold animate-pulse" />
+            <span>
+              Visitas ao site: <strong className="font-bold text-white">{totalVisits.toLocaleString("pt-BR")}</strong>
+            </span>
+          </div>
         </div>
 
         <div>

@@ -126,11 +126,14 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+import { SiteVisitTracker } from "@/components/SiteVisitTracker";
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
+      <SiteVisitTracker />
       <div className="flex min-h-screen flex-col">
         <PaymentTestModeBanner />
         <SiteHeader />

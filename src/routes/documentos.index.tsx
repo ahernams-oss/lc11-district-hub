@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { PageHero } from "@/components/PageHero";
-import { FileText, ExternalLink, Download, Search, X } from "lucide-react";
+import { FileText, ExternalLink, Download, Search, X, LayoutGrid, List, Eye, Maximize2 } from "lucide-react";
 import { useDocuments, DOCUMENT_CATEGORIES, RGD_YEARS, RGD_ITEMS, type DocumentItem } from "@/lib/documents";
 
 export const Route = createFileRoute("/documentos/")({
@@ -43,6 +43,8 @@ function DocumentosIndex() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("all");
   const [year, setYear] = useState<string>("all");
+  const [viewMode, setViewMode] = useState<"list" | "grid">("list");
+  const [previewDoc, setPreviewDoc] = useState<DocumentItem | null>(null);
 
   const years = useMemo(() => {
     const set = new Set<string>();
@@ -122,9 +124,40 @@ function DocumentosIndex() {
           )}
         </div>
 
-        <p className="mt-4 text-sm text-muted-foreground">
-          {isLoading ? "Carregando..." : `${filtered.length} documento(s) encontrado(s)`}
-        </p>
+        {/* View Mode Controls Bar */}
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-b pb-3">
+          <p className="text-sm text-muted-foreground">
+            {isLoading ? "Carregando..." : `${filtered.length} documento(s) encontrado(s)`}
+          </p>
+
+          <div className="flex items-center gap-1 rounded-lg border bg-muted/40 p-1">
+            <span className="px-2 text-xs font-medium text-muted-foreground">Visualização:</span>
+            <button
+              type="button"
+              onClick={() => setViewMode("list")}
+              className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
+                viewMode === "list"
+                  ? "bg-card text-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              title="Modo de Visualização em Lista"
+            >
+              <List className="h-3.5 w-3.5" /> Lista
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode("grid")}
+              className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
+                viewMode === "grid"
+                  ? "bg-card text-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              title="Modo de Visualização em Grade"
+            >
+              <LayoutGrid className="h-3.5 w-3.5" /> Grade
+            </button>
+          </div>
+        </div>
 
         {!isLoading && filtered.length === 0 ? (
           <div className="mt-6 flex flex-col items-center justify-center gap-3 rounded-md border border-dashed bg-card/50 py-16 text-center">
@@ -132,16 +165,71 @@ function DocumentosIndex() {
             <p className="text-sm text-muted-foreground">Nenhum documento corresponde aos filtros.</p>
           </div>
         ) : (
-          <ul className="mt-6 grid gap-4">
+          <div className={viewMode === "grid" ? "mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" : "mt-6 grid gap-4"}>
             {filtered.map((d) => {
               const href = d.file_url || d.external_url || "#";
               const isExternal = !!d.external_url && !d.file_url;
               const catPath = CATEGORY_TO_PATH[d.category];
               const catLabel = CATEGORY_LABEL[d.category] ?? d.category;
+
+              if (viewMode === "grid") {
+                return (
+                  <div
+                    key={d.id}
+                    className="flex flex-col justify-between rounded-xl border bg-card p-5 shadow-xs transition-shadow hover:shadow-md"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2">
+                        {catPath ? (
+                          <Link
+                            to="/documentos/$"
+                            params={{ _splat: catPath }}
+                            className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary hover:bg-primary/20"
+                          >
+                            {catLabel}
+                          </Link>
+                        ) : (
+                          <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs text-muted-foreground">
+                            {catLabel}
+                          </span>
+                        )}
+                        <FileText className="h-5 w-5 text-primary/70" />
+                      </div>
+                      <h3 className="mt-3 font-display text-base font-semibold text-foreground line-clamp-2">
+                        {d.title}
+                      </h3>
+                      {d.description && (
+                        <p className="mt-2 text-xs text-muted-foreground line-clamp-3">
+                          {d.description}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="mt-5 flex items-center gap-2 border-t pt-3">
+                      <button
+                        type="button"
+                        onClick={() => setPreviewDoc(d)}
+                        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-md border px-3 py-1.5 text-xs font-medium hover:bg-surface"
+                      >
+                        <Eye className="h-3.5 w-3.5" /> Visualizar
+                      </button>
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center justify-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground hover:opacity-90"
+                      >
+                        {isExternal ? <ExternalLink className="h-3.5 w-3.5" /> : <Download className="h-3.5 w-3.5" />}
+                      </a>
+                    </div>
+                  </div>
+                );
+              }
+
               return (
-                <li
+                <div
                   key={d.id}
-                  className="flex flex-col gap-3 rounded-md border bg-card p-4 sm:flex-row sm:items-start"
+                  className="flex flex-col gap-3 rounded-lg border bg-card p-4 sm:flex-row sm:items-start"
                 >
                   <FileText className="h-6 w-6 shrink-0 text-primary" />
                   <div className="min-w-0 flex-1">
@@ -163,20 +251,74 @@ function DocumentosIndex() {
                       <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground">{d.description}</p>
                     )}
                   </div>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex shrink-0 items-center gap-2 self-start rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
-                  >
-                    {isExternal ? (<>Abrir <ExternalLink className="h-4 w-4" /></>) : (<>Baixar <Download className="h-4 w-4" /></>)}
-                  </a>
-                </li>
+                  <div className="flex shrink-0 items-center gap-2 self-start">
+                    <button
+                      type="button"
+                      onClick={() => setPreviewDoc(d)}
+                      className="inline-flex items-center gap-1.5 rounded-md border px-3 py-2 text-sm font-medium hover:bg-surface"
+                    >
+                      <Eye className="h-4 w-4" /> Visualizar
+                    </button>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
+                    >
+                      {isExternal ? (<>Abrir <ExternalLink className="h-4 w-4" /></>) : (<>Baixar <Download className="h-4 w-4" /></>)}
+                    </a>
+                  </div>
+                </div>
               );
             })}
-          </ul>
+          </div>
         )}
       </section>
+
+      {/* Document Preview Modal */}
+      {previewDoc && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+          <div className="flex h-[90vh] w-[95vw] max-w-5xl flex-col rounded-xl bg-card shadow-2xl overflow-hidden">
+            <div className="flex items-center justify-between border-b px-4 py-3">
+              <div className="flex items-center gap-2 min-w-0 pr-4">
+                <FileText className="h-5 w-5 shrink-0 text-primary" />
+                <span className="font-display font-semibold truncate">{previewDoc.title}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <a
+                  href={previewDoc.file_url || previewDoc.external_url || "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground"
+                >
+                  <Download className="h-3.5 w-3.5" /> Baixar
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setPreviewDoc(null)}
+                  className="rounded-lg p-1.5 text-muted-foreground hover:bg-surface hover:text-foreground"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+            <div className="flex-1 bg-muted/20 p-2 overflow-hidden">
+              {previewDoc.file_url && /\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(previewDoc.file_url) ? (
+                <div className="flex h-full items-center justify-center p-4">
+                  <img src={previewDoc.file_url} alt="" className="max-h-full max-w-full object-contain rounded-lg" />
+                </div>
+              ) : (
+                <iframe
+                  src={previewDoc.file_url || previewDoc.external_url || "about:blank"}
+                  title="Visualizador de documento"
+                  className="h-full w-full rounded border-0"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
+

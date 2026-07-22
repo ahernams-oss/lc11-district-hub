@@ -46,6 +46,7 @@ import { Route as ClubesEsRouteImport } from './routes/clubes.es'
 import { Route as CheckoutReturnRouteImport } from './routes/checkout/return'
 import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
 import { Route as AdminClubesRouteImport } from './routes/admin.clubes'
+import { Route as AdminAuditoriaRouteImport } from './routes/admin.auditoria'
 import { Route as ClubesRegiaoIndexRouteImport } from './routes/clubes.regiao.index'
 import { Route as AdminRegioesIndexRouteImport } from './routes/admin.regioes.index'
 import { Route as AdminProjetosIndexRouteImport } from './routes/admin.projetos.index'
@@ -262,6 +263,11 @@ const AdminClubesRoute = AdminClubesRouteImport.update({
   path: '/clubes',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAuditoriaRoute = AdminAuditoriaRouteImport.update({
+  id: '/auditoria',
+  path: '/auditoria',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ClubesRegiaoIndexRoute = ClubesRegiaoIndexRouteImport.update({
   id: '/clubes/regiao/',
   path: '/clubes/regiao/',
@@ -439,6 +445,7 @@ export interface FileRoutesByFullPath {
   '/tesoureiro': typeof TesoureiroRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
+  '/admin/auditoria': typeof AdminAuditoriaRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/checkout/return': typeof CheckoutReturnRoute
@@ -506,6 +513,7 @@ export interface FileRoutesByTo {
   '/tesoureiro': typeof TesoureiroRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
+  '/admin/auditoria': typeof AdminAuditoriaRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/checkout/return': typeof CheckoutReturnRoute
@@ -576,6 +584,7 @@ export interface FileRoutesById {
   '/tesoureiro': typeof TesoureiroRoute
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
+  '/admin/auditoria': typeof AdminAuditoriaRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/checkout/return': typeof CheckoutReturnRoute
@@ -647,6 +656,7 @@ export interface FileRouteTypes {
     | '/tesoureiro'
     | '/vice-governador-1'
     | '/vice-governador-2'
+    | '/admin/auditoria'
     | '/admin/clubes'
     | '/admin/usuarios'
     | '/checkout/return'
@@ -714,6 +724,7 @@ export interface FileRouteTypes {
     | '/tesoureiro'
     | '/vice-governador-1'
     | '/vice-governador-2'
+    | '/admin/auditoria'
     | '/admin/clubes'
     | '/admin/usuarios'
     | '/checkout/return'
@@ -783,6 +794,7 @@ export interface FileRouteTypes {
     | '/tesoureiro'
     | '/vice-governador-1'
     | '/vice-governador-2'
+    | '/admin/auditoria'
     | '/admin/clubes'
     | '/admin/usuarios'
     | '/checkout/return'
@@ -1135,6 +1147,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminClubesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/auditoria': {
+      id: '/admin/auditoria'
+      path: '/auditoria'
+      fullPath: '/admin/auditoria'
+      preLoaderRoute: typeof AdminAuditoriaRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/clubes/regiao/': {
       id: '/clubes/regiao/'
       path: '/clubes/regiao'
@@ -1377,6 +1396,7 @@ const AdminRegioesIdRouteWithChildren = AdminRegioesIdRoute._addFileChildren(
 )
 
 interface AdminRouteChildren {
+  AdminAuditoriaRoute: typeof AdminAuditoriaRoute
   AdminClubesRoute: typeof AdminClubesRoute
   AdminUsuariosRoute: typeof AdminUsuariosRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -1403,6 +1423,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAuditoriaRoute: AdminAuditoriaRoute,
   AdminClubesRoute: AdminClubesRoute,
   AdminUsuariosRoute: AdminUsuariosRoute,
   AdminIndexRoute: AdminIndexRoute,

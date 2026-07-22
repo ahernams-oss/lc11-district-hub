@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { CONTENT_LABELS, type ContentKey } from "@/lib/content";
 import {
   FileText, Users, MapPin, Newspaper, Calendar, Sparkles,
-  Building2, ExternalLink, ShieldCheck, MessageSquare,
+  Building2, ExternalLink, ShieldCheck, MessageSquare, Activity,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin/")({
@@ -20,6 +20,7 @@ const ALL_CARDS = [
   { to: "/admin/eventos", title: "Eventos", desc: "Calendário oficial de eventos e ações.", icon: Calendar, requires: "panel" as const },
   { to: "/admin/projetos", title: "Projetos", desc: "Projetos sociais e iniciativas em destaque.", icon: Sparkles, requires: "panel" as const },
   { to: "/admin/popups", title: "Pop-ups", desc: "Crie pop-ups com data/hora de início e término, tempo de exposição e link.", icon: MessageSquare, requires: "panel" as const },
+  { to: "/admin/auditoria", title: "Dashboard de Auditoria", desc: "Gráficos e relatórios de quem acessou e baixou documentos restritos.", icon: Activity, requires: "users" as const },
   { to: "/admin/usuarios", title: "Usuários & Acessos", desc: "Aprove novos logins e gerencie quem tem acesso ao painel.", icon: ShieldCheck, requires: "users" as const },
 ] as const;
 
@@ -60,6 +61,7 @@ function AdminHome() {
   const news = useCount("news");
   const events = useCount("events");
   const projects = useCount("projects");
+  const auditLogs = useCount("document_audit_logs");
 
   return (
     <div>
@@ -77,7 +79,7 @@ function AdminHome() {
         <StatCard label="Líderes" value={leaders.data ?? 0} loading={leaders.isLoading} />
         <StatCard label="Notícias" value={news.data ?? 0} loading={news.isLoading} />
         <StatCard label="Eventos" value={events.data ?? 0} loading={events.isLoading} />
-        <StatCard label="Projetos" value={projects.data ?? 0} loading={projects.isLoading} />
+        <StatCard label="Logs de Auditoria" value={auditLogs.data ?? 0} loading={auditLogs.isLoading} />
       </div>
 
       {/* Atalhos Clubes por Estado */}

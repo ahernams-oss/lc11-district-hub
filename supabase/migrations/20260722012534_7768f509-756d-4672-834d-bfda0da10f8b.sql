@@ -1,0 +1,1 @@
+UPDATE public.site_content SET data = jsonb_set(data, '{image_url}', to_jsonb('/__l5e/assets-v1/4e5786fd-61a4-4fe0-951d-ef8f75499dfa/alexandre-lcif.jpeg'::text)) WHERE key='lcif';

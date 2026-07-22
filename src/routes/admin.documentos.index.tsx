@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useDocuments, DOCUMENT_CATEGORIES } from "@/lib/documents";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
-import { Plus, Edit, Trash2, FileText, ExternalLink } from "lucide-react";
+import { Plus, Edit, Trash2, FileText, ExternalLink, ShieldCheck, Lock } from "lucide-react";
 
 export const Route = createFileRoute("/admin/documentos/")({
   component: DocumentsList,
@@ -26,15 +26,26 @@ function DocumentsList() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-bold">Documentos</h1>
-        <Link
-          to="/admin/documentos/$id"
-          params={{ id: "novo" }}
-          className="inline-flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
-        >
-          <Plus className="h-4 w-4" /> Novo documento
-        </Link>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 className="font-display text-2xl font-bold">Documentos</h1>
+          <p className="text-xs text-muted-foreground mt-0.5">Gerencie os documentos públicos e restritos do distrito.</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/admin/documentos/auditoria"
+            className="inline-flex items-center gap-1.5 rounded-md border px-3 py-2 text-xs font-semibold text-foreground hover:bg-surface"
+          >
+            <ShieldCheck className="h-4 w-4 text-primary" /> Trilha de Auditoria
+          </Link>
+          <Link
+            to="/admin/documentos/$id"
+            params={{ id: "novo" }}
+            className="inline-flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow"
+          >
+            <Plus className="h-4 w-4" /> Novo documento
+          </Link>
+        </div>
       </div>
 
       {isLoading ? (
@@ -55,8 +66,15 @@ function DocumentsList() {
                     <li key={d.id} className="flex items-center gap-3 p-3">
                       <FileText className="h-5 w-5 shrink-0 text-muted-foreground" />
                       <div className="min-w-0 flex-1">
-                        <div className="truncate font-semibold">{d.title}</div>
-                        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-2">
+                          <span className="truncate font-semibold">{d.title}</span>
+                          {d.is_restricted && (
+                            <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:text-amber-400 border border-amber-500/20">
+                              <Lock className="h-3 w-3" /> Restrito ({d.required_role || "membro"})
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-3 text-xs text-muted-foreground mt-0.5">
                           <span>#{d.sort_order}</span>
                           {d.file_url && <span>arquivo</span>}
                           {d.external_url && (
@@ -90,3 +108,4 @@ function DocumentsList() {
     </div>
   );
 }
+

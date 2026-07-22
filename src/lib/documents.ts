@@ -9,8 +9,16 @@ export type DocumentItem = {
   file_url: string | null;
   external_url: string | null;
   sort_order: number;
+  is_restricted?: boolean;
+  required_role?: "membro" | "diretoria" | "admin";
   created_at: string;
   updated_at: string;
+};
+
+export const REQUIRED_ROLE_LABELS: Record<string, string> = {
+  membro: "Membros Leão (Logados)",
+  diretoria: "Diretoria & Painel",
+  admin: "Administradores",
 };
 
 export const RGD_YEARS = ["2026-2027", "2027-2028", "2028-2029"] as const;
@@ -57,3 +65,4 @@ export function useDocuments(category?: string) {
     staleTime: 30_000,
   });
 }
+

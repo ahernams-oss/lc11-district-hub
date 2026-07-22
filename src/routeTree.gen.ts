@@ -28,6 +28,7 @@ import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssessoriaRouteImport } from './routes/assessoria'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AcessoRouteImport } from './routes/acesso'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjetosIndexRouteImport } from './routes/projetos.index'
 import { Route as ExGovernadoresIndexRouteImport } from './routes/ex-governadores.index'
@@ -69,6 +70,7 @@ import { Route as AdminLideresIdRouteImport } from './routes/admin.lideres.$id'
 import { Route as AdminGrandesLeoesNovoRouteImport } from './routes/admin.grandes-leoes.novo'
 import { Route as AdminGrandesLeoesIdRouteImport } from './routes/admin.grandes-leoes.$id'
 import { Route as AdminEventosIdRouteImport } from './routes/admin.eventos.$id'
+import { Route as AdminDocumentosAuditoriaRouteImport } from './routes/admin.documentos.auditoria'
 import { Route as AdminDocumentosIdRouteImport } from './routes/admin.documentos.$id'
 import { Route as AdminConteudoKeyRouteImport } from './routes/admin.conteudo.$key'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
@@ -168,6 +170,11 @@ const AssessoriaRoute = AssessoriaRouteImport.update({
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcessoRoute = AcessoRouteImport.update({
+  id: '/acesso',
+  path: '/acesso',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -375,6 +382,12 @@ const AdminEventosIdRoute = AdminEventosIdRouteImport.update({
   path: '/eventos/$id',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminDocumentosAuditoriaRoute =
+  AdminDocumentosAuditoriaRouteImport.update({
+    id: '/documentos/auditoria',
+    path: '/documentos/auditoria',
+    getParentRoute: () => AdminRoute,
+  } as any)
 const AdminDocumentosIdRoute = AdminDocumentosIdRouteImport.update({
   id: '/documentos/$id',
   path: '/documentos/$id',
@@ -406,6 +419,7 @@ const AdminRegioesIdDivisoesDivIdClubesClubIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/acesso': typeof AcessoRoute
   '/admin': typeof AdminRouteWithChildren
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
@@ -443,6 +457,7 @@ export interface FileRoutesByFullPath {
   '/projetos/': typeof ProjetosIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
+  '/admin/documentos/auditoria': typeof AdminDocumentosAuditoriaRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
   '/admin/grandes-leoes/$id': typeof AdminGrandesLeoesIdRoute
   '/admin/grandes-leoes/novo': typeof AdminGrandesLeoesNovoRoute
@@ -473,6 +488,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/acesso': typeof AcessoRoute
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
   '/contato': typeof ContatoRoute
@@ -508,6 +524,7 @@ export interface FileRoutesByTo {
   '/projetos': typeof ProjetosIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
+  '/admin/documentos/auditoria': typeof AdminDocumentosAuditoriaRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
   '/admin/grandes-leoes/$id': typeof AdminGrandesLeoesIdRoute
   '/admin/grandes-leoes/novo': typeof AdminGrandesLeoesNovoRoute
@@ -539,6 +556,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/acesso': typeof AcessoRoute
   '/admin': typeof AdminRouteWithChildren
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
@@ -576,6 +594,7 @@ export interface FileRoutesById {
   '/projetos/': typeof ProjetosIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
+  '/admin/documentos/auditoria': typeof AdminDocumentosAuditoriaRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
   '/admin/grandes-leoes/$id': typeof AdminGrandesLeoesIdRoute
   '/admin/grandes-leoes/novo': typeof AdminGrandesLeoesNovoRoute
@@ -608,6 +627,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/acesso'
     | '/admin'
     | '/assessoria'
     | '/auth'
@@ -645,6 +665,7 @@ export interface FileRouteTypes {
     | '/projetos/'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
+    | '/admin/documentos/auditoria'
     | '/admin/eventos/$id'
     | '/admin/grandes-leoes/$id'
     | '/admin/grandes-leoes/novo'
@@ -675,6 +696,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/acesso'
     | '/assessoria'
     | '/auth'
     | '/contato'
@@ -710,6 +732,7 @@ export interface FileRouteTypes {
     | '/projetos'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
+    | '/admin/documentos/auditoria'
     | '/admin/eventos/$id'
     | '/admin/grandes-leoes/$id'
     | '/admin/grandes-leoes/novo'
@@ -740,6 +763,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/acesso'
     | '/admin'
     | '/assessoria'
     | '/auth'
@@ -777,6 +801,7 @@ export interface FileRouteTypes {
     | '/projetos/'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
+    | '/admin/documentos/auditoria'
     | '/admin/eventos/$id'
     | '/admin/grandes-leoes/$id'
     | '/admin/grandes-leoes/novo'
@@ -808,6 +833,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AcessoRoute: typeof AcessoRoute
   AdminRoute: typeof AdminRouteWithChildren
   AssessoriaRoute: typeof AssessoriaRoute
   AuthRoute: typeof AuthRoute
@@ -981,6 +1007,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/acesso': {
+      id: '/acesso'
+      path: '/acesso'
+      fullPath: '/acesso'
+      preLoaderRoute: typeof AcessoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -1270,6 +1303,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEventosIdRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/documentos/auditoria': {
+      id: '/admin/documentos/auditoria'
+      path: '/documentos/auditoria'
+      fullPath: '/admin/documentos/auditoria'
+      preLoaderRoute: typeof AdminDocumentosAuditoriaRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/documentos/$id': {
       id: '/admin/documentos/$id'
       path: '/documentos/$id'
@@ -1342,6 +1382,7 @@ interface AdminRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
   AdminConteudoKeyRoute: typeof AdminConteudoKeyRoute
   AdminDocumentosIdRoute: typeof AdminDocumentosIdRoute
+  AdminDocumentosAuditoriaRoute: typeof AdminDocumentosAuditoriaRoute
   AdminEventosIdRoute: typeof AdminEventosIdRoute
   AdminGrandesLeoesIdRoute: typeof AdminGrandesLeoesIdRoute
   AdminGrandesLeoesNovoRoute: typeof AdminGrandesLeoesNovoRoute
@@ -1367,6 +1408,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
   AdminConteudoKeyRoute: AdminConteudoKeyRoute,
   AdminDocumentosIdRoute: AdminDocumentosIdRoute,
+  AdminDocumentosAuditoriaRoute: AdminDocumentosAuditoriaRoute,
   AdminEventosIdRoute: AdminEventosIdRoute,
   AdminGrandesLeoesIdRoute: AdminGrandesLeoesIdRoute,
   AdminGrandesLeoesNovoRoute: AdminGrandesLeoesNovoRoute,
@@ -1404,6 +1446,7 @@ const DocumentosRouteWithChildren = DocumentosRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AcessoRoute: AcessoRoute,
   AdminRoute: AdminRouteWithChildren,
   AssessoriaRoute: AssessoriaRoute,
   AuthRoute: AuthRoute,

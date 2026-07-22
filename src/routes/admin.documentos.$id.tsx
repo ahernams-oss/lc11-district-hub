@@ -5,7 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { DOCUMENT_CATEGORIES, type DocumentItem } from "@/lib/documents";
 import { uploadDocumentFile } from "@/lib/documents.functions";
 import { useServerFn } from "@tanstack/react-start";
-import { Upload, X, Eye, EyeOff, FileText, ExternalLink, Download, Maximize2, Sparkles } from "lucide-react";
+import { Upload, X, Eye, EyeOff, FileText, ExternalLink, Download, Maximize2, Sparkles, Lock, ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/admin/documentos/$id")({
   component: DocumentEdit,
@@ -24,13 +24,24 @@ function DocumentEdit() {
   const [uploading, setUploading] = useState(false);
   const [showPreview, setShowPreview] = useState(true);
   const [fullscreenViewer, setFullscreenViewer] = useState(false);
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{
+    category: string;
+    title: string;
+    description: string;
+    file_url: string;
+    external_url: string;
+    sort_order: number;
+    is_restricted: boolean;
+    required_role: "membro" | "diretoria" | "admin";
+  }>({
     category: DOCUMENT_CATEGORIES[0].slug,
     title: "",
     description: "",
     file_url: "",
     external_url: "",
     sort_order: 0,
+    is_restricted: false,
+    required_role: "membro",
   });
 
   useEffect(() => {
@@ -53,6 +64,8 @@ function DocumentEdit() {
         file_url: d.file_url ?? "",
         external_url: d.external_url ?? "",
         sort_order: d.sort_order,
+        is_restricted: !!d.is_restricted,
+        required_role: d.required_role || "membro",
       });
       setLoading(false);
     })();
@@ -72,6 +85,8 @@ function DocumentEdit() {
       file_url: form.file_url || null,
       external_url: form.external_url.trim() || null,
       sort_order: Number(form.sort_order) || 0,
+      is_restricted: form.is_restricted,
+      required_role: form.required_role,
     };
     const { error } = isNew
       ? await (supabase as any).from("documents").insert(payload)
@@ -236,6 +251,46 @@ function DocumentEdit() {
               value={form.sort_order}
               onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })}
             />
+          </div>
+
+          {/* Sensitivity & Access Control Section */}
+          <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 space-y-3">
+            <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400 font-semibold text-sm">
+              <Lock className="h-4 w-4" />
+              <span>Controle de Acesso & Documento Sensível</span>
+            </div>
+
+            <label className="flex items-start gap-2.5 cursor-pointer pt-1">
+              <input
+                type="checkbox"
+                checked={form.is_restricted}
+                onChange={(e) => setForm({ ...form, is_restricted: e.target.checked })}
+                className="mt-0.5 h-4 w-4 rounded border-amber-500 text-amber-600 focus:ring-amber-500"
+              />
+              <div className="text-xs">
+                <span className="font-semibold text-foreground">Documento Sensível / Restrito 🔒</span>
+                <p className="text-muted-foreground mt-0.5">
+                  Exige que o visitante esteja autenticado no <strong>Portal de Membros</strong> para visualizar ou baixar.
+                </p>
+              </div>
+            </label>
+
+            {form.is_restricted && (
+              <div className="pt-2 border-t border-amber-500/20">
+                <label className={label}>Perfil mínimo exigido para acesso</label>
+                <select
+                  className={`${field} mt-1 border-amber-500/40 bg-background`}
+                  value={form.required_role}
+                  onChange={(e) =>
+                    setForm({ ...form, required_role: e.target.value as "membro" | "diretoria" | "admin" })
+                  }
+                >
+                  <option value="membro">Membros Leão (Qualquer conta logada)</option>
+                  <option value="diretoria">Diretoria & Painel (Intermediário ou superior)</option>
+                  <option value="admin">Administradores (Controle Total)</option>
+                </select>
+              </div>
+            )}
           </div>
 
           <div className="flex gap-3 pt-4">

@@ -1,8 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { PageHero } from "@/components/PageHero";
-import { FileText, ExternalLink, Download, Search, X, LayoutGrid, List, Eye, Maximize2 } from "lucide-react";
-import { useDocuments, DOCUMENT_CATEGORIES, RGD_YEARS, RGD_ITEMS, type DocumentItem } from "@/lib/documents";
+import { FileText, ExternalLink, Download, Search, X, LayoutGrid, List, Eye, Maximize2, Lock, ShieldCheck, Key } from "lucide-react";
+import { useDocuments, DOCUMENT_CATEGORIES, RGD_YEARS, RGD_ITEMS, type DocumentItem, REQUIRED_ROLE_LABELS } from "@/lib/documents";
+import { useAuth } from "@/hooks/use-auth";
+import { logDocumentAccess } from "@/lib/documents.audit";
 
 export const Route = createFileRoute("/documentos/")({
   component: DocumentosIndex,
@@ -40,11 +42,15 @@ function getDocYear(d: DocumentItem): string | null {
 
 function DocumentosIndex() {
   const { data: docs = [], isLoading } = useDocuments();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("all");
   const [year, setYear] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [previewDoc, setPreviewDoc] = useState<DocumentItem | null>(null);
+  const [restrictedModalDoc, setRestrictedModalDoc] = useState<DocumentItem | null>(null);
 
   const years = useMemo(() => {
     const set = new Set<string>();
@@ -70,12 +76,37 @@ function DocumentosIndex() {
 
   const hasFilters = query !== "" || category !== "all" || year !== "all";
 
+  function handleAction(doc: DocumentItem, action: "VIEW" | "DOWNLOAD") {
+    // If restricted and user is not logged in, prompt to log in via Member Portal /acesso
+    if (doc.is_restricted && !user) {
+      setRestrictedModalDoc(doc);
+      return;
+    }
+
+    // Log audit event if document is restricted or if user is logged in
+    if (user) {
+      logDocumentAccess({
+        documentId: doc.id,
+        documentTitle: doc.title,
+        user: { id: user.id, email: user.email ?? "sem-email" },
+        action,
+      });
+    }
+
+    if (action === "VIEW") {
+      setPreviewDoc(doc);
+    } else {
+      const href = doc.file_url || doc.external_url || "#";
+      window.open(href, "_blank", "noreferrer");
+    }
+  }
+
   return (
     <>
       <PageHero
-        eyebrow="Transparência"
-        title="Documentos"
-        description="Pesquise atos, estatutos e regulamentos do Distrito LC-11."
+        eyebrow="Transparência & Membros"
+        title="Documentos do Distrito"
+        description="Pesquise atos, estatutos, regulamentos e arquivos internos do Distrito LC-11."
       />
 
       <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
@@ -124,6 +155,28 @@ function DocumentosIndex() {
           )}
         </div>
 
+        {/* Member Status / Portal Notice */}
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-xs">
+          <div className="flex items-center gap-2 text-foreground">
+            <ShieldCheck className="h-4 w-4 text-primary shrink-0" />
+            <span>
+              {user ? (
+                <>Conectado como <strong className="text-primary">{user.email}</strong> — Acesso a documentos restritos liberado.</>
+              ) : (
+                <>Documentos marcados com <strong className="text-amber-700 dark:text-amber-400">🔒 Restrito</strong> exigem autenticação no Portal de Membros.</>
+              )}
+            </span>
+          </div>
+          {!user ? (
+            <Link
+              to="/acesso"
+              className="inline-flex items-center gap-1 rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground hover:opacity-90 shadow-xs"
+            >
+              <Key className="h-3.5 w-3.5" /> Acessar Portal do Membro
+            </Link>
+          ) : null}
+        </div>
+
         {/* View Mode Controls Bar */}
         <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-b pb-3">
           <p className="text-sm text-muted-foreground">
@@ -167,7 +220,6 @@ function DocumentosIndex() {
         ) : (
           <div className={viewMode === "grid" ? "mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" : "mt-6 grid gap-4"}>
             {filtered.map((d) => {
-              const href = d.file_url || d.external_url || "#";
               const isExternal = !!d.external_url && !d.file_url;
               const catPath = CATEGORY_TO_PATH[d.category];
               const catLabel = CATEGORY_LABEL[d.category] ?? d.category;
@@ -176,10 +228,12 @@ function DocumentosIndex() {
                 return (
                   <div
                     key={d.id}
-                    className="flex flex-col justify-between rounded-xl border bg-card p-5 shadow-xs transition-shadow hover:shadow-md"
+                    className={`flex flex-col justify-between rounded-xl border bg-card p-5 shadow-xs transition-all hover:shadow-md ${
+                      d.is_restricted ? "border-amber-500/30 bg-amber-500/5" : ""
+                    }`}
                   >
                     <div>
-                      <div className="flex items-center justify-between gap-2">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
                         {catPath ? (
                           <Link
                             to="/documentos/$"
@@ -193,7 +247,13 @@ function DocumentosIndex() {
                             {catLabel}
                           </span>
                         )}
-                        <FileText className="h-5 w-5 text-primary/70" />
+                        {d.is_restricted ? (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:text-amber-400">
+                            <Lock className="h-3 w-3" /> Restrito
+                          </span>
+                        ) : (
+                          <FileText className="h-5 w-5 text-primary/70" />
+                        )}
                       </div>
                       <h3 className="mt-3 font-display text-base font-semibold text-foreground line-clamp-2">
                         {d.title}
@@ -208,19 +268,18 @@ function DocumentosIndex() {
                     <div className="mt-5 flex items-center gap-2 border-t pt-3">
                       <button
                         type="button"
-                        onClick={() => setPreviewDoc(d)}
+                        onClick={() => handleAction(d, "VIEW")}
                         className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-md border px-3 py-1.5 text-xs font-medium hover:bg-surface"
                       >
                         <Eye className="h-3.5 w-3.5" /> Visualizar
                       </button>
-                      <a
-                        href={href}
-                        target="_blank"
-                        rel="noreferrer"
+                      <button
+                        type="button"
+                        onClick={() => handleAction(d, "DOWNLOAD")}
                         className="inline-flex items-center justify-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground hover:opacity-90"
                       >
                         {isExternal ? <ExternalLink className="h-3.5 w-3.5" /> : <Download className="h-3.5 w-3.5" />}
-                      </a>
+                      </button>
                     </div>
                   </div>
                 );
@@ -229,9 +288,15 @@ function DocumentosIndex() {
               return (
                 <div
                   key={d.id}
-                  className="flex flex-col gap-3 rounded-lg border bg-card p-4 sm:flex-row sm:items-start"
+                  className={`flex flex-col gap-3 rounded-lg border bg-card p-4 sm:flex-row sm:items-start ${
+                    d.is_restricted ? "border-amber-500/30 bg-amber-500/5" : ""
+                  }`}
                 >
-                  <FileText className="h-6 w-6 shrink-0 text-primary" />
+                  {d.is_restricted ? (
+                    <Lock className="h-6 w-6 shrink-0 text-amber-600 dark:text-amber-400" />
+                  ) : (
+                    <FileText className="h-6 w-6 shrink-0 text-primary" />
+                  )}
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       {catPath ? (
@@ -245,6 +310,11 @@ function DocumentosIndex() {
                       ) : (
                         <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">{catLabel}</span>
                       )}
+                      {d.is_restricted && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:text-amber-400">
+                          🔒 Restrito ({REQUIRED_ROLE_LABELS[d.required_role || "membro"]})
+                        </span>
+                      )}
                     </div>
                     <h3 className="mt-1 font-display text-lg font-semibold">{d.title}</h3>
                     {d.description && (
@@ -254,19 +324,18 @@ function DocumentosIndex() {
                   <div className="flex shrink-0 items-center gap-2 self-start">
                     <button
                       type="button"
-                      onClick={() => setPreviewDoc(d)}
+                      onClick={() => handleAction(d, "VIEW")}
                       className="inline-flex items-center gap-1.5 rounded-md border px-3 py-2 text-sm font-medium hover:bg-surface"
                     >
                       <Eye className="h-4 w-4" /> Visualizar
                     </button>
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noreferrer"
+                    <button
+                      type="button"
+                      onClick={() => handleAction(d, "DOWNLOAD")}
                       className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
                     >
                       {isExternal ? (<>Abrir <ExternalLink className="h-4 w-4" /></>) : (<>Baixar <Download className="h-4 w-4" /></>)}
-                    </a>
+                    </button>
                   </div>
                 </div>
               );
@@ -274,6 +343,44 @@ function DocumentosIndex() {
           </div>
         )}
       </section>
+
+      {/* Restricted Document Access Prompt Modal */}
+      {restrictedModalDoc && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-2xl bg-card p-6 shadow-2xl space-y-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-400">
+              <Lock className="h-6 w-6" />
+            </div>
+            <div>
+              <span className="text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">Documento Restrito</span>
+              <h2 className="font-display text-xl font-bold text-foreground mt-0.5">{restrictedModalDoc.title}</h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Este arquivo é de circulação interna e exige autenticação no <strong>Portal de Membros</strong> do Distrito LC-11.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-2.5 pt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setRestrictedModalDoc(null);
+                  navigate({ to: "/acesso", search: { returnTo: "/documentos" } });
+                }}
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90 shadow"
+              >
+                <Key className="h-4 w-4" /> Entrar no Portal do Membro
+              </button>
+              <button
+                type="button"
+                onClick={() => setRestrictedModalDoc(null)}
+                className="rounded-md border px-4 py-2 text-sm hover:bg-surface"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Document Preview Modal */}
       {previewDoc && (
@@ -283,16 +390,20 @@ function DocumentosIndex() {
               <div className="flex items-center gap-2 min-w-0 pr-4">
                 <FileText className="h-5 w-5 shrink-0 text-primary" />
                 <span className="font-display font-semibold truncate">{previewDoc.title}</span>
+                {previewDoc.is_restricted && (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:text-amber-400">
+                    <Lock className="h-3 w-3" /> Restrito
+                  </span>
+                )}
               </div>
               <div className="flex items-center gap-2">
-                <a
-                  href={previewDoc.file_url || previewDoc.external_url || "#"}
-                  target="_blank"
-                  rel="noreferrer"
+                <button
+                  type="button"
+                  onClick={() => handleAction(previewDoc, "DOWNLOAD")}
                   className="inline-flex items-center gap-1 rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground"
                 >
                   <Download className="h-3.5 w-3.5" /> Baixar
-                </a>
+                </button>
                 <button
                   type="button"
                   onClick={() => setPreviewDoc(null)}
@@ -321,4 +432,5 @@ function DocumentosIndex() {
     </>
   );
 }
+
 

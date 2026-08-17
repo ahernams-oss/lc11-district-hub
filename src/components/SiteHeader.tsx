@@ -262,7 +262,7 @@ export function SiteHeader() {
                     {regioesSubmenu.map((r) => (
                       <Link
                         key={r.to}
-                        to={r.to}
+                        to={r.to as any}
                         className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
                         activeProps={{ className: "text-primary bg-surface" }}
                       >
@@ -301,7 +301,7 @@ export function SiteHeader() {
                     {atosGovernadorSubmenu.map((s) => (
                       <Link
                         key={s.to}
-                        to={s.to}
+                        to={s.to as any}
                         className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
                         activeProps={{ className: "text-primary bg-surface" }}
                       >
@@ -330,7 +330,7 @@ export function SiteHeader() {
                           {g.items.map((s) => (
                             <Link
                               key={s.to}
-                              to={s.to}
+                              to={s.to as any}
                               className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
                               activeProps={{ className: "text-primary bg-surface" }}
                             >
@@ -347,7 +347,7 @@ export function SiteHeader() {
                 {documentosSubmenu.map((s) => (
                   <Link
                     key={s.to}
-                    to={s.to}
+                    to={s.to as any}
                     className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
                     activeProps={{ className: "text-primary bg-surface" }}
                   >
@@ -514,7 +514,7 @@ export function SiteHeader() {
               {regioesSubmenu.map((r) => (
                 <Link
                   key={r.to}
-                  to={r.to}
+                  to={r.to as any}
                   onClick={() => setOpen(false)}
                   className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
                   activeProps={{ className: "text-primary bg-surface" }}
@@ -538,7 +538,7 @@ export function SiteHeader() {
               {atosGovernadorSubmenu.map((s) => (
                 <Link
                   key={s.to}
-                  to={s.to}
+                  to={s.to as any}
                   onClick={() => setOpen(false)}
                   className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
                   activeProps={{ className: "text-primary bg-surface" }}
@@ -556,7 +556,7 @@ export function SiteHeader() {
                     {g.items.map((s) => (
                       <Link
                         key={s.to}
-                        to={s.to}
+                        to={s.to as any}
                         onClick={() => setOpen(false)}
                         className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
                         activeProps={{ className: "text-primary bg-surface" }}
@@ -572,7 +572,7 @@ export function SiteHeader() {
             {documentosSubmenu.map((s) => (
               <Link
                 key={s.to}
-                to={s.to}
+                to={s.to as any}
                 onClick={() => setOpen(false)}
                 className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
                 activeProps={{ className: "text-primary bg-surface" }}

@@ -35,7 +35,7 @@ function LeadersList() {
       <div className="flex items-center justify-between">
         <h1 className="font-display text-2xl font-bold">Líderes</h1>
         <Link
-          to="/admin/lideres/novo"
+          to={"/admin/lideres/novo" as any}
           className="inline-flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
         >
           <Plus className="h-4 w-4" /> Adicionar líder

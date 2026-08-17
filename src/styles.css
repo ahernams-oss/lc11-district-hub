@@ -125,4 +125,16 @@
     font-family: var(--font-display);
     letter-spacing: -0.015em;
   }
+
+  /* Select Option Contrast Fix for Dark Themes */
+  select option {
+    background-color: #0d1321 !important;
+    color: #f8fafc !important;
+  }
+  select option:hover,
+  select option:focus,
+  select option:checked {
+    background-color: #1e293b !important;
+    color: #ffffff !important;
+  }
 }

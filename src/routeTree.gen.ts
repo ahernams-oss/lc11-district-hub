@@ -21,6 +21,7 @@ import { Route as LionsInternacionalRouteImport } from './routes/lions-internaci
 import { Route as LcifRouteImport } from './routes/lcif'
 import { Route as HistoriaRouteImport } from './routes/historia'
 import { Route as GovernadorRouteImport } from './routes/governador'
+import { Route as GestaoRouteImport } from './routes/gestao'
 import { Route as GatRouteImport } from './routes/gat'
 import { Route as DocumentosRouteImport } from './routes/documentos'
 import { Route as DoarRouteImport } from './routes/doar'
@@ -31,12 +32,21 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AcessoRouteImport } from './routes/acesso'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjetosIndexRouteImport } from './routes/projetos.index'
+import { Route as GestaoIndexRouteImport } from './routes/gestao.index'
 import { Route as ExGovernadoresIndexRouteImport } from './routes/ex-governadores.index'
 import { Route as EventosIndexRouteImport } from './routes/eventos.index'
 import { Route as DocumentosIndexRouteImport } from './routes/documentos.index'
 import { Route as ClubesIndexRouteImport } from './routes/clubes.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ProjetosIdRouteImport } from './routes/projetos.$id'
+import { Route as GestaoUsuariosRouteImport } from './routes/gestao.usuarios'
+import { Route as GestaoNominataRouteImport } from './routes/gestao.nominata'
+import { Route as GestaoLoginRouteImport } from './routes/gestao.login'
+import { Route as GestaoFinanceiroRouteImport } from './routes/gestao.financeiro'
+import { Route as GestaoEstruturaDistritalRouteImport } from './routes/gestao.estrutura-distrital'
+import { Route as GestaoDocumentosRouteImport } from './routes/gestao.documentos'
+import { Route as GestaoCrmRouteImport } from './routes/gestao.crm'
+import { Route as GestaoContabilRouteImport } from './routes/gestao.contabil'
 import { Route as ExGovernadoresIdRouteImport } from './routes/ex-governadores.$id'
 import { Route as EventosIdRouteImport } from './routes/eventos.$id'
 import { Route as DocumentosSplatRouteImport } from './routes/documentos.$'
@@ -47,6 +57,10 @@ import { Route as CheckoutReturnRouteImport } from './routes/checkout/return'
 import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
 import { Route as AdminClubesRouteImport } from './routes/admin.clubes'
 import { Route as AdminAuditoriaRouteImport } from './routes/admin.auditoria'
+import { Route as GestaoFinanceiroIndexRouteImport } from './routes/gestao.financeiro.index'
+import { Route as GestaoCrmIndexRouteImport } from './routes/gestao.crm.index'
+import { Route as GestaoContabilIndexRouteImport } from './routes/gestao.contabil.index'
+import { Route as GestaoClubesAssociadosIndexRouteImport } from './routes/gestao.clubes-associados.index'
 import { Route as ClubesRegiaoIndexRouteImport } from './routes/clubes.regiao.index'
 import { Route as AdminRegioesIndexRouteImport } from './routes/admin.regioes.index'
 import { Route as AdminProjetosIndexRouteImport } from './routes/admin.projetos.index'
@@ -58,6 +72,25 @@ import { Route as AdminEventosIndexRouteImport } from './routes/admin.eventos.in
 import { Route as AdminDocumentosIndexRouteImport } from './routes/admin.documentos.index'
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
 import { Route as ProjetosCausaSlugRouteImport } from './routes/projetos.causa.$slug'
+import { Route as GestaoFinanceiroRelatoriosRouteImport } from './routes/gestao.financeiro.relatorios'
+import { Route as GestaoFinanceiroOrcamentoRouteImport } from './routes/gestao.financeiro.orcamento'
+import { Route as GestaoFinanceiroMovimentacoesRouteImport } from './routes/gestao.financeiro.movimentacoes'
+import { Route as GestaoFinanceiroFluxoCaixaRouteImport } from './routes/gestao.financeiro.fluxo-caixa'
+import { Route as GestaoFinanceiroContasReceberRouteImport } from './routes/gestao.financeiro.contas-receber'
+import { Route as GestaoFinanceiroContasPagarRouteImport } from './routes/gestao.financeiro.contas-pagar'
+import { Route as GestaoFinanceiroContasBancariasRouteImport } from './routes/gestao.financeiro.contas-bancarias'
+import { Route as GestaoFinanceiroCobrancasRouteImport } from './routes/gestao.financeiro.cobrancas'
+import { Route as GestaoFinanceiroCategoriasRouteImport } from './routes/gestao.financeiro.categorias'
+import { Route as GestaoFinanceiroAprovacoesRouteImport } from './routes/gestao.financeiro.aprovacoes'
+import { Route as GestaoCrmTarefasRouteImport } from './routes/gestao.crm.tarefas'
+import { Route as GestaoCrmInteracoesRouteImport } from './routes/gestao.crm.interacoes'
+import { Route as GestaoCrmFunilRouteImport } from './routes/gestao.crm.funil'
+import { Route as GestaoCrmContatosRouteImport } from './routes/gestao.crm.contatos'
+import { Route as GestaoContabilPlanoContasRouteImport } from './routes/gestao.contabil.plano-contas'
+import { Route as GestaoContabilLancamentosRouteImport } from './routes/gestao.contabil.lancamentos'
+import { Route as GestaoContabilBalanceteRouteImport } from './routes/gestao.contabil.balancete'
+import { Route as GestaoClubesAssociadosClubesRouteImport } from './routes/gestao.clubes-associados.clubes'
+import { Route as GestaoClubesAssociadosAssociadosRouteImport } from './routes/gestao.clubes-associados.associados'
 import { Route as ClubesRegiaoLetraRouteImport } from './routes/clubes.regiao.$letra'
 import { Route as ApiPublicProjetosRouteImport } from './routes/api.public.projetos'
 import { Route as ApiPublicLcifRouteImport } from './routes/api.public.lcif'
@@ -138,6 +171,11 @@ const GovernadorRoute = GovernadorRouteImport.update({
   path: '/governador',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GestaoRoute = GestaoRouteImport.update({
+  id: '/gestao',
+  path: '/gestao',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GatRoute = GatRouteImport.update({
   id: '/gat',
   path: '/gat',
@@ -188,6 +226,11 @@ const ProjetosIndexRoute = ProjetosIndexRouteImport.update({
   path: '/projetos/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GestaoIndexRoute = GestaoIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GestaoRoute,
+} as any)
 const ExGovernadoresIndexRoute = ExGovernadoresIndexRouteImport.update({
   id: '/ex-governadores/',
   path: '/ex-governadores/',
@@ -217,6 +260,47 @@ const ProjetosIdRoute = ProjetosIdRouteImport.update({
   id: '/projetos/$id',
   path: '/projetos/$id',
   getParentRoute: () => rootRouteImport,
+} as any)
+const GestaoUsuariosRoute = GestaoUsuariosRouteImport.update({
+  id: '/usuarios',
+  path: '/usuarios',
+  getParentRoute: () => GestaoRoute,
+} as any)
+const GestaoNominataRoute = GestaoNominataRouteImport.update({
+  id: '/nominata',
+  path: '/nominata',
+  getParentRoute: () => GestaoRoute,
+} as any)
+const GestaoLoginRoute = GestaoLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => GestaoRoute,
+} as any)
+const GestaoFinanceiroRoute = GestaoFinanceiroRouteImport.update({
+  id: '/financeiro',
+  path: '/financeiro',
+  getParentRoute: () => GestaoRoute,
+} as any)
+const GestaoEstruturaDistritalRoute =
+  GestaoEstruturaDistritalRouteImport.update({
+    id: '/estrutura-distrital',
+    path: '/estrutura-distrital',
+    getParentRoute: () => GestaoRoute,
+  } as any)
+const GestaoDocumentosRoute = GestaoDocumentosRouteImport.update({
+  id: '/documentos',
+  path: '/documentos',
+  getParentRoute: () => GestaoRoute,
+} as any)
+const GestaoCrmRoute = GestaoCrmRouteImport.update({
+  id: '/crm',
+  path: '/crm',
+  getParentRoute: () => GestaoRoute,
+} as any)
+const GestaoContabilRoute = GestaoContabilRouteImport.update({
+  id: '/contabil',
+  path: '/contabil',
+  getParentRoute: () => GestaoRoute,
 } as any)
 const ExGovernadoresIdRoute = ExGovernadoresIdRouteImport.update({
   id: '/ex-governadores/$id',
@@ -268,6 +352,27 @@ const AdminAuditoriaRoute = AdminAuditoriaRouteImport.update({
   path: '/auditoria',
   getParentRoute: () => AdminRoute,
 } as any)
+const GestaoFinanceiroIndexRoute = GestaoFinanceiroIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GestaoFinanceiroRoute,
+} as any)
+const GestaoCrmIndexRoute = GestaoCrmIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GestaoCrmRoute,
+} as any)
+const GestaoContabilIndexRoute = GestaoContabilIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GestaoContabilRoute,
+} as any)
+const GestaoClubesAssociadosIndexRoute =
+  GestaoClubesAssociadosIndexRouteImport.update({
+    id: '/clubes-associados/',
+    path: '/clubes-associados/',
+    getParentRoute: () => GestaoRoute,
+  } as any)
 const ClubesRegiaoIndexRoute = ClubesRegiaoIndexRouteImport.update({
   id: '/clubes/regiao/',
   path: '/clubes/regiao/',
@@ -323,6 +428,115 @@ const ProjetosCausaSlugRoute = ProjetosCausaSlugRouteImport.update({
   path: '/projetos/causa/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GestaoFinanceiroRelatoriosRoute =
+  GestaoFinanceiroRelatoriosRouteImport.update({
+    id: '/relatorios',
+    path: '/relatorios',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroOrcamentoRoute =
+  GestaoFinanceiroOrcamentoRouteImport.update({
+    id: '/orcamento',
+    path: '/orcamento',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroMovimentacoesRoute =
+  GestaoFinanceiroMovimentacoesRouteImport.update({
+    id: '/movimentacoes',
+    path: '/movimentacoes',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroFluxoCaixaRoute =
+  GestaoFinanceiroFluxoCaixaRouteImport.update({
+    id: '/fluxo-caixa',
+    path: '/fluxo-caixa',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroContasReceberRoute =
+  GestaoFinanceiroContasReceberRouteImport.update({
+    id: '/contas-receber',
+    path: '/contas-receber',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroContasPagarRoute =
+  GestaoFinanceiroContasPagarRouteImport.update({
+    id: '/contas-pagar',
+    path: '/contas-pagar',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroContasBancariasRoute =
+  GestaoFinanceiroContasBancariasRouteImport.update({
+    id: '/contas-bancarias',
+    path: '/contas-bancarias',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroCobrancasRoute =
+  GestaoFinanceiroCobrancasRouteImport.update({
+    id: '/cobrancas',
+    path: '/cobrancas',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroCategoriasRoute =
+  GestaoFinanceiroCategoriasRouteImport.update({
+    id: '/categorias',
+    path: '/categorias',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroAprovacoesRoute =
+  GestaoFinanceiroAprovacoesRouteImport.update({
+    id: '/aprovacoes',
+    path: '/aprovacoes',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoCrmTarefasRoute = GestaoCrmTarefasRouteImport.update({
+  id: '/tarefas',
+  path: '/tarefas',
+  getParentRoute: () => GestaoCrmRoute,
+} as any)
+const GestaoCrmInteracoesRoute = GestaoCrmInteracoesRouteImport.update({
+  id: '/interacoes',
+  path: '/interacoes',
+  getParentRoute: () => GestaoCrmRoute,
+} as any)
+const GestaoCrmFunilRoute = GestaoCrmFunilRouteImport.update({
+  id: '/funil',
+  path: '/funil',
+  getParentRoute: () => GestaoCrmRoute,
+} as any)
+const GestaoCrmContatosRoute = GestaoCrmContatosRouteImport.update({
+  id: '/contatos',
+  path: '/contatos',
+  getParentRoute: () => GestaoCrmRoute,
+} as any)
+const GestaoContabilPlanoContasRoute =
+  GestaoContabilPlanoContasRouteImport.update({
+    id: '/plano-contas',
+    path: '/plano-contas',
+    getParentRoute: () => GestaoContabilRoute,
+  } as any)
+const GestaoContabilLancamentosRoute =
+  GestaoContabilLancamentosRouteImport.update({
+    id: '/lancamentos',
+    path: '/lancamentos',
+    getParentRoute: () => GestaoContabilRoute,
+  } as any)
+const GestaoContabilBalanceteRoute = GestaoContabilBalanceteRouteImport.update({
+  id: '/balancete',
+  path: '/balancete',
+  getParentRoute: () => GestaoContabilRoute,
+} as any)
+const GestaoClubesAssociadosClubesRoute =
+  GestaoClubesAssociadosClubesRouteImport.update({
+    id: '/clubes-associados/clubes',
+    path: '/clubes-associados/clubes',
+    getParentRoute: () => GestaoRoute,
+  } as any)
+const GestaoClubesAssociadosAssociadosRoute =
+  GestaoClubesAssociadosAssociadosRouteImport.update({
+    id: '/clubes-associados/associados',
+    path: '/clubes-associados/associados',
+    getParentRoute: () => GestaoRoute,
+  } as any)
 const ClubesRegiaoLetraRoute = ClubesRegiaoLetraRouteImport.update({
   id: '/clubes/regiao/$letra',
   path: '/clubes/regiao/$letra',
@@ -433,6 +647,7 @@ export interface FileRoutesByFullPath {
   '/doar': typeof DoarRoute
   '/documentos': typeof DocumentosRouteWithChildren
   '/gat': typeof GatRoute
+  '/gestao': typeof GestaoRouteWithChildren
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
   '/lcif': typeof LcifRoute
@@ -455,12 +670,21 @@ export interface FileRoutesByFullPath {
   '/documentos/$': typeof DocumentosSplatRoute
   '/eventos/$id': typeof EventosIdRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
+  '/gestao/contabil': typeof GestaoContabilRouteWithChildren
+  '/gestao/crm': typeof GestaoCrmRouteWithChildren
+  '/gestao/documentos': typeof GestaoDocumentosRoute
+  '/gestao/estrutura-distrital': typeof GestaoEstruturaDistritalRoute
+  '/gestao/financeiro': typeof GestaoFinanceiroRouteWithChildren
+  '/gestao/login': typeof GestaoLoginRoute
+  '/gestao/nominata': typeof GestaoNominataRoute
+  '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
   '/clubes/': typeof ClubesIndexRoute
   '/documentos/': typeof DocumentosIndexRoute
   '/eventos/': typeof EventosIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
+  '/gestao/': typeof GestaoIndexRoute
   '/projetos/': typeof ProjetosIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
@@ -478,6 +702,25 @@ export interface FileRoutesByFullPath {
   '/api/public/lcif': typeof ApiPublicLcifRoute
   '/api/public/projetos': typeof ApiPublicProjetosRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
+  '/gestao/clubes-associados/associados': typeof GestaoClubesAssociadosAssociadosRoute
+  '/gestao/clubes-associados/clubes': typeof GestaoClubesAssociadosClubesRoute
+  '/gestao/contabil/balancete': typeof GestaoContabilBalanceteRoute
+  '/gestao/contabil/lancamentos': typeof GestaoContabilLancamentosRoute
+  '/gestao/contabil/plano-contas': typeof GestaoContabilPlanoContasRoute
+  '/gestao/crm/contatos': typeof GestaoCrmContatosRoute
+  '/gestao/crm/funil': typeof GestaoCrmFunilRoute
+  '/gestao/crm/interacoes': typeof GestaoCrmInteracoesRoute
+  '/gestao/crm/tarefas': typeof GestaoCrmTarefasRoute
+  '/gestao/financeiro/aprovacoes': typeof GestaoFinanceiroAprovacoesRoute
+  '/gestao/financeiro/categorias': typeof GestaoFinanceiroCategoriasRoute
+  '/gestao/financeiro/cobrancas': typeof GestaoFinanceiroCobrancasRoute
+  '/gestao/financeiro/contas-bancarias': typeof GestaoFinanceiroContasBancariasRoute
+  '/gestao/financeiro/contas-pagar': typeof GestaoFinanceiroContasPagarRoute
+  '/gestao/financeiro/contas-receber': typeof GestaoFinanceiroContasReceberRoute
+  '/gestao/financeiro/fluxo-caixa': typeof GestaoFinanceiroFluxoCaixaRoute
+  '/gestao/financeiro/movimentacoes': typeof GestaoFinanceiroMovimentacoesRoute
+  '/gestao/financeiro/orcamento': typeof GestaoFinanceiroOrcamentoRoute
+  '/gestao/financeiro/relatorios': typeof GestaoFinanceiroRelatoriosRoute
   '/projetos/causa/$slug': typeof ProjetosCausaSlugRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
   '/admin/documentos/': typeof AdminDocumentosIndexRoute
@@ -489,6 +732,10 @@ export interface FileRoutesByFullPath {
   '/admin/projetos/': typeof AdminProjetosIndexRoute
   '/admin/regioes/': typeof AdminRegioesIndexRoute
   '/clubes/regiao/': typeof ClubesRegiaoIndexRoute
+  '/gestao/clubes-associados/': typeof GestaoClubesAssociadosIndexRoute
+  '/gestao/contabil/': typeof GestaoContabilIndexRoute
+  '/gestao/crm/': typeof GestaoCrmIndexRoute
+  '/gestao/financeiro/': typeof GestaoFinanceiroIndexRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
@@ -523,12 +770,18 @@ export interface FileRoutesByTo {
   '/documentos/$': typeof DocumentosSplatRoute
   '/eventos/$id': typeof EventosIdRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
+  '/gestao/documentos': typeof GestaoDocumentosRoute
+  '/gestao/estrutura-distrital': typeof GestaoEstruturaDistritalRoute
+  '/gestao/login': typeof GestaoLoginRoute
+  '/gestao/nominata': typeof GestaoNominataRoute
+  '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin': typeof AdminIndexRoute
   '/clubes': typeof ClubesIndexRoute
   '/documentos': typeof DocumentosIndexRoute
   '/eventos': typeof EventosIndexRoute
   '/ex-governadores': typeof ExGovernadoresIndexRoute
+  '/gestao': typeof GestaoIndexRoute
   '/projetos': typeof ProjetosIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
@@ -546,6 +799,25 @@ export interface FileRoutesByTo {
   '/api/public/lcif': typeof ApiPublicLcifRoute
   '/api/public/projetos': typeof ApiPublicProjetosRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
+  '/gestao/clubes-associados/associados': typeof GestaoClubesAssociadosAssociadosRoute
+  '/gestao/clubes-associados/clubes': typeof GestaoClubesAssociadosClubesRoute
+  '/gestao/contabil/balancete': typeof GestaoContabilBalanceteRoute
+  '/gestao/contabil/lancamentos': typeof GestaoContabilLancamentosRoute
+  '/gestao/contabil/plano-contas': typeof GestaoContabilPlanoContasRoute
+  '/gestao/crm/contatos': typeof GestaoCrmContatosRoute
+  '/gestao/crm/funil': typeof GestaoCrmFunilRoute
+  '/gestao/crm/interacoes': typeof GestaoCrmInteracoesRoute
+  '/gestao/crm/tarefas': typeof GestaoCrmTarefasRoute
+  '/gestao/financeiro/aprovacoes': typeof GestaoFinanceiroAprovacoesRoute
+  '/gestao/financeiro/categorias': typeof GestaoFinanceiroCategoriasRoute
+  '/gestao/financeiro/cobrancas': typeof GestaoFinanceiroCobrancasRoute
+  '/gestao/financeiro/contas-bancarias': typeof GestaoFinanceiroContasBancariasRoute
+  '/gestao/financeiro/contas-pagar': typeof GestaoFinanceiroContasPagarRoute
+  '/gestao/financeiro/contas-receber': typeof GestaoFinanceiroContasReceberRoute
+  '/gestao/financeiro/fluxo-caixa': typeof GestaoFinanceiroFluxoCaixaRoute
+  '/gestao/financeiro/movimentacoes': typeof GestaoFinanceiroMovimentacoesRoute
+  '/gestao/financeiro/orcamento': typeof GestaoFinanceiroOrcamentoRoute
+  '/gestao/financeiro/relatorios': typeof GestaoFinanceiroRelatoriosRoute
   '/projetos/causa/$slug': typeof ProjetosCausaSlugRoute
   '/admin/conteudo': typeof AdminConteudoIndexRoute
   '/admin/documentos': typeof AdminDocumentosIndexRoute
@@ -557,6 +829,10 @@ export interface FileRoutesByTo {
   '/admin/projetos': typeof AdminProjetosIndexRoute
   '/admin/regioes': typeof AdminRegioesIndexRoute
   '/clubes/regiao': typeof ClubesRegiaoIndexRoute
+  '/gestao/clubes-associados': typeof GestaoClubesAssociadosIndexRoute
+  '/gestao/contabil': typeof GestaoContabilIndexRoute
+  '/gestao/crm': typeof GestaoCrmIndexRoute
+  '/gestao/financeiro': typeof GestaoFinanceiroIndexRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
@@ -572,6 +848,7 @@ export interface FileRoutesById {
   '/doar': typeof DoarRoute
   '/documentos': typeof DocumentosRouteWithChildren
   '/gat': typeof GatRoute
+  '/gestao': typeof GestaoRouteWithChildren
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
   '/lcif': typeof LcifRoute
@@ -594,12 +871,21 @@ export interface FileRoutesById {
   '/documentos/$': typeof DocumentosSplatRoute
   '/eventos/$id': typeof EventosIdRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
+  '/gestao/contabil': typeof GestaoContabilRouteWithChildren
+  '/gestao/crm': typeof GestaoCrmRouteWithChildren
+  '/gestao/documentos': typeof GestaoDocumentosRoute
+  '/gestao/estrutura-distrital': typeof GestaoEstruturaDistritalRoute
+  '/gestao/financeiro': typeof GestaoFinanceiroRouteWithChildren
+  '/gestao/login': typeof GestaoLoginRoute
+  '/gestao/nominata': typeof GestaoNominataRoute
+  '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
   '/clubes/': typeof ClubesIndexRoute
   '/documentos/': typeof DocumentosIndexRoute
   '/eventos/': typeof EventosIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
+  '/gestao/': typeof GestaoIndexRoute
   '/projetos/': typeof ProjetosIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
@@ -617,6 +903,25 @@ export interface FileRoutesById {
   '/api/public/lcif': typeof ApiPublicLcifRoute
   '/api/public/projetos': typeof ApiPublicProjetosRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
+  '/gestao/clubes-associados/associados': typeof GestaoClubesAssociadosAssociadosRoute
+  '/gestao/clubes-associados/clubes': typeof GestaoClubesAssociadosClubesRoute
+  '/gestao/contabil/balancete': typeof GestaoContabilBalanceteRoute
+  '/gestao/contabil/lancamentos': typeof GestaoContabilLancamentosRoute
+  '/gestao/contabil/plano-contas': typeof GestaoContabilPlanoContasRoute
+  '/gestao/crm/contatos': typeof GestaoCrmContatosRoute
+  '/gestao/crm/funil': typeof GestaoCrmFunilRoute
+  '/gestao/crm/interacoes': typeof GestaoCrmInteracoesRoute
+  '/gestao/crm/tarefas': typeof GestaoCrmTarefasRoute
+  '/gestao/financeiro/aprovacoes': typeof GestaoFinanceiroAprovacoesRoute
+  '/gestao/financeiro/categorias': typeof GestaoFinanceiroCategoriasRoute
+  '/gestao/financeiro/cobrancas': typeof GestaoFinanceiroCobrancasRoute
+  '/gestao/financeiro/contas-bancarias': typeof GestaoFinanceiroContasBancariasRoute
+  '/gestao/financeiro/contas-pagar': typeof GestaoFinanceiroContasPagarRoute
+  '/gestao/financeiro/contas-receber': typeof GestaoFinanceiroContasReceberRoute
+  '/gestao/financeiro/fluxo-caixa': typeof GestaoFinanceiroFluxoCaixaRoute
+  '/gestao/financeiro/movimentacoes': typeof GestaoFinanceiroMovimentacoesRoute
+  '/gestao/financeiro/orcamento': typeof GestaoFinanceiroOrcamentoRoute
+  '/gestao/financeiro/relatorios': typeof GestaoFinanceiroRelatoriosRoute
   '/projetos/causa/$slug': typeof ProjetosCausaSlugRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
   '/admin/documentos/': typeof AdminDocumentosIndexRoute
@@ -628,6 +933,10 @@ export interface FileRoutesById {
   '/admin/projetos/': typeof AdminProjetosIndexRoute
   '/admin/regioes/': typeof AdminRegioesIndexRoute
   '/clubes/regiao/': typeof ClubesRegiaoIndexRoute
+  '/gestao/clubes-associados/': typeof GestaoClubesAssociadosIndexRoute
+  '/gestao/contabil/': typeof GestaoContabilIndexRoute
+  '/gestao/crm/': typeof GestaoCrmIndexRoute
+  '/gestao/financeiro/': typeof GestaoFinanceiroIndexRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
@@ -644,6 +953,7 @@ export interface FileRouteTypes {
     | '/doar'
     | '/documentos'
     | '/gat'
+    | '/gestao'
     | '/governador'
     | '/historia'
     | '/lcif'
@@ -666,12 +976,21 @@ export interface FileRouteTypes {
     | '/documentos/$'
     | '/eventos/$id'
     | '/ex-governadores/$id'
+    | '/gestao/contabil'
+    | '/gestao/crm'
+    | '/gestao/documentos'
+    | '/gestao/estrutura-distrital'
+    | '/gestao/financeiro'
+    | '/gestao/login'
+    | '/gestao/nominata'
+    | '/gestao/usuarios'
     | '/projetos/$id'
     | '/admin/'
     | '/clubes/'
     | '/documentos/'
     | '/eventos/'
     | '/ex-governadores/'
+    | '/gestao/'
     | '/projetos/'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
@@ -689,6 +1008,25 @@ export interface FileRouteTypes {
     | '/api/public/lcif'
     | '/api/public/projetos'
     | '/clubes/regiao/$letra'
+    | '/gestao/clubes-associados/associados'
+    | '/gestao/clubes-associados/clubes'
+    | '/gestao/contabil/balancete'
+    | '/gestao/contabil/lancamentos'
+    | '/gestao/contabil/plano-contas'
+    | '/gestao/crm/contatos'
+    | '/gestao/crm/funil'
+    | '/gestao/crm/interacoes'
+    | '/gestao/crm/tarefas'
+    | '/gestao/financeiro/aprovacoes'
+    | '/gestao/financeiro/categorias'
+    | '/gestao/financeiro/cobrancas'
+    | '/gestao/financeiro/contas-bancarias'
+    | '/gestao/financeiro/contas-pagar'
+    | '/gestao/financeiro/contas-receber'
+    | '/gestao/financeiro/fluxo-caixa'
+    | '/gestao/financeiro/movimentacoes'
+    | '/gestao/financeiro/orcamento'
+    | '/gestao/financeiro/relatorios'
     | '/projetos/causa/$slug'
     | '/admin/conteudo/'
     | '/admin/documentos/'
@@ -700,6 +1038,10 @@ export interface FileRouteTypes {
     | '/admin/projetos/'
     | '/admin/regioes/'
     | '/clubes/regiao/'
+    | '/gestao/clubes-associados/'
+    | '/gestao/contabil/'
+    | '/gestao/crm/'
+    | '/gestao/financeiro/'
     | '/api/public/payments/webhook'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
@@ -734,12 +1076,18 @@ export interface FileRouteTypes {
     | '/documentos/$'
     | '/eventos/$id'
     | '/ex-governadores/$id'
+    | '/gestao/documentos'
+    | '/gestao/estrutura-distrital'
+    | '/gestao/login'
+    | '/gestao/nominata'
+    | '/gestao/usuarios'
     | '/projetos/$id'
     | '/admin'
     | '/clubes'
     | '/documentos'
     | '/eventos'
     | '/ex-governadores'
+    | '/gestao'
     | '/projetos'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
@@ -757,6 +1105,25 @@ export interface FileRouteTypes {
     | '/api/public/lcif'
     | '/api/public/projetos'
     | '/clubes/regiao/$letra'
+    | '/gestao/clubes-associados/associados'
+    | '/gestao/clubes-associados/clubes'
+    | '/gestao/contabil/balancete'
+    | '/gestao/contabil/lancamentos'
+    | '/gestao/contabil/plano-contas'
+    | '/gestao/crm/contatos'
+    | '/gestao/crm/funil'
+    | '/gestao/crm/interacoes'
+    | '/gestao/crm/tarefas'
+    | '/gestao/financeiro/aprovacoes'
+    | '/gestao/financeiro/categorias'
+    | '/gestao/financeiro/cobrancas'
+    | '/gestao/financeiro/contas-bancarias'
+    | '/gestao/financeiro/contas-pagar'
+    | '/gestao/financeiro/contas-receber'
+    | '/gestao/financeiro/fluxo-caixa'
+    | '/gestao/financeiro/movimentacoes'
+    | '/gestao/financeiro/orcamento'
+    | '/gestao/financeiro/relatorios'
     | '/projetos/causa/$slug'
     | '/admin/conteudo'
     | '/admin/documentos'
@@ -768,6 +1135,10 @@ export interface FileRouteTypes {
     | '/admin/projetos'
     | '/admin/regioes'
     | '/clubes/regiao'
+    | '/gestao/clubes-associados'
+    | '/gestao/contabil'
+    | '/gestao/crm'
+    | '/gestao/financeiro'
     | '/api/public/payments/webhook'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
@@ -782,6 +1153,7 @@ export interface FileRouteTypes {
     | '/doar'
     | '/documentos'
     | '/gat'
+    | '/gestao'
     | '/governador'
     | '/historia'
     | '/lcif'
@@ -804,12 +1176,21 @@ export interface FileRouteTypes {
     | '/documentos/$'
     | '/eventos/$id'
     | '/ex-governadores/$id'
+    | '/gestao/contabil'
+    | '/gestao/crm'
+    | '/gestao/documentos'
+    | '/gestao/estrutura-distrital'
+    | '/gestao/financeiro'
+    | '/gestao/login'
+    | '/gestao/nominata'
+    | '/gestao/usuarios'
     | '/projetos/$id'
     | '/admin/'
     | '/clubes/'
     | '/documentos/'
     | '/eventos/'
     | '/ex-governadores/'
+    | '/gestao/'
     | '/projetos/'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
@@ -827,6 +1208,25 @@ export interface FileRouteTypes {
     | '/api/public/lcif'
     | '/api/public/projetos'
     | '/clubes/regiao/$letra'
+    | '/gestao/clubes-associados/associados'
+    | '/gestao/clubes-associados/clubes'
+    | '/gestao/contabil/balancete'
+    | '/gestao/contabil/lancamentos'
+    | '/gestao/contabil/plano-contas'
+    | '/gestao/crm/contatos'
+    | '/gestao/crm/funil'
+    | '/gestao/crm/interacoes'
+    | '/gestao/crm/tarefas'
+    | '/gestao/financeiro/aprovacoes'
+    | '/gestao/financeiro/categorias'
+    | '/gestao/financeiro/cobrancas'
+    | '/gestao/financeiro/contas-bancarias'
+    | '/gestao/financeiro/contas-pagar'
+    | '/gestao/financeiro/contas-receber'
+    | '/gestao/financeiro/fluxo-caixa'
+    | '/gestao/financeiro/movimentacoes'
+    | '/gestao/financeiro/orcamento'
+    | '/gestao/financeiro/relatorios'
     | '/projetos/causa/$slug'
     | '/admin/conteudo/'
     | '/admin/documentos/'
@@ -838,6 +1238,10 @@ export interface FileRouteTypes {
     | '/admin/projetos/'
     | '/admin/regioes/'
     | '/clubes/regiao/'
+    | '/gestao/clubes-associados/'
+    | '/gestao/contabil/'
+    | '/gestao/crm/'
+    | '/gestao/financeiro/'
     | '/api/public/payments/webhook'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
@@ -853,6 +1257,7 @@ export interface RootRouteChildren {
   DoarRoute: typeof DoarRoute
   DocumentosRoute: typeof DocumentosRouteWithChildren
   GatRoute: typeof GatRoute
+  GestaoRoute: typeof GestaoRouteWithChildren
   GovernadorRoute: typeof GovernadorRoute
   HistoriaRoute: typeof HistoriaRoute
   LcifRoute: typeof LcifRoute
@@ -972,6 +1377,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GovernadorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gestao': {
+      id: '/gestao'
+      path: '/gestao'
+      fullPath: '/gestao'
+      preLoaderRoute: typeof GestaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gat': {
       id: '/gat'
       path: '/gat'
@@ -1042,6 +1454,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjetosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gestao/': {
+      id: '/gestao/'
+      path: '/'
+      fullPath: '/gestao/'
+      preLoaderRoute: typeof GestaoIndexRouteImport
+      parentRoute: typeof GestaoRoute
+    }
     '/ex-governadores/': {
       id: '/ex-governadores/'
       path: '/ex-governadores'
@@ -1083,6 +1502,62 @@ declare module '@tanstack/react-router' {
       fullPath: '/projetos/$id'
       preLoaderRoute: typeof ProjetosIdRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/gestao/usuarios': {
+      id: '/gestao/usuarios'
+      path: '/usuarios'
+      fullPath: '/gestao/usuarios'
+      preLoaderRoute: typeof GestaoUsuariosRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/nominata': {
+      id: '/gestao/nominata'
+      path: '/nominata'
+      fullPath: '/gestao/nominata'
+      preLoaderRoute: typeof GestaoNominataRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/login': {
+      id: '/gestao/login'
+      path: '/login'
+      fullPath: '/gestao/login'
+      preLoaderRoute: typeof GestaoLoginRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/financeiro': {
+      id: '/gestao/financeiro'
+      path: '/financeiro'
+      fullPath: '/gestao/financeiro'
+      preLoaderRoute: typeof GestaoFinanceiroRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/estrutura-distrital': {
+      id: '/gestao/estrutura-distrital'
+      path: '/estrutura-distrital'
+      fullPath: '/gestao/estrutura-distrital'
+      preLoaderRoute: typeof GestaoEstruturaDistritalRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/documentos': {
+      id: '/gestao/documentos'
+      path: '/documentos'
+      fullPath: '/gestao/documentos'
+      preLoaderRoute: typeof GestaoDocumentosRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/crm': {
+      id: '/gestao/crm'
+      path: '/crm'
+      fullPath: '/gestao/crm'
+      preLoaderRoute: typeof GestaoCrmRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/contabil': {
+      id: '/gestao/contabil'
+      path: '/contabil'
+      fullPath: '/gestao/contabil'
+      preLoaderRoute: typeof GestaoContabilRouteImport
+      parentRoute: typeof GestaoRoute
     }
     '/ex-governadores/$id': {
       id: '/ex-governadores/$id'
@@ -1153,6 +1628,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/auditoria'
       preLoaderRoute: typeof AdminAuditoriaRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/gestao/financeiro/': {
+      id: '/gestao/financeiro/'
+      path: '/'
+      fullPath: '/gestao/financeiro/'
+      preLoaderRoute: typeof GestaoFinanceiroIndexRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/crm/': {
+      id: '/gestao/crm/'
+      path: '/'
+      fullPath: '/gestao/crm/'
+      preLoaderRoute: typeof GestaoCrmIndexRouteImport
+      parentRoute: typeof GestaoCrmRoute
+    }
+    '/gestao/contabil/': {
+      id: '/gestao/contabil/'
+      path: '/'
+      fullPath: '/gestao/contabil/'
+      preLoaderRoute: typeof GestaoContabilIndexRouteImport
+      parentRoute: typeof GestaoContabilRoute
+    }
+    '/gestao/clubes-associados/': {
+      id: '/gestao/clubes-associados/'
+      path: '/clubes-associados'
+      fullPath: '/gestao/clubes-associados/'
+      preLoaderRoute: typeof GestaoClubesAssociadosIndexRouteImport
+      parentRoute: typeof GestaoRoute
     }
     '/clubes/regiao/': {
       id: '/clubes/regiao/'
@@ -1230,6 +1733,139 @@ declare module '@tanstack/react-router' {
       fullPath: '/projetos/causa/$slug'
       preLoaderRoute: typeof ProjetosCausaSlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/gestao/financeiro/relatorios': {
+      id: '/gestao/financeiro/relatorios'
+      path: '/relatorios'
+      fullPath: '/gestao/financeiro/relatorios'
+      preLoaderRoute: typeof GestaoFinanceiroRelatoriosRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/orcamento': {
+      id: '/gestao/financeiro/orcamento'
+      path: '/orcamento'
+      fullPath: '/gestao/financeiro/orcamento'
+      preLoaderRoute: typeof GestaoFinanceiroOrcamentoRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/movimentacoes': {
+      id: '/gestao/financeiro/movimentacoes'
+      path: '/movimentacoes'
+      fullPath: '/gestao/financeiro/movimentacoes'
+      preLoaderRoute: typeof GestaoFinanceiroMovimentacoesRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/fluxo-caixa': {
+      id: '/gestao/financeiro/fluxo-caixa'
+      path: '/fluxo-caixa'
+      fullPath: '/gestao/financeiro/fluxo-caixa'
+      preLoaderRoute: typeof GestaoFinanceiroFluxoCaixaRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/contas-receber': {
+      id: '/gestao/financeiro/contas-receber'
+      path: '/contas-receber'
+      fullPath: '/gestao/financeiro/contas-receber'
+      preLoaderRoute: typeof GestaoFinanceiroContasReceberRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/contas-pagar': {
+      id: '/gestao/financeiro/contas-pagar'
+      path: '/contas-pagar'
+      fullPath: '/gestao/financeiro/contas-pagar'
+      preLoaderRoute: typeof GestaoFinanceiroContasPagarRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/contas-bancarias': {
+      id: '/gestao/financeiro/contas-bancarias'
+      path: '/contas-bancarias'
+      fullPath: '/gestao/financeiro/contas-bancarias'
+      preLoaderRoute: typeof GestaoFinanceiroContasBancariasRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/cobrancas': {
+      id: '/gestao/financeiro/cobrancas'
+      path: '/cobrancas'
+      fullPath: '/gestao/financeiro/cobrancas'
+      preLoaderRoute: typeof GestaoFinanceiroCobrancasRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/categorias': {
+      id: '/gestao/financeiro/categorias'
+      path: '/categorias'
+      fullPath: '/gestao/financeiro/categorias'
+      preLoaderRoute: typeof GestaoFinanceiroCategoriasRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/aprovacoes': {
+      id: '/gestao/financeiro/aprovacoes'
+      path: '/aprovacoes'
+      fullPath: '/gestao/financeiro/aprovacoes'
+      preLoaderRoute: typeof GestaoFinanceiroAprovacoesRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/crm/tarefas': {
+      id: '/gestao/crm/tarefas'
+      path: '/tarefas'
+      fullPath: '/gestao/crm/tarefas'
+      preLoaderRoute: typeof GestaoCrmTarefasRouteImport
+      parentRoute: typeof GestaoCrmRoute
+    }
+    '/gestao/crm/interacoes': {
+      id: '/gestao/crm/interacoes'
+      path: '/interacoes'
+      fullPath: '/gestao/crm/interacoes'
+      preLoaderRoute: typeof GestaoCrmInteracoesRouteImport
+      parentRoute: typeof GestaoCrmRoute
+    }
+    '/gestao/crm/funil': {
+      id: '/gestao/crm/funil'
+      path: '/funil'
+      fullPath: '/gestao/crm/funil'
+      preLoaderRoute: typeof GestaoCrmFunilRouteImport
+      parentRoute: typeof GestaoCrmRoute
+    }
+    '/gestao/crm/contatos': {
+      id: '/gestao/crm/contatos'
+      path: '/contatos'
+      fullPath: '/gestao/crm/contatos'
+      preLoaderRoute: typeof GestaoCrmContatosRouteImport
+      parentRoute: typeof GestaoCrmRoute
+    }
+    '/gestao/contabil/plano-contas': {
+      id: '/gestao/contabil/plano-contas'
+      path: '/plano-contas'
+      fullPath: '/gestao/contabil/plano-contas'
+      preLoaderRoute: typeof GestaoContabilPlanoContasRouteImport
+      parentRoute: typeof GestaoContabilRoute
+    }
+    '/gestao/contabil/lancamentos': {
+      id: '/gestao/contabil/lancamentos'
+      path: '/lancamentos'
+      fullPath: '/gestao/contabil/lancamentos'
+      preLoaderRoute: typeof GestaoContabilLancamentosRouteImport
+      parentRoute: typeof GestaoContabilRoute
+    }
+    '/gestao/contabil/balancete': {
+      id: '/gestao/contabil/balancete'
+      path: '/balancete'
+      fullPath: '/gestao/contabil/balancete'
+      preLoaderRoute: typeof GestaoContabilBalanceteRouteImport
+      parentRoute: typeof GestaoContabilRoute
+    }
+    '/gestao/clubes-associados/clubes': {
+      id: '/gestao/clubes-associados/clubes'
+      path: '/clubes-associados/clubes'
+      fullPath: '/gestao/clubes-associados/clubes'
+      preLoaderRoute: typeof GestaoClubesAssociadosClubesRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/clubes-associados/associados': {
+      id: '/gestao/clubes-associados/associados'
+      path: '/clubes-associados/associados'
+      fullPath: '/gestao/clubes-associados/associados'
+      preLoaderRoute: typeof GestaoClubesAssociadosAssociadosRouteImport
+      parentRoute: typeof GestaoRoute
     }
     '/clubes/regiao/$letra': {
       id: '/clubes/regiao/$letra'
@@ -1465,6 +2101,108 @@ const DocumentosRouteWithChildren = DocumentosRoute._addFileChildren(
   DocumentosRouteChildren,
 )
 
+interface GestaoContabilRouteChildren {
+  GestaoContabilBalanceteRoute: typeof GestaoContabilBalanceteRoute
+  GestaoContabilLancamentosRoute: typeof GestaoContabilLancamentosRoute
+  GestaoContabilPlanoContasRoute: typeof GestaoContabilPlanoContasRoute
+  GestaoContabilIndexRoute: typeof GestaoContabilIndexRoute
+}
+
+const GestaoContabilRouteChildren: GestaoContabilRouteChildren = {
+  GestaoContabilBalanceteRoute: GestaoContabilBalanceteRoute,
+  GestaoContabilLancamentosRoute: GestaoContabilLancamentosRoute,
+  GestaoContabilPlanoContasRoute: GestaoContabilPlanoContasRoute,
+  GestaoContabilIndexRoute: GestaoContabilIndexRoute,
+}
+
+const GestaoContabilRouteWithChildren = GestaoContabilRoute._addFileChildren(
+  GestaoContabilRouteChildren,
+)
+
+interface GestaoCrmRouteChildren {
+  GestaoCrmContatosRoute: typeof GestaoCrmContatosRoute
+  GestaoCrmFunilRoute: typeof GestaoCrmFunilRoute
+  GestaoCrmInteracoesRoute: typeof GestaoCrmInteracoesRoute
+  GestaoCrmTarefasRoute: typeof GestaoCrmTarefasRoute
+  GestaoCrmIndexRoute: typeof GestaoCrmIndexRoute
+}
+
+const GestaoCrmRouteChildren: GestaoCrmRouteChildren = {
+  GestaoCrmContatosRoute: GestaoCrmContatosRoute,
+  GestaoCrmFunilRoute: GestaoCrmFunilRoute,
+  GestaoCrmInteracoesRoute: GestaoCrmInteracoesRoute,
+  GestaoCrmTarefasRoute: GestaoCrmTarefasRoute,
+  GestaoCrmIndexRoute: GestaoCrmIndexRoute,
+}
+
+const GestaoCrmRouteWithChildren = GestaoCrmRoute._addFileChildren(
+  GestaoCrmRouteChildren,
+)
+
+interface GestaoFinanceiroRouteChildren {
+  GestaoFinanceiroAprovacoesRoute: typeof GestaoFinanceiroAprovacoesRoute
+  GestaoFinanceiroCategoriasRoute: typeof GestaoFinanceiroCategoriasRoute
+  GestaoFinanceiroCobrancasRoute: typeof GestaoFinanceiroCobrancasRoute
+  GestaoFinanceiroContasBancariasRoute: typeof GestaoFinanceiroContasBancariasRoute
+  GestaoFinanceiroContasPagarRoute: typeof GestaoFinanceiroContasPagarRoute
+  GestaoFinanceiroContasReceberRoute: typeof GestaoFinanceiroContasReceberRoute
+  GestaoFinanceiroFluxoCaixaRoute: typeof GestaoFinanceiroFluxoCaixaRoute
+  GestaoFinanceiroMovimentacoesRoute: typeof GestaoFinanceiroMovimentacoesRoute
+  GestaoFinanceiroOrcamentoRoute: typeof GestaoFinanceiroOrcamentoRoute
+  GestaoFinanceiroRelatoriosRoute: typeof GestaoFinanceiroRelatoriosRoute
+  GestaoFinanceiroIndexRoute: typeof GestaoFinanceiroIndexRoute
+}
+
+const GestaoFinanceiroRouteChildren: GestaoFinanceiroRouteChildren = {
+  GestaoFinanceiroAprovacoesRoute: GestaoFinanceiroAprovacoesRoute,
+  GestaoFinanceiroCategoriasRoute: GestaoFinanceiroCategoriasRoute,
+  GestaoFinanceiroCobrancasRoute: GestaoFinanceiroCobrancasRoute,
+  GestaoFinanceiroContasBancariasRoute: GestaoFinanceiroContasBancariasRoute,
+  GestaoFinanceiroContasPagarRoute: GestaoFinanceiroContasPagarRoute,
+  GestaoFinanceiroContasReceberRoute: GestaoFinanceiroContasReceberRoute,
+  GestaoFinanceiroFluxoCaixaRoute: GestaoFinanceiroFluxoCaixaRoute,
+  GestaoFinanceiroMovimentacoesRoute: GestaoFinanceiroMovimentacoesRoute,
+  GestaoFinanceiroOrcamentoRoute: GestaoFinanceiroOrcamentoRoute,
+  GestaoFinanceiroRelatoriosRoute: GestaoFinanceiroRelatoriosRoute,
+  GestaoFinanceiroIndexRoute: GestaoFinanceiroIndexRoute,
+}
+
+const GestaoFinanceiroRouteWithChildren =
+  GestaoFinanceiroRoute._addFileChildren(GestaoFinanceiroRouteChildren)
+
+interface GestaoRouteChildren {
+  GestaoContabilRoute: typeof GestaoContabilRouteWithChildren
+  GestaoCrmRoute: typeof GestaoCrmRouteWithChildren
+  GestaoDocumentosRoute: typeof GestaoDocumentosRoute
+  GestaoEstruturaDistritalRoute: typeof GestaoEstruturaDistritalRoute
+  GestaoFinanceiroRoute: typeof GestaoFinanceiroRouteWithChildren
+  GestaoLoginRoute: typeof GestaoLoginRoute
+  GestaoNominataRoute: typeof GestaoNominataRoute
+  GestaoUsuariosRoute: typeof GestaoUsuariosRoute
+  GestaoIndexRoute: typeof GestaoIndexRoute
+  GestaoClubesAssociadosAssociadosRoute: typeof GestaoClubesAssociadosAssociadosRoute
+  GestaoClubesAssociadosClubesRoute: typeof GestaoClubesAssociadosClubesRoute
+  GestaoClubesAssociadosIndexRoute: typeof GestaoClubesAssociadosIndexRoute
+}
+
+const GestaoRouteChildren: GestaoRouteChildren = {
+  GestaoContabilRoute: GestaoContabilRouteWithChildren,
+  GestaoCrmRoute: GestaoCrmRouteWithChildren,
+  GestaoDocumentosRoute: GestaoDocumentosRoute,
+  GestaoEstruturaDistritalRoute: GestaoEstruturaDistritalRoute,
+  GestaoFinanceiroRoute: GestaoFinanceiroRouteWithChildren,
+  GestaoLoginRoute: GestaoLoginRoute,
+  GestaoNominataRoute: GestaoNominataRoute,
+  GestaoUsuariosRoute: GestaoUsuariosRoute,
+  GestaoIndexRoute: GestaoIndexRoute,
+  GestaoClubesAssociadosAssociadosRoute: GestaoClubesAssociadosAssociadosRoute,
+  GestaoClubesAssociadosClubesRoute: GestaoClubesAssociadosClubesRoute,
+  GestaoClubesAssociadosIndexRoute: GestaoClubesAssociadosIndexRoute,
+}
+
+const GestaoRouteWithChildren =
+  GestaoRoute._addFileChildren(GestaoRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AcessoRoute: AcessoRoute,
@@ -1475,6 +2213,7 @@ const rootRouteChildren: RootRouteChildren = {
   DoarRoute: DoarRoute,
   DocumentosRoute: DocumentosRouteWithChildren,
   GatRoute: GatRoute,
+  GestaoRoute: GestaoRouteWithChildren,
   GovernadorRoute: GovernadorRoute,
   HistoriaRoute: HistoriaRoute,
   LcifRoute: LcifRoute,

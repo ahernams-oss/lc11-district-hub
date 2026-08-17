@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 
-export type AppRole = "admin" | "avancado" | "intermediario" | "basico" | "user";
+export type AppRole = "admin" | "avancado" | "intermediario" | "basico" | "user" | "gestor_financeiro" | "gestor_contabil" | "gestor_crm" | "gestor_admin";
 
 export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
@@ -19,27 +19,30 @@ export function useAuth() {
       setRoles(((data ?? []) as { role: AppRole }[]).map((r) => r.role));
     };
 
-    const handleBypass = () => {
+    const handleBypass = (gestaoOnly = false) => {
       setUser({
-        id: "dev-admin-id",
-        email: "admin@localhost",
+        id: gestaoOnly ? "dev-gestor-id" : "dev-admin-id",
+        email: gestaoOnly ? "gestor@localhost" : "admin@localhost",
         aud: "authenticated",
         role: "authenticated",
         created_at: new Date().toISOString(),
         app_metadata: {},
         user_metadata: {},
       } as any);
-      setRoles(["admin"]);
+      // Admin bypass: all roles. Gestão bypass: only gestão roles.
+      setRoles(gestaoOnly ? ["gestor_admin"] : ["admin", "gestor_admin"]);
       setLoading(false);
     };
 
-    if (import.meta.env.DEV && localStorage.getItem("dev_admin_bypass") === "true") {
-      handleBypass();
-    }
+    const isDevBypass = import.meta.env.DEV && localStorage.getItem("dev_admin_bypass") === "true";
+    const isDevGestaoBypass = import.meta.env.DEV && localStorage.getItem("dev_gestao_bypass") === "true";
+    if (isDevBypass) handleBypass(false);
+    else if (isDevGestaoBypass) handleBypass(true);
 
     const { data: sub } = supabase.auth.onAuthStateChange((event, s) => {
       if (event === "SIGNED_OUT") {
         localStorage.removeItem("dev_admin_bypass");
+        localStorage.removeItem("dev_gestao_bypass");
         setSession(null);
         setUser(null);
         setRoles([]);
@@ -48,7 +51,11 @@ export function useAuth() {
       }
 
       if (import.meta.env.DEV && localStorage.getItem("dev_admin_bypass") === "true") {
-        handleBypass();
+        handleBypass(false);
+        return;
+      }
+      if (import.meta.env.DEV && localStorage.getItem("dev_gestao_bypass") === "true") {
+        handleBypass(true);
         return;
       }
 
@@ -63,7 +70,11 @@ export function useAuth() {
 
     supabase.auth.getSession().then(async ({ data: { session: s } }) => {
       if (import.meta.env.DEV && localStorage.getItem("dev_admin_bypass") === "true") {
-        handleBypass();
+        handleBypass(false);
+        return;
+      }
+      if (import.meta.env.DEV && localStorage.getItem("dev_gestao_bypass") === "true") {
+        handleBypass(true);
         return;
       }
       setSession(s);
@@ -84,8 +95,16 @@ export function useAuth() {
   const canViewUsers = isAvancado; // avancado, admin
   const canManageUsers = isAdmin;
 
+  // Sistema de Gestão — roles independentes do painel admin
+  const isGestorAdmin = roles.includes("gestor_admin");
+  const isGestorFinanceiro = isGestorAdmin || roles.includes("gestor_financeiro");
+  const isGestorContabil = isGestorAdmin || roles.includes("gestor_contabil");
+  const isGestorCRM = isGestorAdmin || roles.includes("gestor_crm");
+  const hasGestaoAccess = isGestorAdmin || isGestorFinanceiro || isGestorContabil || isGestorCRM;
+
   const signOut = async () => {
     localStorage.removeItem("dev_admin_bypass");
+    localStorage.removeItem("dev_gestao_bypass");
     await supabase.auth.signOut();
     setSession(null);
     setUser(null);
@@ -104,6 +123,12 @@ export function useAuth() {
     canEditContent,
     canViewUsers,
     canManageUsers,
+    // Gestão
+    isGestorAdmin,
+    isGestorFinanceiro,
+    isGestorContabil,
+    isGestorCRM,
+    hasGestaoAccess,
     signOut,
   };
 }

@@ -49,6 +49,50 @@ function AdminAuditDashboard() {
   const totalViews = useMemo(() => logs.filter((l) => l.action === "VIEW").length, [logs]);
   const uniqueUsers = useMemo(() => new Set(logs.map((l) => l.user_email)).size, [logs]);
 
+  const filteredLogs = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+    return logs.filter((l: DocumentAuditLog) => {
+      if (actionFilter !== "ALL" && l.action !== actionFilter) return false;
+      if (!term) return true;
+      return (
+        (l.user_email ?? "").toLowerCase().includes(term) ||
+        (l.document_title ?? "").toLowerCase().includes(term)
+      );
+    });
+  }, [logs, searchTerm, actionFilter]);
+
+  const timelineData = useMemo(() => {
+    const map = new Map<string, { date: string; VIEW: number; DOWNLOAD: number }>();
+    for (const l of logs) {
+      const date = new Date(l.created_at).toLocaleDateString("pt-BR");
+      const entry = map.get(date) ?? { date, VIEW: 0, DOWNLOAD: 0 };
+      if (l.action === "DOWNLOAD") entry.DOWNLOAD += 1;
+      else entry.VIEW += 1;
+      map.set(date, entry);
+    }
+    return Array.from(map.values()).slice(-14);
+  }, [logs]);
+
+  const actionPieData = useMemo(
+    () => [
+      { name: "Visualizações", value: totalViews, color: ACTION_COLORS.VIEW },
+      { name: "Downloads", value: totalDownloads, color: ACTION_COLORS.DOWNLOAD },
+    ],
+    [totalViews, totalDownloads],
+  );
+
+  const topDocsData = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const l of logs) {
+      const name = l.document_title ?? "—";
+      map.set(name, (map.get(name) ?? 0) + 1);
+    }
+    return Array.from(map.entries())
+      .map(([name, total]) => ({ name, total }))
+      .sort((a, b) => b.total - a.total)
+      .slice(0, 5);
+  }, [logs]);
+
   return (
     <div className="space-y-8">
       {/* Header */}

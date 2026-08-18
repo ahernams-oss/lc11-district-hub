@@ -82,6 +82,538 @@ export type Database = {
           },
         ]
       }
+      con_lancamento_itens: {
+        Row: {
+          conta_id: string
+          created_at: string
+          historico_complementar: string | null
+          id: string
+          lancamento_id: string
+          tipo: string
+          valor: number
+        }
+        Insert: {
+          conta_id: string
+          created_at?: string
+          historico_complementar?: string | null
+          id?: string
+          lancamento_id: string
+          tipo: string
+          valor?: number
+        }
+        Update: {
+          conta_id?: string
+          created_at?: string
+          historico_complementar?: string | null
+          id?: string
+          lancamento_id?: string
+          tipo?: string
+          valor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "con_lancamento_itens_conta_id_fkey"
+            columns: ["conta_id"]
+            isOneToOne: false
+            referencedRelation: "con_plano_contas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "con_lancamento_itens_lancamento_id_fkey"
+            columns: ["lancamento_id"]
+            isOneToOne: false
+            referencedRelation: "con_lancamentos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      con_lancamentos: {
+        Row: {
+          competencia: string | null
+          created_at: string
+          criado_por: string | null
+          data: string
+          historico: string
+          id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          competencia?: string | null
+          created_at?: string
+          criado_por?: string | null
+          data: string
+          historico: string
+          id?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          competencia?: string | null
+          created_at?: string
+          criado_por?: string | null
+          data?: string
+          historico?: string
+          id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      con_plano_contas: {
+        Row: {
+          ativo: boolean
+          codigo: string
+          created_at: string
+          id: string
+          natureza: string
+          nivel: number
+          nome: string
+          pai_id: string | null
+          sintetica: boolean
+          tipo: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          codigo: string
+          created_at?: string
+          id?: string
+          natureza: string
+          nivel?: number
+          nome: string
+          pai_id?: string | null
+          sintetica?: boolean
+          tipo: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          codigo?: string
+          created_at?: string
+          id?: string
+          natureza?: string
+          nivel?: number
+          nome?: string
+          pai_id?: string | null
+          sintetica?: boolean
+          tipo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "con_plano_contas_pai_id_fkey"
+            columns: ["pai_id"]
+            isOneToOne: false
+            referencedRelation: "con_plano_contas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_contatos: {
+        Row: {
+          cargo: string | null
+          clube_nome: string | null
+          created_at: string
+          email: string | null
+          estagio_funil: string
+          id: string
+          nome: string
+          observacoes: string | null
+          origem: string | null
+          status: string
+          telefone: string | null
+          tipo: string
+          updated_at: string
+          valor_estimado: number
+          whatsapp: string | null
+        }
+        Insert: {
+          cargo?: string | null
+          clube_nome?: string | null
+          created_at?: string
+          email?: string | null
+          estagio_funil?: string
+          id?: string
+          nome: string
+          observacoes?: string | null
+          origem?: string | null
+          status?: string
+          telefone?: string | null
+          tipo?: string
+          updated_at?: string
+          valor_estimado?: number
+          whatsapp?: string | null
+        }
+        Update: {
+          cargo?: string | null
+          clube_nome?: string | null
+          created_at?: string
+          email?: string | null
+          estagio_funil?: string
+          id?: string
+          nome?: string
+          observacoes?: string | null
+          origem?: string | null
+          status?: string
+          telefone?: string | null
+          tipo?: string
+          updated_at?: string
+          valor_estimado?: number
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      crm_interacoes: {
+        Row: {
+          contato_id: string
+          created_at: string
+          descricao: string | null
+          id: string
+          registrado_por: string | null
+          tipo: string
+          titulo: string
+        }
+        Insert: {
+          contato_id: string
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          registrado_por?: string | null
+          tipo?: string
+          titulo: string
+        }
+        Update: {
+          contato_id?: string
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          registrado_por?: string | null
+          tipo?: string
+          titulo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_interacoes_contato_id_fkey"
+            columns: ["contato_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contatos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_tarefas_followup: {
+        Row: {
+          concluida_em: string | null
+          contato_id: string
+          created_at: string
+          data_vencimento: string
+          descricao: string | null
+          id: string
+          status: string
+          tipo: string
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          concluida_em?: string | null
+          contato_id: string
+          created_at?: string
+          data_vencimento: string
+          descricao?: string | null
+          id?: string
+          status?: string
+          tipo?: string
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          concluida_em?: string | null
+          contato_id?: string
+          created_at?: string
+          data_vencimento?: string
+          descricao?: string | null
+          id?: string
+          status?: string
+          tipo?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_tarefas_followup_contato_id_fkey"
+            columns: ["contato_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contatos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      dist_associados: {
+        Row: {
+          cargo_clube: string
+          cargo_distrital: string | null
+          categoria: string
+          clube_id: string
+          cpf: string | null
+          created_at: string
+          data_admissao: string | null
+          data_nascimento: string | null
+          email: string | null
+          foto_url: string | null
+          id: string
+          nome: string
+          nome_conjuge: string | null
+          status: string
+          telefone: string | null
+          updated_at: string
+          whatsapp: string | null
+        }
+        Insert: {
+          cargo_clube?: string
+          cargo_distrital?: string | null
+          categoria?: string
+          clube_id: string
+          cpf?: string | null
+          created_at?: string
+          data_admissao?: string | null
+          data_nascimento?: string | null
+          email?: string | null
+          foto_url?: string | null
+          id?: string
+          nome: string
+          nome_conjuge?: string | null
+          status?: string
+          telefone?: string | null
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Update: {
+          cargo_clube?: string
+          cargo_distrital?: string | null
+          categoria?: string
+          clube_id?: string
+          cpf?: string | null
+          created_at?: string
+          data_admissao?: string | null
+          data_nascimento?: string | null
+          email?: string | null
+          foto_url?: string | null
+          id?: string
+          nome?: string
+          nome_conjuge?: string | null
+          status?: string
+          telefone?: string | null
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dist_associados_clube_id_fkey"
+            columns: ["clube_id"]
+            isOneToOne: false
+            referencedRelation: "dist_clubes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      dist_clubes: {
+        Row: {
+          cep: string | null
+          charter_date: string | null
+          cidade: string
+          codigo_lions: string | null
+          created_at: string
+          dia_reuniao: string | null
+          divisao: string
+          email: string | null
+          endereco: string | null
+          estado: string
+          horario_reuniao: string | null
+          id: string
+          local_reuniao: string | null
+          nome: string
+          observacoes: string | null
+          regiao: string
+          status: string
+          telefone: string | null
+          updated_at: string
+        }
+        Insert: {
+          cep?: string | null
+          charter_date?: string | null
+          cidade?: string
+          codigo_lions?: string | null
+          created_at?: string
+          dia_reuniao?: string | null
+          divisao?: string
+          email?: string | null
+          endereco?: string | null
+          estado?: string
+          horario_reuniao?: string | null
+          id?: string
+          local_reuniao?: string | null
+          nome: string
+          observacoes?: string | null
+          regiao?: string
+          status?: string
+          telefone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          cep?: string | null
+          charter_date?: string | null
+          cidade?: string
+          codigo_lions?: string | null
+          created_at?: string
+          dia_reuniao?: string | null
+          divisao?: string
+          email?: string | null
+          endereco?: string | null
+          estado?: string
+          horario_reuniao?: string | null
+          id?: string
+          local_reuniao?: string | null
+          nome?: string
+          observacoes?: string | null
+          regiao?: string
+          status?: string
+          telefone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      dist_documentos_informativos: {
+        Row: {
+          arquivo_nome: string
+          arquivo_tamanho: string | null
+          arquivo_url: string
+          autor_cargo: string
+          categoria: string
+          created_at: string
+          criado_por: string | null
+          descricao: string | null
+          id: string
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          arquivo_nome: string
+          arquivo_tamanho?: string | null
+          arquivo_url: string
+          autor_cargo?: string
+          categoria?: string
+          created_at?: string
+          criado_por?: string | null
+          descricao?: string | null
+          id?: string
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          arquivo_nome?: string
+          arquivo_tamanho?: string | null
+          arquivo_url?: string
+          autor_cargo?: string
+          categoria?: string
+          created_at?: string
+          criado_por?: string | null
+          descricao?: string | null
+          id?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      dist_estrutura_cargos: {
+        Row: {
+          ano_leonico: string
+          cargo_nome: string
+          categoria_estrutura: string
+          clube_origem: string | null
+          created_at: string
+          email: string | null
+          id: string
+          nome_titular: string
+          ordem: number
+          telefone: string | null
+          updated_at: string
+        }
+        Insert: {
+          ano_leonico?: string
+          cargo_nome: string
+          categoria_estrutura?: string
+          clube_origem?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          nome_titular: string
+          ordem?: number
+          telefone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ano_leonico?: string
+          cargo_nome?: string
+          categoria_estrutura?: string
+          clube_origem?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          nome_titular?: string
+          ordem?: number
+          telefone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      dist_nominata_clube: {
+        Row: {
+          ano_leonico: string
+          cargo: string
+          clube_id: string
+          created_at: string
+          email: string | null
+          id: string
+          nome_oficial: string
+          telefone: string | null
+          updated_at: string
+          whatsapp: string | null
+        }
+        Insert: {
+          ano_leonico?: string
+          cargo: string
+          clube_id: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          nome_oficial: string
+          telefone?: string | null
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Update: {
+          ano_leonico?: string
+          cargo?: string
+          clube_id?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          nome_oficial?: string
+          telefone?: string | null
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dist_nominata_clube_clube_id_fkey"
+            columns: ["clube_id"]
+            isOneToOne: false
+            referencedRelation: "dist_clubes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       divisions: {
         Row: {
           code: string
@@ -328,6 +860,476 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      fin_categorias: {
+        Row: {
+          ativo: boolean
+          cor: string
+          created_at: string
+          id: string
+          nome: string
+          ordem: number
+          tipo: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          cor?: string
+          created_at?: string
+          id?: string
+          nome: string
+          ordem?: number
+          tipo?: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          cor?: string
+          created_at?: string
+          id?: string
+          nome?: string
+          ordem?: number
+          tipo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      fin_cobrancas: {
+        Row: {
+          club_id: string | null
+          created_at: string
+          criado_por: string | null
+          descricao: string
+          id: string
+          observacoes: string | null
+          referencia: string | null
+          status: string
+          updated_at: string
+          valor: number
+          vencimento: string
+        }
+        Insert: {
+          club_id?: string | null
+          created_at?: string
+          criado_por?: string | null
+          descricao: string
+          id?: string
+          observacoes?: string | null
+          referencia?: string | null
+          status?: string
+          updated_at?: string
+          valor?: number
+          vencimento: string
+        }
+        Update: {
+          club_id?: string | null
+          created_at?: string
+          criado_por?: string | null
+          descricao?: string
+          id?: string
+          observacoes?: string | null
+          referencia?: string | null
+          status?: string
+          updated_at?: string
+          valor?: number
+          vencimento?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fin_cobrancas_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
+            referencedRelation: "clubs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fin_cobrancas_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
+            referencedRelation: "clubs_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fin_contas_bancarias: {
+        Row: {
+          agencia: string | null
+          ativo: boolean
+          banco: string
+          conta: string | null
+          created_at: string
+          id: string
+          nome: string
+          saldo_inicial: number
+          tipo: string
+          updated_at: string
+        }
+        Insert: {
+          agencia?: string | null
+          ativo?: boolean
+          banco: string
+          conta?: string | null
+          created_at?: string
+          id?: string
+          nome: string
+          saldo_inicial?: number
+          tipo?: string
+          updated_at?: string
+        }
+        Update: {
+          agencia?: string | null
+          ativo?: boolean
+          banco?: string
+          conta?: string | null
+          created_at?: string
+          id?: string
+          nome?: string
+          saldo_inicial?: number
+          tipo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      fin_contas_pagar: {
+        Row: {
+          anexo_url: string | null
+          aprovado_em: string | null
+          aprovado_por: string | null
+          categoria_id: string | null
+          competencia: string | null
+          conta_id: string | null
+          created_at: string
+          criado_por: string | null
+          descricao: string
+          documento: string | null
+          fornecedor: string | null
+          id: string
+          observacoes: string | null
+          pago_em: string | null
+          parecer_governador: string | null
+          solicitante_nome: string | null
+          status: string
+          status_aprovacao: string
+          updated_at: string
+          valor: number
+          valor_pago: number | null
+          vencimento: string
+        }
+        Insert: {
+          anexo_url?: string | null
+          aprovado_em?: string | null
+          aprovado_por?: string | null
+          categoria_id?: string | null
+          competencia?: string | null
+          conta_id?: string | null
+          created_at?: string
+          criado_por?: string | null
+          descricao: string
+          documento?: string | null
+          fornecedor?: string | null
+          id?: string
+          observacoes?: string | null
+          pago_em?: string | null
+          parecer_governador?: string | null
+          solicitante_nome?: string | null
+          status?: string
+          status_aprovacao?: string
+          updated_at?: string
+          valor?: number
+          valor_pago?: number | null
+          vencimento: string
+        }
+        Update: {
+          anexo_url?: string | null
+          aprovado_em?: string | null
+          aprovado_por?: string | null
+          categoria_id?: string | null
+          competencia?: string | null
+          conta_id?: string | null
+          created_at?: string
+          criado_por?: string | null
+          descricao?: string
+          documento?: string | null
+          fornecedor?: string | null
+          id?: string
+          observacoes?: string | null
+          pago_em?: string | null
+          parecer_governador?: string | null
+          solicitante_nome?: string | null
+          status?: string
+          status_aprovacao?: string
+          updated_at?: string
+          valor?: number
+          valor_pago?: number | null
+          vencimento?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fin_contas_pagar_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "fin_categorias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fin_contas_pagar_conta_id_fkey"
+            columns: ["conta_id"]
+            isOneToOne: false
+            referencedRelation: "fin_contas_bancarias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fin_contas_receber: {
+        Row: {
+          anexo_url: string | null
+          categoria_id: string | null
+          competencia: string | null
+          conta_id: string | null
+          created_at: string
+          criado_por: string | null
+          descricao: string
+          documento: string | null
+          id: string
+          observacoes: string | null
+          pagador: string | null
+          recebido_em: string | null
+          status: string
+          updated_at: string
+          valor: number
+          valor_recebido: number | null
+          vencimento: string
+        }
+        Insert: {
+          anexo_url?: string | null
+          categoria_id?: string | null
+          competencia?: string | null
+          conta_id?: string | null
+          created_at?: string
+          criado_por?: string | null
+          descricao: string
+          documento?: string | null
+          id?: string
+          observacoes?: string | null
+          pagador?: string | null
+          recebido_em?: string | null
+          status?: string
+          updated_at?: string
+          valor?: number
+          valor_recebido?: number | null
+          vencimento: string
+        }
+        Update: {
+          anexo_url?: string | null
+          categoria_id?: string | null
+          competencia?: string | null
+          conta_id?: string | null
+          created_at?: string
+          criado_por?: string | null
+          descricao?: string
+          documento?: string | null
+          id?: string
+          observacoes?: string | null
+          pagador?: string | null
+          recebido_em?: string | null
+          status?: string
+          updated_at?: string
+          valor?: number
+          valor_recebido?: number | null
+          vencimento?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fin_contas_receber_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "fin_categorias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fin_contas_receber_conta_id_fkey"
+            columns: ["conta_id"]
+            isOneToOne: false
+            referencedRelation: "fin_contas_bancarias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fin_historico_aprovacoes: {
+        Row: {
+          acao: string
+          cargo_usuario: string | null
+          conta_pagar_id: string | null
+          created_at: string
+          id: string
+          parecer: string | null
+          usuario_id: string | null
+          usuario_nome: string | null
+        }
+        Insert: {
+          acao: string
+          cargo_usuario?: string | null
+          conta_pagar_id?: string | null
+          created_at?: string
+          id?: string
+          parecer?: string | null
+          usuario_id?: string | null
+          usuario_nome?: string | null
+        }
+        Update: {
+          acao?: string
+          cargo_usuario?: string | null
+          conta_pagar_id?: string | null
+          created_at?: string
+          id?: string
+          parecer?: string | null
+          usuario_id?: string | null
+          usuario_nome?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fin_historico_aprovacoes_conta_pagar_id_fkey"
+            columns: ["conta_pagar_id"]
+            isOneToOne: false
+            referencedRelation: "fin_contas_pagar"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fin_movimentacoes: {
+        Row: {
+          categoria_id: string | null
+          conciliado: boolean
+          conta_id: string
+          created_at: string
+          criado_por: string | null
+          data: string
+          descricao: string
+          documento: string | null
+          id: string
+          observacoes: string | null
+          tipo: string
+          updated_at: string
+          valor: number
+        }
+        Insert: {
+          categoria_id?: string | null
+          conciliado?: boolean
+          conta_id: string
+          created_at?: string
+          criado_por?: string | null
+          data: string
+          descricao: string
+          documento?: string | null
+          id?: string
+          observacoes?: string | null
+          tipo?: string
+          updated_at?: string
+          valor?: number
+        }
+        Update: {
+          categoria_id?: string | null
+          conciliado?: boolean
+          conta_id?: string
+          created_at?: string
+          criado_por?: string | null
+          data?: string
+          descricao?: string
+          documento?: string | null
+          id?: string
+          observacoes?: string | null
+          tipo?: string
+          updated_at?: string
+          valor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fin_movimentacoes_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "fin_categorias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fin_movimentacoes_conta_id_fkey"
+            columns: ["conta_id"]
+            isOneToOne: false
+            referencedRelation: "fin_contas_bancarias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fin_orcamento: {
+        Row: {
+          ano: number
+          created_at: string
+          criado_por: string | null
+          descricao: string | null
+          id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          ano: number
+          created_at?: string
+          criado_por?: string | null
+          descricao?: string | null
+          id?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          ano?: number
+          created_at?: string
+          criado_por?: string | null
+          descricao?: string | null
+          id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      fin_orcamento_itens: {
+        Row: {
+          categoria_id: string | null
+          created_at: string
+          id: string
+          observacoes: string | null
+          orcamento_id: string
+          valor_previsto: number
+        }
+        Insert: {
+          categoria_id?: string | null
+          created_at?: string
+          id?: string
+          observacoes?: string | null
+          orcamento_id: string
+          valor_previsto?: number
+        }
+        Update: {
+          categoria_id?: string | null
+          created_at?: string
+          id?: string
+          observacoes?: string | null
+          orcamento_id?: string
+          valor_previsto?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fin_orcamento_itens_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "fin_categorias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fin_orcamento_itens_orcamento_id_fkey"
+            columns: ["orcamento_id"]
+            isOneToOne: false
+            referencedRelation: "fin_orcamento"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       leaders: {
         Row: {

@@ -3,8 +3,37 @@ import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 export async function assertAprovacoesAccess(userId: string) {
-  if (userId === "00000000-0000-0000-0000-000000000001") return;
-  // Auth bypass for dev
+  if (
+    userId === "00000000-0000-0000-0000-000000000001" ||
+    userId === "dev-admin-id" ||
+    userId === "dev-gestor-id"
+  ) return;
+
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  try {
+    const { data, error } = await supabaseAdmin
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", userId);
+    if (!error && data) {
+      const roles = data.map((r: any) => r.role as string);
+      if (
+        roles.includes("gestor_admin") ||
+        roles.includes("gestor_financeiro") ||
+        roles.includes("admin")
+      ) {
+        return;
+      }
+    }
+  } catch {
+    // Fall through to dev check
+  }
+
+  if (process.env.NODE_ENV !== "production") {
+    return;
+  }
+
+  throw new Error("Acesso negado: requer permissão para aprovações de despesas.");
 }
 
 // ─── MOCK DATASET DE DEV ───

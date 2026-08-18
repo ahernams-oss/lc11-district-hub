@@ -320,7 +320,7 @@ function ContasReceberPage() {
             </Field>
           </FormRow>
 
-          {form.status === "recebido" && (
+          {(form.status as string) === "recebido" && (
             <FormRow>
               <Field label="Recebido em">
                 <FormInput type="date" value={form.recebido_em ?? ""} onChange={(e) => setForm((f) => ({ ...f, recebido_em: e.target.value }))} />

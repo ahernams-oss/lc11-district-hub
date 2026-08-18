@@ -44,7 +44,7 @@ function GestaoDocumentosPage() {
   });
 
   const addMutation = useMutation({
-    mutationFn: addDocumentoInformativo,
+    mutationFn: (data: any) => addDocumentoInformativo({ data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dist-documentos"] });
       setModalOpen(false);
@@ -53,7 +53,7 @@ function GestaoDocumentosPage() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: deleteDocumentoInformativo,
+    mutationFn: (data: any) => deleteDocumentoInformativo({ data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dist-documentos"] });
     },

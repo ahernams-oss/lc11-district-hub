@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 type FileUploadInputProps = {
   value: string | null | undefined;
-  onChange: (url: string | null) => void;
+  onChange: (url: string, size?: number | null) => void;
   bucket?: string;
   folder?: string;
   accept?: string;
@@ -44,7 +44,7 @@ export function FileUploadInput({
         .from(bucket)
         .getPublicUrl(fileName);
 
-      onChange(publicUrlData.publicUrl);
+      onChange(publicUrlData.publicUrl, file.size);
     } catch (err: any) {
       setError(err?.message ?? "Erro ao fazer upload do arquivo.");
     } finally {
@@ -53,7 +53,7 @@ export function FileUploadInput({
   }
 
   function handleRemove() {
-    onChange(null);
+    onChange("", null);
   }
 
   const isPdf = value?.toLowerCase().endsWith(".pdf");

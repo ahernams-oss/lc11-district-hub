@@ -1,6 +1,6 @@
 import { ChevronRight } from "lucide-react";
 
-type Breadcrumb = { label: string; to?: string };
+type Breadcrumb = string | { label: string; to?: string };
 
 type GestaoHeaderProps = {
   title: string;
@@ -15,7 +15,9 @@ export function GestaoHeader({ title, subtitle, breadcrumbs, actions }: GestaoHe
       {/* Breadcrumbs */}
       {breadcrumbs && breadcrumbs.length > 0 && (
         <nav className="mb-2 flex items-center gap-1 text-xs text-slate-500">
-          {breadcrumbs.map((crumb, i) => (
+          {breadcrumbs.map((raw, i) => {
+            const crumb = typeof raw === "string" ? { label: raw, to: undefined } : raw;
+            return (
             <span key={i} className="flex items-center gap-1">
               {i > 0 && <ChevronRight className="h-3 w-3 text-slate-600" />}
               {crumb.to ? (
@@ -26,7 +28,8 @@ export function GestaoHeader({ title, subtitle, breadcrumbs, actions }: GestaoHe
                 <span className="text-slate-400">{crumb.label}</span>
               )}
             </span>
-          ))}
+            );
+          })}
         </nav>
       )}
 

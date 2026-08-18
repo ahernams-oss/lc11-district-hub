@@ -19,7 +19,10 @@ export interface EventItem {
   lodging_tips?: string | null;
   food_tips?: string | null;
   tourism_tips?: string | null;
+  inscricao_valor_cents?: number | null;
+  inscricao_ativa?: boolean | null;
 }
+
 
 export function useEvents() {
   return useQuery({

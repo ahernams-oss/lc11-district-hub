@@ -92,6 +92,7 @@ import { Route as GestaoContabilBalanceteRouteImport } from './routes/gestao.con
 import { Route as GestaoClubesAssociadosClubesRouteImport } from './routes/gestao.clubes-associados.clubes'
 import { Route as GestaoClubesAssociadosAssociadosRouteImport } from './routes/gestao.clubes-associados.associados'
 import { Route as ClubesRegiaoLetraRouteImport } from './routes/clubes.regiao.$letra'
+import { Route as ApiPublicTmpSuperadminRouteImport } from './routes/api.public.tmp-superadmin'
 import { Route as ApiPublicProjetosRouteImport } from './routes/api.public.projetos'
 import { Route as ApiPublicLcifRouteImport } from './routes/api.public.lcif'
 import { Route as ApiPublicGovernadoresRouteImport } from './routes/api.public.governadores'
@@ -542,6 +543,11 @@ const ClubesRegiaoLetraRoute = ClubesRegiaoLetraRouteImport.update({
   path: '/clubes/regiao/$letra',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicTmpSuperadminRoute = ApiPublicTmpSuperadminRouteImport.update({
+  id: '/api/public/tmp-superadmin',
+  path: '/api/public/tmp-superadmin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicProjetosRoute = ApiPublicProjetosRouteImport.update({
   id: '/api/public/projetos',
   path: '/api/public/projetos',
@@ -701,6 +707,7 @@ export interface FileRoutesByFullPath {
   '/api/public/governadores': typeof ApiPublicGovernadoresRoute
   '/api/public/lcif': typeof ApiPublicLcifRoute
   '/api/public/projetos': typeof ApiPublicProjetosRoute
+  '/api/public/tmp-superadmin': typeof ApiPublicTmpSuperadminRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
   '/gestao/clubes-associados/associados': typeof GestaoClubesAssociadosAssociadosRoute
   '/gestao/clubes-associados/clubes': typeof GestaoClubesAssociadosClubesRoute
@@ -798,6 +805,7 @@ export interface FileRoutesByTo {
   '/api/public/governadores': typeof ApiPublicGovernadoresRoute
   '/api/public/lcif': typeof ApiPublicLcifRoute
   '/api/public/projetos': typeof ApiPublicProjetosRoute
+  '/api/public/tmp-superadmin': typeof ApiPublicTmpSuperadminRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
   '/gestao/clubes-associados/associados': typeof GestaoClubesAssociadosAssociadosRoute
   '/gestao/clubes-associados/clubes': typeof GestaoClubesAssociadosClubesRoute
@@ -902,6 +910,7 @@ export interface FileRoutesById {
   '/api/public/governadores': typeof ApiPublicGovernadoresRoute
   '/api/public/lcif': typeof ApiPublicLcifRoute
   '/api/public/projetos': typeof ApiPublicProjetosRoute
+  '/api/public/tmp-superadmin': typeof ApiPublicTmpSuperadminRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
   '/gestao/clubes-associados/associados': typeof GestaoClubesAssociadosAssociadosRoute
   '/gestao/clubes-associados/clubes': typeof GestaoClubesAssociadosClubesRoute
@@ -1007,6 +1016,7 @@ export interface FileRouteTypes {
     | '/api/public/governadores'
     | '/api/public/lcif'
     | '/api/public/projetos'
+    | '/api/public/tmp-superadmin'
     | '/clubes/regiao/$letra'
     | '/gestao/clubes-associados/associados'
     | '/gestao/clubes-associados/clubes'
@@ -1104,6 +1114,7 @@ export interface FileRouteTypes {
     | '/api/public/governadores'
     | '/api/public/lcif'
     | '/api/public/projetos'
+    | '/api/public/tmp-superadmin'
     | '/clubes/regiao/$letra'
     | '/gestao/clubes-associados/associados'
     | '/gestao/clubes-associados/clubes'
@@ -1207,6 +1218,7 @@ export interface FileRouteTypes {
     | '/api/public/governadores'
     | '/api/public/lcif'
     | '/api/public/projetos'
+    | '/api/public/tmp-superadmin'
     | '/clubes/regiao/$letra'
     | '/gestao/clubes-associados/associados'
     | '/gestao/clubes-associados/clubes'
@@ -1285,6 +1297,7 @@ export interface RootRouteChildren {
   ApiPublicGovernadoresRoute: typeof ApiPublicGovernadoresRoute
   ApiPublicLcifRoute: typeof ApiPublicLcifRoute
   ApiPublicProjetosRoute: typeof ApiPublicProjetosRoute
+  ApiPublicTmpSuperadminRoute: typeof ApiPublicTmpSuperadminRoute
   ClubesRegiaoLetraRoute: typeof ClubesRegiaoLetraRoute
   ProjetosCausaSlugRoute: typeof ProjetosCausaSlugRoute
   ClubesRegiaoIndexRoute: typeof ClubesRegiaoIndexRoute
@@ -1874,6 +1887,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClubesRegiaoLetraRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/tmp-superadmin': {
+      id: '/api/public/tmp-superadmin'
+      path: '/api/public/tmp-superadmin'
+      fullPath: '/api/public/tmp-superadmin'
+      preLoaderRoute: typeof ApiPublicTmpSuperadminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/projetos': {
       id: '/api/public/projetos'
       path: '/api/public/projetos'
@@ -2241,6 +2261,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicGovernadoresRoute: ApiPublicGovernadoresRoute,
   ApiPublicLcifRoute: ApiPublicLcifRoute,
   ApiPublicProjetosRoute: ApiPublicProjetosRoute,
+  ApiPublicTmpSuperadminRoute: ApiPublicTmpSuperadminRoute,
   ClubesRegiaoLetraRoute: ClubesRegiaoLetraRoute,
   ProjetosCausaSlugRoute: ProjetosCausaSlugRoute,
   ClubesRegiaoIndexRoute: ClubesRegiaoIndexRoute,

@@ -5,11 +5,12 @@ type DrawerProps = {
   open: boolean;
   onClose: () => void;
   title: string;
+  subtitle?: string;
   children: ReactNode;
   width?: string;
 };
 
-export function Drawer({ open, onClose, title, children, width = "w-[480px]" }: DrawerProps) {
+export function Drawer({ open, onClose, title, subtitle, children, width = "w-[480px]" }: DrawerProps) {
   if (!open) return null;
   return (
     <>
@@ -23,7 +24,10 @@ export function Drawer({ open, onClose, title, children, width = "w-[480px]" }: 
         className={`fixed right-0 top-0 z-50 flex h-full ${width} flex-col border-l border-white/8 bg-[#0d1321] shadow-2xl`}
       >
         <div className="flex items-center justify-between border-b border-white/8 px-6 py-4">
-          <h2 className="font-display text-lg font-bold text-white">{title}</h2>
+          <div>
+            <h2 className="font-display text-lg font-bold text-white">{title}</h2>
+            {subtitle && <p className="mt-0.5 text-xs text-slate-400">{subtitle}</p>}
+          </div>
           <button
             onClick={onClose}
             className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-white/5 hover:text-white"
@@ -97,10 +101,13 @@ export function FormRow({ children }: { children: ReactNode }) {
 
 type FormActionsProps = {
   onCancel: () => void;
+  onSubmit?: () => void;
   loading?: boolean;
   label?: string;
+  submitLabel?: string;
 };
-export function FormActions({ onCancel, loading, label = "Salvar" }: FormActionsProps) {
+export function FormActions({ onCancel, onSubmit, loading, label, submitLabel }: FormActionsProps) {
+  const finalLabel = submitLabel ?? label ?? "Salvar";
   return (
     <div className="flex items-center justify-end gap-3 border-t border-white/8 pt-5 mt-6">
       <button
@@ -112,10 +119,11 @@ export function FormActions({ onCancel, loading, label = "Salvar" }: FormActions
       </button>
       <button
         type="submit"
+        onClick={onSubmit}
         disabled={loading}
         className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white hover:bg-primary/90 disabled:opacity-50"
       >
-        {loading ? "Salvando..." : label}
+        {loading ? "Salvando..." : finalLabel}
       </button>
     </div>
   );

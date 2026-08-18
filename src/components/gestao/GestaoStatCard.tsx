@@ -1,7 +1,10 @@
 import { type LucideIcon } from "lucide-react";
 
 type StatCardProps = {
-  label: string;
+  label?: string;
+  title?: string;
+  subtitle?: string;
+  color?: string;
   value: string | number;
   loading?: boolean;
   icon?: LucideIcon;
@@ -34,6 +37,8 @@ const VARIANT_STYLES = {
 
 export function GestaoStatCard({
   label,
+  title,
+  subtitle,
   value,
   loading,
   icon: Icon,
@@ -47,7 +52,7 @@ export function GestaoStatCard({
       <div className="flex items-start justify-between">
         <div>
           <div className="text-xs font-medium uppercase tracking-wider text-slate-500">
-            {label}
+            {label ?? title}
           </div>
           <div className="mt-2 font-display text-2xl font-bold text-white">
             {loading ? (
@@ -56,6 +61,9 @@ export function GestaoStatCard({
               value
             )}
           </div>
+          {subtitle && !loading && (
+            <div className="mt-1 text-xs text-slate-400">{subtitle}</div>
+          )}
           {trend && !loading && (
             <div className={`mt-1 text-xs ${styles.trend}`}>
               {trend.value > 0 ? "↑" : trend.value < 0 ? "↓" : "→"}{" "}

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { PageHero } from "@/components/PageHero";
 import { getCampanhaBySlug } from "@/lib/campanhas";
 import { StripeEmbeddedCheckout } from "@/components/StripeEmbeddedCheckout";
+import { PixQrCode } from "@/components/PixQrCode";
 
 export const Route = createFileRoute("/campanhas/$slug")({
   head: () => ({

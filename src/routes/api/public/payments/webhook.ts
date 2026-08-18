@@ -19,24 +19,29 @@ async function registrarContaRecebida(
   admin: AdminClient,
   args: { descricao: string; valorCents: number; pagador: string | null; documento: string },
 ) {
+  const { data: existente } = await admin
+    .from("fin_contas_receber")
+    .select("id")
+    .eq("documento", args.documento)
+    .maybeSingle();
+  if (existente) return;
+
   const hoje = new Date();
-  const { error } = await admin.from("fin_contas_receber").upsert(
-    {
-      descricao: args.descricao,
-      valor: args.valorCents,
-      vencimento: hoje.toISOString().slice(0, 10),
-      competencia: hoje.toISOString().slice(0, 7),
-      status: "recebido",
-      recebido_em: hoje.toISOString(),
-      valor_recebido: args.valorCents,
-      pagador: args.pagador,
-      documento: args.documento,
-      observacoes: "Lançamento automático — pagamento online (Stripe)",
-    },
-    { onConflict: "documento", ignoreDuplicates: true },
-  );
+  const { error } = await admin.from("fin_contas_receber").insert({
+    descricao: args.descricao,
+    valor: args.valorCents,
+    vencimento: hoje.toISOString().slice(0, 10),
+    competencia: hoje.toISOString().slice(0, 7),
+    status: "recebido",
+    recebido_em: hoje.toISOString(),
+    valor_recebido: args.valorCents,
+    pagador: args.pagador,
+    documento: args.documento,
+    observacoes: "Lançamento automático — pagamento online (Stripe)",
+  });
   if (error) console.error("Falha ao lançar em contas a receber:", error);
 }
+
 
 async function persistDonation(session: any, env: StripeEnv) {
   if (!session?.id) return;

@@ -205,7 +205,7 @@ function GestaoClubesPage() {
                   <div className="mt-3 space-y-1.5 text-xs text-slate-400">
                     <div className="flex items-center gap-2">
                       <MapPin className="h-3.5 w-3.5 text-slate-500" />
-                      <span>{clube.cidade} - {clube.estado} {clube.endereco && `(${clube.endereco})`}</span>
+                      <span>{clube.cidade} - {clube.estado} {(clube as any).endereco && `(${(clube as any).endereco})`}</span>
                     </div>
                     {clube.dia_reuniao && (
                       <div className="flex items-center gap-2">

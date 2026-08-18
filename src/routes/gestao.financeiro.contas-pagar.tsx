@@ -354,7 +354,7 @@ function ContasPagarPage() {
             </Field>
           </FormRow>
 
-          {form.status === "pago" && (
+          {(form.status as string) === "pago" && (
             <FormRow>
               <Field label="Pago em">
                 <FormInput

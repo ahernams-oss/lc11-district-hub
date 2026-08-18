@@ -205,7 +205,7 @@ function LancamentosPage() {
                   <div key={l.id} className="p-4 hover:bg-white/[0.02] transition-colors">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <span className="font-mono text-xs text-slate-500">#{l.numero}</span>
+                        <span className="font-mono text-xs text-slate-500">#{l.id.slice(0, 8)}</span>
                         <span className="font-semibold text-white text-sm">{l.historico}</span>
                         <StatusBadge status={l.status} />
                       </div>

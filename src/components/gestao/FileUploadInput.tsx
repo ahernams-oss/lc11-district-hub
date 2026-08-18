@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 type FileUploadInputProps = {
   value: string | null | undefined;
-  onChange: (url: string | null) => void;
+  onChange: (url: string, size?: number | null) => void;
   bucket?: string;
   folder?: string;
   accept?: string;
@@ -53,7 +53,7 @@ export function FileUploadInput({
   }
 
   function handleRemove() {
-    onChange(null);
+    onChange("", null);
   }
 
   const isPdf = value?.toLowerCase().endsWith(".pdf");

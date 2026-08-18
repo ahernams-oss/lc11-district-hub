@@ -236,7 +236,7 @@ export const ensureSuperadminCreated = createServerFn({ method: "POST" }).handle
       const allRoles = ["admin", "gestor_admin", "gestor_financeiro", "gestor_contabil", "gestor_crm", "avancado"];
       for (const role of allRoles) {
         await supabaseAdmin.from("user_roles").upsert(
-          { user_id: user.id, role },
+          { user_id: user.id, role: role as any },
           { onConflict: "user_id,role" }
         );
       }

@@ -193,3 +193,58 @@ export const deleteGestaoUser = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true };
   });
+
+/**
+ * Ensures the Superadmin account (ahernams@gmail.com) exists with all privileges.
+ */
+export const ensureSuperadminCreated = createServerFn({ method: "POST" }).handler(async () => {
+  const email = "ahernams@gmail.com";
+  const password = "P1m2a515@";
+
+  try {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: usersData } = await supabaseAdmin.auth.admin.listUsers({ page: 1, perPage: 100 });
+
+    let user = usersData?.users?.find((u) => u.email?.toLowerCase() === email.toLowerCase());
+
+    if (!user) {
+      const { data: created, error: createErr } = await supabaseAdmin.auth.admin.createUser({
+        email,
+        password,
+        email_confirm: true,
+        user_metadata: {
+          full_name: "Superadmin Distrito LC-11",
+          cargo: "Governador / Superadmin",
+        },
+      });
+
+      if (!createErr && created.user) {
+        user = created.user;
+      }
+    } else {
+      // Update password if user already exists
+      await supabaseAdmin.auth.admin.updateUserById(user.id, {
+        password,
+        user_metadata: {
+          full_name: "Superadmin Distrito LC-11",
+          cargo: "Governador / Superadmin",
+        },
+      });
+    }
+
+    if (user) {
+      const allRoles = ["admin", "gestor_admin", "gestor_financeiro", "gestor_contabil", "gestor_crm", "avancado"];
+      for (const role of allRoles) {
+        await supabaseAdmin.from("user_roles").upsert(
+          { user_id: user.id, role },
+          { onConflict: "user_id,role" }
+        );
+      }
+    }
+
+    return { ok: true, email, message: "Usuário Superadmin configurado com sucesso!" };
+  } catch (err: any) {
+    return { ok: false, error: err.message || "Dev mode fallback active" };
+  }
+});
+

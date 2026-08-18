@@ -190,6 +190,10 @@ function Doar() {
                     >
                       Doar R$ {custom || valor || 0}
                     </button>
+
+                    <div className="mt-6">
+                      <PixQrCode amountInCents={amountInCents} title="Prefere pagar com PIX?" />
+                    </div>
                   </>
                 )}
 

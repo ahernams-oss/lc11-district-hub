@@ -1,12 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
 import { GestaoStatCard } from "@/components/gestao/GestaoStatCard";
 import { StatusBadge } from "@/components/gestao/StatusBadge";
-import { BookOpen, FileSpreadsheet, ArrowLeftRight, CheckCircle2, Plus, ArrowRight } from "lucide-react";
+import { BookOpen, FileSpreadsheet, ArrowLeftRight, CheckCircle2, Plus, ArrowRight, RefreshCw } from "lucide-react";
 import { getContabilDashboard } from "@/lib/contabil.functions";
 import { formatBRL, formatDate, monthLabel } from "@/lib/financeiro.utils";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/gestao/contabil/")({
   component: ContabilDashboardPage,
@@ -19,11 +21,31 @@ const QUICK_LINKS = [
 ];
 
 function ContabilDashboardPage() {
+  const queryClient = useQueryClient();
   const fetchDashboard = useServerFn(getContabilDashboard);
-  const { data, isLoading } = useQuery({
+
+  const { data, isLoading, refetch, isRefetching } = useQuery({
     queryKey: ["contabil-dashboard"],
     queryFn: () => fetchDashboard({}),
+    refetchInterval: 30_000,
+    staleTime: 0,
   });
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("realtime-contabil-dashboard")
+      .on("postgres_changes", { event: "*", schema: "public", table: "contabil_lancamentos" }, () => {
+        queryClient.invalidateQueries({ queryKey: ["contabil-dashboard"] });
+      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "contabil_plano_contas" }, () => {
+        queryClient.invalidateQueries({ queryKey: ["contabil-dashboard"] });
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
 
   return (
     <div>
@@ -31,6 +53,16 @@ function ContabilDashboardPage() {
         title="Módulo Contábil"
         subtitle="Escrituração contábil em partida dobrada, balancetes e conciliação"
         breadcrumbs={[{ label: "Gestão", to: "/gestao" }, { label: "Contábil" }]}
+        actions={
+          <button
+            onClick={() => refetch()}
+            disabled={isRefetching}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:bg-white/5 hover:text-white disabled:opacity-50 transition"
+          >
+            <RefreshCw className={`h-3.5 w-3.5 ${isRefetching ? "animate-spin text-primary" : ""}`} />
+            {isRefetching ? "Atualizando..." : "Atualizar Dashboard"}
+          </button>
+        }
       />
 
       <div className="p-6 space-y-8">

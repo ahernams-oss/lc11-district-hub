@@ -49,6 +49,8 @@ function GestaoAprovacoesPage() {
     mutationFn: (vars: { id: string; parecer?: string | null }) => aprovarDespesa({ data: vars }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["despesas-aprovacao"] });
+      queryClient.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["contas-pagar"] });
       setAprovarModal({ open: false });
       setParecerTexto("");
     },
@@ -59,6 +61,8 @@ function GestaoAprovacoesPage() {
       rejeitarDespesa({ data: vars }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["despesas-aprovacao"] });
+      queryClient.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["contas-pagar"] });
       setRejeitarModal({ open: false });
       setParecerTexto("");
     },

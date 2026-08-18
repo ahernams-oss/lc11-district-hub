@@ -70,6 +70,7 @@ function LancamentosPage() {
       setDrawer(false);
       qc.invalidateQueries({ queryKey: ["lancamentos"] });
       qc.invalidateQueries({ queryKey: ["contabil-dashboard"] });
+      qc.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
     },
     onError: (e: any) => setMsg({ type: "err", text: e?.message ?? "Erro ao salvar lançamento." }),
   });
@@ -81,6 +82,7 @@ function LancamentosPage() {
       setConfirmDelete(null);
       qc.invalidateQueries({ queryKey: ["lancamentos"] });
       qc.invalidateQueries({ queryKey: ["contabil-dashboard"] });
+      qc.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
     },
     onError: (e: any) => setMsg({ type: "err", text: e?.message ?? "Erro ao excluir." }),
   });

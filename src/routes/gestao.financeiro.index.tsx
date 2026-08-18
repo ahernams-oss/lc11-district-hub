@@ -1,14 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
 import { GestaoStatCard } from "@/components/gestao/GestaoStatCard";
 import {
   DollarSign, TrendingUp, TrendingDown, AlertTriangle,
-  Wallet, ArrowRight, Users2,
+  Wallet, ArrowRight, Users2, RefreshCw,
 } from "lucide-react";
 import { getFinanceiroDashboard } from "@/lib/financeiro.functions";
 import { formatBRL, monthLabel } from "@/lib/financeiro.utils";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/gestao/financeiro/")({
   component: FinanceiroDashboard,
@@ -22,12 +24,37 @@ const QUICK_LINKS = [
 ];
 
 function FinanceiroDashboard() {
+  const queryClient = useQueryClient();
   const fetchDashboard = useServerFn(getFinanceiroDashboard);
-  const { data, isLoading } = useQuery({
+
+  const { data, isLoading, refetch, isRefetching } = useQuery({
     queryKey: ["financeiro-dashboard"],
     queryFn: () => fetchDashboard({}),
-    refetchInterval: 60_000,
+    refetchInterval: 30_000,
+    staleTime: 0,
   });
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("realtime-financeiro-dashboard")
+      .on("postgres_changes", { event: "*", schema: "public", table: "fin_movimentacoes" }, () => {
+        queryClient.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
+      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "fin_contas_pagar" }, () => {
+        queryClient.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
+      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "fin_contas_receber" }, () => {
+        queryClient.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
+      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "fin_cobrancas" }, () => {
+        queryClient.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
 
   return (
     <div>
@@ -35,6 +62,16 @@ function FinanceiroDashboard() {
         title="Módulo Financeiro"
         subtitle="Controle financeiro completo do Distrito LC-11"
         breadcrumbs={[{ label: "Gestão", to: "/gestao" }, { label: "Financeiro" }]}
+        actions={
+          <button
+            onClick={() => refetch()}
+            disabled={isRefetching}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:bg-white/5 hover:text-white disabled:opacity-50 transition"
+          >
+            <RefreshCw className={`h-3.5 w-3.5 ${isRefetching ? "animate-spin text-primary" : ""}`} />
+            {isRefetching ? "Atualizando..." : "Atualizar Dashboard"}
+          </button>
+        }
       />
 
       <div className="p-6 space-y-8">

@@ -68,6 +68,7 @@ function MovimentacoesPage() {
       setDrawer(false);
       qc.invalidateQueries({ queryKey: ["movimentacoes"] });
       qc.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
+      qc.invalidateQueries({ queryKey: ["contabil-dashboard"] });
     },
     onError: (e: any) => setMsg({ type: "err", text: e?.message ?? "Erro" }),
   });
@@ -79,6 +80,7 @@ function MovimentacoesPage() {
       setConfirmDelete(null);
       qc.invalidateQueries({ queryKey: ["movimentacoes"] });
       qc.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
+      qc.invalidateQueries({ queryKey: ["contabil-dashboard"] });
     },
     onError: (e: any) => setMsg({ type: "err", text: e?.message ?? "Erro" }),
   });

@@ -56,6 +56,7 @@ function CobrancasPage() {
       setMsg({ type: "ok", text: "Cobrança salva com sucesso." });
       setDrawer(false);
       qc.invalidateQueries({ queryKey: ["cobrancas"] });
+      qc.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
     },
     onError: (e: any) => setMsg({ type: "err", text: e?.message ?? "Erro" }),
   });
@@ -66,6 +67,7 @@ function CobrancasPage() {
       setMsg({ type: "ok", text: "Cobrança excluída." });
       setConfirmDelete(null);
       qc.invalidateQueries({ queryKey: ["cobrancas"] });
+      qc.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
     },
     onError: (e: any) => setMsg({ type: "err", text: e?.message ?? "Erro" }),
   });

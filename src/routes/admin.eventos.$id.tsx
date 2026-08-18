@@ -28,6 +28,8 @@ interface Form {
   lodging_tips: string;
   food_tips: string;
   tourism_tips: string;
+  inscricao_ativa: boolean;
+  inscricao_valor: string;
 }
 
 function toLocalDT(iso: string | null): string {
@@ -59,6 +61,8 @@ function EventEditor() {
     lodging_tips: "",
     food_tips: "",
     tourism_tips: "",
+    inscricao_ativa: false,
+    inscricao_valor: "",
   });
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
@@ -91,6 +95,8 @@ function EventEditor() {
             lodging_tips: d.lodging_tips ?? "",
             food_tips: d.food_tips ?? "",
             tourism_tips: d.tourism_tips ?? "",
+            inscricao_ativa: Boolean(d.inscricao_ativa),
+            inscricao_valor: d.inscricao_valor_cents ? String(Number(d.inscricao_valor_cents) / 100) : "",
           });
         }
         setLoading(false);
@@ -118,6 +124,10 @@ function EventEditor() {
         ends_at: form.ends_at ? new Date(form.ends_at).toISOString() : null,
         latitude: form.latitude ? Number(form.latitude) : null,
         longitude: form.longitude ? Number(form.longitude) : null,
+        inscricao_ativa: form.inscricao_ativa,
+        inscricao_valor_cents: form.inscricao_valor
+          ? Math.round(parseFloat(form.inscricao_valor.replace(",", ".")) * 100)
+          : 0,
       };
       if (isNew) {
         const { data, error } = await supabase.from("events").insert(payload).select().single();
@@ -228,6 +238,26 @@ function EventEditor() {
               onChange={(e) => setForm({ ...form, ends_at: e.target.value })}
               className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
             />
+          </F>
+          <F label="Valor da inscrição (R$)">
+            <input
+              type="number"
+              step="0.01"
+              value={form.inscricao_valor}
+              onChange={(e) => setForm({ ...form, inscricao_valor: e.target.value })}
+              placeholder="0,00"
+              className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
+            />
+          </F>
+          <F label="Inscrições online">
+            <label className="mt-2 flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={form.inscricao_ativa}
+                onChange={(e) => setForm({ ...form, inscricao_ativa: e.target.checked })}
+              />
+              Abertas (exibe o botão de pagamento na página do evento)
+            </label>
           </F>
           <F label="Clube anfitrião">
             <input

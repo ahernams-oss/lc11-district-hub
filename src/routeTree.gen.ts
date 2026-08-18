@@ -37,6 +37,7 @@ import { Route as ExGovernadoresIndexRouteImport } from './routes/ex-governadore
 import { Route as EventosIndexRouteImport } from './routes/eventos.index'
 import { Route as DocumentosIndexRouteImport } from './routes/documentos.index'
 import { Route as ClubesIndexRouteImport } from './routes/clubes.index'
+import { Route as CampanhasIndexRouteImport } from './routes/campanhas.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ProjetosIdRouteImport } from './routes/projetos.$id'
 import { Route as GestaoUsuariosRouteImport } from './routes/gestao.usuarios'
@@ -54,8 +55,10 @@ import { Route as ClubesRjRouteImport } from './routes/clubes.rj'
 import { Route as ClubesGrandesLeoesRouteImport } from './routes/clubes.grandes-leoes'
 import { Route as ClubesEsRouteImport } from './routes/clubes.es'
 import { Route as CheckoutReturnRouteImport } from './routes/checkout/return'
+import { Route as CampanhasSlugRouteImport } from './routes/campanhas.$slug'
 import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
 import { Route as AdminClubesRouteImport } from './routes/admin.clubes'
+import { Route as AdminCampanhasRouteImport } from './routes/admin.campanhas'
 import { Route as AdminAuditoriaRouteImport } from './routes/admin.auditoria'
 import { Route as GestaoFinanceiroIndexRouteImport } from './routes/gestao.financeiro.index'
 import { Route as GestaoCrmIndexRouteImport } from './routes/gestao.crm.index'
@@ -251,6 +254,11 @@ const ClubesIndexRoute = ClubesIndexRouteImport.update({
   path: '/clubes/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CampanhasIndexRoute = CampanhasIndexRouteImport.update({
+  id: '/campanhas/',
+  path: '/campanhas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -337,6 +345,11 @@ const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
   path: '/checkout/return',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CampanhasSlugRoute = CampanhasSlugRouteImport.update({
+  id: '/campanhas/$slug',
+  path: '/campanhas/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
   id: '/usuarios',
   path: '/usuarios',
@@ -345,6 +358,11 @@ const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
 const AdminClubesRoute = AdminClubesRouteImport.update({
   id: '/clubes',
   path: '/clubes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCampanhasRoute = AdminCampanhasRouteImport.update({
+  id: '/campanhas',
+  path: '/campanhas',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminAuditoriaRoute = AdminAuditoriaRouteImport.update({
@@ -661,8 +679,10 @@ export interface FileRoutesByFullPath {
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
   '/admin/auditoria': typeof AdminAuditoriaRoute
+  '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
+  '/campanhas/$slug': typeof CampanhasSlugRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
   '/clubes/grandes-leoes': typeof ClubesGrandesLeoesRoute
@@ -680,6 +700,7 @@ export interface FileRoutesByFullPath {
   '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/campanhas/': typeof CampanhasIndexRoute
   '/clubes/': typeof ClubesIndexRoute
   '/documentos/': typeof DocumentosIndexRoute
   '/eventos/': typeof EventosIndexRoute
@@ -761,8 +782,10 @@ export interface FileRoutesByTo {
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
   '/admin/auditoria': typeof AdminAuditoriaRoute
+  '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
+  '/campanhas/$slug': typeof CampanhasSlugRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
   '/clubes/grandes-leoes': typeof ClubesGrandesLeoesRoute
@@ -777,6 +800,7 @@ export interface FileRoutesByTo {
   '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin': typeof AdminIndexRoute
+  '/campanhas': typeof CampanhasIndexRoute
   '/clubes': typeof ClubesIndexRoute
   '/documentos': typeof DocumentosIndexRoute
   '/eventos': typeof EventosIndexRoute
@@ -862,8 +886,10 @@ export interface FileRoutesById {
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
   '/admin/auditoria': typeof AdminAuditoriaRoute
+  '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
+  '/campanhas/$slug': typeof CampanhasSlugRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
   '/clubes/grandes-leoes': typeof ClubesGrandesLeoesRoute
@@ -881,6 +907,7 @@ export interface FileRoutesById {
   '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/campanhas/': typeof CampanhasIndexRoute
   '/clubes/': typeof ClubesIndexRoute
   '/documentos/': typeof DocumentosIndexRoute
   '/eventos/': typeof EventosIndexRoute
@@ -967,8 +994,10 @@ export interface FileRouteTypes {
     | '/vice-governador-1'
     | '/vice-governador-2'
     | '/admin/auditoria'
+    | '/admin/campanhas'
     | '/admin/clubes'
     | '/admin/usuarios'
+    | '/campanhas/$slug'
     | '/checkout/return'
     | '/clubes/es'
     | '/clubes/grandes-leoes'
@@ -986,6 +1015,7 @@ export interface FileRouteTypes {
     | '/gestao/usuarios'
     | '/projetos/$id'
     | '/admin/'
+    | '/campanhas/'
     | '/clubes/'
     | '/documentos/'
     | '/eventos/'
@@ -1067,8 +1097,10 @@ export interface FileRouteTypes {
     | '/vice-governador-1'
     | '/vice-governador-2'
     | '/admin/auditoria'
+    | '/admin/campanhas'
     | '/admin/clubes'
     | '/admin/usuarios'
+    | '/campanhas/$slug'
     | '/checkout/return'
     | '/clubes/es'
     | '/clubes/grandes-leoes'
@@ -1083,6 +1115,7 @@ export interface FileRouteTypes {
     | '/gestao/usuarios'
     | '/projetos/$id'
     | '/admin'
+    | '/campanhas'
     | '/clubes'
     | '/documentos'
     | '/eventos'
@@ -1167,8 +1200,10 @@ export interface FileRouteTypes {
     | '/vice-governador-1'
     | '/vice-governador-2'
     | '/admin/auditoria'
+    | '/admin/campanhas'
     | '/admin/clubes'
     | '/admin/usuarios'
+    | '/campanhas/$slug'
     | '/checkout/return'
     | '/clubes/es'
     | '/clubes/grandes-leoes'
@@ -1186,6 +1221,7 @@ export interface FileRouteTypes {
     | '/gestao/usuarios'
     | '/projetos/$id'
     | '/admin/'
+    | '/campanhas/'
     | '/clubes/'
     | '/documentos/'
     | '/eventos/'
@@ -1270,6 +1306,7 @@ export interface RootRouteChildren {
   TesoureiroRoute: typeof TesoureiroRoute
   ViceGovernador1Route: typeof ViceGovernador1Route
   ViceGovernador2Route: typeof ViceGovernador2Route
+  CampanhasSlugRoute: typeof CampanhasSlugRoute
   CheckoutReturnRoute: typeof CheckoutReturnRoute
   ClubesEsRoute: typeof ClubesEsRoute
   ClubesGrandesLeoesRoute: typeof ClubesGrandesLeoesRoute
@@ -1277,6 +1314,7 @@ export interface RootRouteChildren {
   EventosIdRoute: typeof EventosIdRoute
   ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
   ProjetosIdRoute: typeof ProjetosIdRoute
+  CampanhasIndexRoute: typeof CampanhasIndexRoute
   ClubesIndexRoute: typeof ClubesIndexRoute
   EventosIndexRoute: typeof EventosIndexRoute
   ExGovernadoresIndexRoute: typeof ExGovernadoresIndexRoute
@@ -1489,6 +1527,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClubesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/campanhas/': {
+      id: '/campanhas/'
+      path: '/campanhas'
+      fullPath: '/campanhas/'
+      preLoaderRoute: typeof CampanhasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/': {
       id: '/admin/'
       path: '/'
@@ -1608,6 +1653,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckoutReturnRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/campanhas/$slug': {
+      id: '/campanhas/$slug'
+      path: '/campanhas/$slug'
+      fullPath: '/campanhas/$slug'
+      preLoaderRoute: typeof CampanhasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/usuarios': {
       id: '/admin/usuarios'
       path: '/usuarios'
@@ -1620,6 +1672,13 @@ declare module '@tanstack/react-router' {
       path: '/clubes'
       fullPath: '/admin/clubes'
       preLoaderRoute: typeof AdminClubesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/campanhas': {
+      id: '/admin/campanhas'
+      path: '/campanhas'
+      fullPath: '/admin/campanhas'
+      preLoaderRoute: typeof AdminCampanhasRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/auditoria': {
@@ -2033,6 +2092,7 @@ const AdminRegioesIdRouteWithChildren = AdminRegioesIdRoute._addFileChildren(
 
 interface AdminRouteChildren {
   AdminAuditoriaRoute: typeof AdminAuditoriaRoute
+  AdminCampanhasRoute: typeof AdminCampanhasRoute
   AdminClubesRoute: typeof AdminClubesRoute
   AdminUsuariosRoute: typeof AdminUsuariosRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -2060,6 +2120,7 @@ interface AdminRouteChildren {
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAuditoriaRoute: AdminAuditoriaRoute,
+  AdminCampanhasRoute: AdminCampanhasRoute,
   AdminClubesRoute: AdminClubesRoute,
   AdminUsuariosRoute: AdminUsuariosRoute,
   AdminIndexRoute: AdminIndexRoute,
@@ -2226,6 +2287,7 @@ const rootRouteChildren: RootRouteChildren = {
   TesoureiroRoute: TesoureiroRoute,
   ViceGovernador1Route: ViceGovernador1Route,
   ViceGovernador2Route: ViceGovernador2Route,
+  CampanhasSlugRoute: CampanhasSlugRoute,
   CheckoutReturnRoute: CheckoutReturnRoute,
   ClubesEsRoute: ClubesEsRoute,
   ClubesGrandesLeoesRoute: ClubesGrandesLeoesRoute,
@@ -2233,6 +2295,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventosIdRoute: EventosIdRoute,
   ExGovernadoresIdRoute: ExGovernadoresIdRoute,
   ProjetosIdRoute: ProjetosIdRoute,
+  CampanhasIndexRoute: CampanhasIndexRoute,
   ClubesIndexRoute: ClubesIndexRoute,
   EventosIndexRoute: EventosIndexRoute,
   ExGovernadoresIndexRoute: ExGovernadoresIndexRoute,

@@ -109,6 +109,10 @@ function CampanhaDetalhe() {
                 >
                   Doar
                 </button>
+
+                <div className="mt-6">
+                  <PixQrCode amountInCents={amountInCents} title="Prefere pagar com PIX?" />
+                </div>
               </>
             ) : (
               <>

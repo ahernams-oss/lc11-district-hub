@@ -11,7 +11,7 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminLayout() {
-  const { user, hasPanelAccess, canViewUsers, isAdmin, isAvancado, isIntermediario, loading, signOut } = useAuth();
+  const { user, hasPanelAccess, canViewUsers, isAdmin, isAvancado, isIntermediario, loading, signOut, devBypass } = useAuth();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 

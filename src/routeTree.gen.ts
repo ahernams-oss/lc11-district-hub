@@ -37,6 +37,7 @@ import { Route as ExGovernadoresIndexRouteImport } from './routes/ex-governadore
 import { Route as EventosIndexRouteImport } from './routes/eventos.index'
 import { Route as DocumentosIndexRouteImport } from './routes/documentos.index'
 import { Route as ClubesIndexRouteImport } from './routes/clubes.index'
+import { Route as CampanhasIndexRouteImport } from './routes/campanhas.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ProjetosIdRouteImport } from './routes/projetos.$id'
 import { Route as GestaoUsuariosRouteImport } from './routes/gestao.usuarios'
@@ -249,6 +250,11 @@ const DocumentosIndexRoute = DocumentosIndexRouteImport.update({
 const ClubesIndexRoute = ClubesIndexRouteImport.update({
   id: '/clubes/',
   path: '/clubes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasIndexRoute = CampanhasIndexRouteImport.update({
+  id: '/campanhas/',
+  path: '/campanhas/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -680,6 +686,7 @@ export interface FileRoutesByFullPath {
   '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/campanhas/': typeof CampanhasIndexRoute
   '/clubes/': typeof ClubesIndexRoute
   '/documentos/': typeof DocumentosIndexRoute
   '/eventos/': typeof EventosIndexRoute
@@ -777,6 +784,7 @@ export interface FileRoutesByTo {
   '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin': typeof AdminIndexRoute
+  '/campanhas': typeof CampanhasIndexRoute
   '/clubes': typeof ClubesIndexRoute
   '/documentos': typeof DocumentosIndexRoute
   '/eventos': typeof EventosIndexRoute
@@ -881,6 +889,7 @@ export interface FileRoutesById {
   '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/campanhas/': typeof CampanhasIndexRoute
   '/clubes/': typeof ClubesIndexRoute
   '/documentos/': typeof DocumentosIndexRoute
   '/eventos/': typeof EventosIndexRoute
@@ -986,6 +995,7 @@ export interface FileRouteTypes {
     | '/gestao/usuarios'
     | '/projetos/$id'
     | '/admin/'
+    | '/campanhas/'
     | '/clubes/'
     | '/documentos/'
     | '/eventos/'
@@ -1083,6 +1093,7 @@ export interface FileRouteTypes {
     | '/gestao/usuarios'
     | '/projetos/$id'
     | '/admin'
+    | '/campanhas'
     | '/clubes'
     | '/documentos'
     | '/eventos'
@@ -1186,6 +1197,7 @@ export interface FileRouteTypes {
     | '/gestao/usuarios'
     | '/projetos/$id'
     | '/admin/'
+    | '/campanhas/'
     | '/clubes/'
     | '/documentos/'
     | '/eventos/'
@@ -1277,6 +1289,7 @@ export interface RootRouteChildren {
   EventosIdRoute: typeof EventosIdRoute
   ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
   ProjetosIdRoute: typeof ProjetosIdRoute
+  CampanhasIndexRoute: typeof CampanhasIndexRoute
   ClubesIndexRoute: typeof ClubesIndexRoute
   EventosIndexRoute: typeof EventosIndexRoute
   ExGovernadoresIndexRoute: typeof ExGovernadoresIndexRoute
@@ -1487,6 +1500,13 @@ declare module '@tanstack/react-router' {
       path: '/clubes'
       fullPath: '/clubes/'
       preLoaderRoute: typeof ClubesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/': {
+      id: '/campanhas/'
+      path: '/campanhas'
+      fullPath: '/campanhas/'
+      preLoaderRoute: typeof CampanhasIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -2233,6 +2253,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventosIdRoute: EventosIdRoute,
   ExGovernadoresIdRoute: ExGovernadoresIdRoute,
   ProjetosIdRoute: ProjetosIdRoute,
+  CampanhasIndexRoute: CampanhasIndexRoute,
   ClubesIndexRoute: ClubesIndexRoute,
   EventosIndexRoute: EventosIndexRoute,
   ExGovernadoresIndexRoute: ExGovernadoresIndexRoute,

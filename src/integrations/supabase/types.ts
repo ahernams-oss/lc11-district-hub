@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      campanhas: {
+        Row: {
+          ativo: boolean
+          conteudo: string | null
+          created_at: string
+          descricao: string | null
+          id: string
+          imagem_url: string | null
+          meta_cents: number
+          ordem: number
+          slug: string
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          conteudo?: string | null
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          imagem_url?: string | null
+          meta_cents?: number
+          ordem?: number
+          slug: string
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          conteudo?: string | null
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          imagem_url?: string | null
+          meta_cents?: number
+          ordem?: number
+          slug?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       clubs: {
         Row: {
           address: string | null
@@ -741,6 +783,57 @@ export type Database = {
         }
         Relationships: []
       }
+      donation_subscriptions: {
+        Row: {
+          amount_cents: number
+          cancel_at_period_end: boolean
+          created_at: string
+          currency: string
+          current_period_end: string | null
+          customer_email: string | null
+          customer_name: string | null
+          environment: string
+          id: string
+          price_id: string | null
+          status: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string
+          updated_at: string
+        }
+        Insert: {
+          amount_cents?: number
+          cancel_at_period_end?: boolean
+          created_at?: string
+          currency?: string
+          current_period_end?: string | null
+          customer_email?: string | null
+          customer_name?: string | null
+          environment?: string
+          id?: string
+          price_id?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id: string
+          updated_at?: string
+        }
+        Update: {
+          amount_cents?: number
+          cancel_at_period_end?: boolean
+          created_at?: string
+          currency?: string
+          current_period_end?: string | null
+          customer_email?: string | null
+          customer_name?: string | null
+          environment?: string
+          id?: string
+          price_id?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       donations: {
         Row: {
           amount: number
@@ -751,12 +844,17 @@ export type Database = {
           description: string | null
           environment: string
           id: string
+          kind: string
           payment_status: string
           raw_event: Json | null
           receipt_number: string
+          reference_id: string | null
+          reference_label: string | null
           status: string
+          stripe_customer_id: string | null
           stripe_payment_intent_id: string | null
           stripe_session_id: string
+          stripe_subscription_id: string | null
           updated_at: string
         }
         Insert: {
@@ -768,12 +866,17 @@ export type Database = {
           description?: string | null
           environment: string
           id?: string
+          kind?: string
           payment_status: string
           raw_event?: Json | null
           receipt_number: string
+          reference_id?: string | null
+          reference_label?: string | null
           status: string
+          stripe_customer_id?: string | null
           stripe_payment_intent_id?: string | null
           stripe_session_id: string
+          stripe_subscription_id?: string | null
           updated_at?: string
         }
         Update: {
@@ -785,15 +888,79 @@ export type Database = {
           description?: string | null
           environment?: string
           id?: string
+          kind?: string
           payment_status?: string
           raw_event?: Json | null
           receipt_number?: string
+          reference_id?: string | null
+          reference_label?: string | null
           status?: string
+          stripe_customer_id?: string | null
           stripe_payment_intent_id?: string | null
           stripe_session_id?: string
+          stripe_subscription_id?: string | null
           updated_at?: string
         }
         Relationships: []
+      }
+      event_inscricoes: {
+        Row: {
+          clube: string | null
+          created_at: string
+          email: string | null
+          environment: string
+          event_id: string | null
+          event_titulo: string
+          id: string
+          nome: string | null
+          payment_status: string
+          quantidade: number
+          stripe_session_id: string
+          telefone: string | null
+          updated_at: string
+          valor_cents: number
+        }
+        Insert: {
+          clube?: string | null
+          created_at?: string
+          email?: string | null
+          environment?: string
+          event_id?: string | null
+          event_titulo: string
+          id?: string
+          nome?: string | null
+          payment_status?: string
+          quantidade?: number
+          stripe_session_id: string
+          telefone?: string | null
+          updated_at?: string
+          valor_cents?: number
+        }
+        Update: {
+          clube?: string | null
+          created_at?: string
+          email?: string | null
+          environment?: string
+          event_id?: string | null
+          event_titulo?: string
+          id?: string
+          nome?: string | null
+          payment_status?: string
+          quantidade?: number
+          stripe_session_id?: string
+          telefone?: string | null
+          updated_at?: string
+          valor_cents?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_inscricoes_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       events: {
         Row: {
@@ -805,6 +972,8 @@ export type Database = {
           gallery_urls: string[]
           host_club: string | null
           id: string
+          inscricao_ativa: boolean
+          inscricao_valor_cents: number
           latitude: number | null
           location: string | null
           lodging_tips: string | null
@@ -826,6 +995,8 @@ export type Database = {
           gallery_urls?: string[]
           host_club?: string | null
           id?: string
+          inscricao_ativa?: boolean
+          inscricao_valor_cents?: number
           latitude?: number | null
           location?: string | null
           lodging_tips?: string | null
@@ -847,6 +1018,8 @@ export type Database = {
           gallery_urls?: string[]
           host_club?: string | null
           id?: string
+          inscricao_ativa?: boolean
+          inscricao_valor_cents?: number
           latitude?: number | null
           location?: string | null
           lodging_tips?: string | null

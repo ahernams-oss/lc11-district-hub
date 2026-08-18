@@ -58,6 +58,7 @@ import { Route as CheckoutReturnRouteImport } from './routes/checkout/return'
 import { Route as CampanhasSlugRouteImport } from './routes/campanhas.$slug'
 import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
 import { Route as AdminClubesRouteImport } from './routes/admin.clubes'
+import { Route as AdminCampanhasRouteImport } from './routes/admin.campanhas'
 import { Route as AdminAuditoriaRouteImport } from './routes/admin.auditoria'
 import { Route as GestaoFinanceiroIndexRouteImport } from './routes/gestao.financeiro.index'
 import { Route as GestaoCrmIndexRouteImport } from './routes/gestao.crm.index'
@@ -357,6 +358,11 @@ const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
 const AdminClubesRoute = AdminClubesRouteImport.update({
   id: '/clubes',
   path: '/clubes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCampanhasRoute = AdminCampanhasRouteImport.update({
+  id: '/campanhas',
+  path: '/campanhas',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminAuditoriaRoute = AdminAuditoriaRouteImport.update({
@@ -673,6 +679,7 @@ export interface FileRoutesByFullPath {
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
   '/admin/auditoria': typeof AdminAuditoriaRoute
+  '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/campanhas/$slug': typeof CampanhasSlugRoute
@@ -775,6 +782,7 @@ export interface FileRoutesByTo {
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
   '/admin/auditoria': typeof AdminAuditoriaRoute
+  '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/campanhas/$slug': typeof CampanhasSlugRoute
@@ -878,6 +886,7 @@ export interface FileRoutesById {
   '/vice-governador-1': typeof ViceGovernador1Route
   '/vice-governador-2': typeof ViceGovernador2Route
   '/admin/auditoria': typeof AdminAuditoriaRoute
+  '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/campanhas/$slug': typeof CampanhasSlugRoute
@@ -985,6 +994,7 @@ export interface FileRouteTypes {
     | '/vice-governador-1'
     | '/vice-governador-2'
     | '/admin/auditoria'
+    | '/admin/campanhas'
     | '/admin/clubes'
     | '/admin/usuarios'
     | '/campanhas/$slug'
@@ -1087,6 +1097,7 @@ export interface FileRouteTypes {
     | '/vice-governador-1'
     | '/vice-governador-2'
     | '/admin/auditoria'
+    | '/admin/campanhas'
     | '/admin/clubes'
     | '/admin/usuarios'
     | '/campanhas/$slug'
@@ -1189,6 +1200,7 @@ export interface FileRouteTypes {
     | '/vice-governador-1'
     | '/vice-governador-2'
     | '/admin/auditoria'
+    | '/admin/campanhas'
     | '/admin/clubes'
     | '/admin/usuarios'
     | '/campanhas/$slug'
@@ -1662,6 +1674,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminClubesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/campanhas': {
+      id: '/admin/campanhas'
+      path: '/campanhas'
+      fullPath: '/admin/campanhas'
+      preLoaderRoute: typeof AdminCampanhasRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/auditoria': {
       id: '/admin/auditoria'
       path: '/auditoria'
@@ -2073,6 +2092,7 @@ const AdminRegioesIdRouteWithChildren = AdminRegioesIdRoute._addFileChildren(
 
 interface AdminRouteChildren {
   AdminAuditoriaRoute: typeof AdminAuditoriaRoute
+  AdminCampanhasRoute: typeof AdminCampanhasRoute
   AdminClubesRoute: typeof AdminClubesRoute
   AdminUsuariosRoute: typeof AdminUsuariosRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -2100,6 +2120,7 @@ interface AdminRouteChildren {
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAuditoriaRoute: AdminAuditoriaRoute,
+  AdminCampanhasRoute: AdminCampanhasRoute,
   AdminClubesRoute: AdminClubesRoute,
   AdminUsuariosRoute: AdminUsuariosRoute,
   AdminIndexRoute: AdminIndexRoute,

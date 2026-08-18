@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { CONTENT_LABELS, type ContentKey } from "@/lib/content";
 import {
   FileText, Users, MapPin, Newspaper, Calendar, Sparkles,
-  Building2, ExternalLink, ShieldCheck, MessageSquare, Activity,
+  Building2, ExternalLink, HeartHandshake, ShieldCheck, MessageSquare, Activity,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin/")({
@@ -19,6 +19,7 @@ const ALL_CARDS = [
   { to: "/admin/noticias", title: "Notícias", desc: "Publique e edite notícias do distrito.", icon: Newspaper, requires: "panel" as const },
   { to: "/admin/eventos", title: "Eventos", desc: "Calendário oficial de eventos e ações.", icon: Calendar, requires: "panel" as const },
   { to: "/admin/projetos", title: "Projetos", desc: "Projetos sociais e iniciativas em destaque.", icon: Sparkles, requires: "panel" as const },
+  { to: "/admin/campanhas", title: "Campanhas de Doação", desc: "Cadastre causas específicas com meta, imagem e texto para arrecadação.", icon: HeartHandshake, requires: "panel" as const },
   { to: "/admin/popups", title: "Pop-ups", desc: "Crie pop-ups com data/hora de início e término, tempo de exposição e link.", icon: MessageSquare, requires: "panel" as const },
   { to: "/admin/auditoria", title: "Dashboard de Auditoria", desc: "Gráficos e relatórios de quem acessou e baixou documentos restritos.", icon: Activity, requires: "users" as const },
   { to: "/admin/usuarios", title: "Usuários & Acessos", desc: "Aprove novos logins e gerencie quem tem acesso ao painel.", icon: ShieldCheck, requires: "users" as const },

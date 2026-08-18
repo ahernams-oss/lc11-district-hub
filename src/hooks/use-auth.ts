@@ -9,6 +9,7 @@ export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [roles, setRoles] = useState<AppRole[]>([]);
+  const [devBypass, setDevBypass] = useState(false);
 
   useEffect(() => {
     const loadRoles = async (uid: string) => {
@@ -31,6 +32,7 @@ export function useAuth() {
       } as any);
       // Admin bypass: all roles. Gestão bypass: only gestão roles.
       setRoles(gestaoOnly ? ["gestor_admin"] : ["admin", "gestor_admin"]);
+      setDevBypass(true);
       setLoading(false);
     };
 
@@ -59,6 +61,7 @@ export function useAuth() {
         return;
       }
 
+      setDevBypass(false);
       setSession(s);
       setUser(s?.user ?? null);
       if (s?.user) {
@@ -77,6 +80,7 @@ export function useAuth() {
         handleBypass(true);
         return;
       }
+      setDevBypass(false);
       setSession(s);
       setUser(s?.user ?? null);
       if (s?.user) await loadRoles(s.user.id);
@@ -113,6 +117,7 @@ export function useAuth() {
 
   return {
     session,
+    devBypass,
     user,
     loading,
     roles,

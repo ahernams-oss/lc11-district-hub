@@ -11,7 +11,7 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminLayout() {
-  const { user, hasPanelAccess, canViewUsers, isAdmin, isAvancado, isIntermediario, loading, signOut } = useAuth();
+  const { user, hasPanelAccess, canViewUsers, isAdmin, isAvancado, isIntermediario, loading, signOut, devBypass } = useAuth();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
@@ -109,8 +109,28 @@ function AdminLayout() {
         </Link>
       </aside>
       <main className="min-w-0">
+        {devBypass && (
+          <div className="mb-5 rounded-md border border-amber-500/50 bg-amber-500/10 p-4 text-sm">
+            <p className="font-semibold text-amber-700">Modo de desenvolvimento — sem sessão real</p>
+            <p className="mt-1 text-amber-700/90">
+              Você entrou pelo atalho de desenvolvimento, então o banco de dados recusa envios de
+              imagem e gravações (erro de permissão). Faça login com sua conta de administrador
+              para salvar conteúdo.
+            </p>
+            <button
+              onClick={async () => {
+                await signOut();
+                navigate({ to: "/auth" });
+              }}
+              className="mt-3 inline-flex rounded-md bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground"
+            >
+              Entrar com minha conta
+            </button>
+          </div>
+        )}
         <Outlet />
       </main>
+
     </div>
   );
 }

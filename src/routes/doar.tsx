@@ -4,6 +4,7 @@ import { Heart, ShieldCheck, Sparkles, Repeat, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { StripeEmbeddedCheckout, type CheckoutConfig } from "@/components/StripeEmbeddedCheckout";
+import { PixQrCode } from "@/components/PixQrCode";
 import { getStripeEnvironment } from "@/lib/stripe";
 import { createSupporterPortalSession } from "@/utils/payments.functions";
 import { listCampanhas } from "@/lib/campanhas";

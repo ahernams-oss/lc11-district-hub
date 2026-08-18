@@ -1,8 +1,8 @@
-import { HeartHandshake, createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
-import { LogOut, FileText, Users, Home, MapPin, Newspaper, Calendar, Sparkles, ShieldCheck, MessageSquare, FolderArchive, Building2, Award, Activity } from "lucide-react";
+import { LogOut, FileText, Users, Home, MapPin, Newspaper, Calendar, Sparkles, ShieldCheck, MessageSquare, FolderArchive, Building2, Award, Activity, HeartHandshake} from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
   ssr: false,

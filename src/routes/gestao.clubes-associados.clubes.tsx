@@ -55,7 +55,7 @@ function GestaoClubesPage() {
   });
 
   const saveMutation = useMutation({
-    mutationFn: upsertClube,
+    mutationFn: (data: any) => upsertClube({ data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dist-clubes"] });
       queryClient.invalidateQueries({ queryKey: ["clubes-metrics"] });
@@ -65,7 +65,7 @@ function GestaoClubesPage() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: deleteClube,
+    mutationFn: (data: any) => deleteClube({ data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dist-clubes"] });
       queryClient.invalidateQueries({ queryKey: ["clubes-metrics"] });

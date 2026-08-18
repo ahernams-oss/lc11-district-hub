@@ -53,7 +53,7 @@ function GestaoEstruturaPage() {
   });
 
   const saveMutation = useMutation({
-    mutationFn: upsertCargoDistrital,
+    mutationFn: (data: any) => upsertCargoDistrital({ data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dist-estrutura"] });
       setDrawerOpen(false);
@@ -62,7 +62,7 @@ function GestaoEstruturaPage() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: deleteCargoDistrital,
+    mutationFn: (data: any) => deleteCargoDistrital({ data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dist-estrutura"] });
     },

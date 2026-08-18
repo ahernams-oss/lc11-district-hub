@@ -62,7 +62,7 @@ function GestaoNominataPage() {
   });
 
   const saveMutation = useMutation({
-    mutationFn: upsertNominataCargo,
+    mutationFn: (data: any) => upsertNominataCargo({ data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["nominata-clube"] });
       setDrawerOpen(false);
@@ -71,7 +71,7 @@ function GestaoNominataPage() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: deleteNominataCargo,
+    mutationFn: (data: any) => deleteNominataCargo({ data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["nominata-clube"] });
     },

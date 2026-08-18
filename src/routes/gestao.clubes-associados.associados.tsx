@@ -61,7 +61,7 @@ function GestaoAssociadosPage() {
   });
 
   const saveMutation = useMutation({
-    mutationFn: upsertAssociado,
+    mutationFn: (data: any) => upsertAssociado({ data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dist-associados"] });
       queryClient.invalidateQueries({ queryKey: ["clubes-metrics"] });
@@ -71,7 +71,7 @@ function GestaoAssociadosPage() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: deleteAssociado,
+    mutationFn: (data: any) => deleteAssociado({ data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dist-associados"] });
       queryClient.invalidateQueries({ queryKey: ["clubes-metrics"] });

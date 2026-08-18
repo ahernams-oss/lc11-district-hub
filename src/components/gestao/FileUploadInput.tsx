@@ -44,7 +44,7 @@ export function FileUploadInput({
         .from(bucket)
         .getPublicUrl(fileName);
 
-      onChange(publicUrlData.publicUrl);
+      onChange(publicUrlData.publicUrl, file.size);
     } catch (err: any) {
       setError(err?.message ?? "Erro ao fazer upload do arquivo.");
     } finally {

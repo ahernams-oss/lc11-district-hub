@@ -4,6 +4,7 @@ import { Heart, ShieldCheck, Sparkles, Repeat, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { StripeEmbeddedCheckout, type CheckoutConfig } from "@/components/StripeEmbeddedCheckout";
+import { PixQrCode } from "@/components/PixQrCode";
 import { getStripeEnvironment } from "@/lib/stripe";
 import { createSupporterPortalSession } from "@/utils/payments.functions";
 import { listCampanhas } from "@/lib/campanhas";
@@ -189,6 +190,10 @@ function Doar() {
                     >
                       Doar R$ {custom || valor || 0}
                     </button>
+
+                    <div className="mt-6">
+                      <PixQrCode amountInCents={amountInCents} title="Prefere pagar com PIX?" />
+                    </div>
                   </>
                 )}
 
@@ -275,6 +280,10 @@ function Doar() {
                         >
                           Doar para {campanhaSelecionada?.titulo ?? "a campanha"}
                         </button>
+
+                        <div className="mt-6">
+                          <PixQrCode amountInCents={amountInCents} title="Prefere pagar com PIX?" />
+                        </div>
                         <Link to="/campanhas" className="mt-3 block text-center text-xs underline opacity-80 hover:opacity-100">
                           Ver todas as campanhas
                         </Link>

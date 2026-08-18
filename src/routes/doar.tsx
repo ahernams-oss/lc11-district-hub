@@ -103,8 +103,9 @@ function Doar() {
                 </button>
 
                 <p className="mt-4 text-center text-xs opacity-80">
-                  Ou faça uma transferência via PIX: <strong className="font-mono">doacao@distritolc11.org</strong>
+                  Ou faça uma transferência via PIX (CNPJ): <strong className="font-mono">27.784.685/0001-60</strong>
                 </p>
+
               </>
             ) : (
               <>

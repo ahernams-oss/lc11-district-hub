@@ -55,6 +55,7 @@ import { Route as ClubesRjRouteImport } from './routes/clubes.rj'
 import { Route as ClubesGrandesLeoesRouteImport } from './routes/clubes.grandes-leoes'
 import { Route as ClubesEsRouteImport } from './routes/clubes.es'
 import { Route as CheckoutReturnRouteImport } from './routes/checkout/return'
+import { Route as CampanhasSlugRouteImport } from './routes/campanhas.$slug'
 import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
 import { Route as AdminClubesRouteImport } from './routes/admin.clubes'
 import { Route as AdminAuditoriaRouteImport } from './routes/admin.auditoria'
@@ -341,6 +342,11 @@ const ClubesEsRoute = ClubesEsRouteImport.update({
 const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
   id: '/checkout/return',
   path: '/checkout/return',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasSlugRoute = CampanhasSlugRouteImport.update({
+  id: '/campanhas/$slug',
+  path: '/campanhas/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
@@ -669,6 +675,7 @@ export interface FileRoutesByFullPath {
   '/admin/auditoria': typeof AdminAuditoriaRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
+  '/campanhas/$slug': typeof CampanhasSlugRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
   '/clubes/grandes-leoes': typeof ClubesGrandesLeoesRoute
@@ -770,6 +777,7 @@ export interface FileRoutesByTo {
   '/admin/auditoria': typeof AdminAuditoriaRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
+  '/campanhas/$slug': typeof CampanhasSlugRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
   '/clubes/grandes-leoes': typeof ClubesGrandesLeoesRoute
@@ -872,6 +880,7 @@ export interface FileRoutesById {
   '/admin/auditoria': typeof AdminAuditoriaRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
+  '/campanhas/$slug': typeof CampanhasSlugRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/clubes/es': typeof ClubesEsRoute
   '/clubes/grandes-leoes': typeof ClubesGrandesLeoesRoute
@@ -978,6 +987,7 @@ export interface FileRouteTypes {
     | '/admin/auditoria'
     | '/admin/clubes'
     | '/admin/usuarios'
+    | '/campanhas/$slug'
     | '/checkout/return'
     | '/clubes/es'
     | '/clubes/grandes-leoes'
@@ -1079,6 +1089,7 @@ export interface FileRouteTypes {
     | '/admin/auditoria'
     | '/admin/clubes'
     | '/admin/usuarios'
+    | '/campanhas/$slug'
     | '/checkout/return'
     | '/clubes/es'
     | '/clubes/grandes-leoes'
@@ -1180,6 +1191,7 @@ export interface FileRouteTypes {
     | '/admin/auditoria'
     | '/admin/clubes'
     | '/admin/usuarios'
+    | '/campanhas/$slug'
     | '/checkout/return'
     | '/clubes/es'
     | '/clubes/grandes-leoes'
@@ -1282,6 +1294,7 @@ export interface RootRouteChildren {
   TesoureiroRoute: typeof TesoureiroRoute
   ViceGovernador1Route: typeof ViceGovernador1Route
   ViceGovernador2Route: typeof ViceGovernador2Route
+  CampanhasSlugRoute: typeof CampanhasSlugRoute
   CheckoutReturnRoute: typeof CheckoutReturnRoute
   ClubesEsRoute: typeof ClubesEsRoute
   ClubesGrandesLeoesRoute: typeof ClubesGrandesLeoesRoute
@@ -1626,6 +1639,13 @@ declare module '@tanstack/react-router' {
       path: '/checkout/return'
       fullPath: '/checkout/return'
       preLoaderRoute: typeof CheckoutReturnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campanhas/$slug': {
+      id: '/campanhas/$slug'
+      path: '/campanhas/$slug'
+      fullPath: '/campanhas/$slug'
+      preLoaderRoute: typeof CampanhasSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/usuarios': {
@@ -2246,6 +2266,7 @@ const rootRouteChildren: RootRouteChildren = {
   TesoureiroRoute: TesoureiroRoute,
   ViceGovernador1Route: ViceGovernador1Route,
   ViceGovernador2Route: ViceGovernador2Route,
+  CampanhasSlugRoute: CampanhasSlugRoute,
   CheckoutReturnRoute: CheckoutReturnRoute,
   ClubesEsRoute: ClubesEsRoute,
   ClubesGrandesLeoesRoute: ClubesGrandesLeoesRoute,

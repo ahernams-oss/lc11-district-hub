@@ -4,6 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { useEvent } from "@/lib/events";
 import { ArrowLeft, MapPin, Clock, Calendar, Users, User, Pencil, Hotel, UtensilsCrossed, Compass, Info } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
+import { EventRegistrationCard } from "@/components/EventRegistrationCard";
 
 export const Route = createFileRoute("/eventos/$id")({
   component: EventDetail,
@@ -110,6 +111,17 @@ function EventDetail() {
         {ended && (
           <div className="mt-6 rounded-xl border border-destructive/40 bg-destructive/10 px-5 py-4 text-sm font-semibold text-destructive">
             ⚠ Evento encerrado
+          </div>
+        )}
+
+        {event.inscricao_ativa && Number(event.inscricao_valor_cents ?? 0) >= 500 && (
+          <div className="mt-6">
+            <EventRegistrationCard
+              eventId={event.id}
+              eventTitle={event.title}
+              valorCents={Number(event.inscricao_valor_cents)}
+              encerrado={ended}
+            />
           </div>
         )}
 

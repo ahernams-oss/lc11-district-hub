@@ -9,8 +9,14 @@ import type { Database } from './types'
 export const requireSupabaseAuth = createMiddleware({ type: 'function' }).server(
   async ({ next }) => {
     
-    const SUPABASE_URL = process.env.SUPABASE_URL;
-    const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY;
+    const SUPABASE_URL =
+      process.env.SUPABASE_URL ||
+      (typeof import.meta !== 'undefined' && (import.meta.env as any)?.VITE_SUPABASE_URL) ||
+      'https://lwxnwvtdvmcnkcfcnamc.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY =
+      process.env.SUPABASE_PUBLISHABLE_KEY ||
+      (typeof import.meta !== 'undefined' && (import.meta.env as any)?.VITE_SUPABASE_PUBLISHABLE_KEY) ||
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3eG53dnRkdm1jbmtjZmNuYW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2NzA4NTcsImV4cCI6MjA5NjI0Njg1N30.oK1D9Mwer6rppqcEQGx7QVuvR37wPiTgMKq_-ZfBVdo';
 
     if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
       const missing = [

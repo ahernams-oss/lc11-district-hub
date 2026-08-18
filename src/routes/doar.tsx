@@ -280,6 +280,10 @@ function Doar() {
                         >
                           Doar para {campanhaSelecionada?.titulo ?? "a campanha"}
                         </button>
+
+                        <div className="mt-6">
+                          <PixQrCode amountInCents={amountInCents} title="Prefere pagar com PIX?" />
+                        </div>
                         <Link to="/campanhas" className="mt-3 block text-center text-xs underline opacity-80 hover:opacity-100">
                           Ver todas as campanhas
                         </Link>

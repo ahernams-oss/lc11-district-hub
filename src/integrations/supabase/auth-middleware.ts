@@ -11,22 +11,14 @@ export const requireSupabaseAuth = createMiddleware({ type: 'function' }).server
     
     const SUPABASE_URL =
       process.env.SUPABASE_URL ||
+      process.env.VITE_SUPABASE_URL ||
       (typeof import.meta !== 'undefined' && (import.meta.env as any)?.VITE_SUPABASE_URL) ||
       'https://lwxnwvtdvmcnkcfcnamc.supabase.co';
     const SUPABASE_PUBLISHABLE_KEY =
       process.env.SUPABASE_PUBLISHABLE_KEY ||
+      process.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
       (typeof import.meta !== 'undefined' && (import.meta.env as any)?.VITE_SUPABASE_PUBLISHABLE_KEY) ||
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3eG53dnRkdm1jbmtjZmNuYW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2NzA4NTcsImV4cCI6MjA5NjI0Njg1N30.oK1D9Mwer6rppqcEQGx7QVuvR37wPiTgMKq_-ZfBVdo';
-
-    if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
-      const missing = [
-        ...(!SUPABASE_URL ? ['SUPABASE_URL'] : []),
-        ...(!SUPABASE_PUBLISHABLE_KEY ? ['SUPABASE_PUBLISHABLE_KEY'] : []),
-      ];
-      const message = `Missing Supabase environment variable(s): ${missing.join(', ')}. Connect Supabase in Lovable Cloud.`;
-      console.error(`[Supabase] ${message}`);
-      throw new Error(message);
-    }
     
     const request = getRequest();
 

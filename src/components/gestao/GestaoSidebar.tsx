@@ -31,6 +31,8 @@ import { useState } from "react";
 type GestaoSidebarProps = {
   pathname: string;
   onSignOut: () => void;
+  mobileOpen?: boolean;
+  onCloseMobile?: () => void;
 };
 
 type NavItem = {
@@ -126,7 +128,7 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
   },
 ];
 
-export function GestaoSidebar({ pathname, onSignOut }: GestaoSidebarProps) {
+export function GestaoSidebar({ pathname, onSignOut, mobileOpen = false, onCloseMobile }: GestaoSidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const { user, isGestorAdmin, isGestorFinanceiro, isGestorContabil, isGestorCRM } = useAuth();
 
@@ -243,9 +245,13 @@ export function GestaoSidebar({ pathname, onSignOut }: GestaoSidebarProps) {
 
   return (
     <aside
-      className={`flex flex-col border-r border-white/8 bg-[#0d1321] transition-all duration-300 ${
-        collapsed ? "w-[68px]" : "w-[260px]"
-      }`}
+      onClick={(e) => {
+        const target = e.target as HTMLElement;
+        if (target.closest("a")) onCloseMobile?.();
+      }}
+      className={`fixed inset-y-0 left-0 z-50 flex w-[260px] flex-col border-r border-white/8 bg-[#0d1321] transition-transform duration-300 lg:static lg:z-auto lg:translate-x-0 lg:transition-all ${
+        mobileOpen ? "translate-x-0" : "-translate-x-full"
+      } ${collapsed ? "lg:w-[68px]" : "lg:w-[260px]"}`}
     >
       {/* Header */}
       <div className="flex items-center gap-3 border-b border-white/8 px-4 py-5">

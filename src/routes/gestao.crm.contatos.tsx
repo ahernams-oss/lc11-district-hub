@@ -214,7 +214,7 @@ function CrmContatosPage() {
           {isLoading ? (
             <div className="p-8 text-center text-sm text-slate-500">Carregando contatos...</div>
           ) : (
-            <table className="w-full text-left text-xs">
+            <div className="w-full overflow-x-auto"><table className="min-w-[760px] w-full text-left text-xs">
               <thead className="border-b border-white/8 bg-white/[0.02] uppercase tracking-wider text-slate-500">
                 <tr>
                   <th className="px-5 py-3.5 font-semibold">Contato / Clube</th>
@@ -298,7 +298,7 @@ function CrmContatosPage() {
                   </tr>
                 )}
               </tbody>
-            </table>
+            </table></div>
           )}
         </div>
       </div>

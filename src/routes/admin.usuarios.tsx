@@ -118,7 +118,7 @@ function UsersTable({ user, canManageUsers }: { user: any; canManageUsers: boole
             Erro: {(usersQuery.error as Error)?.message}
           </div>
         ) : (
-          <table className="w-full text-sm">
+          <div className="w-full overflow-x-auto"><table className="min-w-[760px] w-full text-sm">
             <thead className="bg-surface text-left text-xs uppercase tracking-wide text-muted-foreground">
               <tr>
                 <th className="px-4 py-3">Email</th>
@@ -218,7 +218,7 @@ function UsersTable({ user, canManageUsers }: { user: any; canManageUsers: boole
                 </tr>
               )}
             </tbody>
-          </table>
+          </table></div>
         )}
       </div>
     </div>

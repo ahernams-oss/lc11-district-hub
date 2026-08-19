@@ -113,7 +113,7 @@ function CobrancasPage() {
         )}
 
         {/* Summary */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
             <div className="text-xs text-slate-500 uppercase tracking-wider">Pendente</div>
             <div className="mt-1 text-xl font-bold text-amber-400">{formatBRL(totalPendente)}</div>
@@ -147,7 +147,7 @@ function CobrancasPage() {
           ) : (cobrancas ?? []).length === 0 ? (
             <div className="py-16 text-center text-sm text-slate-500">Nenhuma cobrança encontrada.</div>
           ) : (
-            <table className="w-full text-sm">
+            <div className="w-full overflow-x-auto"><table className="min-w-[760px] w-full text-sm">
               <thead className="border-b border-white/8 bg-white/[0.02] text-left text-xs uppercase tracking-wider text-slate-500">
                 <tr>
                   <th className="px-4 py-3">Clube</th>
@@ -177,7 +177,7 @@ function CobrancasPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table></div>
           )}
         </div>
       </div>

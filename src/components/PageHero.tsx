@@ -17,15 +17,15 @@ export function PageHero({
         <div className="absolute -left-32 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-gold blur-3xl" />
         <div className="absolute -right-24 top-0 h-72 w-72 rounded-full bg-primary-deep blur-3xl" />
       </div>
-      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
         {eyebrow && (
-          <p className="mb-3 font-semibold uppercase tracking-[0.2em] text-gold text-base">{eyebrow}</p>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold sm:text-base">{eyebrow}</p>
         )}
-        <h1 className="max-w-3xl font-display font-bold leading-tight sm:text-5xl lg:text-6xl text-8xl">
+        <h1 className="max-w-3xl font-display text-3xl font-bold leading-tight sm:text-5xl lg:text-6xl">
           {title}
         </h1>
         {description && (
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed opacity-90">{description}</p>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed opacity-90 sm:mt-5 sm:text-lg">{description}</p>
         )}
         {children && <div className="mt-8">{children}</div>}
       </div>

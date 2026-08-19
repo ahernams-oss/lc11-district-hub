@@ -125,7 +125,7 @@ function DocumentosIndex() {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="h-10 rounded-md border bg-background px-3 text-sm"
+            className="h-10 w-full min-w-0 rounded-md border bg-background px-3 text-sm sm:w-auto"
             aria-label="Filtrar por categoria"
           >
             <option value="all">Todas as categorias</option>
@@ -136,7 +136,7 @@ function DocumentosIndex() {
           <select
             value={year}
             onChange={(e) => setYear(e.target.value)}
-            className="h-10 rounded-md border bg-background px-3 text-sm"
+            className="h-10 w-full min-w-0 rounded-md border bg-background px-3 text-sm sm:w-auto"
             aria-label="Filtrar por ano"
           >
             <option value="all">Todos os anos</option>

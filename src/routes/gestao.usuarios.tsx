@@ -205,7 +205,7 @@ function UsersManager({ currentUser }: { currentUser: any }) {
               Erro ao carregar usuários: {(usersQuery.error as Error)?.message}
             </div>
           ) : (
-            <table className="w-full text-left text-xs">
+            <div className="w-full overflow-x-auto"><table className="min-w-[760px] w-full text-left text-xs">
               <thead className="border-b border-white/8 bg-white/[0.02] uppercase tracking-wider text-slate-500">
                 <tr>
                   <th className="px-5 py-3.5 font-semibold">Usuário / E-mail</th>
@@ -301,7 +301,7 @@ function UsersManager({ currentUser }: { currentUser: any }) {
                   </tr>
                 )}
               </tbody>
-            </table>
+            </table></div>
           )}
         </div>
       </div>

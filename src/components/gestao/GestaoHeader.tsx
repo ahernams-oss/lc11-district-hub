@@ -11,7 +11,7 @@ type GestaoHeaderProps = {
 
 export function GestaoHeader({ title, subtitle, breadcrumbs, actions }: GestaoHeaderProps) {
   return (
-    <header className="border-b border-white/8 bg-[#0f1629]/80 px-6 py-4 backdrop-blur-sm">
+    <header className="border-b border-white/8 bg-[#0f1629]/80 px-4 py-4 backdrop-blur-sm sm:px-6">
       {/* Breadcrumbs */}
       {breadcrumbs && breadcrumbs.length > 0 && (
         <nav className="mb-2 flex items-center gap-1 text-xs text-slate-500">
@@ -33,14 +33,14 @@ export function GestaoHeader({ title, subtitle, breadcrumbs, actions }: GestaoHe
         </nav>
       )}
 
-      <div className="flex items-center justify-between gap-4">
-        <div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        <div className="min-w-0">
           <h1 className="font-display text-xl font-bold text-white">{title}</h1>
           {subtitle && (
             <p className="mt-0.5 text-sm text-slate-400">{subtitle}</p>
           )}
         </div>
-        {actions && <div className="flex items-center gap-2">{actions}</div>}
+        {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
       </div>
     </header>
   );

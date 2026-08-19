@@ -131,23 +131,24 @@ function Index() {
         <div className="relative mx-auto max-w-7xl px-4 pt-4 pb-16 sm:px-6 sm:pt-6 sm:pb-24 lg:px-8 lg:pt-8 lg:pb-28">
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
             {/* LEFT: PIN + Message */}
-            <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-start">
+            <div className="flex min-w-0 flex-col items-center gap-8 xl:flex-row xl:items-start">
               {/* Governor PIN image */}
               {gov?.pin_url && (
-                <div className="flex-shrink-0 lg:-translate-x-[4cm] lg:translate-y-[4cm]">
+                <div className="w-full max-w-[180px] shrink-0 sm:max-w-[220px] 2xl:-translate-x-[4cm] 2xl:translate-y-[4cm]">
                   <img
                     src={gov.pin_url}
                     alt={`PIN do ${gov.name}`}
-                    className="max-h-72 w-auto rounded-xl shadow-elegant"
+                    className="mx-auto max-h-56 w-auto rounded-xl shadow-elegant sm:max-h-72"
                   />
                 </div>
               )}
 
-              <div>
+              <div className="min-w-0">
+
                 <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-gold">
                   {hero.hero_eyebrow}
                 </p>
-                <h1 className="font-display text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl whitespace-pre-line">
+                <h1 className="font-display text-3xl font-bold leading-tight break-words whitespace-pre-line sm:text-4xl lg:text-5xl xl:text-6xl">
                   {hero.hero_title}
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed opacity-95 sm:text-xl whitespace-pre-line">
@@ -171,7 +172,7 @@ function Index() {
             </div>
 
             {/* RIGHT: Dynamic banner carousel */}
-            <div className="relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-2xl bg-white shadow-elegant ring-1 ring-white/20 lg:aspect-[3/4] lg:translate-x-[5cm]">
+            <div className="relative flex aspect-[3/4] w-full min-w-0 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-elegant ring-1 ring-white/20 2xl:translate-x-[5cm]">
               {slides.map((slide, i) => {
                 const img = (
                   <img

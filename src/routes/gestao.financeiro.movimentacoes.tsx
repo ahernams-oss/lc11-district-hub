@@ -133,7 +133,7 @@ function MovimentacoesPage() {
         )}
 
         {/* Summary */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div className="rounded-xl border border-white/8 bg-white/[0.03] p-4">
             <div className="flex items-center gap-2 text-xs text-slate-500 uppercase tracking-wider">
               <ArrowUpCircle className="h-3.5 w-3.5 text-emerald-400" /> Entradas
@@ -178,7 +178,7 @@ function MovimentacoesPage() {
               Nenhuma movimentação encontrada.
             </div>
           ) : (
-            <table className="w-full text-sm">
+            <div className="w-full overflow-x-auto"><table className="min-w-[760px] w-full text-sm">
               <thead className="border-b border-white/8 bg-white/[0.02] text-left text-xs uppercase tracking-wider text-slate-500">
                 <tr>
                   <th className="px-4 py-3">Data</th>
@@ -225,7 +225,7 @@ function MovimentacoesPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table></div>
           )}
         </div>
       </div>

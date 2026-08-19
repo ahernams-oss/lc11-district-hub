@@ -85,7 +85,7 @@ function FluxoCaixaPage() {
 
       <div className="p-6 space-y-6">
         {/* Summary */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
             <div className="flex items-center gap-2 text-xs text-slate-400 uppercase tracking-wider">
               <TrendingUp className="h-3.5 w-3.5 text-emerald-400" /> Total Entradas
@@ -152,7 +152,7 @@ function FluxoCaixaPage() {
           <div className="border-b border-white/8 px-5 py-4">
             <h3 className="font-display font-bold text-white">Saldo Acumulado</h3>
           </div>
-          <table className="w-full text-sm">
+          <div className="w-full overflow-x-auto"><table className="min-w-[760px] w-full text-sm">
             <thead className="border-b border-white/8 text-left text-xs uppercase tracking-wider text-slate-500">
               <tr>
                 <th className="px-5 py-3">Mês</th>
@@ -173,7 +173,7 @@ function FluxoCaixaPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         </div>
       </div>
     </div>

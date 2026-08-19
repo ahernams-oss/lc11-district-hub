@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { LogOut, FileText, Users, Home, MapPin, Newspaper, Calendar, Sparkles, ShieldCheck, MessageSquare, FolderArchive, Building2, Award, Activity, HeartHandshake} from "lucide-react";
@@ -14,6 +14,7 @@ function AdminLayout() {
   const { user, hasPanelAccess, canViewUsers, isAdmin, isAvancado, isIntermediario, loading, signOut, devBypass } = useAuth();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const [navOpen, setNavOpen] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) navigate({ to: "/auth" });
@@ -70,29 +71,43 @@ function AdminLayout() {
   ].filter((i) => i.show);
 
   return (
-    <div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 lg:grid-cols-[240px_1fr]">
+    <div className="mx-auto grid max-w-7xl gap-6 px-4 py-6 sm:py-8 lg:grid-cols-[240px_1fr]">
       <aside className="space-y-1">
-        <div className="mb-4">
-          <div className="font-display text-lg font-bold">Painel Admin</div>
-          <div className="text-xs text-muted-foreground">{user.email}</div>
-          <div className="mt-1 inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
-            {roleLabel}
+        <div className="mb-4 flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <div className="font-display text-lg font-bold">Painel Admin</div>
+            <div className="truncate text-xs text-muted-foreground">{user.email}</div>
+            <div className="mt-1 inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
+              {roleLabel}
+            </div>
           </div>
+          <button
+            type="button"
+            onClick={() => setNavOpen((v) => !v)}
+            className="shrink-0 rounded-md border px-3 py-2 text-sm lg:hidden"
+            aria-expanded={navOpen}
+          >
+            {navOpen ? "Fechar menu" : "Menu"}
+          </button>
         </div>
+        <div className={`${navOpen ? "block" : "hidden"} space-y-1 lg:block`}>
         {navItems.map((item) => {
           const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
           return (
             <Link
               key={item.to}
               to={item.to}
+              onClick={() => setNavOpen(false)}
               className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm ${
                 active ? "bg-primary text-primary-foreground" : "hover:bg-surface"
               }`}
             >
-              <item.icon className="h-4 w-4" /> {item.label}
+              <item.icon className="h-4 w-4 shrink-0" /> {item.label}
             </Link>
           );
         })}
+        </div>
+
         <button
           onClick={async () => {
             await signOut();

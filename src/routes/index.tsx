@@ -131,10 +131,10 @@ function Index() {
         <div className="relative mx-auto max-w-7xl px-4 pt-4 pb-16 sm:px-6 sm:pt-6 sm:pb-24 lg:px-8 lg:pt-8 lg:pb-28">
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
             {/* LEFT: PIN + Message */}
-            <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-start">
+            <div className="flex min-w-0 flex-col items-center gap-8 lg:flex-row lg:items-start">
               {/* Governor PIN image */}
               {gov?.pin_url && (
-                <div className="w-full max-w-[220px] shrink-0 sm:max-w-[260px] 2xl:-translate-x-[4cm] 2xl:translate-y-[4cm]">
+                <div className="w-full max-w-[180px] shrink-0 sm:max-w-[220px] 2xl:-translate-x-[4cm] 2xl:translate-y-[4cm]">
                   <img
                     src={gov.pin_url}
                     alt={`PIN do ${gov.name}`}
@@ -143,7 +143,8 @@ function Index() {
                 </div>
               )}
 
-              <div>
+              <div className="min-w-0">
+
                 <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-gold">
                   {hero.hero_eyebrow}
                 </p>

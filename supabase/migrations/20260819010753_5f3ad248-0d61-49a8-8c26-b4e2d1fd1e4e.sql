@@ -1,0 +1,2 @@
+DROP POLICY "Permitir leitura por administradores" ON public.site_visits;
+CREATE POLICY "Somente administradores leem visitas" ON public.site_visits FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin') OR public.has_panel_access(auth.uid()));

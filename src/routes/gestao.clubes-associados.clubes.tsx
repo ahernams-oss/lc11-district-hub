@@ -342,7 +342,7 @@ function GestaoClubesPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                   <div className="col-span-2">
                     <label className="block text-slate-300 font-medium mb-1">Cidade</label>
                     <input

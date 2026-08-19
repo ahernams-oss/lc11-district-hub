@@ -113,7 +113,7 @@ function CobrancasPage() {
         )}
 
         {/* Summary */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
             <div className="text-xs text-slate-500 uppercase tracking-wider">Pendente</div>
             <div className="mt-1 text-xl font-bold text-amber-400">{formatBRL(totalPendente)}</div>

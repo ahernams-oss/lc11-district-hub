@@ -85,7 +85,7 @@ function FluxoCaixaPage() {
 
       <div className="p-6 space-y-6">
         {/* Summary */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
             <div className="flex items-center gap-2 text-xs text-slate-400 uppercase tracking-wider">
               <TrendingUp className="h-3.5 w-3.5 text-emerald-400" /> Total Entradas

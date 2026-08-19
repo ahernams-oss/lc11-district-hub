@@ -1,7 +1,8 @@
 import { createFileRoute, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { GestaoSidebar } from "@/components/gestao";
+import { Menu } from "lucide-react";
 
 export const Route = createFileRoute("/gestao")({
   ssr: false,
@@ -18,6 +19,7 @@ function GestaoLayout() {
   const { user, hasGestaoAccess, loading, signOut } = useAuth();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const isLoginPage = pathname === "/gestao/login";
 

@@ -128,7 +128,7 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
   },
 ];
 
-export function GestaoSidebar({ pathname, onSignOut }: GestaoSidebarProps) {
+export function GestaoSidebar({ pathname, onSignOut, mobileOpen = false, onCloseMobile }: GestaoSidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const { user, isGestorAdmin, isGestorFinanceiro, isGestorContabil, isGestorCRM } = useAuth();
 

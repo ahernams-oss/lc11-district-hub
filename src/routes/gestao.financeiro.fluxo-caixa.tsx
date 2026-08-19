@@ -152,7 +152,7 @@ function FluxoCaixaPage() {
           <div className="border-b border-white/8 px-5 py-4">
             <h3 className="font-display font-bold text-white">Saldo Acumulado</h3>
           </div>
-          <table className="w-full text-sm">
+          <div className="w-full overflow-x-auto"><table className="min-w-[760px] w-full text-sm">
             <thead className="border-b border-white/8 text-left text-xs uppercase tracking-wider text-slate-500">
               <tr>
                 <th className="px-5 py-3">Mês</th>
@@ -173,7 +173,7 @@ function FluxoCaixaPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         </div>
       </div>
     </div>

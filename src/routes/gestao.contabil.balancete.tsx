@@ -71,7 +71,7 @@ function BalancetePage() {
           ) : (data?.balancete?.length ?? 0) === 0 ? (
             <div className="py-16 text-center text-sm text-slate-500">Nenhum dado encontrado para o período selecionado.</div>
           ) : (
-            <table className="w-full text-sm">
+            <div className="w-full overflow-x-auto"><table className="min-w-[760px] w-full text-sm">
               <thead className="border-b border-white/8 bg-white/[0.02] text-left text-xs uppercase tracking-wider text-slate-500">
                 <tr>
                   <th className="px-4 py-3 w-36">Código</th>
@@ -128,7 +128,7 @@ function BalancetePage() {
                   </td>
                 </tr>
               </tfoot>
-            </table>
+            </table></div>
           )}
         </div>
       </div>

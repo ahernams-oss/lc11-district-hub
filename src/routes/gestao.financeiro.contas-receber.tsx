@@ -188,7 +188,7 @@ function ContasReceberPage() {
               <button onClick={() => { setForm({ ...EMPTY_FORM }); setDrawer(true); }} className="text-primary underline">Cadastrar agora</button>
             </div>
           ) : (
-            <table className="w-full text-sm">
+            <div className="w-full overflow-x-auto"><table className="min-w-[760px] w-full text-sm">
               <thead className="border-b border-white/8 bg-white/[0.02] text-left text-xs uppercase tracking-wider text-slate-500">
                 <tr>
                   <th className="px-4 py-3">Descrição</th>
@@ -243,7 +243,7 @@ function ContasReceberPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table></div>
           )}
         </div>
       </div>

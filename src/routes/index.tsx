@@ -138,7 +138,7 @@ function Index() {
                   <img
                     src={gov.pin_url}
                     alt={`PIN do ${gov.name}`}
-                    className="max-h-72 w-auto rounded-xl shadow-elegant"
+                    className="mx-auto max-h-56 w-auto rounded-xl shadow-elegant sm:max-h-72"
                   />
                 </div>
               )}

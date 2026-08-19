@@ -31,6 +31,8 @@ import { useState } from "react";
 type GestaoSidebarProps = {
   pathname: string;
   onSignOut: () => void;
+  mobileOpen?: boolean;
+  onCloseMobile?: () => void;
 };
 
 type NavItem = {

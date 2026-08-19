@@ -71,15 +71,34 @@ function GestaoLayout() {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#0f1629] text-slate-200">
+      {menuOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/60 lg:hidden"
+          onClick={() => setMenuOpen(false)}
+          aria-hidden
+        />
+      )}
       <GestaoSidebar
         pathname={pathname}
+        mobileOpen={menuOpen}
+        onCloseMobile={() => setMenuOpen(false)}
         onSignOut={async () => {
           await signOut();
           navigate({ to: "/gestao/login" });
         }}
       />
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <main className="flex-1 overflow-y-auto">
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+        <div className="flex items-center gap-3 border-b border-white/8 px-4 py-3 lg:hidden">
+          <button
+            onClick={() => setMenuOpen(true)}
+            aria-label="Abrir menu"
+            className="rounded-lg border border-white/10 p-2 text-slate-300 hover:bg-white/5"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+          <span className="truncate font-display text-sm font-bold text-white">Gestão Distrital</span>
+        </div>
+        <main className="min-w-0 flex-1 overflow-y-auto">
           <Outlet />
         </main>
       </div>

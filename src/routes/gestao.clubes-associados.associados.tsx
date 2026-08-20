@@ -666,6 +666,12 @@ function GestaoAssociadosPage() {
                 </button>
               </div>
             </form>
+
+            {formData.id && (
+              <div className="border-t border-white/10 px-6 py-6">
+                <CargoHistorico associadoId={formData.id} />
+              </div>
+            )}
           </div>
         </div>
       )}

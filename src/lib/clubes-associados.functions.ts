@@ -366,8 +366,10 @@ export const upsertCargoHistorico = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertClubesAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const ano = data.ano_leonico || anoLeonicoDe(data.data_inicio || undefined);
     const payload = {
       ...data,
+      ano_leonico: ano,
       data_inicio: data.data_inicio || null,
       data_fim: data.data_fim || null,
     };

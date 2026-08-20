@@ -393,57 +393,84 @@ export type Database = {
       }
       dist_associados: {
         Row: {
+          bairro: string | null
+          bio: string | null
           cargo_clube: string
           cargo_distrital: string | null
           categoria: string
+          cep: string | null
+          cidade: string | null
+          cidade_endereco: string | null
           clube_id: string
+          complemento: string | null
           cpf: string | null
           created_at: string
           data_admissao: string | null
           data_nascimento: string | null
           email: string | null
+          estado_uf: string | null
           foto_url: string | null
           id: string
+          logradouro: string | null
           nome: string
           nome_conjuge: string | null
+          numero: string | null
           status: string
           telefone: string | null
           updated_at: string
           whatsapp: string | null
         }
         Insert: {
+          bairro?: string | null
+          bio?: string | null
           cargo_clube?: string
           cargo_distrital?: string | null
           categoria?: string
+          cep?: string | null
+          cidade?: string | null
+          cidade_endereco?: string | null
           clube_id: string
+          complemento?: string | null
           cpf?: string | null
           created_at?: string
           data_admissao?: string | null
           data_nascimento?: string | null
           email?: string | null
+          estado_uf?: string | null
           foto_url?: string | null
           id?: string
+          logradouro?: string | null
           nome: string
           nome_conjuge?: string | null
+          numero?: string | null
           status?: string
           telefone?: string | null
           updated_at?: string
           whatsapp?: string | null
         }
         Update: {
+          bairro?: string | null
+          bio?: string | null
           cargo_clube?: string
           cargo_distrital?: string | null
           categoria?: string
+          cep?: string | null
+          cidade?: string | null
+          cidade_endereco?: string | null
           clube_id?: string
+          complemento?: string | null
           cpf?: string | null
           created_at?: string
           data_admissao?: string | null
           data_nascimento?: string | null
           email?: string | null
+          estado_uf?: string | null
           foto_url?: string | null
           id?: string
+          logradouro?: string | null
           nome?: string
           nome_conjuge?: string | null
+          numero?: string | null
           status?: string
           telefone?: string | null
           updated_at?: string

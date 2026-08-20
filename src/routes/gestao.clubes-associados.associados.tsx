@@ -18,7 +18,43 @@ import {
   Shield,
 } from "lucide-react";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
+import { FileUploadInput } from "@/components/gestao/FileUploadInput";
 import { listAssociados, upsertAssociado, deleteAssociado, listClubes } from "@/lib/clubes-associados.functions";
+
+const labelCls = "block text-slate-300 font-semibold mb-1.5";
+const inputCls =
+  "w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-slate-500 focus:border-primary focus:outline-none";
+const selectCls =
+  "w-full rounded-lg border border-white/10 bg-[#0d1321] px-3 py-2 text-sm text-white focus:border-primary focus:outline-none [&>option]:bg-[#0d1321] [&>option]:text-white";
+
+const CARGOS_CLUBE = [
+  "Presidente",
+  "1º Vice-Presidente",
+  "2º Vice-Presidente",
+  "3º Vice-Presidente",
+  "Secretário(a)",
+  "Tesoureiro(a)",
+  "Diretor(a) Social",
+  "Diretor(a) de Marketing",
+  "Domador(a)",
+  "Cão Guia",
+  "Diretor(a) de Membros",
+  "Conselheiro(a)",
+  "Membro",
+];
+
+const CARGOS_DISTRITO = [
+  "Governador(a)",
+  "1º Vice-Governador(a)",
+  "2º Vice-Governador(a)",
+  "Secretário(a) Distrital",
+  "Tesoureiro(a) Distrital",
+  "Presidente de Região",
+  "Presidente de Divisão",
+  "Assessor(a) Distrital",
+  "Coordenador(a) Distrital",
+  "Past Governador(a)",
+];
 
 export const Route = createFileRoute("/gestao/clubes-associados/associados")({
   component: GestaoAssociadosPage,
@@ -43,11 +79,21 @@ function GestaoAssociadosPage() {
     whatsapp: "",
     data_nascimento: "",
     data_admissao: "",
-    cargo_clube: "Membro",
+    cargo_clube: "",
     cargo_distrital: "",
     categoria: "ativo" as "ativo" | "honorario" | "privilegiado" | "vitalicio" | "ausente",
     status: "ativo" as "ativo" | "desligado" | "licenciado",
     nome_conjuge: "",
+    foto_url: "",
+    cidade: "",
+    cep: "",
+    logradouro: "",
+    numero: "",
+    complemento: "",
+    bairro: "",
+    cidade_endereco: "",
+    estado_uf: "",
+    bio: "",
   });
 
   const { data: associados, isLoading } = useQuery({
@@ -89,11 +135,21 @@ function GestaoAssociadosPage() {
       whatsapp: "",
       data_nascimento: "",
       data_admissao: "",
-      cargo_clube: "Membro",
+      cargo_clube: "",
       cargo_distrital: "",
       categoria: "ativo",
       status: "ativo",
       nome_conjuge: "",
+      foto_url: "",
+      cidade: "",
+      cep: "",
+      logradouro: "",
+      numero: "",
+      complemento: "",
+      bairro: "",
+      cidade_endereco: "",
+      estado_uf: "",
+      bio: "",
     });
     setEditingAssociado(null);
   };
@@ -110,14 +166,25 @@ function GestaoAssociadosPage() {
       whatsapp: assoc.whatsapp || "",
       data_nascimento: assoc.data_nascimento || "",
       data_admissao: assoc.data_admissao || "",
-      cargo_clube: assoc.cargo_clube || "Membro",
+      cargo_clube: assoc.cargo_clube || "",
       cargo_distrital: assoc.cargo_distrital || "",
       categoria: assoc.categoria || "ativo",
       status: assoc.status || "ativo",
       nome_conjuge: assoc.nome_conjuge || "",
+      foto_url: assoc.foto_url || "",
+      cidade: assoc.cidade || "",
+      cep: assoc.cep || "",
+      logradouro: assoc.logradouro || "",
+      numero: assoc.numero || "",
+      complemento: assoc.complemento || "",
+      bairro: assoc.bairro || "",
+      cidade_endereco: assoc.cidade_endereco || "",
+      estado_uf: assoc.estado_uf || "",
+      bio: assoc.bio || "",
     });
     setDrawerOpen(true);
   };
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -303,181 +370,302 @@ function GestaoAssociadosPage() {
         </div>
       </div>
 
-      {/* Drawer de Cadastro / Edição de Associado */}
+      {/* Drawer de Cadastro / Edição de Associado — padrão perfil */}
       {drawerOpen && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm">
-          <div className="w-full max-w-lg bg-[#0d1321] border-l border-white/10 p-6 shadow-2xl overflow-y-auto flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                <h3 className="font-display text-lg font-bold text-white">
-                  {formData.id ? "Editar Associado / Leão" : "Cadastrar Novo Associado"}
-                </h3>
-                <button
-                  onClick={() => setDrawerOpen(false)}
-                  className="rounded p-1 text-slate-400 hover:bg-white/10 hover:text-white"
-                >
-                  <X className="h-5 w-5" />
-                </button>
+          <div className="w-full max-w-2xl bg-[#0d1321] border-l border-white/10 shadow-2xl overflow-y-auto">
+            {/* Capa */}
+            <div className="relative h-28 bg-gradient-to-r from-primary to-blue-900">
+              <div className="absolute -bottom-8 left-6 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-4 border-[#0d1321] bg-primary text-lg font-bold text-white">
+                {formData.foto_url ? (
+                  <img src={formData.foto_url} alt="Foto do associado" className="h-full w-full object-cover" />
+                ) : (
+                  (formData.nome || "AS").slice(0, 2).toUpperCase()
+                )}
+              </div>
+              <button
+                onClick={() => setDrawerOpen(false)}
+                className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-medium text-white hover:bg-white/20"
+              >
+                <X className="h-3.5 w-3.5" /> Cancelar
+              </button>
+            </div>
+
+            <form id="assocForm" onSubmit={handleSubmit} className="px-6 pb-8 pt-12 space-y-5 text-xs">
+              <div>
+                <label className="block font-semibold text-slate-300 mb-1.5">Foto de perfil</label>
+                <FileUploadInput
+                  value={formData.foto_url}
+                  onChange={(url) => setFormData({ ...formData, foto_url: url })}
+                  bucket="site-images"
+                  folder="associados"
+                  accept="image/*"
+                />
               </div>
 
-              <form id="assocForm" onSubmit={handleSubmit} className="mt-6 space-y-4 text-xs">
+              <div>
+                <label className={labelCls}>Nome *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.nome}
+                  onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                  className={inputCls}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-slate-300 font-medium mb-1">Lions Clube de Origem *</label>
+                  <label className={labelCls}>Clube *</label>
                   <select
                     required
                     value={formData.clube_id}
                     onChange={(e) => setFormData({ ...formData, clube_id: e.target.value })}
-                    className="w-full rounded-lg border border-white/10 bg-[#0d1321] px-3 py-2 text-sm text-white focus:border-primary focus:outline-none [&>option]:bg-[#0d1321] [&>option]:text-white"
+                    className={selectCls}
                   >
-                    <option value="" className="bg-[#0d1321] text-white">Selecione um clube...</option>
+                    <option value="">Selecione um clube...</option>
                     {clubes?.map((c) => (
-                      <option key={c.id} value={c.id} className="bg-[#0d1321] text-white">
+                      <option key={c.id} value={c.id}>
                         {c.nome}
                       </option>
                     ))}
                   </select>
                 </div>
-
                 <div>
-                  <label className="block text-slate-300 font-medium mb-1">Nome Completo (CL / CaL / Leo) *</label>
+                  <label className={labelCls}>Cidade</label>
                   <input
                     type="text"
-                    required
-                    placeholder="Ex: CL Dr. Roberto Mendes"
-                    value={formData.nome}
-                    onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary focus:outline-none"
+                    value={formData.cidade}
+                    onChange={(e) => setFormData({ ...formData, cidade: e.target.value })}
+                    className={inputCls}
                   />
                 </div>
+              </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-slate-300 font-medium mb-1">CPF</label>
-                    <input
-                      type="text"
-                      placeholder="000.000.000-00"
-                      value={formData.cpf}
-                      onChange={(e) => setFormData({ ...formData, cpf: e.target.value })}
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-slate-300 font-medium mb-1">E-mail</label>
-                    <input
-                      type="email"
-                      placeholder="email@exemplo.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-slate-300 font-medium mb-1">Telefone</label>
-                    <input
-                      type="text"
-                      placeholder="(27) 99999-0000"
-                      value={formData.telefone}
-                      onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-slate-300 font-medium mb-1">WhatsApp</label>
-                    <input
-                      type="text"
-                      placeholder="(27) 99999-0000"
-                      value={formData.whatsapp}
-                      onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-slate-300 font-medium mb-1">Cargo no Clube</label>
-                    <input
-                      type="text"
-                      placeholder="Ex: Presidente, Secretário, Tesoureiro, Membro"
-                      value={formData.cargo_clube}
-                      onChange={(e) => setFormData({ ...formData, cargo_clube: e.target.value })}
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-slate-300 font-medium mb-1">Cargo Distrital</label>
-                    <input
-                      type="text"
-                      placeholder="Ex: Assessor Distrital de Visão"
-                      value={formData.cargo_distrital}
-                      onChange={(e) => setFormData({ ...formData, cargo_distrital: e.target.value })}
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-slate-300 font-medium mb-1">Categoria de Associado</label>
-                    <select
-                      value={formData.categoria}
-                      onChange={(e) => setFormData({ ...formData, categoria: e.target.value as any })}
-                      className="w-full rounded-lg border border-white/10 bg-[#0d1321] px-3 py-2 text-sm text-white focus:border-primary focus:outline-none [&>option]:bg-[#0d1321] [&>option]:text-white"
-                    >
-                      <option value="ativo" className="bg-[#0d1321] text-white">Ativo</option>
-                      <option value="honorario" className="bg-[#0d1321] text-white">Honorário</option>
-                      <option value="privilegiado" className="bg-[#0d1321] text-white">Privilegiado</option>
-                      <option value="vitalicio" className="bg-[#0d1321] text-white">Vitalício</option>
-                      <option value="ausente" className="bg-[#0d1321] text-white">Ausente</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-slate-300 font-medium mb-1">Status</label>
-                    <select
-                      value={formData.status}
-                      onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
-                      className="w-full rounded-lg border border-white/10 bg-[#0d1321] px-3 py-2 text-sm text-white focus:border-primary focus:outline-none [&>option]:bg-[#0d1321] [&>option]:text-white"
-                    >
-                      <option value="ativo" className="bg-[#0d1321] text-white">Ativo</option>
-                      <option value="licenciado" className="bg-[#0d1321] text-white">Licenciado</option>
-                      <option value="desligado" className="bg-[#0d1321] text-white">Desligado</option>
-                    </select>
-                  </div>
-                </div>
-
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-slate-300 font-medium mb-1">Nome do Cônjuge / Companheiro(a)</label>
+                  <label className={labelCls}>Telefone Celular</label>
                   <input
                     type="text"
-                    placeholder="Nome completo do cônjuge"
-                    value={formData.nome_conjuge}
-                    onChange={(e) => setFormData({ ...formData, nome_conjuge: e.target.value })}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary focus:outline-none"
+                    value={formData.telefone}
+                    onChange={(e) => setFormData({ ...formData, telefone: e.target.value, whatsapp: e.target.value })}
+                    className={inputCls}
                   />
                 </div>
-              </form>
-            </div>
+                <div>
+                  <label className={labelCls}>E-mail</label>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className={inputCls}
+                  />
+                </div>
+              </div>
 
-            <div className="pt-6 border-t border-white/10 flex items-center justify-end gap-3 mt-6">
-              <button
-                type="button"
-                onClick={() => setDrawerOpen(false)}
-                className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-300 hover:bg-white/10"
-              >
-                Cancelar
-              </button>
-              <button
-                type="submit"
-                form="assocForm"
-                disabled={saveMutation.isPending}
-                className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-primary/25 hover:bg-primary-deep disabled:opacity-50"
-              >
-                {saveMutation.isPending ? "Salvando..." : "Salvar Associado"}
-              </button>
-            </div>
+              <div>
+                <label className={labelCls}>Cargo no clube</label>
+                <select
+                  value={formData.cargo_clube}
+                  onChange={(e) => setFormData({ ...formData, cargo_clube: e.target.value })}
+                  className={selectCls}
+                >
+                  <option value="">Nenhum</option>
+                  {CARGOS_CLUBE.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className={labelCls}>Cargo no Distrito</label>
+                <select
+                  value={formData.cargo_distrital}
+                  onChange={(e) => setFormData({ ...formData, cargo_distrital: e.target.value })}
+                  className={selectCls}
+                >
+                  <option value="">Nenhum</option>
+                  {CARGOS_DISTRITO.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className={labelCls}>Data de Nascimento</label>
+                  <input
+                    type="date"
+                    value={formData.data_nascimento}
+                    onChange={(e) => setFormData({ ...formData, data_nascimento: e.target.value })}
+                    className={inputCls}
+                  />
+                </div>
+                <div>
+                  <label className={labelCls}>Data de Admissão</label>
+                  <input
+                    type="date"
+                    value={formData.data_admissao}
+                    onChange={(e) => setFormData({ ...formData, data_admissao: e.target.value })}
+                    className={inputCls}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className={labelCls}>CEP</label>
+                  <input
+                    type="text"
+                    placeholder="00000-000"
+                    value={formData.cep}
+                    onChange={(e) => setFormData({ ...formData, cep: e.target.value })}
+                    className={inputCls}
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className={labelCls}>Logradouro</label>
+                  <input
+                    type="text"
+                    value={formData.logradouro}
+                    onChange={(e) => setFormData({ ...formData, logradouro: e.target.value })}
+                    className={inputCls}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className={labelCls}>Número</label>
+                  <input
+                    type="text"
+                    value={formData.numero}
+                    onChange={(e) => setFormData({ ...formData, numero: e.target.value })}
+                    className={inputCls}
+                  />
+                </div>
+                <div>
+                  <label className={labelCls}>Complemento</label>
+                  <input
+                    type="text"
+                    value={formData.complemento}
+                    onChange={(e) => setFormData({ ...formData, complemento: e.target.value })}
+                    className={inputCls}
+                  />
+                </div>
+                <div>
+                  <label className={labelCls}>Bairro</label>
+                  <input
+                    type="text"
+                    value={formData.bairro}
+                    onChange={(e) => setFormData({ ...formData, bairro: e.target.value })}
+                    className={inputCls}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                <div className="sm:col-span-3">
+                  <label className={labelCls}>Cidade (endereço)</label>
+                  <input
+                    type="text"
+                    value={formData.cidade_endereco}
+                    onChange={(e) => setFormData({ ...formData, cidade_endereco: e.target.value })}
+                    className={inputCls}
+                  />
+                </div>
+                <div>
+                  <label className={labelCls}>Estado (UF)</label>
+                  <input
+                    type="text"
+                    maxLength={2}
+                    value={formData.estado_uf}
+                    onChange={(e) => setFormData({ ...formData, estado_uf: e.target.value.toUpperCase() })}
+                    className={inputCls}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className={labelCls}>CPF</label>
+                  <input
+                    type="text"
+                    placeholder="000.000.000-00"
+                    value={formData.cpf}
+                    onChange={(e) => setFormData({ ...formData, cpf: e.target.value })}
+                    className={inputCls}
+                  />
+                </div>
+                <div>
+                  <label className={labelCls}>Categoria</label>
+                  <select
+                    value={formData.categoria}
+                    onChange={(e) => setFormData({ ...formData, categoria: e.target.value as any })}
+                    className={selectCls}
+                  >
+                    <option value="ativo">Ativo</option>
+                    <option value="honorario">Honorário</option>
+                    <option value="privilegiado">Privilegiado</option>
+                    <option value="vitalicio">Vitalício</option>
+                    <option value="ausente">Ausente</option>
+                  </select>
+                </div>
+                <div>
+                  <label className={labelCls}>Status</label>
+                  <select
+                    value={formData.status}
+                    onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
+                    className={selectCls}
+                  >
+                    <option value="ativo">Ativo</option>
+                    <option value="licenciado">Licenciado</option>
+                    <option value="desligado">Desligado</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className={labelCls}>Nome do Cônjuge / Companheiro(a)</label>
+                <input
+                  type="text"
+                  value={formData.nome_conjuge}
+                  onChange={(e) => setFormData({ ...formData, nome_conjuge: e.target.value })}
+                  className={inputCls}
+                />
+              </div>
+
+              <div>
+                <label className={labelCls}>Bio</label>
+                <textarea
+                  rows={4}
+                  value={formData.bio}
+                  onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
+                  className={inputCls}
+                />
+              </div>
+
+              <div className="flex items-center gap-3 pt-2">
+                <button
+                  type="submit"
+                  disabled={saveMutation.isPending}
+                  className="rounded-lg bg-primary px-6 py-2 text-sm font-semibold text-white shadow-lg shadow-primary/25 hover:bg-primary-deep disabled:opacity-50"
+                >
+                  {saveMutation.isPending ? "Salvando..." : "Salvar"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setDrawerOpen(false)}
+                  className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-300 hover:bg-white/10"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

@@ -312,7 +312,7 @@ function DesktopNav() {
         </Link>
       ))}
       <a
-        href="https://datastudio.google.com/u/0/reporting/59bed738-bb40-496a-99a1-ff4b9dd931e3/page/dfKpF?s=kTIPxUX9PZo"
+        href="https://lookerstudio.google.com/reporting/59bed738-bb40-496a-99a1-ff4b9dd931e3/page/dfKpF"
         target="_blank"
         rel="noreferrer"
         className="inline-flex items-center gap-1 rounded-md border-2 border-primary bg-gold px-3 py-2 text-sm font-semibold text-gold-foreground shadow-sm transition-colors hover:bg-gold/90 2xl:px-4"
@@ -602,7 +602,7 @@ export function SiteHeader() {
             </Link>
           ))}
           <a
-            href="https://datastudio.google.com/u/0/reporting/59bed738-bb40-496a-99a1-ff4b9dd931e3/page/dfKpF?s=kTIPxUX9PZo"
+            href="https://lookerstudio.google.com/reporting/59bed738-bb40-496a-99a1-ff4b9dd931e3/page/dfKpF"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center justify-center gap-2 rounded-md border-2 border-primary bg-gold px-3 py-2 text-base font-semibold text-gold-foreground shadow-sm hover:bg-gold/90"

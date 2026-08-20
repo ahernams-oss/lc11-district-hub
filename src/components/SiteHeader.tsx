@@ -311,6 +311,14 @@ function DesktopNav() {
           {item.label}
         </Link>
       ))}
+      <a
+        href="https://datastudio.google.com/u/0/reporting/59bed738-bb40-496a-99a1-ff4b9dd931e3/page/dfKpF?s=kTIPxUX9PZo"
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center gap-1 rounded-md border-2 border-primary bg-gold px-3 py-2 text-sm font-semibold text-gold-foreground shadow-sm transition-colors hover:bg-gold/90 2xl:px-4"
+      >
+        Dados <ExternalLink className="h-3.5 w-3.5" />
+      </a>
       <Link
         to="/lcif"
         className="rounded-md border-2 border-gold bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary-deep 2xl:px-4"
@@ -593,6 +601,14 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <a
+            href="https://datastudio.google.com/u/0/reporting/59bed738-bb40-496a-99a1-ff4b9dd931e3/page/dfKpF?s=kTIPxUX9PZo"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-md border-2 border-primary bg-gold px-3 py-2 text-base font-semibold text-gold-foreground shadow-sm hover:bg-gold/90"
+          >
+            Dados <ExternalLink className="h-4 w-4" />
+          </a>
           <Link
             to="/lcif"
             onClick={() => setOpen(false)}

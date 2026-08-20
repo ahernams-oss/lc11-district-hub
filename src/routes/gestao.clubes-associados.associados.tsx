@@ -771,88 +771,49 @@ function CargoHistorico({ associadoId }: { associadoId: string }) {
         </ul>
       )}
 
-      <div className="rounded-lg border border-white/10 bg-white/5 p-4 space-y-3">
-        <p className="font-semibold text-slate-300">Adicionar cargo ao histórico</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label className={labelCls}>Âmbito</label>
-            <select
-              value={novo.ambito}
-              onChange={(e) => setNovo({ ...novo, ambito: e.target.value as any, cargo: "" })}
-              className={selectCls}
-            >
-              <option value="clube">Clube</option>
-              <option value="distrito">Distrito</option>
-            </select>
-          </div>
-          <div>
-            <label className={labelCls}>Cargo</label>
-            <select value={novo.cargo} onChange={(e) => setNovo({ ...novo, cargo: e.target.value })} className={selectCls}>
-              <option value="">Selecione...</option>
-              {opcoes.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div>
-            <label className={labelCls}>Ano leonístico</label>
-            <input
-              type="text"
-              placeholder="2026-2027"
-              value={novo.ano_leonico}
-              onChange={(e) => setNovo({ ...novo, ano_leonico: e.target.value })}
-              className={inputCls}
-            />
-          </div>
-          <div>
-            <label className={labelCls}>Início</label>
-            <input
-              type="date"
-              value={novo.data_inicio}
-              onChange={(e) => setNovo({ ...novo, data_inicio: e.target.value })}
-              className={inputCls}
-            />
-          </div>
-          <div>
-            <label className={labelCls}>Término</label>
-            <input
-              type="date"
-              value={novo.data_fim}
-              onChange={(e) => setNovo({ ...novo, data_fim: e.target.value })}
-              className={inputCls}
-            />
-          </div>
-        </div>
-        <div>
-          <label className={labelCls}>Observações</label>
+      <div className="border-t border-white/10 pt-4">
+        <div className="flex flex-wrap items-center gap-2">
+          <select
+            value={novo.ambito}
+            onChange={(e) => setNovo({ ...novo, ambito: e.target.value as any, cargo: "" })}
+            className={`${selectCls} w-auto min-w-[120px]`}
+          >
+            <option value="clube">Clube</option>
+            <option value="distrito">Distrito</option>
+          </select>
+          <select
+            value={novo.cargo}
+            onChange={(e) => setNovo({ ...novo, cargo: e.target.value })}
+            className={`${selectCls} min-w-[220px] flex-1`}
+          >
+            <option value="">Selecione o cargo</option>
+            {opcoes.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
           <input
-            type="text"
-            value={novo.observacoes}
-            onChange={(e) => setNovo({ ...novo, observacoes: e.target.value })}
-            className={inputCls}
+            type="date"
+            value={novo.data_inicio}
+            onChange={(e) => setNovo({ ...novo, data_inicio: e.target.value })}
+            className={`${inputCls} w-auto min-w-[150px]`}
           />
-        </div>
-        <label className="flex items-center gap-2 text-slate-300">
           <input
-            type="checkbox"
-            checked={novo.atual}
-            onChange={(e) => setNovo({ ...novo, atual: e.target.checked })}
-            className="h-4 w-4 rounded border-white/20 bg-white/5"
+            type="date"
+            value={novo.data_fim}
+            onChange={(e) => setNovo({ ...novo, data_fim: e.target.value })}
+            className={`${inputCls} w-auto min-w-[150px]`}
           />
-          Cargo atual
-        </label>
-        <button
-          type="button"
-          disabled={!novo.cargo || addMutation.isPending}
-          onClick={() => addMutation.mutate({ ...novo, associado_id: associadoId })}
-          className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-deep disabled:opacity-50"
-        >
-          <Plus className="h-4 w-4" /> Adicionar
-        </button>
+          <button
+            type="button"
+            disabled={!novo.cargo || addMutation.isPending}
+            onClick={() => addMutation.mutate({ ...novo, atual: !novo.data_fim, associado_id: associadoId })}
+            className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white hover:bg-primary-deep disabled:opacity-50"
+          >
+            Adicionar
+          </button>
+        </div>
       </div>
     </div>
   );

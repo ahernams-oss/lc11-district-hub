@@ -16,10 +16,19 @@ import {
   Filter,
   CheckCircle,
   Shield,
+  History,
 } from "lucide-react";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
 import { FileUploadInput } from "@/components/gestao/FileUploadInput";
-import { listAssociados, upsertAssociado, deleteAssociado, listClubes } from "@/lib/clubes-associados.functions";
+import {
+  listAssociados,
+  upsertAssociado,
+  deleteAssociado,
+  listClubes,
+  listCargosHistorico,
+  upsertCargoHistorico,
+  deleteCargoHistorico,
+} from "@/lib/clubes-associados.functions";
 
 const labelCls = "block text-slate-300 font-semibold mb-1.5";
 const inputCls =
@@ -666,9 +675,185 @@ function GestaoAssociadosPage() {
                 </button>
               </div>
             </form>
+
+            {formData.id && (
+              <div className="border-t border-white/10 px-6 py-6">
+                <CargoHistorico associadoId={formData.id} />
+              </div>
+            )}
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function CargoHistorico({ associadoId }: { associadoId: string }) {
+  const queryClient = useQueryClient();
+  const [novo, setNovo] = useState({
+    ambito: "clube" as "clube" | "distrito",
+    cargo: "",
+    ano_leonico: "",
+    data_inicio: "",
+    data_fim: "",
+    atual: false,
+    observacoes: "",
+  });
+
+  const { data: historico, isLoading } = useQuery({
+    queryKey: ["assoc-cargos", associadoId],
+    queryFn: () => listCargosHistorico({ data: { associado_id: associadoId } }),
+  });
+
+  const addMutation = useMutation({
+    mutationFn: (data: any) => upsertCargoHistorico({ data }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["assoc-cargos", associadoId] });
+      setNovo({ ambito: "clube", cargo: "", ano_leonico: "", data_inicio: "", data_fim: "", atual: false, observacoes: "" });
+    },
+  });
+
+  const delMutation = useMutation({
+    mutationFn: (id: string) => deleteCargoHistorico({ data: { id } }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["assoc-cargos", associadoId] }),
+  });
+
+  const opcoes = novo.ambito === "clube" ? CARGOS_CLUBE : CARGOS_DISTRITO;
+
+  return (
+    <div className="space-y-4 text-xs">
+      <div className="flex items-center gap-2">
+        <History className="h-4 w-4 text-primary" />
+        <h3 className="font-display text-sm font-bold text-white">Histórico de cargos</h3>
+      </div>
+
+      {isLoading ? (
+        <p className="text-slate-400">Carregando histórico...</p>
+      ) : !historico || historico.length === 0 ? (
+        <p className="text-slate-400">Nenhum cargo registrado ainda.</p>
+      ) : (
+        <ul className="space-y-2">
+          {historico.map((h: any) => (
+            <li
+              key={h.id}
+              className="flex items-start justify-between gap-3 rounded-lg border border-white/10 bg-white/5 px-3 py-2"
+            >
+              <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-semibold text-white">{h.cargo}</span>
+                  <span className="rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-primary">
+                    {h.ambito === "distrito" ? "Distrito" : "Clube"}
+                  </span>
+                  {h.atual && (
+                    <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-emerald-300">
+                      Atual
+                    </span>
+                  )}
+                </div>
+                <p className="mt-1 text-slate-400">
+                  {h.ano_leonico ? `${h.ano_leonico} · ` : ""}
+                  {h.data_inicio ? new Date(h.data_inicio + "T00:00:00").toLocaleDateString("pt-BR") : "—"}
+                  {" até "}
+                  {h.data_fim ? new Date(h.data_fim + "T00:00:00").toLocaleDateString("pt-BR") : "atual"}
+                </p>
+                {h.observacoes && <p className="mt-1 text-slate-500">{h.observacoes}</p>}
+              </div>
+              <button
+                type="button"
+                onClick={() => delMutation.mutate(h.id)}
+                className="rounded-lg p-1.5 text-slate-400 hover:bg-red-500/10 hover:text-red-400"
+                title="Remover registro"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div className="rounded-lg border border-white/10 bg-white/5 p-4 space-y-3">
+        <p className="font-semibold text-slate-300">Adicionar cargo ao histórico</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label className={labelCls}>Âmbito</label>
+            <select
+              value={novo.ambito}
+              onChange={(e) => setNovo({ ...novo, ambito: e.target.value as any, cargo: "" })}
+              className={selectCls}
+            >
+              <option value="clube">Clube</option>
+              <option value="distrito">Distrito</option>
+            </select>
+          </div>
+          <div>
+            <label className={labelCls}>Cargo</label>
+            <select value={novo.cargo} onChange={(e) => setNovo({ ...novo, cargo: e.target.value })} className={selectCls}>
+              <option value="">Selecione...</option>
+              {opcoes.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label className={labelCls}>Ano leonístico</label>
+            <input
+              type="text"
+              placeholder="2026-2027"
+              value={novo.ano_leonico}
+              onChange={(e) => setNovo({ ...novo, ano_leonico: e.target.value })}
+              className={inputCls}
+            />
+          </div>
+          <div>
+            <label className={labelCls}>Início</label>
+            <input
+              type="date"
+              value={novo.data_inicio}
+              onChange={(e) => setNovo({ ...novo, data_inicio: e.target.value })}
+              className={inputCls}
+            />
+          </div>
+          <div>
+            <label className={labelCls}>Término</label>
+            <input
+              type="date"
+              value={novo.data_fim}
+              onChange={(e) => setNovo({ ...novo, data_fim: e.target.value })}
+              className={inputCls}
+            />
+          </div>
+        </div>
+        <div>
+          <label className={labelCls}>Observações</label>
+          <input
+            type="text"
+            value={novo.observacoes}
+            onChange={(e) => setNovo({ ...novo, observacoes: e.target.value })}
+            className={inputCls}
+          />
+        </div>
+        <label className="flex items-center gap-2 text-slate-300">
+          <input
+            type="checkbox"
+            checked={novo.atual}
+            onChange={(e) => setNovo({ ...novo, atual: e.target.checked })}
+            className="h-4 w-4 rounded border-white/20 bg-white/5"
+          />
+          Cargo atual
+        </label>
+        <button
+          type="button"
+          disabled={!novo.cargo || addMutation.isPending}
+          onClick={() => addMutation.mutate({ ...novo, associado_id: associadoId })}
+          className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-deep disabled:opacity-50"
+        >
+          <Plus className="h-4 w-4" /> Adicionar
+        </button>
+      </div>
     </div>
   );
 }

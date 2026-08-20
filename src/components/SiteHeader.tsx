@@ -379,31 +379,31 @@ export function SiteHeader() {
           >
             LCIF
           </Link>
-          <Link
-            to="/doar"
-            className="ml-1 inline-flex items-center justify-center rounded-md bg-gold px-3 py-2 text-sm font-semibold text-gold-foreground shadow-card transition-transform hover:scale-105 2xl:ml-2 2xl:px-4"
-          >
-            Doar
-          </Link>
-          <a
-            href="https://lovable.dev/projects/3c09d0df-b614-426e-b3c7-58ab2e837294"
-            target="_blank"
-            rel="noreferrer"
-            className="ml-1 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold tracking-wide text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary-deep hover:shadow-md active:scale-95 group 2xl:px-5"
-          >
-            <span>Lions Connecta</span>
-            <ExternalLink className="h-3.5 w-3.5 opacity-90 transition-opacity group-hover:opacity-100" />
-          </a>
-          <a
-            href="https://lionsinternational.my.site.com/s/login/?language=pt_BR"
-            target="_blank"
-            rel="noreferrer"
-            className="ml-1 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold tracking-wide text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary-deep hover:shadow-md active:scale-95 group 2xl:px-5"
-          >
-            <span>MyLion</span>
-            <ExternalLink className="h-3.5 w-3.5 opacity-90 transition-opacity group-hover:opacity-100" />
-          </a>
         </nav>
+        <Link
+          to="/doar"
+          className="ml-1 inline-flex items-center justify-center rounded-md bg-gold px-3 py-2 text-sm font-semibold text-gold-foreground shadow-card transition-transform hover:scale-105 2xl:ml-2 2xl:px-4"
+        >
+          Doar
+        </Link>
+        <a
+          href="https://lovable.dev/projects/3c09d0df-b614-426e-b3c7-58ab2e837294"
+          target="_blank"
+          rel="noreferrer"
+          className="ml-1 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold tracking-wide text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary-deep hover:shadow-md active:scale-95 group 2xl:px-5"
+        >
+          <span>Lions Connecta</span>
+          <ExternalLink className="h-3.5 w-3.5 opacity-90 transition-opacity group-hover:opacity-100" />
+        </a>
+        <a
+          href="https://lionsinternational.my.site.com/s/login/?language=pt_BR"
+          target="_blank"
+          rel="noreferrer"
+          className="ml-1 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold tracking-wide text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary-deep hover:shadow-md active:scale-95 group 2xl:px-5"
+        >
+          <span>MyLion</span>
+          <ExternalLink className="h-3.5 w-3.5 opacity-90 transition-opacity group-hover:opacity-100" />
+        </a>
 
         <button
           onClick={() => setOpen((v) => !v)}

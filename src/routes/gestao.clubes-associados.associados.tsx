@@ -99,11 +99,21 @@ function GestaoAssociadosPage() {
       whatsapp: "",
       data_nascimento: "",
       data_admissao: "",
-      cargo_clube: "Membro",
+      cargo_clube: "",
       cargo_distrital: "",
       categoria: "ativo",
       status: "ativo",
       nome_conjuge: "",
+      foto_url: "",
+      cidade: "",
+      cep: "",
+      logradouro: "",
+      numero: "",
+      complemento: "",
+      bairro: "",
+      cidade_endereco: "",
+      estado_uf: "",
+      bio: "",
     });
     setEditingAssociado(null);
   };
@@ -120,14 +130,25 @@ function GestaoAssociadosPage() {
       whatsapp: assoc.whatsapp || "",
       data_nascimento: assoc.data_nascimento || "",
       data_admissao: assoc.data_admissao || "",
-      cargo_clube: assoc.cargo_clube || "Membro",
+      cargo_clube: assoc.cargo_clube || "",
       cargo_distrital: assoc.cargo_distrital || "",
       categoria: assoc.categoria || "ativo",
       status: assoc.status || "ativo",
       nome_conjuge: assoc.nome_conjuge || "",
+      foto_url: assoc.foto_url || "",
+      cidade: assoc.cidade || "",
+      cep: assoc.cep || "",
+      logradouro: assoc.logradouro || "",
+      numero: assoc.numero || "",
+      complemento: assoc.complemento || "",
+      bairro: assoc.bairro || "",
+      cidade_endereco: assoc.cidade_endereco || "",
+      estado_uf: assoc.estado_uf || "",
+      bio: assoc.bio || "",
     });
     setDrawerOpen(true);
   };
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

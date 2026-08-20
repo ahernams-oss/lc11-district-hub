@@ -366,6 +366,19 @@ export const upsertCargoHistorico = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertClubesAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+    // O associado precisa existir no banco (registros de demonstração não têm FK válida)
+    const { data: assoc } = await supabaseAdmin
+      .from("dist_associados")
+      .select("id")
+      .eq("id", data.associado_id)
+      .maybeSingle();
+    if (!assoc) {
+      throw new Error(
+        "Salve o cadastro do associado antes de registrar cargos no histórico (este associado ainda não existe no banco)."
+      );
+    }
+
     const ano = data.ano_leonico || anoLeonicoDe(data.data_inicio || undefined);
     const payload = {
       ...data,

@@ -18,7 +18,43 @@ import {
   Shield,
 } from "lucide-react";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
+import { FileUploadInput } from "@/components/gestao/FileUploadInput";
 import { listAssociados, upsertAssociado, deleteAssociado, listClubes } from "@/lib/clubes-associados.functions";
+
+const labelCls = "block text-slate-300 font-semibold mb-1.5";
+const inputCls =
+  "w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-slate-500 focus:border-primary focus:outline-none";
+const selectCls =
+  "w-full rounded-lg border border-white/10 bg-[#0d1321] px-3 py-2 text-sm text-white focus:border-primary focus:outline-none [&>option]:bg-[#0d1321] [&>option]:text-white";
+
+const CARGOS_CLUBE = [
+  "Presidente",
+  "1º Vice-Presidente",
+  "2º Vice-Presidente",
+  "3º Vice-Presidente",
+  "Secretário(a)",
+  "Tesoureiro(a)",
+  "Diretor(a) Social",
+  "Diretor(a) de Marketing",
+  "Domador(a)",
+  "Cão Guia",
+  "Diretor(a) de Membros",
+  "Conselheiro(a)",
+  "Membro",
+];
+
+const CARGOS_DISTRITO = [
+  "Governador(a)",
+  "1º Vice-Governador(a)",
+  "2º Vice-Governador(a)",
+  "Secretário(a) Distrital",
+  "Tesoureiro(a) Distrital",
+  "Presidente de Região",
+  "Presidente de Divisão",
+  "Assessor(a) Distrital",
+  "Coordenador(a) Distrital",
+  "Past Governador(a)",
+];
 
 export const Route = createFileRoute("/gestao/clubes-associados/associados")({
   component: GestaoAssociadosPage,

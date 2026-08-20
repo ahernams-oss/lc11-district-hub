@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { anoLeonicoDe, fimAnoLeonico } from "@/lib/ano-leonico";
 
 export async function assertClubesAccess(userId: string) {
   if (
@@ -247,33 +248,65 @@ export const upsertAssociado = createServerFn({ method: "POST" })
         associadoId = inserted?.id ?? null;
       }
 
-      // Registrar histórico quando o cargo mudar
+      // Registrar histórico quando o cargo mudar (sempre carimbado com o ano leônico)
       if (associadoId) {
         const hoje = new Date().toISOString().slice(0, 10);
+        const anoAtual = anoLeonicoDe();
         const pares: Array<{ ambito: "clube" | "distrito"; novo: string | null; antigo: string | null }> = [
           { ambito: "clube", novo: data.cargo_clube || null, antigo: anterior?.cargo_clube ?? null },
           { ambito: "distrito", novo: data.cargo_distrital || null, antigo: anterior?.cargo_distrital ?? null },
         ];
         for (const p of pares) {
           if (p.novo === p.antigo) continue;
-          // Encerra o cargo atual desse âmbito
-          await supabaseAdmin
+
+          // Encerra os cargos abertos desse âmbito, respeitando o ano leônico de cada um
+          const { data: abertos } = await supabaseAdmin
             .from("dist_associado_cargos")
-            .update({ atual: false, data_fim: hoje })
+            .select("id, ano_leonico")
             .eq("associado_id", associadoId)
             .eq("ambito", p.ambito)
             .eq("atual", true);
+
+          for (const a of abertos ?? []) {
+            const anoReg = (a as any).ano_leonico || anoAtual;
+            // se o cargo era de um ano leônico anterior, encerra no fim daquele ano
+            const fim = anoReg === anoAtual ? hoje : fimAnoLeonico(anoReg);
+            await supabaseAdmin
+              .from("dist_associado_cargos")
+              .update({ atual: false, data_fim: fim })
+              .eq("id", (a as any).id);
+          }
+
           if (p.novo) {
-            await supabaseAdmin.from("dist_associado_cargos").insert({
-              associado_id: associadoId,
-              ambito: p.ambito,
-              cargo: p.novo,
-              data_inicio: hoje,
-              atual: true,
-            });
+            // evita duplicar o mesmo cargo/ano leônico
+            const { data: jaExiste } = await supabaseAdmin
+              .from("dist_associado_cargos")
+              .select("id")
+              .eq("associado_id", associadoId)
+              .eq("ambito", p.ambito)
+              .eq("cargo", p.novo)
+              .eq("ano_leonico", anoAtual)
+              .maybeSingle();
+
+            if (jaExiste?.id) {
+              await supabaseAdmin
+                .from("dist_associado_cargos")
+                .update({ atual: true, data_fim: null })
+                .eq("id", jaExiste.id);
+            } else {
+              await supabaseAdmin.from("dist_associado_cargos").insert({
+                associado_id: associadoId,
+                ambito: p.ambito,
+                cargo: p.novo,
+                ano_leonico: anoAtual,
+                data_inicio: hoje,
+                atual: true,
+              });
+            }
           }
         }
       }
+
     } catch {
       // Mock operation
       // Mock operation
@@ -333,8 +366,10 @@ export const upsertCargoHistorico = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertClubesAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const ano = data.ano_leonico || anoLeonicoDe(data.data_inicio || undefined);
     const payload = {
       ...data,
+      ano_leonico: ano,
       data_inicio: data.data_inicio || null,
       data_fim: data.data_fim || null,
     };

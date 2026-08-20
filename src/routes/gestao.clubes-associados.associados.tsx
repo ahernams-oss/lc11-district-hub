@@ -690,10 +690,12 @@ function GestaoAssociadosPage() {
 
 function CargoHistorico({ associadoId }: { associadoId: string }) {
   const queryClient = useQueryClient();
+  const anoAtual = anoLeonicoDe();
+  const anos = opcoesAnosLeonicos();
   const [novo, setNovo] = useState({
     ambito: "clube" as "clube" | "distrito",
     cargo: "",
-    ano_leonico: "",
+    ano_leonico: anoAtual,
     data_inicio: "",
     data_fim: "",
     atual: false,
@@ -709,7 +711,7 @@ function CargoHistorico({ associadoId }: { associadoId: string }) {
     mutationFn: (data: any) => upsertCargoHistorico({ data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["assoc-cargos", associadoId] });
-      setNovo({ ambito: "clube", cargo: "", ano_leonico: "", data_inicio: "", data_fim: "", atual: false, observacoes: "" });
+      setNovo({ ambito: "clube", cargo: "", ano_leonico: anoAtual, data_inicio: "", data_fim: "", atual: false, observacoes: "" });
     },
   });
 
@@ -720,59 +722,94 @@ function CargoHistorico({ associadoId }: { associadoId: string }) {
 
   const opcoes = novo.ambito === "clube" ? CARGOS_CLUBE : CARGOS_DISTRITO;
 
+  const grupos = (() => {
+    const map = new Map<string, any[]>();
+    for (const h of (historico as any[]) ?? []) {
+      const ano = h.ano_leonico || (h.data_inicio ? anoLeonicoDe(h.data_inicio) : "Sem ano leônico");
+      if (!map.has(ano)) map.set(ano, []);
+      map.get(ano)!.push(h);
+    }
+    return [...map.entries()].sort((a, b) => b[0].localeCompare(a[0]));
+  })();
+
   return (
     <div className="space-y-4 text-xs">
       <div className="flex items-center gap-2">
         <History className="h-4 w-4 text-primary" />
-        <h3 className="font-display text-sm font-bold text-white">Histórico de cargos</h3>
+        <h3 className="font-display text-sm font-bold text-white">Histórico de cargos por ano leônico</h3>
       </div>
 
       {isLoading ? (
         <p className="text-slate-400">Carregando histórico...</p>
-      ) : !historico || historico.length === 0 ? (
+      ) : grupos.length === 0 ? (
         <p className="text-slate-400">Nenhum cargo registrado.</p>
       ) : (
-        <ul className="space-y-2">
-          {historico.map((h: any) => (
-            <li
-              key={h.id}
-              className="flex items-start justify-between gap-3 rounded-lg border border-white/10 bg-white/5 px-3 py-2"
-            >
-              <div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-semibold text-white">{h.cargo}</span>
-                  <span className="rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-primary">
-                    {h.ambito === "distrito" ? "Distrito" : "Clube"}
-                  </span>
-                  {h.atual && (
-                    <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-emerald-300">
-                      Atual
-                    </span>
-                  )}
-                </div>
-                <p className="mt-1 text-slate-400">
-                  {h.ano_leonico ? `${h.ano_leonico} · ` : ""}
-                  {h.data_inicio ? new Date(h.data_inicio + "T00:00:00").toLocaleDateString("pt-BR") : "—"}
-                  {" até "}
-                  {h.data_fim ? new Date(h.data_fim + "T00:00:00").toLocaleDateString("pt-BR") : "atual"}
-                </p>
-                {h.observacoes && <p className="mt-1 text-slate-500">{h.observacoes}</p>}
+        <div className="space-y-4">
+          {grupos.map(([ano, itens]) => (
+            <div key={ano}>
+              <div className="mb-2 flex items-center gap-2">
+                <span className="rounded-full border border-primary/40 bg-primary/10 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-primary">
+                  AL {ano}
+                </span>
+                {ano === anoAtual && (
+                  <span className="text-[10px] font-semibold uppercase text-emerald-300">Ano vigente</span>
+                )}
               </div>
-              <button
-                type="button"
-                onClick={() => delMutation.mutate(h.id)}
-                className="rounded-lg p-1.5 text-slate-400 hover:bg-red-500/10 hover:text-red-400"
-                title="Remover registro"
-              >
-                <Trash2 className="h-3.5 w-3.5" />
-              </button>
-            </li>
+              <ul className="space-y-2">
+                {itens.map((h: any) => (
+                  <li
+                    key={h.id}
+                    className="flex items-start justify-between gap-3 rounded-lg border border-white/10 bg-white/5 px-3 py-2"
+                  >
+                    <div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="font-semibold text-white">{h.cargo}</span>
+                        <span className="rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-primary">
+                          {h.ambito === "distrito" ? "Distrito" : "Clube"}
+                        </span>
+                        {h.atual && (
+                          <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-emerald-300">
+                            Atual
+                          </span>
+                        )}
+                      </div>
+                      <p className="mt-1 text-slate-400">
+                        {h.data_inicio ? new Date(h.data_inicio + "T00:00:00").toLocaleDateString("pt-BR") : "—"}
+                        {" até "}
+                        {h.data_fim ? new Date(h.data_fim + "T00:00:00").toLocaleDateString("pt-BR") : "atual"}
+                      </p>
+                      {h.observacoes && <p className="mt-1 text-slate-500">{h.observacoes}</p>}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => delMutation.mutate(h.id)}
+                      className="rounded-lg p-1.5 text-slate-400 hover:bg-red-500/10 hover:text-red-400"
+                      title="Remover registro"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
 
       <div className="border-t border-white/10 pt-4">
         <div className="flex flex-wrap items-center gap-2">
+          <select
+            value={novo.ano_leonico}
+            onChange={(e) => setNovo({ ...novo, ano_leonico: e.target.value })}
+            className={`${selectCls} w-auto min-w-[130px]`}
+            title="Ano leônico"
+          >
+            {anos.map((a) => (
+              <option key={a} value={a}>
+                AL {a}
+              </option>
+            ))}
+          </select>
           <select
             value={novo.ambito}
             onChange={(e) => setNovo({ ...novo, ambito: e.target.value as any, cargo: "" })}
@@ -784,7 +821,7 @@ function CargoHistorico({ associadoId }: { associadoId: string }) {
           <select
             value={novo.cargo}
             onChange={(e) => setNovo({ ...novo, cargo: e.target.value })}
-            className={`${selectCls} min-w-[220px] flex-1`}
+            className={`${selectCls} min-w-[200px] flex-1`}
           >
             <option value="">Selecione o cargo</option>
             {opcoes.map((c) => (
@@ -808,13 +845,25 @@ function CargoHistorico({ associadoId }: { associadoId: string }) {
           <button
             type="button"
             disabled={!novo.cargo || addMutation.isPending}
-            onClick={() => addMutation.mutate({ ...novo, atual: !novo.data_fim, associado_id: associadoId })}
+            onClick={() =>
+              addMutation.mutate({
+                ...novo,
+                data_inicio: novo.data_inicio || inicioAnoLeonico(novo.ano_leonico),
+                atual: !novo.data_fim && novo.ano_leonico === anoAtual,
+                associado_id: associadoId,
+              })
+            }
             className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white hover:bg-primary-deep disabled:opacity-50"
           >
             Adicionar
           </button>
         </div>
+        <p className="mt-2 text-[11px] text-slate-500">
+          O ano leônico vai de 1º de julho a 30 de junho. Ao trocar o cargo do associado, o registro anterior é
+          encerrado e arquivado no ano correspondente — o histórico nunca é sobrescrito.
+        </p>
       </div>
     </div>
   );
 }
+

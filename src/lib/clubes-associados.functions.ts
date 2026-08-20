@@ -253,3 +253,64 @@ export const deleteAssociado = createServerFn({ method: "POST" })
 
     return { ok: true };
   });
+
+// ─── HISTÓRICO DE CARGOS ─────────────────────────────────────────────
+export const listCargosHistorico = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(z.object({ associado_id: z.string().uuid() }))
+  .handler(async ({ data, context }) => {
+    await assertClubesAccess(context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: res, error } = await supabaseAdmin
+      .from("dist_associado_cargos")
+      .select("*")
+      .eq("associado_id", data.associado_id)
+      .order("data_inicio", { ascending: false, nullsFirst: false })
+      .order("created_at", { ascending: false });
+    if (error) throw new Error(error.message);
+    return res ?? [];
+  });
+
+export const upsertCargoHistorico = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(
+    z.object({
+      id: z.string().uuid().optional(),
+      associado_id: z.string().uuid(),
+      ambito: z.enum(["clube", "distrito"]).default("clube"),
+      cargo: z.string().min(1),
+      ano_leonico: z.string().optional().nullable(),
+      data_inicio: z.string().optional().nullable(),
+      data_fim: z.string().optional().nullable(),
+      atual: z.boolean().default(false),
+      observacoes: z.string().optional().nullable(),
+    })
+  )
+  .handler(async ({ data, context }) => {
+    await assertClubesAccess(context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const payload = {
+      ...data,
+      data_inicio: data.data_inicio || null,
+      data_fim: data.data_fim || null,
+    };
+    if (data.id) {
+      const { error } = await supabaseAdmin.from("dist_associado_cargos").update(payload).eq("id", data.id);
+      if (error) throw new Error(error.message);
+    } else {
+      const { error } = await supabaseAdmin.from("dist_associado_cargos").insert(payload);
+      if (error) throw new Error(error.message);
+    }
+    return { ok: true };
+  });
+
+export const deleteCargoHistorico = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(z.object({ id: z.string().uuid() }))
+  .handler(async ({ data, context }) => {
+    await assertClubesAccess(context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin.from("dist_associado_cargos").delete().eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });

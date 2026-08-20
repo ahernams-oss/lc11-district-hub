@@ -130,9 +130,18 @@ export function SiteHeader() {
             </Link>
           )}
         </div>
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="inline-flex shrink-0 items-center justify-center rounded-md p-2 text-foreground lg:hidden"
+          aria-label="Abrir menu"
+        >
+          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
+      </div>
 
+      <div className="hidden border-t border-border bg-surface/40 lg:block">
+        <nav className="mx-auto flex max-w-[1800px] flex-wrap items-center justify-center gap-1 px-4 py-1.5 sm:px-6 lg:px-8 xl:gap-2">
 
-        <nav className="hidden min-w-0 items-center justify-end gap-1 2xl:flex 2xl:gap-3">
           <div
             className="relative"
             onMouseEnter={() => setInicioOpen(true)}

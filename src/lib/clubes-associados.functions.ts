@@ -225,13 +225,57 @@ export const upsertAssociado = createServerFn({ method: "POST" })
     await assertClubesAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
+    // Cargos anteriores (para detectar mudança e registrar histórico)
+    let anterior: any = null;
+    let associadoId = data.id ?? null;
+
     try {
       if (data.id) {
+        const { data: prev } = await supabaseAdmin
+          .from("dist_associados")
+          .select("cargo_clube, cargo_distrital")
+          .eq("id", data.id)
+          .maybeSingle();
+        anterior = prev;
         await supabaseAdmin.from("dist_associados").update(data).eq("id", data.id);
       } else {
-        await supabaseAdmin.from("dist_associados").insert(data);
+        const { data: inserted } = await supabaseAdmin
+          .from("dist_associados")
+          .insert(data)
+          .select("id")
+          .maybeSingle();
+        associadoId = inserted?.id ?? null;
+      }
+
+      // Registrar histórico quando o cargo mudar
+      if (associadoId) {
+        const hoje = new Date().toISOString().slice(0, 10);
+        const pares: Array<{ ambito: "clube" | "distrito"; novo: string | null; antigo: string | null }> = [
+          { ambito: "clube", novo: data.cargo_clube || null, antigo: anterior?.cargo_clube ?? null },
+          { ambito: "distrito", novo: data.cargo_distrital || null, antigo: anterior?.cargo_distrital ?? null },
+        ];
+        for (const p of pares) {
+          if (p.novo === p.antigo) continue;
+          // Encerra o cargo atual desse âmbito
+          await supabaseAdmin
+            .from("dist_associado_cargos")
+            .update({ atual: false, data_fim: hoje })
+            .eq("associado_id", associadoId)
+            .eq("ambito", p.ambito)
+            .eq("atual", true);
+          if (p.novo) {
+            await supabaseAdmin.from("dist_associado_cargos").insert({
+              associado_id: associadoId,
+              ambito: p.ambito,
+              cargo: p.novo,
+              data_inicio: hoje,
+              atual: true,
+            });
+          }
+        }
       }
     } catch {
+      // Mock operation
       // Mock operation
     }
 

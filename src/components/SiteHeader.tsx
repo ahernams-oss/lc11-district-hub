@@ -411,17 +411,10 @@ export function SiteHeader() {
             <ExternalLink className="h-3.5 w-3.5 opacity-90 transition-opacity group-hover:opacity-100" />
           </a>
         </nav>
-
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="inline-flex shrink-0 items-center justify-center rounded-md p-2 text-foreground 2xl:hidden"
-          aria-label="Abrir menu"
-        >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
       </div>
 
-      <div className={cn("border-t border-border 2xl:hidden", open ? "block" : "hidden")}>
+      <div className={cn("border-t border-border lg:hidden", open ? "block" : "hidden")}>
+
         <nav className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:px-6">
           <Link
             to="/"

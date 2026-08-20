@@ -210,6 +210,15 @@ export const upsertAssociado = createServerFn({ method: "POST" })
       status: z.enum(["ativo", "desligado", "licenciado"]).default("ativo"),
       nome_conjuge: z.string().optional().nullable(),
       foto_url: z.string().optional().nullable(),
+      cidade: z.string().optional().nullable(),
+      cep: z.string().optional().nullable(),
+      logradouro: z.string().optional().nullable(),
+      numero: z.string().optional().nullable(),
+      complemento: z.string().optional().nullable(),
+      bairro: z.string().optional().nullable(),
+      cidade_endereco: z.string().optional().nullable(),
+      estado_uf: z.string().optional().nullable(),
+      bio: z.string().optional().nullable(),
     })
   )
   .handler(async ({ data, context }) => {

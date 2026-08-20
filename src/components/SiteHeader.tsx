@@ -86,8 +86,8 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur">
-      <div className="mx-auto grid h-16 max-w-[1800px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 sm:px-6 lg:px-8 2xl:flex 2xl:justify-between">
-        <div className="flex min-w-0 items-center gap-3 2xl:shrink-0">
+      <div className="mx-auto grid h-16 max-w-[1800px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 sm:px-6 lg:px-8">
+        <div className="flex min-w-0 items-center gap-3">
           <Link to="/" className="flex shrink-0 items-center gap-2" onClick={() => setOpen(false)}>
             <img src={lionsLogo.url} alt="Lions Clubs International" className="h-10 w-10 object-contain" />
             <div className="leading-tight">
@@ -97,6 +97,8 @@ export function SiteHeader() {
               </div>
             </div>
           </Link>
+        </div>
+        <div className="flex justify-center">
           {governador?.photo_url && (
             <Link
               to="/governador"
@@ -129,6 +131,7 @@ export function SiteHeader() {
             </Link>
           )}
         </div>
+        <div className="flex min-w-0 items-center justify-end gap-2">
 
 
         <nav className="hidden min-w-0 items-center justify-end gap-1 2xl:flex 2xl:gap-3">
@@ -410,6 +413,7 @@ export function SiteHeader() {
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
+    </div>
 
       <div className={cn("border-t border-border 2xl:hidden", open ? "block" : "hidden")}>
         <nav className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:px-6">

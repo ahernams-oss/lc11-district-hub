@@ -313,8 +313,8 @@ function DesktopNav() {
       ))}
       <Link
         to="/lcif"
-        className="rounded-md px-2 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary 2xl:px-3"
-        activeProps={{ className: "text-primary bg-surface" }}
+        className="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary-deep 2xl:px-4"
+        activeProps={{ className: "bg-primary-deep ring-2 ring-gold/50" }}
       >
         LCIF
       </Link>
@@ -596,8 +596,8 @@ export function SiteHeader() {
           <Link
             to="/lcif"
             onClick={() => setOpen(false)}
-            className="rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-surface"
-            activeProps={{ className: "text-primary bg-surface" }}
+            className="rounded-md bg-primary px-3 py-2 text-base font-semibold text-primary-foreground shadow-sm hover:bg-primary-deep"
+            activeProps={{ className: "bg-primary-deep ring-2 ring-gold/50" }}
           >
             LCIF
           </Link>

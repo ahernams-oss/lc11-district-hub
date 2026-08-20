@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { anoLeonicoDe, fimAnoLeonico } from "@/lib/ano-leonico";
 
 export async function assertClubesAccess(userId: string) {
   if (

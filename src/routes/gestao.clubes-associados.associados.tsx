@@ -30,6 +30,7 @@ import {
   deleteCargoHistorico,
 } from "@/lib/clubes-associados.functions";
 import { anoLeonicoDe, opcoesAnosLeonicos, inicioAnoLeonico } from "@/lib/ano-leonico";
+import { toast } from "sonner";
 
 const labelCls = "block text-slate-300 font-semibold mb-1.5";
 const inputCls =
@@ -714,6 +715,7 @@ function CargoHistorico({ associadoId }: { associadoId: string }) {
       queryClient.invalidateQueries({ queryKey: ["assoc-cargos", associadoId] });
       setNovo({ ambito: "clube", cargo: "", ano_leonico: anoAtual, data_inicio: "", data_fim: "", atual: false, observacoes: "" });
     },
+    onError: (e: any) => toast.error(e?.message ?? "Não foi possível registrar o cargo."),
   });
 
   const delMutation = useMutation({

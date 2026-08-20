@@ -86,13 +86,14 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur">
-      <div className="mx-auto grid h-16 max-w-[1800px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 sm:px-6 lg:px-8 2xl:flex 2xl:justify-between">
-        <div className="flex min-w-0 items-center gap-3 2xl:shrink-0">
+      <div className="mx-auto flex h-16 max-w-[1800px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <div className="flex min-w-0 items-center gap-3">
+
           <Link to="/" className="flex shrink-0 items-center gap-2" onClick={() => setOpen(false)}>
             <img src={lionsLogo.url} alt="Lions Clubs International" className="h-10 w-10 object-contain" />
             <div className="leading-tight">
               <div className="whitespace-nowrap font-display text-sm font-bold text-foreground">Distrito LC-11</div>
-              <div className="hidden whitespace-nowrap text-[10px] uppercase tracking-wider text-muted-foreground 2xl:block">
+              <div className="hidden whitespace-nowrap text-[10px] uppercase tracking-wider text-muted-foreground sm:block">
                 Lions Clubs International
               </div>
             </div>
@@ -129,9 +130,18 @@ export function SiteHeader() {
             </Link>
           )}
         </div>
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="inline-flex shrink-0 items-center justify-center rounded-md p-2 text-foreground lg:hidden"
+          aria-label="Abrir menu"
+        >
+          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
+      </div>
 
+      <div className="hidden border-t border-border bg-surface/40 lg:block">
+        <nav className="mx-auto flex max-w-[1800px] flex-wrap items-center justify-center gap-1 px-4 py-1.5 sm:px-6 lg:px-8 xl:gap-2">
 
-        <nav className="hidden min-w-0 items-center justify-end gap-1 2xl:flex 2xl:gap-3">
           <div
             className="relative"
             onMouseEnter={() => setInicioOpen(true)}
@@ -401,17 +411,10 @@ export function SiteHeader() {
             <ExternalLink className="h-3.5 w-3.5 opacity-90 transition-opacity group-hover:opacity-100" />
           </a>
         </nav>
-
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="inline-flex shrink-0 items-center justify-center rounded-md p-2 text-foreground 2xl:hidden"
-          aria-label="Abrir menu"
-        >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
       </div>
 
-      <div className={cn("border-t border-border 2xl:hidden", open ? "block" : "hidden")}>
+      <div className={cn("border-t border-border lg:hidden", open ? "block" : "hidden")}>
+
         <nav className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:px-6">
           <Link
             to="/"

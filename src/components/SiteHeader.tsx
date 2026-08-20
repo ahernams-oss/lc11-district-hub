@@ -93,7 +93,7 @@ export function SiteHeader() {
             <img src={lionsLogo.url} alt="Lions Clubs International" className="h-10 w-10 object-contain" />
             <div className="leading-tight">
               <div className="whitespace-nowrap font-display text-sm font-bold text-foreground">Distrito LC-11</div>
-              <div className="hidden whitespace-nowrap text-[10px] uppercase tracking-wider text-muted-foreground 2xl:block">
+              <div className="hidden whitespace-nowrap text-[10px] uppercase tracking-wider text-muted-foreground sm:block">
                 Lions Clubs International
               </div>
             </div>

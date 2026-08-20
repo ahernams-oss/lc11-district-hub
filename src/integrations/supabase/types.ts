@@ -391,6 +391,56 @@ export type Database = {
           },
         ]
       }
+      dist_associado_cargos: {
+        Row: {
+          ambito: string
+          ano_leonico: string | null
+          associado_id: string
+          atual: boolean
+          cargo: string
+          created_at: string
+          data_fim: string | null
+          data_inicio: string | null
+          id: string
+          observacoes: string | null
+          updated_at: string
+        }
+        Insert: {
+          ambito?: string
+          ano_leonico?: string | null
+          associado_id: string
+          atual?: boolean
+          cargo: string
+          created_at?: string
+          data_fim?: string | null
+          data_inicio?: string | null
+          id?: string
+          observacoes?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ambito?: string
+          ano_leonico?: string | null
+          associado_id?: string
+          atual?: boolean
+          cargo?: string
+          created_at?: string
+          data_fim?: string | null
+          data_inicio?: string | null
+          id?: string
+          observacoes?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dist_associado_cargos_associado_id_fkey"
+            columns: ["associado_id"]
+            isOneToOne: false
+            referencedRelation: "dist_associados"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       dist_associados: {
         Row: {
           bairro: string | null

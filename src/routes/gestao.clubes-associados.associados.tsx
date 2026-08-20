@@ -730,7 +730,7 @@ function CargoHistorico({ associadoId }: { associadoId: string }) {
       {isLoading ? (
         <p className="text-slate-400">Carregando histórico...</p>
       ) : !historico || historico.length === 0 ? (
-        <p className="text-slate-400">Nenhum cargo registrado ainda.</p>
+        <p className="text-slate-400">Nenhum cargo registrado.</p>
       ) : (
         <ul className="space-y-2">
           {historico.map((h: any) => (

@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
 import { GestaoStatCard } from "@/components/gestao/GestaoStatCard";
@@ -15,13 +17,44 @@ import {
   FileText,
   UserPlus,
 } from "lucide-react";
+import { getFinanceiroDashboard } from "@/lib/financeiro.functions";
+import { getContabilDashboard } from "@/lib/contabil.functions";
+import { getCrmDashboardMetrics } from "@/lib/crm.functions";
+import { formatBRL } from "@/lib/financeiro.utils";
 
 export const Route = createFileRoute("/gestao/")({
   component: GestaoDashboard,
 });
 
 function GestaoDashboard() {
-  const { isGestorFinanceiro, isGestorContabil, isGestorCRM, isGestorAdmin } = useAuth();
+  const { isGestorFinanceiro, isGestorContabil, isGestorCRM } = useAuth();
+
+  const fetchFin = useServerFn(getFinanceiroDashboard);
+  const fetchCon = useServerFn(getContabilDashboard);
+  const fetchCrm = useServerFn(getCrmDashboardMetrics);
+
+  const fin = useQuery({
+    queryKey: ["gestao-dashboard-financeiro"],
+    queryFn: () => fetchFin({}),
+    enabled: !!isGestorFinanceiro,
+    refetchInterval: 60_000,
+  });
+
+  const con = useQuery({
+    queryKey: ["gestao-dashboard-contabil"],
+    queryFn: () => fetchCon({}),
+    enabled: !!isGestorContabil,
+    refetchInterval: 60_000,
+  });
+
+  const crm = useQuery({
+    queryKey: ["gestao-dashboard-crm"],
+    queryFn: () => fetchCrm({}),
+    enabled: !!isGestorCRM,
+    refetchInterval: 60_000,
+  });
+
+  const dash = (v: string | undefined) => v ?? "—";
 
   return (
     <div>
@@ -37,36 +70,36 @@ function GestaoDashboard() {
             <>
               <GestaoStatCard
                 label="Saldo em Caixa"
-                value="—"
+                value={dash(fin.data ? formatBRL(fin.data.saldoTotal) : undefined)}
                 icon={DollarSign}
                 variant="success"
-                loading={false}
+                loading={fin.isLoading}
               />
               <GestaoStatCard
                 label="Contas a Vencer (7d)"
-                value="—"
+                value={dash(fin.data ? formatBRL(fin.data.aVencer7d) : undefined)}
                 icon={AlertTriangle}
                 variant="warning"
-                loading={false}
+                loading={fin.isLoading}
               />
             </>
           )}
           {isGestorContabil && (
             <GestaoStatCard
-              label="Lançamentos Pendentes"
-              value="—"
+              label="Lançamentos (mês)"
+              value={dash(con.data ? String(con.data.totalLancamentosMes) : undefined)}
               icon={BookOpen}
               variant="info"
-              loading={false}
+              loading={con.isLoading}
             />
           )}
           {isGestorCRM && (
             <GestaoStatCard
               label="Contatos Ativos"
-              value="—"
+              value={dash(crm.data ? String(crm.data.totalContatos) : undefined)}
               icon={Users}
               variant="default"
-              loading={false}
+              loading={crm.isLoading}
             />
           )}
         </div>
@@ -81,9 +114,9 @@ function GestaoDashboard() {
               color="emerald"
               to="/gestao/financeiro"
               stats={[
-                { icon: TrendingUp, label: "Fluxo de Caixa", value: "—" },
-                { icon: AlertTriangle, label: "Contas Vencidas", value: "—" },
-                { icon: CheckCircle2, label: "Pagas este mês", value: "—" },
+                { icon: TrendingUp, label: "Entradas (mês)", value: dash(fin.data ? formatBRL(fin.data.entradas) : undefined) },
+                { icon: AlertTriangle, label: "Contas Vencidas", value: dash(fin.data ? formatBRL(fin.data.vencidas) : undefined) },
+                { icon: CheckCircle2, label: "Saídas (mês)", value: dash(fin.data ? formatBRL(fin.data.saidas) : undefined) },
               ]}
             />
           )}
@@ -96,9 +129,9 @@ function GestaoDashboard() {
               color="blue"
               to="/gestao/contabil"
               stats={[
-                { icon: FileText, label: "Lançamentos (mês)", value: "—" },
-                { icon: BarChart3, label: "Balancete", value: "—" },
-                { icon: Clock, label: "Período Aberto", value: "—" },
+                { icon: FileText, label: "Lançamentos (mês)", value: dash(con.data ? String(con.data.totalLancamentosMes) : undefined) },
+                { icon: BarChart3, label: "Contas no plano", value: dash(con.data ? String(con.data.totalContas) : undefined) },
+                { icon: Clock, label: "Movimento (mês)", value: dash(con.data ? formatBRL(con.data.movimentoMes) : undefined) },
               ]}
             />
           )}
@@ -111,13 +144,14 @@ function GestaoDashboard() {
               color="violet"
               to="/gestao/crm"
               stats={[
-                { icon: UserPlus, label: "Novos (mês)", value: "—" },
-                { icon: Clock, label: "Follow-ups hoje", value: "—" },
-                { icon: TrendingUp, label: "Engajamento", value: "—" },
+                { icon: UserPlus, label: "Membros ativos", value: dash(crm.data ? String(crm.data.membrosAtivos) : undefined) },
+                { icon: Clock, label: "Follow-ups pendentes", value: dash(crm.data ? String(crm.data.tarefasPendentes) : undefined) },
+                { icon: TrendingUp, label: "Em prospecção", value: dash(crm.data ? String(crm.data.emProspeccao) : undefined) },
               ]}
             />
           )}
         </div>
+
 
         {/* Recent Activity */}
         <div className="rounded-xl border border-white/8 bg-white/[0.03]">

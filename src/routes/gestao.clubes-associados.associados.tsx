@@ -43,11 +43,21 @@ function GestaoAssociadosPage() {
     whatsapp: "",
     data_nascimento: "",
     data_admissao: "",
-    cargo_clube: "Membro",
+    cargo_clube: "",
     cargo_distrital: "",
     categoria: "ativo" as "ativo" | "honorario" | "privilegiado" | "vitalicio" | "ausente",
     status: "ativo" as "ativo" | "desligado" | "licenciado",
     nome_conjuge: "",
+    foto_url: "",
+    cidade: "",
+    cep: "",
+    logradouro: "",
+    numero: "",
+    complemento: "",
+    bairro: "",
+    cidade_endereco: "",
+    estado_uf: "",
+    bio: "",
   });
 
   const { data: associados, isLoading } = useQuery({

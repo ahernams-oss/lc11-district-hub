@@ -39,23 +39,33 @@ function CategoriasPage() {
     e.preventDefault();
     const label = novo.label.trim();
     if (!label) return;
-    const slug = slugifyCategory(novo.slug || label);
+    const parent = categories.find((c) => c.id === novo.parent_id);
+    const base = slugifyCategory(novo.slug || label);
+    const slug = novo.slug
+      ? base
+      : parent
+        ? `${parent.slug}-${base}`
+        : base;
     if (!slug) {
       alert("Informe um identificador válido.");
       return;
     }
     setSaving(true);
-    const { error } = await (supabase as any)
-      .from("document_categories")
-      .insert({ label, slug, sort_order: Number(novo.sort_order) || 0 });
+    const { error } = await (supabase as any).from("document_categories").insert({
+      label,
+      slug,
+      sort_order: Number(novo.sort_order) || 0,
+      parent_id: novo.parent_id || null,
+    });
     setSaving(false);
     if (error) {
       alert(error.message);
       return;
     }
-    setNovo({ label: "", slug: "", sort_order: 0 });
+    setNovo({ label: "", slug: "", sort_order: 0, parent_id: "" });
     refresh();
   }
+
 
   async function atualizar(c: DocumentCategory, patch: Partial<DocumentCategory>) {
     const { error } = await (supabase as any)

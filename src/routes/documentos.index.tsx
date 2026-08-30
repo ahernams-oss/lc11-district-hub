@@ -78,7 +78,7 @@ function DocumentosIndex() {
       }
       return true;
     });
-  }, [docs, query, category, year]);
+  }, [docs, query, category, year, categoryLabel]);
 
   const hasFilters = query !== "" || category !== "all" || year !== "all";
 

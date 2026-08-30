@@ -405,7 +405,7 @@ export function SiteHeader() {
             rel="noreferrer"
             className="ml-1 hidden items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold tracking-wide text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary-deep hover:shadow-md active:scale-95 group sm:inline-flex 2xl:px-5"
           >
-            <span style={{ fontFamily: 'var(--font-sitka)', fontWeight: 600 }}><span className="text-gold" style={{ fontFamily: 'var(--font-engraved)' }}>Lion</span>Portal</span>
+            <span style={{ fontFamily: 'var(--font-sitka)', fontWeight: 600 }}><span className="text-gold" style={{ fontFamily: 'var(--font-engraved)' }}>LION</span>Portal</span>
             <ExternalLink className="h-3.5 w-3.5 opacity-90 transition-opacity group-hover:opacity-100" />
           </a>
 
@@ -638,7 +638,7 @@ export function SiteHeader() {
             rel="noreferrer"
             className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-semibold tracking-wide text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary-deep hover:shadow-md active:scale-95 group"
           >
-            <span style={{ fontFamily: 'var(--font-sitka)', fontWeight: 600 }}><span className="text-gold" style={{ fontFamily: 'var(--font-engraved)' }}>Lion</span>Portal</span>
+            <span style={{ fontFamily: 'var(--font-sitka)', fontWeight: 600 }}><span className="text-gold" style={{ fontFamily: 'var(--font-engraved)' }}>LION</span>Portal</span>
             <ExternalLink className="h-4 w-4 opacity-90 transition-opacity group-hover:opacity-100" />
           </a>
         </nav>

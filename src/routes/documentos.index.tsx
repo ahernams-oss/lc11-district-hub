@@ -71,10 +71,25 @@ function DocumentosIndex() {
     return Array.from(set).sort().reverse();
   }, [docs]);
 
+  // Ao filtrar por uma categoria pai, inclui também as subcategorias.
+  const selectedSlugs = useMemo(() => {
+    const set = new Set<string>();
+    if (category === "all") return set;
+    const add = (slug: string) => {
+      set.add(slug);
+      for (const c of categoryOptions) {
+        const parent = categoryOptions.find((p) => p.id === c.parent_id);
+        if (parent?.slug === slug) add(c.slug);
+      }
+    };
+    add(category);
+    return set;
+  }, [category, categoryOptions]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return docs.filter((d) => {
-      if (category !== "all" && d.category !== category) return false;
+      if (category !== "all" && !selectedSlugs.has(d.category)) return false;
       if (year !== "all" && getDocYear(d) !== year) return false;
       if (q) {
         const hay = `${d.title} ${d.description ?? ""} ${categoryLabel[d.category] ?? d.category}`.toLowerCase();
@@ -82,7 +97,7 @@ function DocumentosIndex() {
       }
       return true;
     });
-  }, [docs, query, category, year, categoryLabel]);
+  }, [docs, query, category, year, categoryLabel, selectedSlugs]);
 
   const hasFilters = query !== "" || category !== "all" || year !== "all";
 

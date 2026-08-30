@@ -54,7 +54,56 @@ export type DocumentCategory = {
   label: string;
   sort_order: number;
   active: boolean;
+  parent_id?: string | null;
 };
+
+export type CategoryNode = DocumentCategory & { children: CategoryNode[]; depth: number };
+
+/** Monta a árvore Categoria > Subcategoria a partir de parent_id. */
+export function buildCategoryTree(list: DocumentCategory[]): CategoryNode[] {
+  const byId = new Map<string, CategoryNode>();
+  for (const c of list) byId.set(c.id, { ...c, children: [], depth: 0 });
+  const roots: CategoryNode[] = [];
+  for (const node of byId.values()) {
+    const parent = node.parent_id ? byId.get(node.parent_id) : undefined;
+    if (parent) parent.children.push(node);
+    else roots.push(node);
+  }
+  const sortFn = (a: CategoryNode, b: CategoryNode) =>
+    a.sort_order - b.sort_order || a.label.localeCompare(b.label);
+  const walk = (nodes: CategoryNode[], depth: number) => {
+    nodes.sort(sortFn);
+    for (const n of nodes) {
+      n.depth = depth;
+      walk(n.children, depth + 1);
+    }
+  };
+  walk(roots, 0);
+  return roots;
+}
+
+/** Lista achatada em ordem hierárquica (útil para <select> e listagens). */
+export function flattenCategoryTree(nodes: CategoryNode[]): CategoryNode[] {
+  return nodes.flatMap((n) => [n, ...flattenCategoryTree(n.children)]);
+}
+
+/** Rótulo completo do caminho, ex: "RGDs e Convenção — AL 2026-2027 — 1ª RGD". */
+export function categoryPathLabels(list: DocumentCategory[]): Record<string, string> {
+  const byId = new Map(list.map((c) => [c.id, c]));
+  const out: Record<string, string> = {};
+  for (const c of list) {
+    const parts = [c.label];
+    let cur = c.parent_id ? byId.get(c.parent_id) : undefined;
+    let guard = 0;
+    while (cur && guard++ < 5) {
+      parts.unshift(cur.label);
+      cur = cur.parent_id ? byId.get(cur.parent_id) : undefined;
+    }
+    out[c.slug] = parts.join(" — ");
+  }
+  return out;
+}
+
 
 export function slugifyCategory(value: string) {
   return value

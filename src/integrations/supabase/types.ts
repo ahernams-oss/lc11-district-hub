@@ -824,6 +824,7 @@ export type Database = {
           created_at: string
           id: string
           label: string
+          parent_id: string | null
           slug: string
           sort_order: number
           updated_at: string
@@ -833,6 +834,7 @@ export type Database = {
           created_at?: string
           id?: string
           label: string
+          parent_id?: string | null
           slug: string
           sort_order?: number
           updated_at?: string
@@ -842,11 +844,20 @@ export type Database = {
           created_at?: string
           id?: string
           label?: string
+          parent_id?: string | null
           slug?: string
           sort_order?: number
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "document_categories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "document_categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       documents: {
         Row: {

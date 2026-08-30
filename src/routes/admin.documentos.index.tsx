@@ -1,5 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useDocuments, useDocumentCategories } from "@/lib/documents";
+import {
+  useDocuments,
+  useDocumentCategories,
+  buildCategoryTree,
+  flattenCategoryTree,
+  categoryPathLabels,
+} from "@/lib/documents";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { Plus, Edit, Trash2, FileText, ExternalLink, ShieldCheck, Lock, Tag } from "lucide-react";
@@ -22,8 +28,10 @@ function DocumentsList() {
     else qc.invalidateQueries({ queryKey: ["documents"] });
   }
 
-  const byCategory = categories.map((c) => ({
+  const paths = categoryPathLabels(categories);
+  const byCategory = flattenCategoryTree(buildCategoryTree(categories)).map((c) => ({
     ...c,
+    label: paths[c.slug] ?? c.label,
     items: data.filter((d) => d.category === c.slug),
   }));
 

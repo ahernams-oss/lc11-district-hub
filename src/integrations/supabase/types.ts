@@ -1637,6 +1637,8 @@ export type Database = {
           phone: string | null
           photo_url: string | null
           pin_url: string | null
+          public_email: string | null
+          public_phone: string | null
           role: string | null
           updated_at: string
           year_label: string | null
@@ -1655,6 +1657,8 @@ export type Database = {
           phone?: string | null
           photo_url?: string | null
           pin_url?: string | null
+          public_email?: string | null
+          public_phone?: string | null
           role?: string | null
           updated_at?: string
           year_label?: string | null
@@ -1673,6 +1677,8 @@ export type Database = {
           phone?: string | null
           photo_url?: string | null
           pin_url?: string | null
+          public_email?: string | null
+          public_phone?: string | null
           role?: string | null
           updated_at?: string
           year_label?: string | null
@@ -1988,14 +1994,14 @@ export type Database = {
           bio?: string | null
           category?: string | null
           created_at?: string | null
-          email?: never
+          email?: string | null
           gallery_urls?: string[] | null
           id?: string | null
           message?: string | null
           motto?: string | null
           name?: string | null
           order_index?: number | null
-          phone?: never
+          phone?: string | null
           photo_url?: string | null
           pin_url?: string | null
           role?: string | null
@@ -2006,14 +2012,14 @@ export type Database = {
           bio?: string | null
           category?: string | null
           created_at?: string | null
-          email?: never
+          email?: string | null
           gallery_urls?: string[] | null
           id?: string | null
           message?: string | null
           motto?: string | null
           name?: string | null
           order_index?: number | null
-          phone?: never
+          phone?: string | null
           photo_url?: string | null
           pin_url?: string | null
           role?: string | null

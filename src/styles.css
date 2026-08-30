@@ -46,6 +46,7 @@
   --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-engraved: "Engravers MT", "Engravers Old English", "Cinzel Decorative", "Cinzel", serif;
+  --font-sitka: "Sitka Small", "Sitka Text", "Sitka Heading", "Cambria", serif;
 
   --shadow-elegant: 0 10px 40px -10px color-mix(in oklab, var(--primary) 30%, transparent);
   --shadow-card: 0 4px 20px -8px color-mix(in oklab, var(--primary) 18%, transparent);

@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { PageHero } from "@/components/PageHero";
 import { FileText, ExternalLink, Download, Search, X, LayoutGrid, List, Eye, Maximize2, Lock, ShieldCheck, Key } from "lucide-react";
-import { useDocuments, DOCUMENT_CATEGORIES, RGD_YEARS, RGD_ITEMS, type DocumentItem, REQUIRED_ROLE_LABELS } from "@/lib/documents";
+import { useDocuments, useDocumentCategories, DOCUMENT_CATEGORIES, RGD_YEARS, RGD_ITEMS, type DocumentItem, REQUIRED_ROLE_LABELS } from "@/lib/documents";
 import { useAuth } from "@/hooks/use-auth";
 import { logDocumentAccess } from "@/lib/documents.audit";
 
@@ -42,8 +42,14 @@ function getDocYear(d: DocumentItem): string | null {
 
 function DocumentosIndex() {
   const { data: docs = [], isLoading } = useDocuments();
+  const { data: categories = [] } = useDocumentCategories();
+  const categoryLabel = useMemo(
+    () => ({ ...CATEGORY_LABEL, ...Object.fromEntries(categories.map((c) => [c.slug, c.label])) }),
+    [categories],
+  );
   const { user } = useAuth();
   const navigate = useNavigate();
+
 
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("all");

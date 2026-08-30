@@ -18,6 +18,9 @@ function DocumentEdit() {
   const qc = useQueryClient();
   const fileRef = useRef<HTMLInputElement>(null);
   const doUpload = useServerFn(uploadDocumentFile);
+  const { data: categories = [] } = useDocumentCategories();
+
+
 
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);

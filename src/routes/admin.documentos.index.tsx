@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useDocuments, DOCUMENT_CATEGORIES } from "@/lib/documents";
+import { useDocuments, useDocumentCategories } from "@/lib/documents";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
-import { Plus, Edit, Trash2, FileText, ExternalLink, ShieldCheck, Lock } from "lucide-react";
+import { Plus, Edit, Trash2, FileText, ExternalLink, ShieldCheck, Lock, Tag } from "lucide-react";
+
 
 export const Route = createFileRoute("/admin/documentos/")({
   component: DocumentsList,
@@ -10,7 +11,9 @@ export const Route = createFileRoute("/admin/documentos/")({
 
 function DocumentsList() {
   const { data = [], isLoading } = useDocuments();
+  const { data: categories = [] } = useDocumentCategories({ includeInactive: true });
   const qc = useQueryClient();
+
 
   async function del(id: string, title: string) {
     if (!confirm(`Excluir "${title}"?`)) return;

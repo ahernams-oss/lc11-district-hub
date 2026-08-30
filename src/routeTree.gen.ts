@@ -108,6 +108,7 @@ import { Route as AdminLideresIdRouteImport } from './routes/admin.lideres.$id'
 import { Route as AdminGrandesLeoesNovoRouteImport } from './routes/admin.grandes-leoes.novo'
 import { Route as AdminGrandesLeoesIdRouteImport } from './routes/admin.grandes-leoes.$id'
 import { Route as AdminEventosIdRouteImport } from './routes/admin.eventos.$id'
+import { Route as AdminDocumentosCategoriasRouteImport } from './routes/admin.documentos.categorias'
 import { Route as AdminDocumentosAuditoriaRouteImport } from './routes/admin.documentos.auditoria'
 import { Route as AdminDocumentosIdRouteImport } from './routes/admin.documentos.$id'
 import { Route as AdminConteudoKeyRouteImport } from './routes/admin.conteudo.$key'
@@ -626,6 +627,12 @@ const AdminEventosIdRoute = AdminEventosIdRouteImport.update({
   path: '/eventos/$id',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminDocumentosCategoriasRoute =
+  AdminDocumentosCategoriasRouteImport.update({
+    id: '/documentos/categorias',
+    path: '/documentos/categorias',
+    getParentRoute: () => AdminRoute,
+  } as any)
 const AdminDocumentosAuditoriaRoute =
   AdminDocumentosAuditoriaRouteImport.update({
     id: '/documentos/auditoria',
@@ -717,6 +724,7 @@ export interface FileRoutesByFullPath {
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
   '/admin/documentos/auditoria': typeof AdminDocumentosAuditoriaRoute
+  '/admin/documentos/categorias': typeof AdminDocumentosCategoriasRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
   '/admin/grandes-leoes/$id': typeof AdminGrandesLeoesIdRoute
   '/admin/grandes-leoes/novo': typeof AdminGrandesLeoesNovoRoute
@@ -818,6 +826,7 @@ export interface FileRoutesByTo {
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
   '/admin/documentos/auditoria': typeof AdminDocumentosAuditoriaRoute
+  '/admin/documentos/categorias': typeof AdminDocumentosCategoriasRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
   '/admin/grandes-leoes/$id': typeof AdminGrandesLeoesIdRoute
   '/admin/grandes-leoes/novo': typeof AdminGrandesLeoesNovoRoute
@@ -926,6 +935,7 @@ export interface FileRoutesById {
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
   '/admin/documentos/auditoria': typeof AdminDocumentosAuditoriaRoute
+  '/admin/documentos/categorias': typeof AdminDocumentosCategoriasRoute
   '/admin/eventos/$id': typeof AdminEventosIdRoute
   '/admin/grandes-leoes/$id': typeof AdminGrandesLeoesIdRoute
   '/admin/grandes-leoes/novo': typeof AdminGrandesLeoesNovoRoute
@@ -1035,6 +1045,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
     | '/admin/documentos/auditoria'
+    | '/admin/documentos/categorias'
     | '/admin/eventos/$id'
     | '/admin/grandes-leoes/$id'
     | '/admin/grandes-leoes/novo'
@@ -1136,6 +1147,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
     | '/admin/documentos/auditoria'
+    | '/admin/documentos/categorias'
     | '/admin/eventos/$id'
     | '/admin/grandes-leoes/$id'
     | '/admin/grandes-leoes/novo'
@@ -1243,6 +1255,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
     | '/admin/documentos/auditoria'
+    | '/admin/documentos/categorias'
     | '/admin/eventos/$id'
     | '/admin/grandes-leoes/$id'
     | '/admin/grandes-leoes/novo'
@@ -2037,6 +2050,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEventosIdRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/documentos/categorias': {
+      id: '/admin/documentos/categorias'
+      path: '/documentos/categorias'
+      fullPath: '/admin/documentos/categorias'
+      preLoaderRoute: typeof AdminDocumentosCategoriasRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/documentos/auditoria': {
       id: '/admin/documentos/auditoria'
       path: '/documentos/auditoria'
@@ -2119,6 +2139,7 @@ interface AdminRouteChildren {
   AdminConteudoKeyRoute: typeof AdminConteudoKeyRoute
   AdminDocumentosIdRoute: typeof AdminDocumentosIdRoute
   AdminDocumentosAuditoriaRoute: typeof AdminDocumentosAuditoriaRoute
+  AdminDocumentosCategoriasRoute: typeof AdminDocumentosCategoriasRoute
   AdminEventosIdRoute: typeof AdminEventosIdRoute
   AdminGrandesLeoesIdRoute: typeof AdminGrandesLeoesIdRoute
   AdminGrandesLeoesNovoRoute: typeof AdminGrandesLeoesNovoRoute
@@ -2147,6 +2168,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminConteudoKeyRoute: AdminConteudoKeyRoute,
   AdminDocumentosIdRoute: AdminDocumentosIdRoute,
   AdminDocumentosAuditoriaRoute: AdminDocumentosAuditoriaRoute,
+  AdminDocumentosCategoriasRoute: AdminDocumentosCategoriasRoute,
   AdminEventosIdRoute: AdminEventosIdRoute,
   AdminGrandesLeoesIdRoute: AdminGrandesLeoesIdRoute,
   AdminGrandesLeoesNovoRoute: AdminGrandesLeoesNovoRoute,

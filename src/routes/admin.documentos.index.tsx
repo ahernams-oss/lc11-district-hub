@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useDocuments, DOCUMENT_CATEGORIES } from "@/lib/documents";
+import { useDocuments, useDocumentCategories } from "@/lib/documents";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
-import { Plus, Edit, Trash2, FileText, ExternalLink, ShieldCheck, Lock } from "lucide-react";
+import { Plus, Edit, Trash2, FileText, ExternalLink, ShieldCheck, Lock, Tag } from "lucide-react";
+
 
 export const Route = createFileRoute("/admin/documentos/")({
   component: DocumentsList,
@@ -10,7 +11,9 @@ export const Route = createFileRoute("/admin/documentos/")({
 
 function DocumentsList() {
   const { data = [], isLoading } = useDocuments();
+  const { data: categories = [] } = useDocumentCategories({ includeInactive: true });
   const qc = useQueryClient();
+
 
   async function del(id: string, title: string) {
     if (!confirm(`Excluir "${title}"?`)) return;
@@ -19,10 +22,11 @@ function DocumentsList() {
     else qc.invalidateQueries({ queryKey: ["documents"] });
   }
 
-  const byCategory = DOCUMENT_CATEGORIES.map((c) => ({
+  const byCategory = categories.map((c) => ({
     ...c,
     items: data.filter((d) => d.category === c.slug),
   }));
+
 
   return (
     <div>
@@ -33,11 +37,18 @@ function DocumentsList() {
         </div>
         <div className="flex items-center gap-2">
           <Link
+            to="/admin/documentos/categorias"
+            className="inline-flex items-center gap-1.5 rounded-md border px-3 py-2 text-xs font-semibold text-foreground hover:bg-surface"
+          >
+            <Tag className="h-4 w-4 text-primary" /> Categorias
+          </Link>
+          <Link
             to="/admin/documentos/auditoria"
             className="inline-flex items-center gap-1.5 rounded-md border px-3 py-2 text-xs font-semibold text-foreground hover:bg-surface"
           >
             <ShieldCheck className="h-4 w-4 text-primary" /> Trilha de Auditoria
           </Link>
+
           <Link
             to="/admin/documentos/$id"
             params={{ id: "novo" }}

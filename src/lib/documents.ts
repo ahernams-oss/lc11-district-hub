@@ -48,6 +48,50 @@ export const DOCUMENT_CATEGORIES: { slug: string; label: string }[] = [
   { slug: "regulamento-sede", label: "Regulamento da Sede" },
 ];
 
+export type DocumentCategory = {
+  id: string;
+  slug: string;
+  label: string;
+  sort_order: number;
+  active: boolean;
+};
+
+export function slugifyCategory(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+/** Categorias cadastradas no painel admin (com fallback para a lista padrão). */
+export function useDocumentCategories(opts?: { includeInactive?: boolean }) {
+  const includeInactive = opts?.includeInactive ?? false;
+  return useQuery({
+    queryKey: ["document-categories", includeInactive ? "all" : "active"],
+    queryFn: async () => {
+      let q = (supabase as any).from("document_categories").select("*");
+      if (!includeInactive) q = q.eq("active", true);
+      const { data, error } = await q
+        .order("sort_order", { ascending: true })
+        .order("label", { ascending: true });
+      if (error) throw error;
+      const rows = (data ?? []) as DocumentCategory[];
+      if (rows.length === 0) {
+        return DOCUMENT_CATEGORIES.map((c, i) => ({
+          id: c.slug,
+          slug: c.slug,
+          label: c.label,
+          sort_order: (i + 1) * 10,
+          active: true,
+        })) as DocumentCategory[];
+      }
+      return rows;
+    },
+    staleTime: 30_000,
+  });
+}
 
 export function useDocuments(category?: string) {
   return useQuery({

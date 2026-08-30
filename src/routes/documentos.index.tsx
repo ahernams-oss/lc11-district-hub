@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { PageHero } from "@/components/PageHero";
 import { FileText, ExternalLink, Download, Search, X, LayoutGrid, List, Eye, Maximize2, Lock, ShieldCheck, Key } from "lucide-react";
-import { useDocuments, DOCUMENT_CATEGORIES, RGD_YEARS, RGD_ITEMS, type DocumentItem, REQUIRED_ROLE_LABELS } from "@/lib/documents";
+import { useDocuments, useDocumentCategories, DOCUMENT_CATEGORIES, RGD_YEARS, RGD_ITEMS, type DocumentItem, REQUIRED_ROLE_LABELS } from "@/lib/documents";
 import { useAuth } from "@/hooks/use-auth";
 import { logDocumentAccess } from "@/lib/documents.audit";
 
@@ -42,8 +42,14 @@ function getDocYear(d: DocumentItem): string | null {
 
 function DocumentosIndex() {
   const { data: docs = [], isLoading } = useDocuments();
+  const { data: categories = [] } = useDocumentCategories();
+  const categoryLabel = useMemo(
+    () => ({ ...CATEGORY_LABEL, ...Object.fromEntries(categories.map((c) => [c.slug, c.label])) }),
+    [categories],
+  );
   const { user } = useAuth();
   const navigate = useNavigate();
+
 
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("all");
@@ -67,12 +73,12 @@ function DocumentosIndex() {
       if (category !== "all" && d.category !== category) return false;
       if (year !== "all" && getDocYear(d) !== year) return false;
       if (q) {
-        const hay = `${d.title} ${d.description ?? ""} ${CATEGORY_LABEL[d.category] ?? d.category}`.toLowerCase();
+        const hay = `${d.title} ${d.description ?? ""} ${categoryLabel[d.category] ?? d.category}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;
     });
-  }, [docs, query, category, year]);
+  }, [docs, query, category, year, categoryLabel]);
 
   const hasFilters = query !== "" || category !== "all" || year !== "all";
 
@@ -129,7 +135,7 @@ function DocumentosIndex() {
             aria-label="Filtrar por categoria"
           >
             <option value="all">Todas as categorias</option>
-            {DOCUMENT_CATEGORIES.map((c) => (
+            {categories.map((c) => (
               <option key={c.slug} value={c.slug}>{c.label}</option>
             ))}
           </select>
@@ -222,7 +228,7 @@ function DocumentosIndex() {
             {filtered.map((d) => {
               const isExternal = !!d.external_url && !d.file_url;
               const catPath = CATEGORY_TO_PATH[d.category];
-              const catLabel = CATEGORY_LABEL[d.category] ?? d.category;
+              const catLabel = categoryLabel[d.category] ?? d.category;
 
               if (viewMode === "grid") {
                 return (

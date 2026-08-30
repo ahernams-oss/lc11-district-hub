@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
-import { DOCUMENT_CATEGORIES, type DocumentItem } from "@/lib/documents";
+import { DOCUMENT_CATEGORIES, useDocumentCategories, type DocumentItem } from "@/lib/documents";
 import { uploadDocumentFile } from "@/lib/documents.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Upload, X, Eye, EyeOff, FileText, ExternalLink, Download, Maximize2, Sparkles, Lock, ShieldCheck } from "lucide-react";
@@ -103,7 +103,8 @@ function DocumentEdit() {
   const label = "block text-xs font-semibold uppercase tracking-wide text-muted-foreground";
 
   const selectedCategoryLabel =
-    DOCUMENT_CATEGORIES.find((c) => c.slug === form.category)?.label ?? form.category;
+    categories.find((c) => c.slug === form.category)?.label ?? form.category;
+
   const docUrl = form.file_url || form.external_url;
   const isImage = form.file_url && /\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(form.file_url);
 
@@ -142,11 +143,12 @@ function DocumentEdit() {
               value={form.category}
               onChange={(e) => setForm({ ...form, category: e.target.value })}
             >
-              {DOCUMENT_CATEGORIES.map((c) => (
+              {categories.map((c) => (
                 <option key={c.slug} value={c.slug}>
                   {c.label}
                 </option>
               ))}
+
             </select>
           </div>
 

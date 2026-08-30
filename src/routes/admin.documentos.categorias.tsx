@@ -1,9 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useDocumentCategories, slugifyCategory, type DocumentCategory } from "@/lib/documents";
-import { ArrowLeft, Plus, Save, Trash2, Tag, Eye, EyeOff } from "lucide-react";
+import {
+  useDocumentCategories,
+  slugifyCategory,
+  buildCategoryTree,
+  flattenCategoryTree,
+  type DocumentCategory,
+  type CategoryNode,
+} from "@/lib/documents";
+import { ArrowLeft, Plus, Save, Trash2, Tag, Eye, EyeOff, FolderTree } from "lucide-react";
 
 export const Route = createFileRoute("/admin/documentos/categorias")({
   component: CategoriasPage,
@@ -13,7 +20,13 @@ function CategoriasPage() {
   const { data: categories = [], isLoading } = useDocumentCategories({ includeInactive: true });
   const qc = useQueryClient();
   const [saving, setSaving] = useState(false);
-  const [novo, setNovo] = useState({ label: "", slug: "", sort_order: 0 });
+  const [novo, setNovo] = useState({ label: "", slug: "", sort_order: 0, parent_id: "" });
+
+  const ordered = useMemo(
+    () => flattenCategoryTree(buildCategoryTree(categories)),
+    [categories],
+  );
+
 
   const field =
     "w-full rounded-md border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary";

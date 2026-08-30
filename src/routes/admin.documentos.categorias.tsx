@@ -77,10 +77,15 @@ function CategoriasPage() {
   }
 
   async function excluir(c: DocumentCategory) {
+    if (categories.some((x) => x.parent_id === c.id)) {
+      alert("Não é possível excluir: esta categoria possui subcategorias. Exclua ou mova as subcategorias primeiro.");
+      return;
+    }
     const { count } = await (supabase as any)
       .from("documents")
       .select("id", { count: "exact", head: true })
       .eq("category", c.slug);
+
     if ((count ?? 0) > 0) {
       alert(
         `Não é possível excluir: existem ${count} documento(s) nesta categoria. Mova-os ou desative a categoria.`,

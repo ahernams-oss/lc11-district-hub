@@ -114,15 +114,33 @@ function CategoriasPage() {
         <div className="flex items-center gap-2 text-sm font-semibold">
           <Plus className="h-4 w-4 text-primary" /> Nova categoria
         </div>
-        <div className="mt-3 grid gap-3 sm:grid-cols-[2fr_2fr_auto_auto]">
+        <div className="mt-3 grid gap-3 sm:grid-cols-[2fr_2fr_2fr_auto_auto]">
           <div>
             <label className="block text-[11px] font-semibold uppercase text-muted-foreground">Nome *</label>
             <input
               className={field}
               value={novo.label}
               onChange={(e) => setNovo({ ...novo, label: e.target.value })}
-              placeholder="Ex: Atos do(a) Governador(a) — AL 2029-2030"
+              placeholder="Ex: 1ª RGD"
             />
+          </div>
+          <div>
+            <label className="block text-[11px] font-semibold uppercase text-muted-foreground">
+              Categoria pai (opcional)
+            </label>
+            <select
+              className={field}
+              value={novo.parent_id}
+              onChange={(e) => setNovo({ ...novo, parent_id: e.target.value })}
+            >
+              <option value="">— Categoria principal —</option>
+              {ordered.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {"— ".repeat(c.depth)}
+                  {c.label}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label className="block text-[11px] font-semibold uppercase text-muted-foreground">
@@ -161,15 +179,22 @@ function CategoriasPage() {
       ) : (
         <div className="mt-6 overflow-hidden rounded-md border bg-card">
           <ul className="divide-y">
-            {categories.map((c) => (
-              <CategoryRow key={c.id} category={c} onSave={atualizar} onDelete={excluir} />
+            {ordered.map((c) => (
+              <CategoryRow
+                key={c.id}
+                category={c}
+                options={ordered}
+                onSave={atualizar}
+                onDelete={excluir}
+              />
             ))}
-            {categories.length === 0 && (
+            {ordered.length === 0 && (
               <li className="p-4 text-sm text-muted-foreground">Nenhuma categoria cadastrada.</li>
             )}
           </ul>
         </div>
       )}
+
     </div>
   );
 }

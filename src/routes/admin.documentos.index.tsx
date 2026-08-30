@@ -22,10 +22,11 @@ function DocumentsList() {
     else qc.invalidateQueries({ queryKey: ["documents"] });
   }
 
-  const byCategory = DOCUMENT_CATEGORIES.map((c) => ({
+  const byCategory = categories.map((c) => ({
     ...c,
     items: data.filter((d) => d.category === c.slug),
   }));
+
 
   return (
     <div>

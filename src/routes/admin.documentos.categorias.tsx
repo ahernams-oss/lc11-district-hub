@@ -199,27 +199,58 @@ function CategoriasPage() {
   );
 }
 
+function collectIds(n: CategoryNode): string[] {
+  return [n.id, ...n.children.flatMap(collectIds)];
+}
+
 function CategoryRow({
   category,
+  options,
   onSave,
   onDelete,
 }: {
-  category: DocumentCategory;
+  category: CategoryNode;
+  options: CategoryNode[];
   onSave: (c: DocumentCategory, patch: Partial<DocumentCategory>) => void;
   onDelete: (c: DocumentCategory) => void;
 }) {
   const [label, setLabel] = useState(category.label);
   const [order, setOrder] = useState(category.sort_order);
-  const dirty = label !== category.label || order !== category.sort_order;
+  const [parentId, setParentId] = useState(category.parent_id ?? "");
+  const blocked = useMemo(() => new Set(collectIds(category)), [category]);
+  const dirty =
+    label !== category.label ||
+    order !== category.sort_order ||
+    parentId !== (category.parent_id ?? "");
 
   return (
-    <li className="flex flex-wrap items-center gap-3 p-3">
-      <Tag className="h-4 w-4 shrink-0 text-muted-foreground" />
+    <li className="flex flex-wrap items-center gap-3 p-3" style={{ paddingLeft: 12 + category.depth * 24 }}>
+      {category.children.length > 0 ? (
+        <FolderTree className="h-4 w-4 shrink-0 text-primary" />
+      ) : (
+        <Tag className="h-4 w-4 shrink-0 text-muted-foreground" />
+      )}
       <input
         className="min-w-[200px] flex-1 rounded-md border bg-background px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-primary"
         value={label}
         onChange={(e) => setLabel(e.target.value)}
       />
+      <select
+        className="min-w-[180px] rounded-md border bg-background px-2 py-1.5 text-sm outline-none focus:ring-2 focus:ring-primary"
+        value={parentId}
+        onChange={(e) => setParentId(e.target.value)}
+        title="Categoria pai"
+      >
+        <option value="">— Categoria principal —</option>
+        {options
+          .filter((o) => !blocked.has(o.id))
+          .map((o) => (
+            <option key={o.id} value={o.id}>
+              {"— ".repeat(o.depth)}
+              {o.label}
+            </option>
+          ))}
+      </select>
       <input
         type="number"
         className="w-20 rounded-md border bg-background px-2 py-1.5 text-sm outline-none focus:ring-2 focus:ring-primary"
@@ -231,6 +262,7 @@ function CategoryRow({
         {category.slug}
       </code>
       <button
+
         onClick={() => onSave(category, { active: !category.active })}
         className={`inline-flex items-center gap-1 rounded-md border px-2.5 py-1.5 text-xs ${
           category.active ? "text-foreground hover:bg-surface" : "text-muted-foreground"

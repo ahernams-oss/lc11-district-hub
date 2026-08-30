@@ -1,8 +1,15 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
-import { DOCUMENT_CATEGORIES, useDocumentCategories, type DocumentItem } from "@/lib/documents";
+import {
+  DOCUMENT_CATEGORIES,
+  useDocumentCategories,
+  buildCategoryTree,
+  flattenCategoryTree,
+  categoryPathLabels,
+  type DocumentItem,
+} from "@/lib/documents";
 import { uploadDocumentFile } from "@/lib/documents.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Upload, X, Eye, EyeOff, FileText, ExternalLink, Download, Maximize2, Sparkles, Lock, ShieldCheck } from "lucide-react";
@@ -19,6 +26,11 @@ function DocumentEdit() {
   const fileRef = useRef<HTMLInputElement>(null);
   const doUpload = useServerFn(uploadDocumentFile);
   const { data: categories = [] } = useDocumentCategories();
+  const categoryOptions = useMemo(
+    () => flattenCategoryTree(buildCategoryTree(categories)),
+    [categories],
+  );
+  const categoryPaths = useMemo(() => categoryPathLabels(categories), [categories]);
 
 
 
@@ -106,7 +118,9 @@ function DocumentEdit() {
   const label = "block text-xs font-semibold uppercase tracking-wide text-muted-foreground";
 
   const selectedCategoryLabel =
-    categories.find((c) => c.slug === form.category)?.label ?? form.category;
+    categoryPaths[form.category] ??
+    categories.find((c) => c.slug === form.category)?.label ??
+    form.category;
 
   const docUrl = form.file_url || form.external_url;
   const isImage = form.file_url && /\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(form.file_url);

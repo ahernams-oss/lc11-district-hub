@@ -40,6 +40,7 @@ import { Route as ClubesIndexRouteImport } from './routes/clubes.index'
 import { Route as CampanhasIndexRouteImport } from './routes/campanhas.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ProjetosIdRouteImport } from './routes/projetos.$id'
+import { Route as NoticiasIdRouteImport } from './routes/noticias.$id'
 import { Route as GestaoUsuariosRouteImport } from './routes/gestao.usuarios'
 import { Route as GestaoNominataRouteImport } from './routes/gestao.nominata'
 import { Route as GestaoLoginRouteImport } from './routes/gestao.login'
@@ -267,6 +268,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
 const ProjetosIdRoute = ProjetosIdRouteImport.update({
   id: '/projetos/$id',
   path: '/projetos/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticiasIdRoute = NoticiasIdRouteImport.update({
+  id: '/noticias/$id',
+  path: '/noticias/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GestaoUsuariosRoute = GestaoUsuariosRouteImport.update({
@@ -697,6 +703,7 @@ export interface FileRoutesByFullPath {
   '/gestao/login': typeof GestaoLoginRoute
   '/gestao/nominata': typeof GestaoNominataRoute
   '/gestao/usuarios': typeof GestaoUsuariosRoute
+  '/noticias/$id': typeof NoticiasIdRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
   '/campanhas/': typeof CampanhasIndexRoute
@@ -797,6 +804,7 @@ export interface FileRoutesByTo {
   '/gestao/login': typeof GestaoLoginRoute
   '/gestao/nominata': typeof GestaoNominataRoute
   '/gestao/usuarios': typeof GestaoUsuariosRoute
+  '/noticias/$id': typeof NoticiasIdRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin': typeof AdminIndexRoute
   '/campanhas': typeof CampanhasIndexRoute
@@ -904,6 +912,7 @@ export interface FileRoutesById {
   '/gestao/login': typeof GestaoLoginRoute
   '/gestao/nominata': typeof GestaoNominataRoute
   '/gestao/usuarios': typeof GestaoUsuariosRoute
+  '/noticias/$id': typeof NoticiasIdRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
   '/campanhas/': typeof CampanhasIndexRoute
@@ -1012,6 +1021,7 @@ export interface FileRouteTypes {
     | '/gestao/login'
     | '/gestao/nominata'
     | '/gestao/usuarios'
+    | '/noticias/$id'
     | '/projetos/$id'
     | '/admin/'
     | '/campanhas/'
@@ -1112,6 +1122,7 @@ export interface FileRouteTypes {
     | '/gestao/login'
     | '/gestao/nominata'
     | '/gestao/usuarios'
+    | '/noticias/$id'
     | '/projetos/$id'
     | '/admin'
     | '/campanhas'
@@ -1218,6 +1229,7 @@ export interface FileRouteTypes {
     | '/gestao/login'
     | '/gestao/nominata'
     | '/gestao/usuarios'
+    | '/noticias/$id'
     | '/projetos/$id'
     | '/admin/'
     | '/campanhas/'
@@ -1312,6 +1324,7 @@ export interface RootRouteChildren {
   ClubesRjRoute: typeof ClubesRjRoute
   EventosIdRoute: typeof EventosIdRoute
   ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
+  NoticiasIdRoute: typeof NoticiasIdRoute
   ProjetosIdRoute: typeof ProjetosIdRoute
   CampanhasIndexRoute: typeof CampanhasIndexRoute
   ClubesIndexRoute: typeof ClubesIndexRoute
@@ -1546,6 +1559,13 @@ declare module '@tanstack/react-router' {
       path: '/projetos/$id'
       fullPath: '/projetos/$id'
       preLoaderRoute: typeof ProjetosIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/noticias/$id': {
+      id: '/noticias/$id'
+      path: '/noticias/$id'
+      fullPath: '/noticias/$id'
+      preLoaderRoute: typeof NoticiasIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gestao/usuarios': {
@@ -2293,6 +2313,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClubesRjRoute: ClubesRjRoute,
   EventosIdRoute: EventosIdRoute,
   ExGovernadoresIdRoute: ExGovernadoresIdRoute,
+  NoticiasIdRoute: NoticiasIdRoute,
   ProjetosIdRoute: ProjetosIdRoute,
   CampanhasIndexRoute: CampanhasIndexRoute,
   ClubesIndexRoute: ClubesIndexRoute,

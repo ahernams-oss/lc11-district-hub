@@ -274,7 +274,14 @@ function CategoryRow({
       </button>
       <button
         disabled={!dirty}
-        onClick={() => onSave(category, { label: label.trim(), sort_order: order })}
+        onClick={() =>
+          onSave(category, {
+            label: label.trim(),
+            sort_order: order,
+            parent_id: parentId || null,
+          })
+        }
+
         className="inline-flex items-center gap-1 rounded-md border px-2.5 py-1.5 text-xs font-semibold hover:bg-surface disabled:opacity-40"
       >
         <Save className="h-3.5 w-3.5" /> Salvar

@@ -73,7 +73,7 @@ function DocumentosIndex() {
       if (category !== "all" && d.category !== category) return false;
       if (year !== "all" && getDocYear(d) !== year) return false;
       if (q) {
-        const hay = `${d.title} ${d.description ?? ""} ${CATEGORY_LABEL[d.category] ?? d.category}`.toLowerCase();
+        const hay = `${d.title} ${d.description ?? ""} ${categoryLabel[d.category] ?? d.category}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;
@@ -135,7 +135,7 @@ function DocumentosIndex() {
             aria-label="Filtrar por categoria"
           >
             <option value="all">Todas as categorias</option>
-            {DOCUMENT_CATEGORIES.map((c) => (
+            {categories.map((c) => (
               <option key={c.slug} value={c.slug}>{c.label}</option>
             ))}
           </select>
@@ -228,7 +228,7 @@ function DocumentosIndex() {
             {filtered.map((d) => {
               const isExternal = !!d.external_url && !d.file_url;
               const catPath = CATEGORY_TO_PATH[d.category];
-              const catLabel = CATEGORY_LABEL[d.category] ?? d.category;
+              const catLabel = categoryLabel[d.category] ?? d.category;
 
               if (viewMode === "grid") {
                 return (

@@ -37,11 +37,18 @@ function DocumentsList() {
         </div>
         <div className="flex items-center gap-2">
           <Link
+            to="/admin/documentos/categorias"
+            className="inline-flex items-center gap-1.5 rounded-md border px-3 py-2 text-xs font-semibold text-foreground hover:bg-surface"
+          >
+            <Tag className="h-4 w-4 text-primary" /> Categorias
+          </Link>
+          <Link
             to="/admin/documentos/auditoria"
             className="inline-flex items-center gap-1.5 rounded-md border px-3 py-2 text-xs font-semibold text-foreground hover:bg-surface"
           >
             <ShieldCheck className="h-4 w-4 text-primary" /> Trilha de Auditoria
           </Link>
+
           <Link
             to="/admin/documentos/$id"
             params={{ id: "novo" }}

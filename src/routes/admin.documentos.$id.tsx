@@ -146,11 +146,13 @@ function DocumentEdit() {
               value={form.category}
               onChange={(e) => setForm({ ...form, category: e.target.value })}
             >
-              {categories.map((c) => (
+              {categoryOptions.map((c) => (
                 <option key={c.slug} value={c.slug}>
+                  {"— ".repeat(c.depth)}
                   {c.label}
                 </option>
               ))}
+
 
             </select>
           </div>

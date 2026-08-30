@@ -128,6 +128,13 @@
     letter-spacing: -0.015em;
   }
 
+  .font-sitka {
+    font-family: var(--font-sitka);
+  }
+  .font-engraved {
+    font-family: var(--font-engraved);
+  }
+
   /* Select Option Contrast Fix for Dark Themes */
   select option {
     background-color: #0d1321 !important;

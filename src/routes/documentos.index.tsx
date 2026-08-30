@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { PageHero } from "@/components/PageHero";
 import { FileText, ExternalLink, Download, Search, X, LayoutGrid, List, Eye, Maximize2, Lock, ShieldCheck, Key } from "lucide-react";
-import { useDocuments, useDocumentCategories, DOCUMENT_CATEGORIES, RGD_YEARS, RGD_ITEMS, type DocumentItem, REQUIRED_ROLE_LABELS } from "@/lib/documents";
+import { useDocuments, useDocumentCategories, buildCategoryTree, flattenCategoryTree, categoryPathLabels, DOCUMENT_CATEGORIES, RGD_YEARS, RGD_ITEMS, type DocumentItem, REQUIRED_ROLE_LABELS } from "@/lib/documents";
 import { useAuth } from "@/hooks/use-auth";
 import { logDocumentAccess } from "@/lib/documents.audit";
 
@@ -44,7 +44,11 @@ function DocumentosIndex() {
   const { data: docs = [], isLoading } = useDocuments();
   const { data: categories = [] } = useDocumentCategories();
   const categoryLabel = useMemo(
-    () => ({ ...CATEGORY_LABEL, ...Object.fromEntries(categories.map((c) => [c.slug, c.label])) }),
+    () => ({ ...CATEGORY_LABEL, ...categoryPathLabels(categories) }),
+    [categories],
+  );
+  const categoryOptions = useMemo(
+    () => flattenCategoryTree(buildCategoryTree(categories)),
     [categories],
   );
   const { user } = useAuth();
@@ -135,8 +139,12 @@ function DocumentosIndex() {
             aria-label="Filtrar por categoria"
           >
             <option value="all">Todas as categorias</option>
-            {categories.map((c) => (
-              <option key={c.slug} value={c.slug}>{c.label}</option>
+            {categoryOptions.map((c) => (
+              <option key={c.slug} value={c.slug}>
+                {"\u00A0\u00A0".repeat(c.depth)}
+                {c.depth > 0 ? "└ " : ""}
+                {c.label}
+              </option>
             ))}
           </select>
           <select

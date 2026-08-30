@@ -3,7 +3,7 @@ import { PageHero } from "@/components/PageHero";
 import { Calendar } from "lucide-react";
 import { useNews } from "@/lib/news";
 
-export const Route = createFileRoute("/noticias")({
+export const Route = createFileRoute("/noticias/")({
   head: () => ({
     meta: [
       { title: "Notícias — Distrito LC-11" },

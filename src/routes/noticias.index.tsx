@@ -1,9 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
 import { Calendar } from "lucide-react";
 import { useNews } from "@/lib/news";
 
-export const Route = createFileRoute("/noticias")({
+export const Route = createFileRoute("/noticias/")({
   head: () => ({
     meta: [
       { title: "Notícias — Distrito LC-11" },
@@ -33,9 +33,11 @@ function Noticias() {
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {data.map((p) => (
-              <article
+              <Link
                 key={p.id}
-                className="group flex flex-col rounded-xl border border-border bg-card p-6 shadow-card transition-transform hover:-translate-y-1"
+                to="/noticias/$id"
+                params={{ id: p.id }}
+                className="group flex flex-col rounded-xl border border-border bg-card p-6 shadow-card transition-transform hover:-translate-y-1 hover:shadow-lg"
               >
                 {p.cover_url && (
                   <img
@@ -67,7 +69,8 @@ function Noticias() {
                     {p.excerpt}
                   </p>
                 )}
-              </article>
+                <span className="mt-4 text-sm font-semibold text-primary">Ler mais →</span>
+              </Link>
             ))}
             {data.length === 0 && (
               <p className="text-muted-foreground">Nenhuma notícia publicada ainda.</p>

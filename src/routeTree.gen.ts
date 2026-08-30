@@ -16,7 +16,6 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SecretarioRouteImport } from './routes/secretario'
 import { Route as ProtocoloLeonisticoRouteImport } from './routes/protocolo-leonistico'
-import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as LionsInternacionalRouteImport } from './routes/lions-internacional'
 import { Route as LcifRouteImport } from './routes/lcif'
 import { Route as HistoriaRouteImport } from './routes/historia'
@@ -32,6 +31,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AcessoRouteImport } from './routes/acesso'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjetosIndexRouteImport } from './routes/projetos.index'
+import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
 import { Route as GestaoIndexRouteImport } from './routes/gestao.index'
 import { Route as ExGovernadoresIndexRouteImport } from './routes/ex-governadores.index'
 import { Route as EventosIndexRouteImport } from './routes/eventos.index'
@@ -149,11 +149,6 @@ const ProtocoloLeonisticoRoute = ProtocoloLeonisticoRouteImport.update({
   path: '/protocolo-leonistico',
   getParentRoute: () => rootRouteImport,
 } as any)
-const NoticiasRoute = NoticiasRouteImport.update({
-  id: '/noticias',
-  path: '/noticias',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LionsInternacionalRoute = LionsInternacionalRouteImport.update({
   id: '/lions-internacional',
   path: '/lions-internacional',
@@ -227,6 +222,11 @@ const IndexRoute = IndexRouteImport.update({
 const ProjetosIndexRoute = ProjetosIndexRouteImport.update({
   id: '/projetos/',
   path: '/projetos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticiasIndexRoute = NoticiasIndexRouteImport.update({
+  id: '/noticias/',
+  path: '/noticias/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GestaoIndexRoute = GestaoIndexRouteImport.update({
@@ -670,7 +670,6 @@ export interface FileRoutesByFullPath {
   '/historia': typeof HistoriaRoute
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
-  '/noticias': typeof NoticiasRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -706,6 +705,7 @@ export interface FileRoutesByFullPath {
   '/eventos/': typeof EventosIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
   '/gestao/': typeof GestaoIndexRoute
+  '/noticias/': typeof NoticiasIndexRoute
   '/projetos/': typeof ProjetosIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
@@ -773,7 +773,6 @@ export interface FileRoutesByTo {
   '/historia': typeof HistoriaRoute
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
-  '/noticias': typeof NoticiasRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -806,6 +805,7 @@ export interface FileRoutesByTo {
   '/eventos': typeof EventosIndexRoute
   '/ex-governadores': typeof ExGovernadoresIndexRoute
   '/gestao': typeof GestaoIndexRoute
+  '/noticias': typeof NoticiasIndexRoute
   '/projetos': typeof ProjetosIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
@@ -877,7 +877,6 @@ export interface FileRoutesById {
   '/historia': typeof HistoriaRoute
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
-  '/noticias': typeof NoticiasRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -913,6 +912,7 @@ export interface FileRoutesById {
   '/eventos/': typeof EventosIndexRoute
   '/ex-governadores/': typeof ExGovernadoresIndexRoute
   '/gestao/': typeof GestaoIndexRoute
+  '/noticias/': typeof NoticiasIndexRoute
   '/projetos/': typeof ProjetosIndexRoute
   '/admin/conteudo/$key': typeof AdminConteudoKeyRoute
   '/admin/documentos/$id': typeof AdminDocumentosIdRoute
@@ -985,7 +985,6 @@ export interface FileRouteTypes {
     | '/historia'
     | '/lcif'
     | '/lions-internacional'
-    | '/noticias'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -1021,6 +1020,7 @@ export interface FileRouteTypes {
     | '/eventos/'
     | '/ex-governadores/'
     | '/gestao/'
+    | '/noticias/'
     | '/projetos/'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
@@ -1088,7 +1088,6 @@ export interface FileRouteTypes {
     | '/historia'
     | '/lcif'
     | '/lions-internacional'
-    | '/noticias'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -1121,6 +1120,7 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/ex-governadores'
     | '/gestao'
+    | '/noticias'
     | '/projetos'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
@@ -1191,7 +1191,6 @@ export interface FileRouteTypes {
     | '/historia'
     | '/lcif'
     | '/lions-internacional'
-    | '/noticias'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -1227,6 +1226,7 @@ export interface FileRouteTypes {
     | '/eventos/'
     | '/ex-governadores/'
     | '/gestao/'
+    | '/noticias/'
     | '/projetos/'
     | '/admin/conteudo/$key'
     | '/admin/documentos/$id'
@@ -1298,7 +1298,6 @@ export interface RootRouteChildren {
   HistoriaRoute: typeof HistoriaRoute
   LcifRoute: typeof LcifRoute
   LionsInternacionalRoute: typeof LionsInternacionalRoute
-  NoticiasRoute: typeof NoticiasRoute
   ProtocoloLeonisticoRoute: typeof ProtocoloLeonisticoRoute
   SecretarioRoute: typeof SecretarioRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -1318,6 +1317,7 @@ export interface RootRouteChildren {
   ClubesIndexRoute: typeof ClubesIndexRoute
   EventosIndexRoute: typeof EventosIndexRoute
   ExGovernadoresIndexRoute: typeof ExGovernadoresIndexRoute
+  NoticiasIndexRoute: typeof NoticiasIndexRoute
   ProjetosIndexRoute: typeof ProjetosIndexRoute
   ApiPublicEventosRoute: typeof ApiPublicEventosRoute
   ApiPublicGovernadoresRoute: typeof ApiPublicGovernadoresRoute
@@ -1378,13 +1378,6 @@ declare module '@tanstack/react-router' {
       path: '/protocolo-leonistico'
       fullPath: '/protocolo-leonistico'
       preLoaderRoute: typeof ProtocoloLeonisticoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/noticias': {
-      id: '/noticias'
-      path: '/noticias'
-      fullPath: '/noticias'
-      preLoaderRoute: typeof NoticiasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lions-internacional': {
@@ -1490,6 +1483,13 @@ declare module '@tanstack/react-router' {
       path: '/projetos'
       fullPath: '/projetos/'
       preLoaderRoute: typeof ProjetosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/noticias/': {
+      id: '/noticias/'
+      path: '/noticias'
+      fullPath: '/noticias/'
+      preLoaderRoute: typeof NoticiasIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gestao/': {
@@ -2279,7 +2279,6 @@ const rootRouteChildren: RootRouteChildren = {
   HistoriaRoute: HistoriaRoute,
   LcifRoute: LcifRoute,
   LionsInternacionalRoute: LionsInternacionalRoute,
-  NoticiasRoute: NoticiasRoute,
   ProtocoloLeonisticoRoute: ProtocoloLeonisticoRoute,
   SecretarioRoute: SecretarioRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
@@ -2299,6 +2298,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClubesIndexRoute: ClubesIndexRoute,
   EventosIndexRoute: EventosIndexRoute,
   ExGovernadoresIndexRoute: ExGovernadoresIndexRoute,
+  NoticiasIndexRoute: NoticiasIndexRoute,
   ProjetosIndexRoute: ProjetosIndexRoute,
   ApiPublicEventosRoute: ApiPublicEventosRoute,
   ApiPublicGovernadoresRoute: ApiPublicGovernadoresRoute,

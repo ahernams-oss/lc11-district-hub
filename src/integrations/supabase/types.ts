@@ -2031,7 +2031,6 @@ export type Database = {
     }
     Functions: {
       can_edit_content: { Args: { _user_id: string }; Returns: boolean }
-      can_read_storage_object: { Args: { _name: string }; Returns: boolean }
       can_view_users: { Args: { _user_id: string }; Returns: boolean }
       has_panel_access: { Args: { _user_id: string }; Returns: boolean }
       has_role: {

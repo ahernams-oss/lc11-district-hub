@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSiteContent } from "@/lib/content";
 import { PageHero } from "@/components/PageHero";
+import { BreakableText, normalizeBreaks } from "@/components/BreakableText";
 import { HandHeart } from "lucide-react";
 
 const DEFAULTS = {

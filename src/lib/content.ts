@@ -13,6 +13,7 @@ export type ContentKey =
   | "vice-governador-1"
   | "vice-governador-2"
   | "lcif"
+  | "conexao-solidaria"
   | "contato";
 
 export const CONTENT_LABELS: Record<ContentKey, string> = {

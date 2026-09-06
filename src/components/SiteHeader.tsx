@@ -80,7 +80,7 @@ function ConexaoSubmenuItems({
   return (
     <>
       {items.map((s) => {
-        const labelParts = s.label.split(" // ");
+        const labelParts = s.label.split(/\s*\/\/\s*/);
         const labelNode = (
           <span className={labelParts.length > 1 ? "block" : undefined}>
             {labelParts.map((part, i) => (

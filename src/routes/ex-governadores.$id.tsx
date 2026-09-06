@@ -39,8 +39,6 @@ function ExGovernadorBio() {
     );
   }
 
-  const gallery = (leader.gallery_urls ?? []).filter(Boolean);
-
   return (
     <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
       <Link

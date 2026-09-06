@@ -17,6 +17,13 @@ function ExGovernadorBio() {
   const { id } = useParams({ from: "/ex-governadores/$id" });
   const { data: leader, isLoading } = useLeader(id);
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const gallery = (leader?.gallery_urls ?? []).filter(Boolean);
+  const [slide, setSlide] = useState(0);
+  useEffect(() => {
+    if (gallery.length <= 1) return;
+    const t = setInterval(() => setSlide((s) => (s + 1) % gallery.length), 4000);
+    return () => clearInterval(t);
+  }, [gallery.length]);
 
   if (isLoading) {
     return <div className="mx-auto max-w-5xl px-4 py-16">Carregando...</div>;

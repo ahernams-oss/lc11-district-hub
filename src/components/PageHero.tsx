@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 
 function BreakableTitle({ title }: { title: string }) {
-  const parts = title.split(/\s*\/\/\s*/);
+  const normalized = title.replace(/\s*\/\/\s*/g, "\n");
+  const parts = normalized.split("\n").map((s) => s.trim()).filter(Boolean);
   if (parts.length <= 1) return <>{title}</>;
   return (
     <>

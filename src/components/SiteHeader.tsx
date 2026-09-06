@@ -65,9 +65,40 @@ const documentosSubmenu = [
   { to: "/documentos/regulamento-sede", label: "Regulamento da Sede" },
 ] as const;
 
-const conexaoSolidariaSubmenu = [
-  { to: "/aliancas-que-transformam", label: "Alianças que Transformam" },
-] as const;
+function ConexaoSubmenuItems({
+  items,
+  mobile,
+  onClick,
+}: {
+  items: ConexaoMenuItem[];
+  mobile?: boolean;
+  onClick?: () => void;
+}) {
+  const cls = mobile
+    ? "ml-4 rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+    : "block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary";
+  return (
+    <>
+      {items.map((s) =>
+        /^https?:\/\//.test(s.to) ? (
+          <a key={s.to} href={s.to} target="_blank" rel="noreferrer" onClick={onClick} className={cls}>
+            {s.label}
+          </a>
+        ) : (
+          <Link
+            key={s.to}
+            to={s.to as any}
+            onClick={onClick}
+            className={cls}
+            activeProps={{ className: "text-primary bg-surface" }}
+          >
+            {s.label}
+          </Link>
+        ),
+      )}
+    </>
+  );
+}
 
 const nav = [
   { to: "/projetos", label: "Projetos" },

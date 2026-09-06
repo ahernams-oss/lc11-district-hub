@@ -25,6 +25,7 @@ import { Route as GatRouteImport } from './routes/gat'
 import { Route as DocumentosRouteImport } from './routes/documentos'
 import { Route as DoarRouteImport } from './routes/doar'
 import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as ConexaoSolidariaRouteImport } from './routes/conexao-solidaria'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssessoriaRouteImport } from './routes/assessoria'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -194,6 +195,11 @@ const DoarRoute = DoarRouteImport.update({
 const ContatoRoute = ContatoRouteImport.update({
   id: '/contato',
   path: '/contato',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConexaoSolidariaRoute = ConexaoSolidariaRouteImport.update({
+  id: '/conexao-solidaria',
+  path: '/conexao-solidaria',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -674,6 +680,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
+  '/conexao-solidaria': typeof ConexaoSolidariaRoute
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/documentos': typeof DocumentosRouteWithChildren
@@ -781,6 +788,7 @@ export interface FileRoutesByTo {
   '/acesso': typeof AcessoRoute
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
+  '/conexao-solidaria': typeof ConexaoSolidariaRoute
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/gat': typeof GatRoute
@@ -885,6 +893,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
+  '/conexao-solidaria': typeof ConexaoSolidariaRoute
   '/contato': typeof ContatoRoute
   '/doar': typeof DoarRoute
   '/documentos': typeof DocumentosRouteWithChildren
@@ -995,6 +1004,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/assessoria'
     | '/auth'
+    | '/conexao-solidaria'
     | '/contato'
     | '/doar'
     | '/documentos'
@@ -1102,6 +1112,7 @@ export interface FileRouteTypes {
     | '/acesso'
     | '/assessoria'
     | '/auth'
+    | '/conexao-solidaria'
     | '/contato'
     | '/doar'
     | '/gat'
@@ -1205,6 +1216,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/assessoria'
     | '/auth'
+    | '/conexao-solidaria'
     | '/contato'
     | '/doar'
     | '/documentos'
@@ -1314,6 +1326,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AssessoriaRoute: typeof AssessoriaRoute
   AuthRoute: typeof AuthRoute
+  ConexaoSolidariaRoute: typeof ConexaoSolidariaRoute
   ContatoRoute: typeof ContatoRoute
   DoarRoute: typeof DoarRoute
   DocumentosRoute: typeof DocumentosRouteWithChildren
@@ -1467,6 +1480,13 @@ declare module '@tanstack/react-router' {
       path: '/contato'
       fullPath: '/contato'
       preLoaderRoute: typeof ContatoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conexao-solidaria': {
+      id: '/conexao-solidaria'
+      path: '/conexao-solidaria'
+      fullPath: '/conexao-solidaria'
+      preLoaderRoute: typeof ConexaoSolidariaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -2312,6 +2332,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AssessoriaRoute: AssessoriaRoute,
   AuthRoute: AuthRoute,
+  ConexaoSolidariaRoute: ConexaoSolidariaRoute,
   ContatoRoute: ContatoRoute,
   DoarRoute: DoarRoute,
   DocumentosRoute: DocumentosRouteWithChildren,

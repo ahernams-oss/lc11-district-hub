@@ -28,6 +28,7 @@ export const CONTENT_LABELS: Record<ContentKey, string> = {
   "vice-governador-1": "Página 1º Vice (textos)",
   "vice-governador-2": "Página 2º Vice (textos)",
   lcif: "Página LCIF",
+  "conexao-solidaria": "Página Conexão Solidária",
   contato: "Fale Conosco (Contato)",
 };
 

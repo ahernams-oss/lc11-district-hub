@@ -49,31 +49,25 @@ function Governador() {
     <>
       <PageHero eyebrow={content.eyebrow} title={content.title} description={content.description} />
 
-      <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center">
-          <div className="w-full max-w-md">
-            <div className="overflow-hidden rounded-2xl border border-border bg-background shadow-elegant">
-              <img src={photo} alt={name} className="h-auto w-full object-cover" />
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-[auto_1fr] lg:items-start">
+          <div className="mx-auto w-full max-w-sm">
+            <div className="overflow-hidden rounded-2xl border border-border shadow-elegant">
+              <img src={photo} alt={name} className="h-full w-full object-cover" />
             </div>
-
-            <div className="mt-5 rounded-xl border border-border bg-background p-5 shadow-card">
-              <div className="space-y-0.5 text-center">
-                {name.split(" // ").map((part, i) => (
-                  <p key={i} className="font-display text-base font-semibold text-foreground">
+            <div className="mt-6 rounded-xl bg-surface p-5 text-sm">
+              <p className="font-semibold text-foreground">
+                {name.split(" // ").map((part, i, arr) => (
+                  <span key={i}>
                     {part}
-                  </p>
+                    {i < arr.length - 1 && <br />}
+                  </span>
                 ))}
-              </div>
-              <p className="mt-1 text-center text-sm text-muted-foreground">{role}</p>
-              <div className="mt-4 space-y-2 text-sm text-muted-foreground">
-                <p className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 shrink-0 text-primary" />
-                  <span className="break-all">{email}</span>
-                </p>
-                <p className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 shrink-0 text-primary" />
-                  {phone}
-                </p>
+              </p>
+              <p className="mt-1 text-muted-foreground">{role}</p>
+              <div className="mt-4 space-y-2 text-muted-foreground">
+                <p className="flex items-center gap-2"><Mail className="h-4 w-4 text-primary" />{email}</p>
+                <p className="flex items-center gap-2"><Phone className="h-4 w-4 text-primary" />{phone}</p>
               </div>
             </div>
 
@@ -94,17 +88,17 @@ function Governador() {
                         type="button"
                         onClick={() => setSlide((s) => (s - 1 + gallery.length) % gallery.length)}
                         aria-label="Foto anterior"
-                        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-2 text-foreground shadow-sm hover:bg-background"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-background/70 p-1.5 text-foreground hover:bg-background"
                       >
-                        <ChevronLeft className="h-5 w-5" />
+                        <ChevronLeft className="h-4 w-4" />
                       </button>
                       <button
                         type="button"
                         onClick={() => setSlide((s) => (s + 1) % gallery.length)}
                         aria-label="Próxima foto"
-                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-2 text-foreground shadow-sm hover:bg-background"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-background/70 p-1.5 text-foreground hover:bg-background"
                       >
-                        <ChevronRight className="h-5 w-5" />
+                        <ChevronRight className="h-4 w-4" />
                       </button>
                       <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1.5">
                         {gallery.map((_, i) => (
@@ -124,7 +118,8 @@ function Governador() {
             )}
           </div>
 
-          <div className="mt-12 w-full max-w-3xl">
+
+          <div>
             <div className="rounded-xl bg-primary p-6 text-primary-foreground shadow-card">
               <Quote className="h-8 w-8 text-gold" />
               <p className="mt-3 font-display text-xl italic leading-relaxed sm:text-2xl whitespace-pre-line">

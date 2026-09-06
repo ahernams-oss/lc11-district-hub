@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSiteContent } from "@/lib/content";
 import { PageHero } from "@/components/PageHero";
 import { BreakableText, normalizeBreaks } from "@/components/BreakableText";
+import { PartnerLogosSection } from "@/components/PartnerLogosSection";
 import { Award } from "lucide-react";
 
 const DEFAULTS = {
@@ -15,6 +16,9 @@ const DEFAULTS = {
     "Reconhecimento nas ações sociais apoiadas\nVisibilidade no site do distrito\nCertificado de parceria\nRelatórios periódicos das ações realizadas",
   footer_text: "Quer ser um Parceiro Prata do Distrito LC-11? Entre em contato e vamos conversar.",
   image_url: "",
+  partner_logos_title: "Nossos Parceiros Prata",
+  partner_logos: [] as string[],
+  partner_logos_links: [] as string[],
 };
 
 export const Route = createFileRoute("/parceiro-prata")({
@@ -66,6 +70,13 @@ function ParceiroPrataPage() {
               <BreakableText text={c.footer_text} />
             </p>
           )}
+
+          <PartnerLogosSection
+            title={c.partner_logos_title}
+            images={c.partner_logos}
+            links={c.partner_logos_links}
+            categoryLabel="Prata"
+          />
 
           <div className="mt-10 rounded-2xl border border-border bg-primary p-8 text-primary-foreground shadow-elegant">
             <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSiteContent } from "@/lib/content";
 import { PageHero } from "@/components/PageHero";
 import { BreakableText, normalizeBreaks } from "@/components/BreakableText";
+import { PartnerLogosSection } from "@/components/PartnerLogosSection";
 import { Gem } from "lucide-react";
 
 const DEFAULTS = {
@@ -15,6 +16,9 @@ const DEFAULTS = {
     "Destaque máximo nos materiais oficiais do distrito\nReconhecimento nas convenções e grandes eventos\nParticipação estratégica nas principais campanhas\nRelatórios periódicos de impacto social",
   footer_text: "Quer construir uma aliança Diamante com o Distrito LC-11? Entre em contato e vamos conversar.",
   image_url: "",
+  partner_logos_title: "Nossos Parceiros Diamante",
+  partner_logos: [] as string[],
+  partner_logos_links: [] as string[],
 };
 
 export const Route = createFileRoute("/parceiro-diamante")({
@@ -66,6 +70,13 @@ function ParceiroDiamantePage() {
               <BreakableText text={c.footer_text} />
             </p>
           )}
+
+          <PartnerLogosSection
+            title={c.partner_logos_title}
+            images={c.partner_logos}
+            links={c.partner_logos_links}
+            categoryLabel="Diamante"
+          />
 
           <div className="mt-10 rounded-2xl border border-border bg-primary p-8 text-primary-foreground shadow-elegant">
             <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">

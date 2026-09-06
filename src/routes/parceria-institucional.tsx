@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSiteContent } from "@/lib/content";
 import { PageHero } from "@/components/PageHero";
 import { BreakableText, normalizeBreaks } from "@/components/BreakableText";
+import { PartnerLogosSection } from "@/components/PartnerLogosSection";
 import { Building2 } from "lucide-react";
 
 const DEFAULTS = {
@@ -15,6 +16,9 @@ const DEFAULTS = {
     "Acordos de cooperação com órgãos públicos e privados\nProjetos sociais desenvolvidos em conjunto\nApoio institucional a campanhas do distrito\nTransparência e prestação de contas em todas as ações",
   footer_text: "Sua instituição quer caminhar junto com o Distrito LC-11? Entre em contato e vamos conversar.",
   image_url: "",
+  partner_logos_title: "Nossos Parceiros Institucionais",
+  partner_logos: [] as string[],
+  partner_logos_links: [] as string[],
 };
 
 export const Route = createFileRoute("/parceria-institucional")({
@@ -66,6 +70,13 @@ function ParceriaInstitucionalPage() {
               <BreakableText text={c.footer_text} />
             </p>
           )}
+
+          <PartnerLogosSection
+            title={c.partner_logos_title}
+            images={c.partner_logos}
+            links={c.partner_logos_links}
+            categoryLabel="Institucionais"
+          />
 
           <div className="mt-10 rounded-2xl border border-border bg-primary p-8 text-primary-foreground shadow-elegant">
             <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">

@@ -32,8 +32,8 @@ export const Route = createFileRoute("/nossas-categorias-de-parceria")({
 
 function NossasCategoriasDeParceriaPage() {
   const c = useSiteContent("nossas-categorias-de-parceria", DEFAULTS);
-  const highlights = (c.highlights || "").split("\n").map((s) => s.trim()).filter(Boolean);
-  const paragraphs = (c.intro || "").split("\n").map((s) => s.trim()).filter(Boolean);
+  const highlights = normalizeBreaks(c.highlights || "").split("\n").map((s) => s.trim()).filter(Boolean);
+  const paragraphs = normalizeBreaks(c.intro || "").split("\n").map((s) => s.trim()).filter(Boolean);
 
   return (
     <>
@@ -53,7 +53,7 @@ function NossasCategoriasDeParceriaPage() {
           {highlights.length > 0 && (
             <div className="rounded-lg border border-border bg-surface p-6">
               <h2 className="font-display text-xl font-semibold text-foreground">
-                {c.highlights_title}
+                <BreakableText text={c.highlights_title} />
               </h2>
               <ul className="mt-4 list-disc space-y-2 pl-5 text-foreground/80">
                 {highlights.map((item, i) => (
@@ -62,7 +62,11 @@ function NossasCategoriasDeParceriaPage() {
               </ul>
             </div>
           )}
-          {c.footer_text && <p>{c.footer_text}</p>}
+          {c.footer_text && (
+            <p>
+              <BreakableText text={c.footer_text} />
+            </p>
+          )}
 
           <div className="mt-10 rounded-2xl border border-border bg-primary p-8 text-primary-foreground shadow-elegant">
             <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">

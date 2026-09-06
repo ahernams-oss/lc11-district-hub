@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
-import { ArrowLeft, User } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, User } from "lucide-react";
 import { useLeader } from "@/lib/leaders";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/ex-governadores/$id")({
   head: () => ({
@@ -17,6 +17,13 @@ function ExGovernadorBio() {
   const { id } = useParams({ from: "/ex-governadores/$id" });
   const { data: leader, isLoading } = useLeader(id);
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const gallery = (leader?.gallery_urls ?? []).filter(Boolean);
+  const [slide, setSlide] = useState(0);
+  useEffect(() => {
+    if (gallery.length <= 1) return;
+    const t = setInterval(() => setSlide((s) => (s + 1) % gallery.length), 4000);
+    return () => clearInterval(t);
+  }, [gallery.length]);
 
   if (isLoading) {
     return <div className="mx-auto max-w-5xl px-4 py-16">Carregando...</div>;
@@ -31,8 +38,6 @@ function ExGovernadorBio() {
       </div>
     );
   }
-
-  const gallery = (leader.gallery_urls ?? []).filter(Boolean);
 
   return (
     <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
@@ -80,20 +85,49 @@ function ExGovernadorBio() {
       {gallery.length > 0 && (
         <div className="mt-12">
           <h2 className="font-display text-xl font-bold text-foreground">Galeria de Fotos</h2>
-          <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-            {gallery.map((url, i) => (
-              <button
-                key={i}
-                onClick={() => setLightbox(url)}
-                className="group overflow-hidden rounded-lg border border-border bg-card"
-              >
+          <div className="mt-4 overflow-hidden rounded-xl border border-border shadow-card">
+            <div className="relative aspect-[4/3] bg-muted">
+              {gallery.map((url, i) => (
                 <img
+                  key={url + i}
                   src={url}
                   alt={`Foto ${i + 1} de ${leader.name}`}
-                  className="aspect-square w-full object-cover transition-transform group-hover:scale-105"
+                  onClick={() => setLightbox(url)}
+                  className={`absolute inset-0 h-full w-full cursor-pointer object-contain object-center transition-opacity duration-700 ${i === slide ? "opacity-100" : "opacity-0"}`}
                 />
-              </button>
-            ))}
+              ))}
+              {gallery.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setSlide((s) => (s - 1 + gallery.length) % gallery.length)}
+                    aria-label="Foto anterior"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-background/70 p-1.5 text-foreground hover:bg-background"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSlide((s) => (s + 1) % gallery.length)}
+                    aria-label="Próxima foto"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-background/70 p-1.5 text-foreground hover:bg-background"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                  <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1.5">
+                    {gallery.map((_, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => setSlide(i)}
+                        aria-label={`Ir para foto ${i + 1}`}
+                        className={`h-1.5 rounded-full transition-all ${i === slide ? "w-5 bg-primary" : "w-1.5 bg-background/70"}`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}

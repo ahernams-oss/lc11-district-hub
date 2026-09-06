@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { ArrowRight, Heart, Eye, Leaf, Users, Calendar, Trophy, Mail, Phone, Activity, Droplet, LifeBuoy, HandHeart, Utensils, Sparkles, Brain } from "lucide-react";
 import heroImg from "@/assets/hero-service.jpg";
 import envImg from "@/assets/project-environment.jpg";
@@ -268,7 +268,7 @@ function Index() {
               <BreakableText text={hero.partners_title} />
             </h2>
           </div>
-          <div className="partners-marquee mt-8" style={{ "--partners-duration": `${partnerRotationSeconds}s` } as React.CSSProperties}>
+          <div className="partners-marquee mt-8" style={{ "--partners-duration": `${partnerRotationSeconds}s` } as CSSProperties}>
             <div className="partners-track">
               {[...partners, ...partners].map((partner, index) => {
                 const logo = (

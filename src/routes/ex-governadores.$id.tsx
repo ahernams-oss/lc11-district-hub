@@ -48,26 +48,26 @@ function ExGovernadorBio() {
         <ArrowLeft className="h-4 w-4" /> Voltar aos Ex-Governadores
       </Link>
 
-      <div className="mt-6 grid gap-8 md:grid-cols-[280px_1fr]">
+      <div className="mt-6 grid gap-8 md:grid-cols-[180px_1fr]">
         <div className="flex flex-col items-center text-center">
           {leader.photo_url ? (
             <img
               src={leader.photo_url}
               alt={leader.name}
-              className="h-56 w-56 rounded-full object-cover shadow-elegant"
+              className="h-28 w-28 rounded-full object-cover shadow-elegant"
             />
           ) : (
-            <div className="flex h-56 w-56 items-center justify-center rounded-full bg-surface">
-              <User className="h-24 w-24 text-muted-foreground/60" />
+            <div className="flex h-28 w-28 items-center justify-center rounded-full bg-surface">
+              <User className="h-12 w-12 text-muted-foreground/60" />
             </div>
           )}
-          <div className="mt-4 w-full max-w-xs rounded-xl border border-gold/40 bg-gradient-to-b from-gold/10 to-gold/5 p-4 text-center shadow-elegant">
-            <h1 className="font-display text-lg font-bold leading-tight text-foreground">{leader.name}</h1>
+          <div className="mt-4 w-full max-w-[14rem] rounded-xl border border-gold/40 bg-gradient-to-b from-gold/10 to-gold/5 p-3 text-center shadow-elegant">
+            <h1 className="font-display text-base font-bold leading-tight text-foreground">{leader.name}</h1>
             {leader.year_label && (
               <div className="mt-1 text-xs font-semibold tracking-wide text-primary uppercase">{leader.year_label}</div>
             )}
             {leader.motto && (
-              <div className="mt-2 border-t border-gold/30 pt-2 text-sm italic text-muted-foreground">{leader.motto}</div>
+              <div className="mt-2 border-t border-gold/30 pt-2 text-xs italic text-muted-foreground">{leader.motto}</div>
             )}
           </div>
         </div>
@@ -87,7 +87,7 @@ function ExGovernadorBio() {
       {gallery.length > 0 && (
         <div className="mt-12">
           <h2 className="font-display text-xl font-bold text-foreground">Galeria de Fotos</h2>
-          <div className="mt-4 overflow-hidden rounded-xl border border-border shadow-card">
+          <div className="mx-auto mt-4 max-w-2xl overflow-hidden rounded-xl border border-border shadow-card">
             <div className="relative aspect-[4/3] bg-muted">
               {gallery.map((url, i) => (
                 <img

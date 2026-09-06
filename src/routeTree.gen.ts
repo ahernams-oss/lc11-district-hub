@@ -16,6 +16,7 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SecretarioRouteImport } from './routes/secretario'
 import { Route as ProtocoloLeonisticoRouteImport } from './routes/protocolo-leonistico'
+import { Route as NossasCategoriasDeParceriaRouteImport } from './routes/nossas-categorias-de-parceria'
 import { Route as LionsInternacionalRouteImport } from './routes/lions-internacional'
 import { Route as LcifRouteImport } from './routes/lcif'
 import { Route as HistoriaRouteImport } from './routes/historia'
@@ -154,6 +155,12 @@ const ProtocoloLeonisticoRoute = ProtocoloLeonisticoRouteImport.update({
   path: '/protocolo-leonistico',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NossasCategoriasDeParceriaRoute =
+  NossasCategoriasDeParceriaRouteImport.update({
+    id: '/nossas-categorias-de-parceria',
+    path: '/nossas-categorias-de-parceria',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LionsInternacionalRoute = LionsInternacionalRouteImport.update({
   id: '/lions-internacional',
   path: '/lions-internacional',
@@ -703,6 +710,7 @@ export interface FileRoutesByFullPath {
   '/historia': typeof HistoriaRoute
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
+  '/nossas-categorias-de-parceria': typeof NossasCategoriasDeParceriaRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -811,6 +819,7 @@ export interface FileRoutesByTo {
   '/historia': typeof HistoriaRoute
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
+  '/nossas-categorias-de-parceria': typeof NossasCategoriasDeParceriaRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -920,6 +929,7 @@ export interface FileRoutesById {
   '/historia': typeof HistoriaRoute
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
+  '/nossas-categorias-de-parceria': typeof NossasCategoriasDeParceriaRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -1033,6 +1043,7 @@ export interface FileRouteTypes {
     | '/historia'
     | '/lcif'
     | '/lions-internacional'
+    | '/nossas-categorias-de-parceria'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -1141,6 +1152,7 @@ export interface FileRouteTypes {
     | '/historia'
     | '/lcif'
     | '/lions-internacional'
+    | '/nossas-categorias-de-parceria'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -1249,6 +1261,7 @@ export interface FileRouteTypes {
     | '/historia'
     | '/lcif'
     | '/lions-internacional'
+    | '/nossas-categorias-de-parceria'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -1361,6 +1374,7 @@ export interface RootRouteChildren {
   HistoriaRoute: typeof HistoriaRoute
   LcifRoute: typeof LcifRoute
   LionsInternacionalRoute: typeof LionsInternacionalRoute
+  NossasCategoriasDeParceriaRoute: typeof NossasCategoriasDeParceriaRoute
   ProtocoloLeonisticoRoute: typeof ProtocoloLeonisticoRoute
   SecretarioRoute: typeof SecretarioRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -1442,6 +1456,13 @@ declare module '@tanstack/react-router' {
       path: '/protocolo-leonistico'
       fullPath: '/protocolo-leonistico'
       preLoaderRoute: typeof ProtocoloLeonisticoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nossas-categorias-de-parceria': {
+      id: '/nossas-categorias-de-parceria'
+      path: '/nossas-categorias-de-parceria'
+      fullPath: '/nossas-categorias-de-parceria'
+      preLoaderRoute: typeof NossasCategoriasDeParceriaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lions-internacional': {
@@ -2384,6 +2405,7 @@ const rootRouteChildren: RootRouteChildren = {
   HistoriaRoute: HistoriaRoute,
   LcifRoute: LcifRoute,
   LionsInternacionalRoute: LionsInternacionalRoute,
+  NossasCategoriasDeParceriaRoute: NossasCategoriasDeParceriaRoute,
   ProtocoloLeonisticoRoute: ProtocoloLeonisticoRoute,
   SecretarioRoute: SecretarioRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,

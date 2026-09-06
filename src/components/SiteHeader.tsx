@@ -112,6 +112,7 @@ function DesktopNav() {
   const [clubesOpen, setClubesOpen] = useState(false);
   const [documentosOpen, setDocumentosOpen] = useState(false);
   const [conexaoOpen, setConexaoOpen] = useState(false);
+  const { items: conexaoItems } = useSiteContent("conexao-solidaria-menu", DEFAULT_CONEXAO_SUBMENU);
 
   return (
     <nav className="flex min-w-0 items-center justify-center gap-1 2xl:gap-3">

@@ -36,6 +36,12 @@ export const CONTENT_LABELS: Record<ContentKey, string> = {
   contato: "Fale Conosco (Contato)",
 };
 
+export type ConexaoMenuItem = { to: string; label: string };
+
+export const DEFAULT_CONEXAO_SUBMENU: { items: ConexaoMenuItem[] } = {
+  items: [{ to: "/aliancas-que-transformam", label: "Alianças que Transformam" }],
+};
+
 export function useSiteContent<T extends Record<string, any>>(key: ContentKey, defaults: T) {
   const q = useQuery({
     queryKey: ["site_content", key],

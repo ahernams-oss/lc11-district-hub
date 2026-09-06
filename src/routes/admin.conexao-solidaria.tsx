@@ -13,7 +13,7 @@ export const Route = createFileRoute("/admin/conexao-solidaria")({
   component: AdminConexaoSolidaria,
 });
 
-const PAGES = ["conexao-solidaria", "aliancas-que-transformam"] as const;
+const PAGES = ["conexao-solidaria", "aliancas-que-transformam", "nossas-categorias-de-parceria"] as const;
 
 function AdminConexaoSolidaria() {
   const [items, setItems] = useState<ConexaoMenuItem[]>(DEFAULT_CONEXAO_SUBMENU.items);

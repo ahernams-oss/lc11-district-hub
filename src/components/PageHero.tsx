@@ -1,5 +1,20 @@
 import type { ReactNode } from "react";
 
+function BreakableTitle({ title }: { title: string }) {
+  const normalized = title.replace(/\s*\/\/\s*/g, "\n");
+  const parts = normalized.split("\n").map((s) => s.trim()).filter(Boolean);
+  if (parts.length <= 1) return <>{title}</>;
+  return (
+    <>
+      {parts.map((part, i) => (
+        <span key={i} className="block">
+          {part}
+        </span>
+      ))}
+    </>
+  );
+}
+
 export function PageHero({
   eyebrow,
   title,
@@ -22,7 +37,7 @@ export function PageHero({
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold sm:text-base">{eyebrow}</p>
         )}
         <h1 className="max-w-3xl font-display text-3xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-          {title}
+          <BreakableTitle title={title} />
         </h1>
         {description && (
           <p className="mt-4 max-w-2xl text-base leading-relaxed opacity-90 sm:mt-5 sm:text-lg">{description}</p>

@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, ExternalLink, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import lionsLogo from "@/assets/lions-logo.png.asset.json";
+const lionsLogoUrl = "/lions-logo.png";
 import { useLeaders } from "@/lib/leaders";
 import { useSiteContent, DEFAULT_CONEXAO_SUBMENU, type ConexaoMenuItem } from "@/lib/content";
 
@@ -408,7 +408,7 @@ export function SiteHeader() {
       <div className="mx-auto grid h-16 max-w-[1800px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-center gap-3">
           <Link to="/" className="flex shrink-0 items-center gap-2" onClick={() => setOpen(false)}>
-            <img src={lionsLogo.url} alt="Lions Clubs International" className="h-10 w-10 object-contain" />
+            <img src={lionsLogoUrl} alt="Lions Clubs International" className="h-10 w-10 object-contain" />
             <div className="leading-tight">
               <div className="whitespace-nowrap font-display text-sm font-bold text-foreground">Distrito LC-11</div>
               <div className="hidden whitespace-nowrap text-[10px] uppercase tracking-wider text-muted-foreground 2xl:block">

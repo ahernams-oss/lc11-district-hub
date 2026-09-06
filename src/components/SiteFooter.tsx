@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Facebook, Instagram, Youtube, Mail, Eye, Lock, ShieldCheck, ArrowRight, CheckCircle2 } from "lucide-react";
-import lionsLogo from "@/assets/lions-logo.png.asset.json";
+const lionsLogoUrl = "/lions-logo.png";
 import { useSiteVisitsStats } from "@/lib/site-visits";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -60,7 +60,7 @@ export function SiteFooter() {
         {/* Coluna 1: Logo & Sobre */}
         <div className="lg:col-span-1">
           <div className="flex items-center gap-3">
-            <img src={lionsLogo.url} alt="Lions Clubs International" className="h-11 w-11 object-contain bg-white rounded-md p-1" />
+            <img src={lionsLogoUrl} alt="Lions Clubs International" className="h-11 w-11 object-contain bg-white rounded-md p-1" />
             <div>
               <div className="font-display text-lg font-bold">Distrito LC-11</div>
               <div className="text-xs uppercase tracking-wider opacity-75">Lions Clubs International</div>

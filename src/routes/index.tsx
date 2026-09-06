@@ -134,10 +134,10 @@ function Index() {
     { category: "Ouro", images: goldPage.partner_logos, links: goldPage.partner_logos_links },
     { category: "Prata", images: hero.partners_silver, links: hero.partners_silver_links },
     { category: "Prata", images: silverPage.partner_logos, links: silverPage.partner_logos_links },
-    { category: "Bronze", images: hero.partners_bronze, links: hero.partners_bronze_links },
-    { category: "Bronze", images: bronzePage.partner_logos, links: bronzePage.partner_logos_links },
     { category: "Institucional", images: hero.partners_institutional, links: hero.partners_institutional_links },
     { category: "Institucional", images: institutionalPage.partner_logos, links: institutionalPage.partner_logos_links },
+    { category: "Bronze", images: hero.partners_bronze, links: hero.partners_bronze_links },
+    { category: "Bronze", images: bronzePage.partner_logos, links: bronzePage.partner_logos_links },
   ];
 
   const partners = partnerGroups.flatMap(({ category, images, links }) =>

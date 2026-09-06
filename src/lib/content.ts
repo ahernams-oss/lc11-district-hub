@@ -16,6 +16,7 @@ export type ContentKey =
   | "conexao-solidaria"
   | "conexao-solidaria-menu"
   | "aliancas-que-transformam"
+  | "nossas-categorias-de-parceria"
   | "contato";
 
 export const CONTENT_LABELS: Record<ContentKey, string> = {

@@ -15,7 +15,7 @@ const CAUSE_ICON_OPTIONS = [
   "Heart", "Droplet", "LifeBuoy", "Leaf", "HandHeart", "Utensils", "Eye", "Sparkles", "Brain", "Activity", "Users", "Calendar", "Trophy",
 ] as const;
 
-const FIELDS: Record<ContentKey, Field[]> = {
+const FIELDS: Partial<Record<ContentKey, Field[]>> = {
   home: [
     { name: "hero_eyebrow", label: "Sobre-título (eyebrow)", type: "text" },
     { name: "hero_title", label: "Título principal", type: "textarea" },

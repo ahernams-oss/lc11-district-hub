@@ -14,6 +14,7 @@ export type ContentKey =
   | "vice-governador-2"
   | "lcif"
   | "conexao-solidaria"
+  | "conexao-solidaria-menu"
   | "aliancas-que-transformam"
   | "contato";
 
@@ -30,8 +31,15 @@ export const CONTENT_LABELS: Record<ContentKey, string> = {
   "vice-governador-2": "Página 2º Vice (textos)",
   lcif: "Página LCIF",
   "conexao-solidaria": "Página Conexão Solidária",
+  "conexao-solidaria-menu": "Submenus de Conexão Solidária",
   "aliancas-que-transformam": "Página Alianças que Transformam",
   contato: "Fale Conosco (Contato)",
+};
+
+export type ConexaoMenuItem = { to: string; label: string };
+
+export const DEFAULT_CONEXAO_SUBMENU: { items: ConexaoMenuItem[] } = {
+  items: [{ to: "/aliancas-que-transformam", label: "Alianças que Transformam" }],
 };
 
 export function useSiteContent<T extends Record<string, any>>(key: ContentKey, defaults: T) {

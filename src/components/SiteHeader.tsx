@@ -4,6 +4,7 @@ import { Menu, X, ExternalLink, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import lionsLogo from "@/assets/lions-logo.png.asset.json";
 import { useLeaders } from "@/lib/leaders";
+import { useSiteContent, DEFAULT_CONEXAO_SUBMENU, type ConexaoMenuItem } from "@/lib/content";
 
 const inicioSubmenu = [
   { to: "/lions-internacional", label: "Sobre o Lions Internacional" },
@@ -64,9 +65,40 @@ const documentosSubmenu = [
   { to: "/documentos/regulamento-sede", label: "Regulamento da Sede" },
 ] as const;
 
-const conexaoSolidariaSubmenu = [
-  { to: "/aliancas-que-transformam", label: "Alianças que Transformam" },
-] as const;
+function ConexaoSubmenuItems({
+  items,
+  mobile,
+  onClick,
+}: {
+  items: ConexaoMenuItem[];
+  mobile?: boolean;
+  onClick?: () => void;
+}) {
+  const cls = mobile
+    ? "ml-4 rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+    : "block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary";
+  return (
+    <>
+      {items.map((s) =>
+        /^https?:\/\//.test(s.to) ? (
+          <a key={s.to} href={s.to} target="_blank" rel="noreferrer" onClick={onClick} className={cls}>
+            {s.label}
+          </a>
+        ) : (
+          <Link
+            key={s.to}
+            to={s.to as any}
+            onClick={onClick}
+            className={cls}
+            activeProps={{ className: "text-primary bg-surface" }}
+          >
+            {s.label}
+          </Link>
+        ),
+      )}
+    </>
+  );
+}
 
 const nav = [
   { to: "/projetos", label: "Projetos" },
@@ -80,6 +112,7 @@ function DesktopNav() {
   const [clubesOpen, setClubesOpen] = useState(false);
   const [documentosOpen, setDocumentosOpen] = useState(false);
   const [conexaoOpen, setConexaoOpen] = useState(false);
+  const { items: conexaoItems } = useSiteContent("conexao-solidaria-menu", DEFAULT_CONEXAO_SUBMENU);
 
   return (
     <nav className="flex min-w-0 items-center justify-center gap-1 2xl:gap-3">
@@ -330,16 +363,7 @@ function DesktopNav() {
         </Link>
         {conexaoOpen && (
           <div className="absolute left-0 top-full z-50 w-64 rounded-md border border-border bg-card p-2 shadow-elegant">
-            {conexaoSolidariaSubmenu.map((s) => (
-              <Link
-                key={s.to}
-                to={s.to as any}
-                className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
-                activeProps={{ className: "text-primary bg-surface" }}
-              >
-                {s.label}
-              </Link>
-            ))}
+            <ConexaoSubmenuItems items={conexaoItems} />
           </div>
         )}
       </div>
@@ -364,6 +388,7 @@ function DesktopNav() {
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const { items: conexaoItems } = useSiteContent("conexao-solidaria-menu", DEFAULT_CONEXAO_SUBMENU);
 
   const { data: governadores } = useLeaders("governador");
   const governador = governadores?.[0];
@@ -641,17 +666,7 @@ export function SiteHeader() {
           >
             Conexão Solidária
           </Link>
-          {conexaoSolidariaSubmenu.map((s) => (
-            <Link
-              key={s.to}
-              to={s.to as any}
-              onClick={() => setOpen(false)}
-              className="ml-4 rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
-              activeProps={{ className: "text-primary bg-surface" }}
-            >
-              {s.label}
-            </Link>
-          ))}
+          <ConexaoSubmenuItems items={conexaoItems} mobile onClick={() => setOpen(false)} />
           <a
             href="https://lookerstudio.google.com/reporting/59bed738-bb40-496a-99a1-ff4b9dd931e3/page/dfKpF"
             target="_blank"

@@ -16,6 +16,10 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SecretarioRouteImport } from './routes/secretario'
 import { Route as ProtocoloLeonisticoRouteImport } from './routes/protocolo-leonistico'
+import { Route as ParceiroPrataRouteImport } from './routes/parceiro-prata'
+import { Route as ParceiroOuroRouteImport } from './routes/parceiro-ouro'
+import { Route as ParceiroDiamanteRouteImport } from './routes/parceiro-diamante'
+import { Route as ParceiroBronzeRouteImport } from './routes/parceiro-bronze'
 import { Route as NossasCategoriasDeParceriaRouteImport } from './routes/nossas-categorias-de-parceria'
 import { Route as LionsInternacionalRouteImport } from './routes/lions-internacional'
 import { Route as LcifRouteImport } from './routes/lcif'
@@ -153,6 +157,26 @@ const SecretarioRoute = SecretarioRouteImport.update({
 const ProtocoloLeonisticoRoute = ProtocoloLeonisticoRouteImport.update({
   id: '/protocolo-leonistico',
   path: '/protocolo-leonistico',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParceiroPrataRoute = ParceiroPrataRouteImport.update({
+  id: '/parceiro-prata',
+  path: '/parceiro-prata',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParceiroOuroRoute = ParceiroOuroRouteImport.update({
+  id: '/parceiro-ouro',
+  path: '/parceiro-ouro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParceiroDiamanteRoute = ParceiroDiamanteRouteImport.update({
+  id: '/parceiro-diamante',
+  path: '/parceiro-diamante',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParceiroBronzeRoute = ParceiroBronzeRouteImport.update({
+  id: '/parceiro-bronze',
+  path: '/parceiro-bronze',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NossasCategoriasDeParceriaRoute =
@@ -711,6 +735,10 @@ export interface FileRoutesByFullPath {
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/nossas-categorias-de-parceria': typeof NossasCategoriasDeParceriaRoute
+  '/parceiro-bronze': typeof ParceiroBronzeRoute
+  '/parceiro-diamante': typeof ParceiroDiamanteRoute
+  '/parceiro-ouro': typeof ParceiroOuroRoute
+  '/parceiro-prata': typeof ParceiroPrataRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -820,6 +848,10 @@ export interface FileRoutesByTo {
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/nossas-categorias-de-parceria': typeof NossasCategoriasDeParceriaRoute
+  '/parceiro-bronze': typeof ParceiroBronzeRoute
+  '/parceiro-diamante': typeof ParceiroDiamanteRoute
+  '/parceiro-ouro': typeof ParceiroOuroRoute
+  '/parceiro-prata': typeof ParceiroPrataRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -930,6 +962,10 @@ export interface FileRoutesById {
   '/lcif': typeof LcifRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/nossas-categorias-de-parceria': typeof NossasCategoriasDeParceriaRoute
+  '/parceiro-bronze': typeof ParceiroBronzeRoute
+  '/parceiro-diamante': typeof ParceiroDiamanteRoute
+  '/parceiro-ouro': typeof ParceiroOuroRoute
+  '/parceiro-prata': typeof ParceiroPrataRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -1044,6 +1080,10 @@ export interface FileRouteTypes {
     | '/lcif'
     | '/lions-internacional'
     | '/nossas-categorias-de-parceria'
+    | '/parceiro-bronze'
+    | '/parceiro-diamante'
+    | '/parceiro-ouro'
+    | '/parceiro-prata'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -1153,6 +1193,10 @@ export interface FileRouteTypes {
     | '/lcif'
     | '/lions-internacional'
     | '/nossas-categorias-de-parceria'
+    | '/parceiro-bronze'
+    | '/parceiro-diamante'
+    | '/parceiro-ouro'
+    | '/parceiro-prata'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -1262,6 +1306,10 @@ export interface FileRouteTypes {
     | '/lcif'
     | '/lions-internacional'
     | '/nossas-categorias-de-parceria'
+    | '/parceiro-bronze'
+    | '/parceiro-diamante'
+    | '/parceiro-ouro'
+    | '/parceiro-prata'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -1375,6 +1423,10 @@ export interface RootRouteChildren {
   LcifRoute: typeof LcifRoute
   LionsInternacionalRoute: typeof LionsInternacionalRoute
   NossasCategoriasDeParceriaRoute: typeof NossasCategoriasDeParceriaRoute
+  ParceiroBronzeRoute: typeof ParceiroBronzeRoute
+  ParceiroDiamanteRoute: typeof ParceiroDiamanteRoute
+  ParceiroOuroRoute: typeof ParceiroOuroRoute
+  ParceiroPrataRoute: typeof ParceiroPrataRoute
   ProtocoloLeonisticoRoute: typeof ProtocoloLeonisticoRoute
   SecretarioRoute: typeof SecretarioRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -1456,6 +1508,34 @@ declare module '@tanstack/react-router' {
       path: '/protocolo-leonistico'
       fullPath: '/protocolo-leonistico'
       preLoaderRoute: typeof ProtocoloLeonisticoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parceiro-prata': {
+      id: '/parceiro-prata'
+      path: '/parceiro-prata'
+      fullPath: '/parceiro-prata'
+      preLoaderRoute: typeof ParceiroPrataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parceiro-ouro': {
+      id: '/parceiro-ouro'
+      path: '/parceiro-ouro'
+      fullPath: '/parceiro-ouro'
+      preLoaderRoute: typeof ParceiroOuroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parceiro-diamante': {
+      id: '/parceiro-diamante'
+      path: '/parceiro-diamante'
+      fullPath: '/parceiro-diamante'
+      preLoaderRoute: typeof ParceiroDiamanteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parceiro-bronze': {
+      id: '/parceiro-bronze'
+      path: '/parceiro-bronze'
+      fullPath: '/parceiro-bronze'
+      preLoaderRoute: typeof ParceiroBronzeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/nossas-categorias-de-parceria': {
@@ -2406,6 +2486,10 @@ const rootRouteChildren: RootRouteChildren = {
   LcifRoute: LcifRoute,
   LionsInternacionalRoute: LionsInternacionalRoute,
   NossasCategoriasDeParceriaRoute: NossasCategoriasDeParceriaRoute,
+  ParceiroBronzeRoute: ParceiroBronzeRoute,
+  ParceiroDiamanteRoute: ParceiroDiamanteRoute,
+  ParceiroOuroRoute: ParceiroOuroRoute,
+  ParceiroPrataRoute: ParceiroPrataRoute,
   ProtocoloLeonisticoRoute: ProtocoloLeonisticoRoute,
   SecretarioRoute: SecretarioRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,

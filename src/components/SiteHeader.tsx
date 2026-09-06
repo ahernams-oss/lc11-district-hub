@@ -4,6 +4,7 @@ import { Menu, X, ExternalLink, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import lionsLogo from "@/assets/lions-logo.png.asset.json";
 import { useLeaders } from "@/lib/leaders";
+import { useSiteContent, DEFAULT_CONEXAO_SUBMENU, type ConexaoMenuItem } from "@/lib/content";
 
 const inicioSubmenu = [
   { to: "/lions-internacional", label: "Sobre o Lions Internacional" },

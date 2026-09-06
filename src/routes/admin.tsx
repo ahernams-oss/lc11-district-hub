@@ -63,6 +63,7 @@ function AdminLayout() {
     { to: "/admin/eventos", label: "Eventos", icon: Calendar, show: true },
     { to: "/admin/projetos", label: "Projetos", icon: Sparkles, show: true },
     { to: "/admin/popups", label: "Pop-ups", icon: MessageSquare, show: true },
+    { to: "/admin/conexao-solidaria", label: "Conexão Solidária", icon: HeartHandshake, show: true },
     { to: "/admin/documentos", label: "Documentos", icon: FolderArchive, show: true },
     { to: "/admin/campanhas", label: "Campanhas de Doação", icon: HeartHandshake, show: true },
 

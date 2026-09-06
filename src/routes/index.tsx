@@ -156,7 +156,7 @@ function Index() {
     "Bronze":        { label: "Parceiros Bronze",        card: "h-24 w-40 sm:h-28 sm:w-48", img: "max-h-16 sm:max-h-20", speedFactor: 0.95, badge: "bg-orange-700/10 text-orange-700 border-orange-700/25" },
     "Institucional": { label: "Parceiros Institucionais", card: "h-28 w-48 sm:h-32 sm:w-56", img: "max-h-20 sm:max-h-24", speedFactor: 1.1, badge: "bg-primary/10 text-primary border-primary/25" },
   };
-  const TIER_ORDER = ["Diamante", "Ouro", "Prata", "Bronze", "Institucional"];
+  const TIER_ORDER = ["Diamante", "Ouro", "Prata", "Institucional", "Bronze"];
   const partnerRows = TIER_ORDER
     .map((tier) => ({ tier, items: partners.filter((p) => p.category === tier) }))
     .filter((row) => row.items.length > 0);

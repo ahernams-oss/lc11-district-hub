@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { ArrowRight, Heart, Eye, Leaf, Users, Calendar, Trophy, Mail, Phone, Activity, Droplet, LifeBuoy, HandHeart, Utensils, Sparkles, Brain } from "lucide-react";
 import heroImg from "@/assets/hero-service.jpg";
 import envImg from "@/assets/project-environment.jpg";
@@ -62,6 +62,13 @@ function Index() {
     stat2_value: string; stat2_label: string;
     stat3_value: string; stat3_label: string;
     stat4_value: string; stat4_label: string;
+    partners_eyebrow: string; partners_title: string;
+    partners_diamond: string[]; partners_diamond_links: string[];
+    partners_gold: string[]; partners_gold_links: string[];
+    partners_silver: string[]; partners_silver_links: string[];
+    partners_bronze: string[]; partners_bronze_links: string[];
+    partners_institutional: string[]; partners_institutional_links: string[];
+    partners_rotation_seconds: number;
     mission_eyebrow: string; mission_title: string;
     mission_text1: string; mission_text2: string; mission_cta: string;
     mission_card1: string; mission_card2: string; mission_card3: string; mission_card4: string;
@@ -80,6 +87,14 @@ function Index() {
     stat2_value: "2.400", stat2_label: "Leões servindo",
     stat3_value: "150k", stat3_label: "Vidas impactadas/ano",
     stat4_value: "100+", stat4_label: "Cidades atendidas",
+    partners_eyebrow: "Quem fortalece o nosso servir",
+    partners_title: "Parceiros do Distrito LC-11",
+    partners_diamond: [], partners_diamond_links: [],
+    partners_gold: [], partners_gold_links: [],
+    partners_silver: [], partners_silver_links: [],
+    partners_bronze: [], partners_bronze_links: [],
+    partners_institutional: [], partners_institutional_links: [],
+    partners_rotation_seconds: 28,
     mission_eyebrow: "Nossa missão",
     mission_title: "Servir com propósito, transformar com compromisso.",
     mission_text1: "Há mais de 100 anos, os Leões do mundo todo agem onde é necessário. No Distrito LC-11, transformamos solidariedade em ação concreta — escola por escola, bairro por bairro, cidade por cidade.",
@@ -104,6 +119,20 @@ function Index() {
     { value: hero.stat3_value, label: hero.stat3_label },
     { value: hero.stat4_value, label: hero.stat4_label },
   ];
+
+  const partnerGroups = [
+    { category: "Diamante", images: hero.partners_diamond, links: hero.partners_diamond_links },
+    { category: "Ouro", images: hero.partners_gold, links: hero.partners_gold_links },
+    { category: "Prata", images: hero.partners_silver, links: hero.partners_silver_links },
+    { category: "Bronze", images: hero.partners_bronze, links: hero.partners_bronze_links },
+    { category: "Institucional", images: hero.partners_institutional, links: hero.partners_institutional_links },
+  ];
+  const partners = partnerGroups.flatMap(({ category, images, links }) =>
+    (Array.isArray(images) ? images : [])
+      .filter((url) => typeof url === "string" && url.trim().length > 0)
+      .map((url, index) => ({ category, url, link: Array.isArray(links) ? (links[index] ?? "").trim() : "" })),
+  );
+  const partnerRotationSeconds = Math.max(5, Number(hero.partners_rotation_seconds) || 28);
 
   const { data: leaders = [] } = useLeaders("governador");
   const gov = leaders[0];
@@ -227,6 +256,39 @@ function Index() {
           ))}
         </div>
       </section>
+
+      {/* PARTNERS */}
+      {partners.length > 0 && (
+        <section className="overflow-hidden border-b border-border bg-background py-12 sm:py-14" aria-labelledby="partners-title">
+          <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              <BreakableText text={hero.partners_eyebrow} />
+            </p>
+            <h2 id="partners-title" className="mt-2 font-display text-2xl font-bold text-foreground sm:text-3xl">
+              <BreakableText text={hero.partners_title} />
+            </h2>
+          </div>
+          <div className="partners-marquee mt-8" style={{ "--partners-duration": `${partnerRotationSeconds}s` } as CSSProperties}>
+            <div className="partners-track">
+              {[...partners, ...partners].map((partner, index) => {
+                const logo = (
+                  <div className="flex h-28 w-48 shrink-0 flex-col items-center justify-center gap-2 rounded-lg border border-border bg-card px-5 py-3 shadow-card sm:h-32 sm:w-56">
+                    <img src={partner.url} alt={`Logo de parceiro ${partner.category}`} loading="lazy" className="min-h-0 max-h-20 w-full object-contain sm:max-h-24" />
+                    <span className="sr-only">Categoria {partner.category}</span>
+                  </div>
+                );
+                if (!partner.link) return <div key={`${partner.category}-${partner.url}-${index}`}>{logo}</div>;
+                const isExternal = /^https?:\/\//i.test(partner.link);
+                return (
+                  <a key={`${partner.category}-${partner.url}-${index}`} href={partner.link} aria-label={`Visitar parceiro ${partner.category}`} {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+                    {logo}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* MISSION */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">

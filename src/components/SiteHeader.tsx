@@ -68,6 +68,7 @@ const nav = [
   { to: "/projetos", label: "Projetos" },
   { to: "/noticias", label: "Notícias" },
   { to: "/eventos", label: "Eventos" },
+  { to: "/conexao-solidaria", label: "Conexão Solidária" },
 ] as const;
 
 function DesktopNav() {

@@ -79,10 +79,20 @@ function ConexaoSubmenuItems({
     : "block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary";
   return (
     <>
-      {items.map((s) =>
-        /^https?:\/\//.test(s.to) ? (
+      {items.map((s) => {
+        const labelParts = s.label.split(" // ");
+        const labelNode = (
+          <span className={labelParts.length > 1 ? "block" : undefined}>
+            {labelParts.map((part, i) => (
+              <span key={i} className={labelParts.length > 1 ? "block" : undefined}>
+                {part}
+              </span>
+            ))}
+          </span>
+        );
+        return /^https?:\/\//.test(s.to) ? (
           <a key={s.to} href={s.to} target="_blank" rel="noreferrer" onClick={onClick} className={cls}>
-            {s.label}
+            {labelNode}
           </a>
         ) : (
           <Link
@@ -92,10 +102,10 @@ function ConexaoSubmenuItems({
             className={cls}
             activeProps={{ className: "text-primary bg-surface" }}
           >
-            {s.label}
+            {labelNode}
           </Link>
-        ),
-      )}
+        );
+      })}
     </>
   );
 }

@@ -14,6 +14,7 @@ export type ContentKey =
   | "vice-governador-2"
   | "lcif"
   | "conexao-solidaria"
+  | "aliancas-que-transformam"
   | "contato";
 
 export const CONTENT_LABELS: Record<ContentKey, string> = {
@@ -29,6 +30,7 @@ export const CONTENT_LABELS: Record<ContentKey, string> = {
   "vice-governador-2": "Página 2º Vice (textos)",
   lcif: "Página LCIF",
   "conexao-solidaria": "Página Conexão Solidária",
+  "aliancas-que-transformam": "Página Alianças que Transformam",
   contato: "Fale Conosco (Contato)",
 };
 

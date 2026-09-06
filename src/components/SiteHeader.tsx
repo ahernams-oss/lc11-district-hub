@@ -64,11 +64,14 @@ const documentosSubmenu = [
   { to: "/documentos/regulamento-sede", label: "Regulamento da Sede" },
 ] as const;
 
+const conexaoSolidariaSubmenu = [
+  { to: "/aliancas-que-transformam", label: "Alianças que Transformam" },
+] as const;
+
 const nav = [
   { to: "/projetos", label: "Projetos" },
   { to: "/noticias", label: "Notícias" },
   { to: "/eventos", label: "Eventos" },
-  { to: "/conexao-solidaria", label: "Conexão Solidária" },
 ] as const;
 
 function DesktopNav() {
@@ -76,6 +79,7 @@ function DesktopNav() {
   const [lideresOpen, setLideresOpen] = useState(false);
   const [clubesOpen, setClubesOpen] = useState(false);
   const [documentosOpen, setDocumentosOpen] = useState(false);
+  const [conexaoOpen, setConexaoOpen] = useState(false);
 
   return (
     <nav className="flex min-w-0 items-center justify-center gap-1 2xl:gap-3">
@@ -312,6 +316,33 @@ function DesktopNav() {
           {item.label}
         </Link>
       ))}
+      <div
+        className="relative"
+        onMouseEnter={() => setConexaoOpen(true)}
+        onMouseLeave={() => setConexaoOpen(false)}
+      >
+        <Link
+          to="/conexao-solidaria"
+          className="flex items-center gap-1 rounded-md px-2 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary 2xl:px-3"
+          activeProps={{ className: "text-primary bg-surface" }}
+        >
+          Conexão Solidária <ChevronDown className="h-3.5 w-3.5" />
+        </Link>
+        {conexaoOpen && (
+          <div className="absolute left-0 top-full z-50 w-64 rounded-md border border-border bg-card p-2 shadow-elegant">
+            {conexaoSolidariaSubmenu.map((s) => (
+              <Link
+                key={s.to}
+                to={s.to as any}
+                className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                activeProps={{ className: "text-primary bg-surface" }}
+              >
+                {s.label}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
       <a
         href="https://lookerstudio.google.com/reporting/59bed738-bb40-496a-99a1-ff4b9dd931e3/page/dfKpF"
         target="_blank"
@@ -600,6 +631,25 @@ export function SiteHeader() {
               activeProps={{ className: "text-primary bg-surface" }}
             >
               {item.label}
+            </Link>
+          ))}
+          <Link
+            to="/conexao-solidaria"
+            onClick={() => setOpen(false)}
+            className="rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-surface"
+            activeProps={{ className: "text-primary bg-surface" }}
+          >
+            Conexão Solidária
+          </Link>
+          {conexaoSolidariaSubmenu.map((s) => (
+            <Link
+              key={s.to}
+              to={s.to as any}
+              onClick={() => setOpen(false)}
+              className="ml-4 rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+              activeProps={{ className: "text-primary bg-surface" }}
+            >
+              {s.label}
             </Link>
           ))}
           <a

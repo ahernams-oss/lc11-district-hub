@@ -28,6 +28,7 @@ import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ConexaoSolidariaRouteImport } from './routes/conexao-solidaria'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssessoriaRouteImport } from './routes/assessoria'
+import { Route as AliancasQueTransformamRouteImport } from './routes/aliancas-que-transformam'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AcessoRouteImport } from './routes/acesso'
 import { Route as IndexRouteImport } from './routes/index'
@@ -210,6 +211,11 @@ const AuthRoute = AuthRouteImport.update({
 const AssessoriaRoute = AssessoriaRouteImport.update({
   id: '/assessoria',
   path: '/assessoria',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AliancasQueTransformamRoute = AliancasQueTransformamRouteImport.update({
+  id: '/aliancas-que-transformam',
+  path: '/aliancas-que-transformam',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -678,6 +684,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/acesso': typeof AcessoRoute
   '/admin': typeof AdminRouteWithChildren
+  '/aliancas-que-transformam': typeof AliancasQueTransformamRoute
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
   '/conexao-solidaria': typeof ConexaoSolidariaRoute
@@ -786,6 +793,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/acesso': typeof AcessoRoute
+  '/aliancas-que-transformam': typeof AliancasQueTransformamRoute
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
   '/conexao-solidaria': typeof ConexaoSolidariaRoute
@@ -891,6 +899,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/acesso': typeof AcessoRoute
   '/admin': typeof AdminRouteWithChildren
+  '/aliancas-que-transformam': typeof AliancasQueTransformamRoute
   '/assessoria': typeof AssessoriaRoute
   '/auth': typeof AuthRoute
   '/conexao-solidaria': typeof ConexaoSolidariaRoute
@@ -1002,6 +1011,7 @@ export interface FileRouteTypes {
     | '/'
     | '/acesso'
     | '/admin'
+    | '/aliancas-que-transformam'
     | '/assessoria'
     | '/auth'
     | '/conexao-solidaria'
@@ -1110,6 +1120,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/acesso'
+    | '/aliancas-que-transformam'
     | '/assessoria'
     | '/auth'
     | '/conexao-solidaria'
@@ -1214,6 +1225,7 @@ export interface FileRouteTypes {
     | '/'
     | '/acesso'
     | '/admin'
+    | '/aliancas-que-transformam'
     | '/assessoria'
     | '/auth'
     | '/conexao-solidaria'
@@ -1324,6 +1336,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AcessoRoute: typeof AcessoRoute
   AdminRoute: typeof AdminRouteWithChildren
+  AliancasQueTransformamRoute: typeof AliancasQueTransformamRoute
   AssessoriaRoute: typeof AssessoriaRoute
   AuthRoute: typeof AuthRoute
   ConexaoSolidariaRoute: typeof ConexaoSolidariaRoute
@@ -1501,6 +1514,13 @@ declare module '@tanstack/react-router' {
       path: '/assessoria'
       fullPath: '/assessoria'
       preLoaderRoute: typeof AssessoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aliancas-que-transformam': {
+      id: '/aliancas-que-transformam'
+      path: '/aliancas-que-transformam'
+      fullPath: '/aliancas-que-transformam'
+      preLoaderRoute: typeof AliancasQueTransformamRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -2330,6 +2350,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AcessoRoute: AcessoRoute,
   AdminRoute: AdminRouteWithChildren,
+  AliancasQueTransformamRoute: AliancasQueTransformamRoute,
   AssessoriaRoute: AssessoriaRoute,
   AuthRoute: AuthRoute,
   ConexaoSolidariaRoute: ConexaoSolidariaRoute,

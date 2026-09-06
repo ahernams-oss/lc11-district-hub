@@ -3,6 +3,7 @@ import { PageHero } from "@/components/PageHero";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { useState } from "react";
 import { useSiteContent } from "@/lib/content";
+import { normalizeBreaks } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/contato")({
   head: () => ({
@@ -53,7 +54,7 @@ function Contato() {
             <div className="rounded-xl border border-border bg-card p-6 shadow-card">
               <MapPin className="h-6 w-6 text-primary" />
               <h3 className="mt-3 font-semibold text-foreground">Sede do Distrito</h3>
-              <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground">{c.address}</p>
+              <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground">{normalizeBreaks(c.address)}</p>
             </div>
           </div>
 
@@ -67,7 +68,7 @@ function Contato() {
                   <Send className="h-6 w-6 text-primary" />
                 </div>
                 <h3 className="mt-4 font-display text-xl font-bold">Mensagem enviada!</h3>
-                <p className="mt-2 text-muted-foreground">{c.success_message}</p>
+                <p className="mt-2 whitespace-pre-line text-muted-foreground">{normalizeBreaks(c.success_message)}</p>
               </div>
             ) : (
               <>

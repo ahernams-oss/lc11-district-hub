@@ -149,6 +149,8 @@ const FIELDS: Partial<Record<ContentKey, Field[]>> = {
     { name: "highlights_title", label: "Título do bloco de destaques", type: "text" },
     { name: "highlights", label: "Destaques (um por linha)", type: "textarea" },
     { name: "footer_text", label: "Texto final / contato", type: "textarea" },
+    { name: "partner_logos_title", label: "Título do bloco de parceiros", type: "text" },
+    { name: "partner_logos", label: "Logos dos parceiros Institucionais (com link)", type: "images_with_links", max: 24, linksField: "partner_logos_links", help: "Cada logo pode ter um link para o site do parceiro. As logos também aparecem na faixa da página inicial." },
     { name: "image_url", label: "Imagem ilustrativa (opcional)", type: "image" },
   ],
   "parceiro-diamante": [
@@ -159,6 +161,8 @@ const FIELDS: Partial<Record<ContentKey, Field[]>> = {
     { name: "highlights_title", label: "Título do bloco de destaques", type: "text" },
     { name: "highlights", label: "Destaques (um por linha)", type: "textarea" },
     { name: "footer_text", label: "Texto final / contato", type: "textarea" },
+    { name: "partner_logos_title", label: "Título do bloco de parceiros", type: "text" },
+    { name: "partner_logos", label: "Logos dos parceiros Diamante (com link)", type: "images_with_links", max: 24, linksField: "partner_logos_links", help: "Cada logo pode ter um link para o site do parceiro. As logos também aparecem na faixa da página inicial." },
     { name: "image_url", label: "Imagem ilustrativa (opcional)", type: "image" },
   ],
   "parceiro-ouro": [
@@ -169,6 +173,8 @@ const FIELDS: Partial<Record<ContentKey, Field[]>> = {
     { name: "highlights_title", label: "Título do bloco de destaques", type: "text" },
     { name: "highlights", label: "Destaques (um por linha)", type: "textarea" },
     { name: "footer_text", label: "Texto final / contato", type: "textarea" },
+    { name: "partner_logos_title", label: "Título do bloco de parceiros", type: "text" },
+    { name: "partner_logos", label: "Logos dos parceiros Ouro (com link)", type: "images_with_links", max: 24, linksField: "partner_logos_links", help: "Cada logo pode ter um link para o site do parceiro. As logos também aparecem na faixa da página inicial." },
     { name: "image_url", label: "Imagem ilustrativa (opcional)", type: "image" },
   ],
   "parceiro-prata": [
@@ -179,6 +185,8 @@ const FIELDS: Partial<Record<ContentKey, Field[]>> = {
     { name: "highlights_title", label: "Título do bloco de destaques", type: "text" },
     { name: "highlights", label: "Destaques (um por linha)", type: "textarea" },
     { name: "footer_text", label: "Texto final / contato", type: "textarea" },
+    { name: "partner_logos_title", label: "Título do bloco de parceiros", type: "text" },
+    { name: "partner_logos", label: "Logos dos parceiros Prata (com link)", type: "images_with_links", max: 24, linksField: "partner_logos_links", help: "Cada logo pode ter um link para o site do parceiro. As logos também aparecem na faixa da página inicial." },
     { name: "image_url", label: "Imagem ilustrativa (opcional)", type: "image" },
   ],
   "parceiro-bronze": [
@@ -189,6 +197,8 @@ const FIELDS: Partial<Record<ContentKey, Field[]>> = {
     { name: "highlights_title", label: "Título do bloco de destaques", type: "text" },
     { name: "highlights", label: "Destaques (um por linha)", type: "textarea" },
     { name: "footer_text", label: "Texto final / contato", type: "textarea" },
+    { name: "partner_logos_title", label: "Título do bloco de parceiros", type: "text" },
+    { name: "partner_logos", label: "Logos dos parceiros Bronze (com link)", type: "images_with_links", max: 24, linksField: "partner_logos_links", help: "Cada logo pode ter um link para o site do parceiro. As logos também aparecem na faixa da página inicial." },
     { name: "image_url", label: "Imagem ilustrativa (opcional)", type: "image" },
   ],
   contato: [

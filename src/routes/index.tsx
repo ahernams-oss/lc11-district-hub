@@ -120,13 +120,26 @@ function Index() {
     { value: hero.stat4_value, label: hero.stat4_label },
   ];
 
+  const PARTNER_PAGE_DEFAULTS = { partner_logos: [] as string[], partner_logos_links: [] as string[] };
+  const diamondPage = useSiteContent("parceiro-diamante", PARTNER_PAGE_DEFAULTS);
+  const goldPage = useSiteContent("parceiro-ouro", PARTNER_PAGE_DEFAULTS);
+  const silverPage = useSiteContent("parceiro-prata", PARTNER_PAGE_DEFAULTS);
+  const bronzePage = useSiteContent("parceiro-bronze", PARTNER_PAGE_DEFAULTS);
+  const institutionalPage = useSiteContent("parceria-institucional", PARTNER_PAGE_DEFAULTS);
+
   const partnerGroups = [
     { category: "Diamante", images: hero.partners_diamond, links: hero.partners_diamond_links },
+    { category: "Diamante", images: diamondPage.partner_logos, links: diamondPage.partner_logos_links },
     { category: "Ouro", images: hero.partners_gold, links: hero.partners_gold_links },
+    { category: "Ouro", images: goldPage.partner_logos, links: goldPage.partner_logos_links },
     { category: "Prata", images: hero.partners_silver, links: hero.partners_silver_links },
+    { category: "Prata", images: silverPage.partner_logos, links: silverPage.partner_logos_links },
     { category: "Bronze", images: hero.partners_bronze, links: hero.partners_bronze_links },
+    { category: "Bronze", images: bronzePage.partner_logos, links: bronzePage.partner_logos_links },
     { category: "Institucional", images: hero.partners_institutional, links: hero.partners_institutional_links },
+    { category: "Institucional", images: institutionalPage.partner_logos, links: institutionalPage.partner_logos_links },
   ];
+
   const partners = partnerGroups.flatMap(({ category, images, links }) =>
     (Array.isArray(images) ? images : [])
       .filter((url) => typeof url === "string" && url.trim().length > 0)

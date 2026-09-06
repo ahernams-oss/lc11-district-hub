@@ -61,13 +61,15 @@ function ExGovernadorBio() {
               <User className="h-24 w-24 text-muted-foreground/60" />
             </div>
           )}
-          <h1 className="mt-4 font-display text-2xl font-bold text-foreground">{leader.name}</h1>
-          {leader.year_label && (
-            <div className="mt-1 text-sm font-semibold text-primary">{leader.year_label}</div>
-          )}
-          {leader.motto && (
-            <div className="mt-2 text-sm italic text-muted-foreground">"{leader.motto}"</div>
-          )}
+          <div className="mt-4 w-full max-w-xs rounded-xl border border-gold/40 bg-gradient-to-b from-gold/10 to-gold/5 p-4 text-center shadow-elegant">
+            <h1 className="font-display text-lg font-bold leading-tight text-foreground">{leader.name}</h1>
+            {leader.year_label && (
+              <div className="mt-1 text-xs font-semibold tracking-wide text-primary uppercase">{leader.year_label}</div>
+            )}
+            {leader.motto && (
+              <div className="mt-2 border-t border-gold/30 pt-2 text-sm italic text-muted-foreground">{leader.motto}</div>
+            )}
+          </div>
         </div>
 
         <div>

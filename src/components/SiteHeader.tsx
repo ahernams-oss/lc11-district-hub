@@ -633,6 +633,25 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <Link
+            to="/conexao-solidaria"
+            onClick={() => setOpen(false)}
+            className="rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-surface"
+            activeProps={{ className: "text-primary bg-surface" }}
+          >
+            Conexão Solidária
+          </Link>
+          {conexaoSolidariaSubmenu.map((s) => (
+            <Link
+              key={s.to}
+              to={s.to as any}
+              onClick={() => setOpen(false)}
+              className="ml-4 rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+              activeProps={{ className: "text-primary bg-surface" }}
+            >
+              {s.label}
+            </Link>
+          ))}
           <a
             href="https://lookerstudio.google.com/reporting/59bed738-bb40-496a-99a1-ff4b9dd931e3/page/dfKpF"
             target="_blank"

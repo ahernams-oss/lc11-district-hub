@@ -17,6 +17,7 @@ const PAGES = [
   "conexao-solidaria",
   "aliancas-que-transformam",
   "nossas-categorias-de-parceria",
+  "parceria-institucional",
   "parceiro-diamante",
   "parceiro-ouro",
   "parceiro-prata",

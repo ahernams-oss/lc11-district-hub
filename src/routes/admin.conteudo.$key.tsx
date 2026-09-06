@@ -133,6 +133,16 @@ const FIELDS: Partial<Record<ContentKey, Field[]>> = {
     { name: "footer_text", label: "Texto final / contato", type: "textarea" },
     { name: "image_url", label: "Imagem ilustrativa (opcional)", type: "image" },
   ],
+  "parceria-institucional": [
+    { name: "eyebrow", label: "Sobre-título", type: "text" },
+    { name: "title", label: "Título", type: "textarea" },
+    { name: "description", label: "Descrição (hero)", type: "textarea" },
+    { name: "intro", label: "Texto de introdução", type: "textarea" },
+    { name: "highlights_title", label: "Título do bloco de destaques", type: "text" },
+    { name: "highlights", label: "Destaques (um por linha)", type: "textarea" },
+    { name: "footer_text", label: "Texto final / contato", type: "textarea" },
+    { name: "image_url", label: "Imagem ilustrativa (opcional)", type: "image" },
+  ],
   "parceiro-diamante": [
     { name: "eyebrow", label: "Sobre-título", type: "text" },
     { name: "title", label: "Título", type: "textarea" },

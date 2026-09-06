@@ -17,6 +17,7 @@ export type ContentKey =
   | "conexao-solidaria-menu"
   | "aliancas-que-transformam"
   | "nossas-categorias-de-parceria"
+  | "parceria-institucional"
   | "parceiro-diamante"
   | "parceiro-ouro"
   | "parceiro-prata"
@@ -39,6 +40,7 @@ export const CONTENT_LABELS: Record<ContentKey, string> = {
   "conexao-solidaria-menu": "Submenus de Conexão Solidária",
   "aliancas-que-transformam": "Página Alianças que Transformam",
   "nossas-categorias-de-parceria": "Página Nossas Categorias de Parceria",
+  "parceria-institucional": "Página Parceria Institucional",
   "parceiro-diamante": "Página Parceiro Diamante",
   "parceiro-ouro": "Página Parceiro Ouro",
   "parceiro-prata": "Página Parceiro Prata",
@@ -52,6 +54,7 @@ export const DEFAULT_CONEXAO_SUBMENU: { items: ConexaoMenuItem[] } = {
   items: [
     { to: "/aliancas-que-transformam", label: "Alianças que Transformam" },
     { to: "/nossas-categorias-de-parceria", label: "Nossas Categorias de Parceria" },
+    { to: "/parceria-institucional", label: "Parceria Institucional" },
     { to: "/parceiro-diamante", label: "Parceiro Diamante" },
     { to: "/parceiro-ouro", label: "Parceiro Ouro" },
     { to: "/parceiro-prata", label: "Parceiro Prata" },

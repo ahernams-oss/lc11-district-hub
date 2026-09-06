@@ -16,6 +16,7 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SecretarioRouteImport } from './routes/secretario'
 import { Route as ProtocoloLeonisticoRouteImport } from './routes/protocolo-leonistico'
+import { Route as ParceriaInstitucionalRouteImport } from './routes/parceria-institucional'
 import { Route as ParceiroPrataRouteImport } from './routes/parceiro-prata'
 import { Route as ParceiroOuroRouteImport } from './routes/parceiro-ouro'
 import { Route as ParceiroDiamanteRouteImport } from './routes/parceiro-diamante'
@@ -157,6 +158,11 @@ const SecretarioRoute = SecretarioRouteImport.update({
 const ProtocoloLeonisticoRoute = ProtocoloLeonisticoRouteImport.update({
   id: '/protocolo-leonistico',
   path: '/protocolo-leonistico',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParceriaInstitucionalRoute = ParceriaInstitucionalRouteImport.update({
+  id: '/parceria-institucional',
+  path: '/parceria-institucional',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ParceiroPrataRoute = ParceiroPrataRouteImport.update({
@@ -739,6 +745,7 @@ export interface FileRoutesByFullPath {
   '/parceiro-diamante': typeof ParceiroDiamanteRoute
   '/parceiro-ouro': typeof ParceiroOuroRoute
   '/parceiro-prata': typeof ParceiroPrataRoute
+  '/parceria-institucional': typeof ParceriaInstitucionalRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -852,6 +859,7 @@ export interface FileRoutesByTo {
   '/parceiro-diamante': typeof ParceiroDiamanteRoute
   '/parceiro-ouro': typeof ParceiroOuroRoute
   '/parceiro-prata': typeof ParceiroPrataRoute
+  '/parceria-institucional': typeof ParceriaInstitucionalRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -966,6 +974,7 @@ export interface FileRoutesById {
   '/parceiro-diamante': typeof ParceiroDiamanteRoute
   '/parceiro-ouro': typeof ParceiroOuroRoute
   '/parceiro-prata': typeof ParceiroPrataRoute
+  '/parceria-institucional': typeof ParceriaInstitucionalRoute
   '/protocolo-leonistico': typeof ProtocoloLeonisticoRoute
   '/secretario': typeof SecretarioRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -1084,6 +1093,7 @@ export interface FileRouteTypes {
     | '/parceiro-diamante'
     | '/parceiro-ouro'
     | '/parceiro-prata'
+    | '/parceria-institucional'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -1197,6 +1207,7 @@ export interface FileRouteTypes {
     | '/parceiro-diamante'
     | '/parceiro-ouro'
     | '/parceiro-prata'
+    | '/parceria-institucional'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -1310,6 +1321,7 @@ export interface FileRouteTypes {
     | '/parceiro-diamante'
     | '/parceiro-ouro'
     | '/parceiro-prata'
+    | '/parceria-institucional'
     | '/protocolo-leonistico'
     | '/secretario'
     | '/sitemap.xml'
@@ -1427,6 +1439,7 @@ export interface RootRouteChildren {
   ParceiroDiamanteRoute: typeof ParceiroDiamanteRoute
   ParceiroOuroRoute: typeof ParceiroOuroRoute
   ParceiroPrataRoute: typeof ParceiroPrataRoute
+  ParceriaInstitucionalRoute: typeof ParceriaInstitucionalRoute
   ProtocoloLeonisticoRoute: typeof ProtocoloLeonisticoRoute
   SecretarioRoute: typeof SecretarioRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -1508,6 +1521,13 @@ declare module '@tanstack/react-router' {
       path: '/protocolo-leonistico'
       fullPath: '/protocolo-leonistico'
       preLoaderRoute: typeof ProtocoloLeonisticoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parceria-institucional': {
+      id: '/parceria-institucional'
+      path: '/parceria-institucional'
+      fullPath: '/parceria-institucional'
+      preLoaderRoute: typeof ParceriaInstitucionalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/parceiro-prata': {
@@ -2490,6 +2510,7 @@ const rootRouteChildren: RootRouteChildren = {
   ParceiroDiamanteRoute: ParceiroDiamanteRoute,
   ParceiroOuroRoute: ParceiroOuroRoute,
   ParceiroPrataRoute: ParceiroPrataRoute,
+  ParceriaInstitucionalRoute: ParceriaInstitucionalRoute,
   ProtocoloLeonisticoRoute: ProtocoloLeonisticoRoute,
   SecretarioRoute: SecretarioRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,

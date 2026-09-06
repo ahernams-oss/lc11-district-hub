@@ -285,7 +285,7 @@ function Index() {
       </section>
 
       {/* PARTNERS */}
-      {partners.length > 0 && (
+      {partnerRows.length > 0 && (
         <section className="overflow-hidden border-b border-border bg-background py-12 sm:py-14" aria-labelledby="partners-title">
           <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
@@ -295,24 +295,39 @@ function Index() {
               <BreakableText text={hero.partners_title} />
             </h2>
           </div>
-          <div className="partners-marquee mt-8" style={{ "--partners-duration": `${partnerRotationSeconds}s` } as CSSProperties}>
-            <div className="partners-track">
-              {[...partners, ...partners].map((partner, index) => {
-                const logo = (
-                  <div className="flex h-28 w-48 shrink-0 flex-col items-center justify-center gap-2 rounded-lg border border-border bg-card px-5 py-3 shadow-card sm:h-32 sm:w-56">
-                    <img src={partner.url} alt={`Logo de parceiro ${partner.category}`} loading="lazy" className="min-h-0 max-h-20 w-full object-contain sm:max-h-24" />
-                    <span className="sr-only">Categoria {partner.category}</span>
+          <div className="mt-8 space-y-8">
+            {partnerRows.map(({ tier, items }) => {
+              const config = PARTNER_TIERS[tier];
+              const duration = Math.round(partnerRotationSeconds * config.speedFactor);
+              return (
+                <div key={tier}>
+                  <div className="mx-auto mb-3 flex max-w-7xl items-center justify-center gap-3 px-4 sm:px-6 lg:px-8">
+                    <span className={`inline-flex items-center rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] ${config.badge}`}>
+                      {config.label}
+                    </span>
                   </div>
-                );
-                if (!partner.link) return <div key={`${partner.category}-${partner.url}-${index}`}>{logo}</div>;
-                const isExternal = /^https?:\/\//i.test(partner.link);
-                return (
-                  <a key={`${partner.category}-${partner.url}-${index}`} href={partner.link} aria-label={`Visitar parceiro ${partner.category}`} {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
-                    {logo}
-                  </a>
-                );
-              })}
-            </div>
+                  <div className="partners-marquee" style={{ "--partners-duration": `${duration}s` } as CSSProperties}>
+                    <div className="partners-track">
+                      {[...items, ...items].map((partner, index) => {
+                        const logo = (
+                          <div className={`flex shrink-0 flex-col items-center justify-center gap-2 rounded-lg border border-border bg-card px-5 py-3 shadow-card ${config.card}`}>
+                            <img src={partner.url} alt={`Logo de parceiro ${partner.category}`} loading="lazy" className={`min-h-0 w-full object-contain ${config.img}`} />
+                            <span className="sr-only">Categoria {partner.category}</span>
+                          </div>
+                        );
+                        if (!partner.link) return <div key={`${partner.category}-${partner.url}-${index}`}>{logo}</div>;
+                        const isExternal = /^https?:\/\//i.test(partner.link);
+                        return (
+                          <a key={`${partner.category}-${partner.url}-${index}`} href={partner.link} aria-label={`Visitar parceiro ${partner.category}`} {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+                            {logo}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
       )}

@@ -388,6 +388,7 @@ function DesktopNav() {
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const { items: conexaoItems } = useSiteContent("conexao-solidaria-menu", DEFAULT_CONEXAO_SUBMENU);
 
   const { data: governadores } = useLeaders("governador");
   const governador = governadores?.[0];

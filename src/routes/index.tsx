@@ -13,6 +13,7 @@ import juventudeImg from "@/assets/cause-juventude.jpg";
 import saudeMentalImg from "@/assets/cause-saude-mental.jpg";
 import { useSiteContent } from "@/lib/content";
 import { useLeaders } from "@/lib/leaders";
+import { BreakableText, normalizeBreaks } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -146,13 +147,13 @@ function Index() {
               <div className="min-w-0">
 
                 <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-                  {hero.hero_eyebrow}
+                  <BreakableText text={hero.hero_eyebrow} />
                 </p>
                 <h1 className="font-display text-3xl font-bold leading-tight break-words whitespace-pre-line sm:text-4xl lg:text-5xl xl:text-6xl">
-                  {hero.hero_title}
+                  {normalizeBreaks(hero.hero_title)}
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed opacity-95 sm:text-xl whitespace-pre-line">
-                  {hero.hero_description}
+                  {normalizeBreaks(hero.hero_description)}
                 </p>
                 <div className="mt-10 flex flex-wrap gap-4">
                   <Link
@@ -231,18 +232,20 @@ function Index() {
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">{hero.mission_eyebrow}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              <BreakableText text={hero.mission_eyebrow} />
+            </p>
             <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl whitespace-pre-line">
-              {hero.mission_title}
+              {normalizeBreaks(hero.mission_title)}
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-muted-foreground whitespace-pre-line">
-              {hero.mission_text1}
+              {normalizeBreaks(hero.mission_text1)}
             </p>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground whitespace-pre-line">
-              {hero.mission_text2}
+              {normalizeBreaks(hero.mission_text2)}
             </p>
             <Link to="/sobre" className="mt-6 inline-flex items-center gap-2 font-semibold text-primary hover:gap-3 transition-all">
-              {hero.mission_cta || "Saiba mais sobre o distrito"} <ArrowRight className="h-4 w-4" />
+              <BreakableText text={hero.mission_cta || "Saiba mais sobre o distrito"} /> <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -266,9 +269,11 @@ function Index() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">{hero.causes_eyebrow}</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                <BreakableText text={hero.causes_eyebrow} />
+              </p>
               <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl">
-                {hero.causes_title}
+                <BreakableText text={hero.causes_title} />
               </h2>
             </div>
             <Link to="/projetos" className="inline-flex items-center gap-2 font-semibold text-primary hover:gap-3 transition-all">
@@ -302,9 +307,13 @@ function Index() {
                     <div className="flex h-10 w-10 items-center justify-center rounded-md bg-accent text-primary">
                       <Icon className="h-5 w-5" />
                     </div>
-                    <h3 className="font-display text-xl font-bold text-foreground">{c.title}</h3>
+                    <h3 className="font-display text-xl font-bold text-foreground">
+                      <BreakableText text={c.title} />
+                    </h3>
                   </div>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    <BreakableText text={c.desc} />
+                  </p>
                 </div>
               </article>
               );

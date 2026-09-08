@@ -39,6 +39,7 @@ export interface Leader {
   motto: string | null;
   order_index: number;
   gallery_urls: string[] | null;
+  club_name: string | null;
 }
 
 export function useLeader(id: string) {

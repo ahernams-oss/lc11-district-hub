@@ -39,6 +39,7 @@ const regioesSubmenu = [
 const atosGovernadorSubmenu = [
   { to: "/documentos/atos-governador/al-2026-2027", label: "AL 2026-2027" },
   { to: "/documentos/atos-governador/al-2027-2028", label: "AL 2027-2028" },
+  { to: "/documentos/atos-governador/al-2028-2029", label: "AL 2028-2029" },
 ] as const;
 
 const rgdYears = ["2026-2027", "2027-2028", "2028-2029"] as const;

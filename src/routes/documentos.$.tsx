@@ -39,6 +39,13 @@ const pages: Record<string, DocPageMeta> = {
       "Atos oficiais do(a) Governador(a) referentes ao Ano Leonístico 2027-2028.",
     category: "atos-governador-al-2027-2028",
   },
+  "atos-governador/al-2028-2029": {
+    eyebrow: "Atos do(a) Governador(a)",
+    title: "AL 2028-2029",
+    description:
+      "Atos oficiais do(a) Governador(a) referentes ao Ano Leonístico 2028-2029.",
+    category: "atos-governador-al-2028-2029",
+  },
   ...rgdPages,
   "estatuto-lions-internacional": {
     eyebrow: "Documento oficial",

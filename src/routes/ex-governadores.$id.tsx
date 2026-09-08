@@ -67,7 +67,7 @@ function ExGovernadorBio() {
               <div className="mt-1 text-xs font-semibold tracking-wide text-primary uppercase">{leader.year_label}</div>
             )}
             {leader.motto && (
-              <div className="mt-2 border-t border-gold/30 pt-2 text-xs italic text-muted-foreground">{leader.motto}</div>
+              <div className="mt-2 border-t border-gold/30 pt-2 text-xs font-bold italic text-muted-foreground">{leader.motto}</div>
             )}
           </div>
         </div>

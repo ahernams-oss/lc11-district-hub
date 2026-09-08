@@ -35,6 +35,7 @@ interface FormState {
   motto: string;
   order_index: number;
   gallery_urls: string[];
+  club_name: string;
 }
 
 const EMPTY: FormState = {
@@ -51,6 +52,7 @@ const EMPTY: FormState = {
   motto: "",
   order_index: 0,
   gallery_urls: [],
+  club_name: "",
 };
 
 function LeaderEditor() {
@@ -94,6 +96,7 @@ function LeaderEditor() {
             motto: data.motto ?? "",
             order_index: data.order_index ?? 0,
             gallery_urls: ((data as any).gallery_urls ?? []) as string[],
+            club_name: (data as any).club_name ?? "",
           });
         }
         setLoading(false);
@@ -262,6 +265,16 @@ function LeaderEditor() {
             required
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
+            className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
+          />
+        </Field>
+
+        <Field label="Clube do Governador">
+          <input
+            type="text"
+            value={form.club_name}
+            onChange={(e) => setForm({ ...form, club_name: e.target.value })}
+            placeholder="Ex.: LC Rio de Janeiro Centro"
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
           />
         </Field>

@@ -1626,6 +1626,7 @@ export type Database = {
         Row: {
           bio: string | null
           category: string
+          club_name: string | null
           created_at: string
           email: string | null
           gallery_urls: string[]
@@ -1646,6 +1647,7 @@ export type Database = {
         Insert: {
           bio?: string | null
           category: string
+          club_name?: string | null
           created_at?: string
           email?: string | null
           gallery_urls?: string[]
@@ -1666,6 +1668,7 @@ export type Database = {
         Update: {
           bio?: string | null
           category?: string
+          club_name?: string | null
           created_at?: string
           email?: string | null
           gallery_urls?: string[]
@@ -1975,6 +1978,7 @@ export type Database = {
         Row: {
           bio: string | null
           category: string | null
+          club_name: string | null
           created_at: string | null
           email: string | null
           gallery_urls: string[] | null
@@ -1993,6 +1997,7 @@ export type Database = {
         Insert: {
           bio?: string | null
           category?: string | null
+          club_name?: string | null
           created_at?: string | null
           email?: string | null
           gallery_urls?: string[] | null
@@ -2011,6 +2016,7 @@ export type Database = {
         Update: {
           bio?: string | null
           category?: string | null
+          club_name?: string | null
           created_at?: string | null
           email?: string | null
           gallery_urls?: string[] | null

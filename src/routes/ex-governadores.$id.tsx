@@ -63,6 +63,9 @@ function ExGovernadorBio() {
           )}
           <div className="mt-4 w-full max-w-[14rem] rounded-xl border border-gold/40 bg-gradient-to-b from-gold/10 to-gold/5 p-3 text-center shadow-elegant">
             <h1 className="font-display text-base font-bold leading-tight text-foreground">{leader.name}</h1>
+            {leader.club_name && (
+              <div className="mt-1 text-xs font-medium text-muted-foreground">{leader.club_name}</div>
+            )}
             {leader.year_label && (
               <div className="mt-1 text-xs font-semibold tracking-wide text-primary uppercase">{leader.year_label}</div>
             )}

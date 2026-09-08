@@ -17,6 +17,7 @@ const CATEGORY_LABEL: Record<string, string> = Object.fromEntries(
 const CATEGORY_TO_PATH: Record<string, string> = {
   "atos-governador-al-2026-2027": "atos-governador/al-2026-2027",
   "atos-governador-al-2027-2028": "atos-governador/al-2027-2028",
+  "atos-governador-al-2028-2029": "atos-governador/al-2028-2029",
   "estatuto-lions-internacional": "estatuto-lions-internacional",
   "estatuto-dmlc": "estatuto-dmlc",
   "estatuto-distrito-lc-11": "estatuto-distrito-lc-11",

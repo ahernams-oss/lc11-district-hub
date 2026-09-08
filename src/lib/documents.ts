@@ -40,6 +40,7 @@ const RGD_CATEGORIES = RGD_YEARS.flatMap((y) =>
 export const DOCUMENT_CATEGORIES: { slug: string; label: string }[] = [
   { slug: "atos-governador-al-2026-2027", label: "Atos do(a) Governador(a) — AL 2026-2027" },
   { slug: "atos-governador-al-2027-2028", label: "Atos do(a) Governador(a) — AL 2027-2028" },
+  { slug: "atos-governador-al-2028-2029", label: "Atos do(a) Governador(a) — AL 2028-2029" },
   ...RGD_CATEGORIES,
   { slug: "estatuto-lions-internacional", label: "Estatuto Lions Internacional" },
   { slug: "estatuto-dmlc", label: "Estatuto DMLC" },

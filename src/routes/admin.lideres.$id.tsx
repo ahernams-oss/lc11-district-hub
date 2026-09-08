@@ -35,6 +35,7 @@ interface FormState {
   motto: string;
   order_index: number;
   gallery_urls: string[];
+  club_name: string;
 }
 
 const EMPTY: FormState = {
@@ -51,6 +52,7 @@ const EMPTY: FormState = {
   motto: "",
   order_index: 0,
   gallery_urls: [],
+  club_name: "",
 };
 
 function LeaderEditor() {

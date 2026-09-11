@@ -459,7 +459,7 @@ export function SiteHeader() {
             Doar
           </Link>
           <a
-            href="https://lovable.dev/projects/3c09d0df-b614-426e-b3c7-58ab2e837294"
+            href="https://darkred-cheetah-877995.hostingersite.com/"
             target="_blank"
             rel="noreferrer"
             className="ml-1 hidden items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold tracking-wide text-primary-foreground shadow-sm transition-all duration-200 hover:bg-primary-deep hover:shadow-md active:scale-95 group sm:inline-flex 2xl:px-5"
@@ -702,7 +702,7 @@ export function SiteHeader() {
             Doar agora
           </Link>
           <a
-            href="https://lovable.dev/projects/3c09d0df-b614-426e-b3c7-58ab2e837294"
+            href="https://darkred-cheetah-877995.hostingersite.com/"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center justify-center gap-1 rounded-md border border-border px-4 py-2.5 text-sm font-medium"

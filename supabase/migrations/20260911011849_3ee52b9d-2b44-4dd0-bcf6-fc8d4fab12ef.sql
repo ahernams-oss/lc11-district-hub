@@ -1,0 +1,1 @@
+GRANT SELECT (id, category, name, role, bio, message, photo_url, pin_url, year_label, motto, order_index, gallery_urls, created_at, updated_at, public_email, public_phone, club_name) ON public.leaders TO anon;

@@ -390,3 +390,73 @@ export const getContabilDashboard = createServerFn({ method: "GET" })
       recentes: recentes ?? [],
     };
   });
+
+// ─── DRE CONTÁBIL ───────────────────────────────────────────────────
+export const getDreContabil = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(z.object({
+    ano: z.number().int(),
+    mesInicio: z.number().int().min(1).max(12),
+    mesFim: z.number().int().min(1).max(12),
+  }))
+  .handler(async ({ data, context }) => {
+    await assertContabilAccess(context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+    const startIso = `${data.ano}-${String(data.mesInicio).padStart(2, "0")}-01`;
+    const endIso = `${data.ano}-${String(data.mesFim).padStart(2, "0")}-31`;
+
+    const { data: contas, error: contasErr } = await supabaseAdmin
+      .from("con_plano_contas")
+      .select("*")
+      .in("tipo", ["receita", "despesa"])
+      .order("codigo");
+    if (contasErr) throw new Error(contasErr.message);
+
+    const { data: items, error: itemsErr } = await supabaseAdmin
+      .from("con_lancamento_itens")
+      .select("conta_id, tipo, valor, lancamento:con_lancamentos(data, status)")
+      .gte("lancamento.data", startIso)
+      .lte("lancamento.data", endIso)
+      .eq("lancamento.status", "validado");
+    if (itemsErr) throw new Error(itemsErr.message);
+
+    const agg: Record<string, { debito: number; credito: number }> = {};
+    for (const c of contas ?? []) agg[c.id] = { debito: 0, credito: 0 };
+    for (const item of items ?? []) {
+      const lancData = (item as any).lancamento?.data;
+      if (!lancData) continue;
+      const a = agg[item.conta_id];
+      if (!a) continue;
+      if (item.tipo === "debito") a.debito += item.valor;
+      else a.credito += item.valor;
+    }
+
+    const linhas = (contas ?? []).map((c) => {
+      const a = agg[c.id];
+      const valor = c.tipo === "receita" ? a.credito - a.debito : a.debito - a.credito;
+      return {
+        id: c.id,
+        codigo: c.codigo,
+        nome: c.nome,
+        tipo: c.tipo as "receita" | "despesa",
+        nivel: c.nivel,
+        sintetica: c.sintetica,
+        valor,
+      };
+    });
+
+    const receitas = linhas.filter((l) => l.tipo === "receita" && !l.sintetica);
+    const despesas = linhas.filter((l) => l.tipo === "despesa" && !l.sintetica);
+    const totalReceitas = receitas.reduce((s, l) => s + l.valor, 0);
+    const totalDespesas = despesas.reduce((s, l) => s + l.valor, 0);
+
+    return {
+      periodo: { ano: data.ano, mesInicio: data.mesInicio, mesFim: data.mesFim },
+      receitas,
+      despesas,
+      totalReceitas,
+      totalDespesas,
+      resultado: totalReceitas - totalDespesas,
+    };
+  });

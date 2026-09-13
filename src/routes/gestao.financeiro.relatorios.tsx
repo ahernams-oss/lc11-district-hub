@@ -74,6 +74,43 @@ function RelatoriosPage() {
     }
   }
 
+  function buildDreSpec() {
+    const rows: ReportRow[] = [];
+    rows.push({ item: "RECEITAS", valor: formatBRL(totalReceitas), __bold: true });
+    for (const m of dreReceitas) rows.push({ item: m.descricao, valor: formatBRL(m.valor), __indent: 1 });
+    rows.push({ item: "DESPESAS", valor: formatBRL(totalDespesas), __bold: true });
+    for (const m of dreDespesas) rows.push({ item: m.descricao, valor: formatBRL(m.valor), __indent: 1 });
+    return {
+      filename: `dre-financeiro-${mes}`,
+      title: "DRE — Demonstração do Resultado do Exercício",
+      subtitle: `Competência: ${monthLabel(mes)}`,
+      columns: [
+        { key: "item", label: "Descrição", weight: 4 },
+        { key: "valor", label: "Valor", align: "right" as const, weight: 1 },
+      ],
+      rows,
+      footerRows: [{ item: "RESULTADO LÍQUIDO", valor: formatBRL(resultadoLiquido) }],
+    };
+  }
+
+  function buildCategoriasSpec() {
+    const rows: ReportRow[] = [];
+    rows.push({ categoria: "RECEITAS POR CATEGORIA", valor: "", __bold: true });
+    for (const [, cat] of catReceitas) rows.push({ categoria: cat.nome, valor: formatBRL(cat.total), __indent: 1 });
+    rows.push({ categoria: "DESPESAS POR CATEGORIA", valor: "", __bold: true });
+    for (const [, cat] of catDespesas) rows.push({ categoria: cat.nome, valor: formatBRL(cat.total), __indent: 1 });
+    return {
+      filename: `relatorio-categorias-${period}m`,
+      title: "Relatório por Categoria",
+      subtitle: `Últimos ${period} meses`,
+      columns: [
+        { key: "categoria", label: "Categoria", weight: 4 },
+        { key: "valor", label: "Total", align: "right" as const, weight: 1 },
+      ],
+      rows,
+    };
+  }
+
   return (
     <div>
       <GestaoHeader

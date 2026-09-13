@@ -272,7 +272,7 @@ export const getBalancete = createServerFn({ method: "GET" })
     const { data: items, error: itemsErr } = await supabaseAdmin
       .from("con_lancamento_itens")
       .select("conta_id, tipo, valor, lancamento:con_lancamentos(data, status)")
-      .lte("lancamento.data", endIso)
+      .lt("lancamento.data", endIso)
       .eq("lancamento.status", "validado");
     if (itemsErr) throw new Error(itemsErr.message);
 
@@ -288,7 +288,7 @@ export const getBalancete = createServerFn({ method: "GET" })
       const cid = item.conta_id;
       if (!contaMovs[cid]) continue;
 
-      const isCurrentMonth = lancData >= startIso && lancData <= endIso;
+      const isCurrentMonth = lancData >= startIso && lancData < endIso;
       if (isCurrentMonth) {
         if (item.tipo === "debito") contaMovs[cid].debitoMes += item.valor;
         else contaMovs[cid].creditoMes += item.valor;
@@ -417,7 +417,7 @@ export const getDreContabil = createServerFn({ method: "GET" })
       .from("con_lancamento_itens")
       .select("conta_id, tipo, valor, lancamento:con_lancamentos(data, status)")
       .gte("lancamento.data", startIso)
-      .lte("lancamento.data", endIso)
+      .lt("lancamento.data", endIso)
       .eq("lancamento.status", "validado");
     if (itemsErr) throw new Error(itemsErr.message);
 

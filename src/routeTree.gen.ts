@@ -101,6 +101,7 @@ import { Route as GestaoCrmFunilRouteImport } from './routes/gestao.crm.funil'
 import { Route as GestaoCrmContatosRouteImport } from './routes/gestao.crm.contatos'
 import { Route as GestaoContabilPlanoContasRouteImport } from './routes/gestao.contabil.plano-contas'
 import { Route as GestaoContabilLancamentosRouteImport } from './routes/gestao.contabil.lancamentos'
+import { Route as GestaoContabilDreRouteImport } from './routes/gestao.contabil.dre'
 import { Route as GestaoContabilBalanceteRouteImport } from './routes/gestao.contabil.balancete'
 import { Route as GestaoClubesAssociadosClubesRouteImport } from './routes/gestao.clubes-associados.clubes'
 import { Route as GestaoClubesAssociadosAssociadosRouteImport } from './routes/gestao.clubes-associados.associados'
@@ -600,6 +601,11 @@ const GestaoContabilLancamentosRoute =
     path: '/lancamentos',
     getParentRoute: () => GestaoContabilRoute,
   } as any)
+const GestaoContabilDreRoute = GestaoContabilDreRouteImport.update({
+  id: '/dre',
+  path: '/dre',
+  getParentRoute: () => GestaoContabilRoute,
+} as any)
 const GestaoContabilBalanceteRoute = GestaoContabilBalanceteRouteImport.update({
   id: '/balancete',
   path: '/balancete',
@@ -805,6 +811,7 @@ export interface FileRoutesByFullPath {
   '/gestao/clubes-associados/associados': typeof GestaoClubesAssociadosAssociadosRoute
   '/gestao/clubes-associados/clubes': typeof GestaoClubesAssociadosClubesRoute
   '/gestao/contabil/balancete': typeof GestaoContabilBalanceteRoute
+  '/gestao/contabil/dre': typeof GestaoContabilDreRoute
   '/gestao/contabil/lancamentos': typeof GestaoContabilLancamentosRoute
   '/gestao/contabil/plano-contas': typeof GestaoContabilPlanoContasRoute
   '/gestao/crm/contatos': typeof GestaoCrmContatosRoute
@@ -916,6 +923,7 @@ export interface FileRoutesByTo {
   '/gestao/clubes-associados/associados': typeof GestaoClubesAssociadosAssociadosRoute
   '/gestao/clubes-associados/clubes': typeof GestaoClubesAssociadosClubesRoute
   '/gestao/contabil/balancete': typeof GestaoContabilBalanceteRoute
+  '/gestao/contabil/dre': typeof GestaoContabilDreRoute
   '/gestao/contabil/lancamentos': typeof GestaoContabilLancamentosRoute
   '/gestao/contabil/plano-contas': typeof GestaoContabilPlanoContasRoute
   '/gestao/crm/contatos': typeof GestaoCrmContatosRoute
@@ -1034,6 +1042,7 @@ export interface FileRoutesById {
   '/gestao/clubes-associados/associados': typeof GestaoClubesAssociadosAssociadosRoute
   '/gestao/clubes-associados/clubes': typeof GestaoClubesAssociadosClubesRoute
   '/gestao/contabil/balancete': typeof GestaoContabilBalanceteRoute
+  '/gestao/contabil/dre': typeof GestaoContabilDreRoute
   '/gestao/contabil/lancamentos': typeof GestaoContabilLancamentosRoute
   '/gestao/contabil/plano-contas': typeof GestaoContabilPlanoContasRoute
   '/gestao/crm/contatos': typeof GestaoCrmContatosRoute
@@ -1153,6 +1162,7 @@ export interface FileRouteTypes {
     | '/gestao/clubes-associados/associados'
     | '/gestao/clubes-associados/clubes'
     | '/gestao/contabil/balancete'
+    | '/gestao/contabil/dre'
     | '/gestao/contabil/lancamentos'
     | '/gestao/contabil/plano-contas'
     | '/gestao/crm/contatos'
@@ -1264,6 +1274,7 @@ export interface FileRouteTypes {
     | '/gestao/clubes-associados/associados'
     | '/gestao/clubes-associados/clubes'
     | '/gestao/contabil/balancete'
+    | '/gestao/contabil/dre'
     | '/gestao/contabil/lancamentos'
     | '/gestao/contabil/plano-contas'
     | '/gestao/crm/contatos'
@@ -1381,6 +1392,7 @@ export interface FileRouteTypes {
     | '/gestao/clubes-associados/associados'
     | '/gestao/clubes-associados/clubes'
     | '/gestao/contabil/balancete'
+    | '/gestao/contabil/dre'
     | '/gestao/contabil/lancamentos'
     | '/gestao/contabil/plano-contas'
     | '/gestao/crm/contatos'
@@ -2118,6 +2130,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GestaoContabilLancamentosRouteImport
       parentRoute: typeof GestaoContabilRoute
     }
+    '/gestao/contabil/dre': {
+      id: '/gestao/contabil/dre'
+      path: '/dre'
+      fullPath: '/gestao/contabil/dre'
+      preLoaderRoute: typeof GestaoContabilDreRouteImport
+      parentRoute: typeof GestaoContabilRoute
+    }
     '/gestao/contabil/balancete': {
       id: '/gestao/contabil/balancete'
       path: '/balancete'
@@ -2388,6 +2407,7 @@ const DocumentosRouteWithChildren = DocumentosRoute._addFileChildren(
 
 interface GestaoContabilRouteChildren {
   GestaoContabilBalanceteRoute: typeof GestaoContabilBalanceteRoute
+  GestaoContabilDreRoute: typeof GestaoContabilDreRoute
   GestaoContabilLancamentosRoute: typeof GestaoContabilLancamentosRoute
   GestaoContabilPlanoContasRoute: typeof GestaoContabilPlanoContasRoute
   GestaoContabilIndexRoute: typeof GestaoContabilIndexRoute
@@ -2395,6 +2415,7 @@ interface GestaoContabilRouteChildren {
 
 const GestaoContabilRouteChildren: GestaoContabilRouteChildren = {
   GestaoContabilBalanceteRoute: GestaoContabilBalanceteRoute,
+  GestaoContabilDreRoute: GestaoContabilDreRoute,
   GestaoContabilLancamentosRoute: GestaoContabilLancamentosRoute,
   GestaoContabilPlanoContasRoute: GestaoContabilPlanoContasRoute,
   GestaoContabilIndexRoute: GestaoContabilIndexRoute,

@@ -5,6 +5,8 @@ import { useState } from "react";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
 import { listMovimentacoes, listCategorias } from "@/lib/financeiro.functions";
 import { formatBRL, monthLabel, lastNMonths, currentYearMonth } from "@/lib/financeiro.utils";
+import { ExportButtons } from "@/components/gestao/ExportButtons";
+import type { ReportRow } from "@/lib/report-export";
 import { FileText, TrendingUp, TrendingDown, BarChart3 } from "lucide-react";
 
 export const Route = createFileRoute("/gestao/financeiro/relatorios")({
@@ -72,6 +74,43 @@ function RelatoriosPage() {
     }
   }
 
+  function buildDreSpec() {
+    const rows: ReportRow[] = [];
+    rows.push({ item: "RECEITAS", valor: formatBRL(totalReceitas), __bold: true });
+    for (const m of dreReceitas) rows.push({ item: m.descricao, valor: formatBRL(m.valor), __indent: 1 });
+    rows.push({ item: "DESPESAS", valor: formatBRL(totalDespesas), __bold: true });
+    for (const m of dreDespesas) rows.push({ item: m.descricao, valor: formatBRL(m.valor), __indent: 1 });
+    return {
+      filename: `dre-financeiro-${mes}`,
+      title: "DRE — Demonstração do Resultado do Exercício",
+      subtitle: `Competência: ${monthLabel(mes)}`,
+      columns: [
+        { key: "item", label: "Descrição", weight: 4 },
+        { key: "valor", label: "Valor", align: "right" as const, weight: 1 },
+      ],
+      rows,
+      footerRows: [{ item: "RESULTADO LÍQUIDO", valor: formatBRL(resultadoLiquido) }],
+    };
+  }
+
+  function buildCategoriasSpec() {
+    const rows: ReportRow[] = [];
+    rows.push({ categoria: "RECEITAS POR CATEGORIA", valor: "", __bold: true });
+    for (const [, cat] of catReceitas) rows.push({ categoria: cat.nome, valor: formatBRL(cat.total), __indent: 1 });
+    rows.push({ categoria: "DESPESAS POR CATEGORIA", valor: "", __bold: true });
+    for (const [, cat] of catDespesas) rows.push({ categoria: cat.nome, valor: formatBRL(cat.total), __indent: 1 });
+    return {
+      filename: `relatorio-categorias-${period}m`,
+      title: "Relatório por Categoria",
+      subtitle: `Últimos ${period} meses`,
+      columns: [
+        { key: "categoria", label: "Categoria", weight: 4 },
+        { key: "valor", label: "Total", align: "right" as const, weight: 1 },
+      ],
+      rows,
+    };
+  }
+
   return (
     <div>
       <GestaoHeader
@@ -109,6 +148,7 @@ function RelatoriosPage() {
               <input type="month" value={mes} onChange={(e) => setMes(e.target.value)}
                 className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none focus:border-primary" />
               <span className="text-sm text-slate-500">DRE — Demonstração do Resultado do Exercício</span>
+              <div className="ml-auto"><ExportButtons getSpec={buildDreSpec} disabled={loadingMes} /></div>
             </div>
 
             <div className="rounded-xl border border-white/8 bg-white/[0.03] overflow-hidden">
@@ -193,6 +233,7 @@ function RelatoriosPage() {
                 ))}
               </div>
               <span className="text-sm text-slate-500">Últimos {period} meses</span>
+              <div className="ml-auto"><ExportButtons getSpec={buildCategoriasSpec} disabled={loadingTodos} /></div>
             </div>
 
             {loadingTodos ? (

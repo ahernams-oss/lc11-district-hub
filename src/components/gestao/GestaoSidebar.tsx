@@ -83,6 +83,7 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
           { to: "/gestao/contabil/plano-contas", label: "Plano de Contas", icon: BookOpen,      accessKey: "contabil" },
           { to: "/gestao/contabil/lancamentos",  label: "Lançamentos",      icon: ArrowLeftRight, accessKey: "contabil" },
           { to: "/gestao/contabil/balancete",    label: "Balancete",        icon: FileBarChart,   accessKey: "contabil" },
+          { to: "/gestao/contabil/dre",          label: "DRE Contábil",     icon: FileBarChart,   accessKey: "contabil" },
         ],
       },
       {

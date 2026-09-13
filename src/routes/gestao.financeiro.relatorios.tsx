@@ -233,6 +233,7 @@ function RelatoriosPage() {
                 ))}
               </div>
               <span className="text-sm text-slate-500">Últimos {period} meses</span>
+              <div className="ml-auto"><ExportButtons getSpec={buildCategoriasSpec} disabled={loadingTodos} /></div>
             </div>
 
             {loadingTodos ? (

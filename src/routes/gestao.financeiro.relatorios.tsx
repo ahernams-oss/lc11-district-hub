@@ -5,6 +5,8 @@ import { useState } from "react";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
 import { listMovimentacoes, listCategorias } from "@/lib/financeiro.functions";
 import { formatBRL, monthLabel, lastNMonths, currentYearMonth } from "@/lib/financeiro.utils";
+import { ExportButtons } from "@/components/gestao/ExportButtons";
+import type { ReportRow } from "@/lib/report-export";
 import { FileText, TrendingUp, TrendingDown, BarChart3 } from "lucide-react";
 
 export const Route = createFileRoute("/gestao/financeiro/relatorios")({

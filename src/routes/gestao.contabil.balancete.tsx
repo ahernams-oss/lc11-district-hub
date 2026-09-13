@@ -59,8 +59,11 @@ function BalancetePage() {
             </select>
           </div>
 
-          <div className="text-xs text-slate-400">
-            Balancete de Verificação referentes a <span className="font-semibold text-white">{monthLabel(`${ano}-${String(mes).padStart(2, "0")}`)}</span>
+          <div className="flex items-center gap-4">
+            <div className="text-xs text-slate-400">
+              Balancete de Verificação referentes a <span className="font-semibold text-white">{monthLabel(`${ano}-${String(mes).padStart(2, "0")}`)}</span>
+            </div>
+            <ExportButtons getSpec={buildSpec} disabled={isLoading || !data} />
           </div>
         </div>
 

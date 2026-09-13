@@ -164,7 +164,7 @@ export const listLancamentos = createServerFn({ method: "GET" })
     if (data?.status) q = q.eq("status", data.status);
     if (data?.mes) {
       const [y, m] = data.mes.split("-");
-      q = q.gte("data", `${y}-${m}-01`).lte("data", `${y}-${m}-31`);
+      q = q.gte("data", `${y}-${m}-01`).lt("data", nextMonthFirstISO(`${y}-${m}`));
     }
     const { data: rows, error } = await q;
     if (error) throw new Error(error.message);
@@ -259,7 +259,7 @@ export const getBalancete = createServerFn({ method: "GET" })
 
     // Format start and end date of period
     const startIso = `${data.ano}-${String(data.mes).padStart(2, "0")}-01`;
-    const endIso = `${data.ano}-${String(data.mes).padStart(2, "0")}-31`;
+    const endIso = nextMonthFirstISO(`${data.ano}-${String(data.mes).padStart(2, "0")}`);
 
     // Fetch accounts
     const { data: contas, error: contasErr } = await supabaseAdmin
@@ -272,7 +272,7 @@ export const getBalancete = createServerFn({ method: "GET" })
     const { data: items, error: itemsErr } = await supabaseAdmin
       .from("con_lancamento_itens")
       .select("conta_id, tipo, valor, lancamento:con_lancamentos(data, status)")
-      .lte("lancamento.data", endIso)
+      .lt("lancamento.data", endIso)
       .eq("lancamento.status", "validado");
     if (itemsErr) throw new Error(itemsErr.message);
 
@@ -288,7 +288,7 @@ export const getBalancete = createServerFn({ method: "GET" })
       const cid = item.conta_id;
       if (!contaMovs[cid]) continue;
 
-      const isCurrentMonth = lancData >= startIso && lancData <= endIso;
+      const isCurrentMonth = lancData >= startIso && lancData < endIso;
       if (isCurrentMonth) {
         if (item.tipo === "debito") contaMovs[cid].debitoMes += item.valor;
         else contaMovs[cid].creditoMes += item.valor;
@@ -362,14 +362,14 @@ export const getContabilDashboard = createServerFn({ method: "GET" })
       .from("con_lancamentos")
       .select("id, status")
       .gte("data", `${yyyy}-${mm}-01`)
-      .lte("data", `${yyyy}-${mm}-31`);
+      .lt("data", nextMonthFirstISO(`${yyyy}-${mm}`));
 
     // Total debitos do mês (somatório dos lançamentos validados)
     const { data: itensMes } = await supabaseAdmin
       .from("con_lancamento_itens")
       .select("valor, tipo, lancamento:con_lancamentos(data, status)")
       .gte("lancamento.data", `${yyyy}-${mm}-01`)
-      .lte("lancamento.data", `${yyyy}-${mm}-31`)
+      .lt("lancamento.data", nextMonthFirstISO(`${yyyy}-${mm}`))
       .eq("lancamento.status", "validado")
       .eq("tipo", "debito");
 
@@ -404,7 +404,7 @@ export const getDreContabil = createServerFn({ method: "GET" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const startIso = `${data.ano}-${String(data.mesInicio).padStart(2, "0")}-01`;
-    const endIso = `${data.ano}-${String(data.mesFim).padStart(2, "0")}-31`;
+    const endIso = nextMonthFirstISO(`${data.ano}-${String(data.mesFim).padStart(2, "0")}`);
 
     const { data: contas, error: contasErr } = await supabaseAdmin
       .from("con_plano_contas")
@@ -417,7 +417,7 @@ export const getDreContabil = createServerFn({ method: "GET" })
       .from("con_lancamento_itens")
       .select("conta_id, tipo, valor, lancamento:con_lancamentos(data, status)")
       .gte("lancamento.data", startIso)
-      .lte("lancamento.data", endIso)
+      .lt("lancamento.data", endIso)
       .eq("lancamento.status", "validado");
     if (itemsErr) throw new Error(itemsErr.message);
 
@@ -460,3 +460,11 @@ export const getDreContabil = createServerFn({ method: "GET" })
       resultado: totalReceitas - totalDespesas,
     };
   });
+
+/** First day of the month after the given "YYYY-MM" (exclusive upper bound for date ranges). */
+function nextMonthFirstISO(ym: string): string {
+  const [y, m] = ym.split("-").map((v) => parseInt(v, 10));
+  const ny = m === 12 ? y + 1 : y;
+  const nm = m === 12 ? 1 : m + 1;
+  return `${ny}-${String(nm).padStart(2, "0")}-01`;
+}

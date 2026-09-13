@@ -5,7 +5,9 @@ import { useState } from "react";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
 import { getBalancete } from "@/lib/contabil.functions";
 import { formatBRL, monthLabel } from "@/lib/financeiro.utils";
-import { FileSpreadsheet, Download, Folder, FileText } from "lucide-react";
+import { ExportButtons } from "@/components/gestao/ExportButtons";
+import type { ReportRow } from "@/lib/report-export";
+import { Folder, FileText } from "lucide-react";
 
 export const Route = createFileRoute("/gestao/contabil/balancete")({
   component: BalancetePage,

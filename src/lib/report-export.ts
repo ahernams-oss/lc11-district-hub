@@ -11,7 +11,8 @@ export type ReportColumn = {
   weight?: number;
 };
 
-export type ReportRow = Record<string, string | number | null | undefined> & {
+export type ReportRow = {
+  [key: string]: string | number | boolean | null | undefined;
   __bold?: boolean;
   __indent?: number;
 };

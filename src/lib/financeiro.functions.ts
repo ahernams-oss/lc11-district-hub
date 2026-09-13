@@ -153,7 +153,7 @@ export const listContasPagar = createServerFn({ method: "GET" })
     if (data?.categoria_id) q = q.eq("categoria_id", data.categoria_id);
     if (data?.mes) {
       const [y, m] = data.mes.split("-");
-      q = q.gte("vencimento", `${y}-${m}-01`).lte("vencimento", `${y}-${m}-31`);
+      q = q.gte("vencimento", `${y}-${m}-01`).lt("vencimento", nextMonthFirstISO(`${y}-${m}`));
     }
     const { data: rows, error } = await q;
     if (error) throw new Error(error.message);
@@ -222,7 +222,7 @@ export const listContasReceber = createServerFn({ method: "GET" })
     if (data?.categoria_id) q = q.eq("categoria_id", data.categoria_id);
     if (data?.mes) {
       const [y, m] = data.mes.split("-");
-      q = q.gte("vencimento", `${y}-${m}-01`).lte("vencimento", `${y}-${m}-31`);
+      q = q.gte("vencimento", `${y}-${m}-01`).lt("vencimento", nextMonthFirstISO(`${y}-${m}`));
     }
     const { data: rows, error } = await q;
     if (error) throw new Error(error.message);
@@ -291,7 +291,7 @@ export const listMovimentacoes = createServerFn({ method: "GET" })
     if (data?.tipo) q = q.eq("tipo", data.tipo);
     if (data?.mes) {
       const [y, m] = data.mes.split("-");
-      q = q.gte("data", `${y}-${m}-01`).lte("data", `${y}-${m}-31`);
+      q = q.gte("data", `${y}-${m}-01`).lt("data", nextMonthFirstISO(`${y}-${m}`));
     }
     const { data: rows, error } = await q;
     if (error) throw new Error(error.message);
@@ -469,7 +469,7 @@ export const getFinanceiroDashboard = createServerFn({ method: "GET" })
       .from("fin_movimentacoes")
       .select("tipo,valor")
       .gte("data", `${yyyy}-${mm}-01`)
-      .lte("data", `${yyyy}-${mm}-31`);
+      .lt("data", nextMonthFirstISO(`${yyyy}-${mm}`));
 
     const entradas = (movs ?? []).filter((m: any) => m.tipo === "entrada").reduce((s: number, m: any) => s + m.valor, 0);
     const saidas   = (movs ?? []).filter((m: any) => m.tipo === "saida").reduce((s: number, m: any) => s + m.valor, 0);
@@ -527,3 +527,11 @@ export const getFinanceiroDashboard = createServerFn({ method: "GET" })
       mes: mesAtual,
     };
   });
+
+/** First day of the month after the given "YYYY-MM" (exclusive upper bound for date ranges). */
+function nextMonthFirstISO(ym: string): string {
+  const [y, m] = ym.split("-").map((v) => parseInt(v, 10));
+  const ny = m === 12 ? y + 1 : y;
+  const nm = m === 12 ? 1 : m + 1;
+  return `${ny}-${String(nm).padStart(2, "0")}-01`;
+}

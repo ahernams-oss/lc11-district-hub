@@ -148,6 +148,7 @@ function RelatoriosPage() {
               <input type="month" value={mes} onChange={(e) => setMes(e.target.value)}
                 className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none focus:border-primary" />
               <span className="text-sm text-slate-500">DRE — Demonstração do Resultado do Exercício</span>
+              <div className="ml-auto"><ExportButtons getSpec={buildDreSpec} disabled={loadingMes} /></div>
             </div>
 
             <div className="rounded-xl border border-white/8 bg-white/[0.03] overflow-hidden">

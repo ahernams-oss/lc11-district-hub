@@ -25,6 +25,44 @@ function BalancetePage() {
     queryFn: () => fetchBalancete({ data: { ano, mes } }),
   });
 
+  function buildSpec() {
+    const rows: ReportRow[] = (data?.balancete ?? []).map((row) => ({
+      codigo: row.codigo,
+      nome: row.nome,
+      saldoAnterior: formatBRL(row.saldoAnterior),
+      debito: row.debito > 0 ? formatBRL(row.debito) : "—",
+      credito: row.credito > 0 ? formatBRL(row.credito) : "—",
+      saldoAtual: formatBRL(row.saldoAtual),
+      __bold: row.sintetica,
+      __indent: row.nivel - 1,
+    }));
+
+    return {
+      filename: `balancete-${ano}-${String(mes).padStart(2, "0")}`,
+      title: "Balancete de Verificação",
+      subtitle: `Período: ${monthLabel(`${ano}-${String(mes).padStart(2, "0")}`)}`,
+      columns: [
+        { key: "codigo", label: "Código", weight: 1 },
+        { key: "nome", label: "Conta contábil", weight: 3 },
+        { key: "saldoAnterior", label: "Saldo anterior", align: "right" as const, weight: 1.2 },
+        { key: "debito", label: "Débito (mês)", align: "right" as const, weight: 1.2 },
+        { key: "credito", label: "Crédito (mês)", align: "right" as const, weight: 1.2 },
+        { key: "saldoAtual", label: "Saldo atual", align: "right" as const, weight: 1.2 },
+      ],
+      rows,
+      footerRows: [
+        {
+          codigo: "",
+          nome: "TOTAL GERAL DO PERÍODO",
+          saldoAnterior: "",
+          debito: formatBRL(data?.totalDebito ?? 0),
+          credito: formatBRL(data?.totalCredito ?? 0),
+          saldoAtual: (data?.totalDebito ?? 0) === (data?.totalCredito ?? 0) ? "Equilibrado" : "Desequilibrado",
+        },
+      ],
+    };
+  }
+
   return (
     <div>
       <GestaoHeader

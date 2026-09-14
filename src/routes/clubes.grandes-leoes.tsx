@@ -172,6 +172,13 @@ function GrandesLeoes() {
                     </div>
                   </div>
                 </div>
+                {fig.leonic_year && (
+                  <div className="mt-3 self-center rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-center">
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Ano Leonístico</span>
+                    <p className="font-display text-sm font-bold text-foreground">{fig.leonic_year}</p>
+                  </div>
+                )}
+                </div>
               );
             })}
           </div>

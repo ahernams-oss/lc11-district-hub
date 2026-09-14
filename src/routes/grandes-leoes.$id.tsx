@@ -2,6 +2,7 @@ import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { ArrowLeft, ChevronLeft, ChevronRight, Award } from "lucide-react";
 import { useLeader } from "@/lib/leaders";
 import { useEffect, useState } from "react";
+import { BreakableText } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/grandes-leoes/$id")({
   head: () => ({
@@ -112,8 +113,8 @@ function GrandeLeaoBio() {
             <p className="mt-3 text-muted-foreground">História ainda não cadastrada.</p>
           )}
           {leader.message && (
-            <div className="mt-6 rounded-xl border border-border bg-surface p-5 text-sm italic leading-relaxed text-foreground/90 whitespace-pre-line">
-              {leader.message}
+            <div className="mt-6 rounded-xl border border-border bg-surface p-5 text-sm italic leading-relaxed text-foreground/90">
+              <BreakableText text={leader.message} />
             </div>
           )}
         </div>

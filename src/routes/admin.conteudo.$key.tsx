@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
+import { BreakHint } from "@/components/BreakHint";
 import { useEffect, useState } from "react";
 import { CONTENT_LABELS, type ContentKey, fetchSiteContent, saveSiteContent } from "@/lib/content";
 import { uploadContentImage } from "@/lib/leaders";
@@ -315,6 +316,7 @@ function ContentEditor() {
                   onChange={(e) => setValues((v) => ({ ...v, [f.name]: e.target.value }))}
                   className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 font-sans"
                 />
+                <BreakHint />
               )}
               {f.type === "image" && (
                 <div className="mt-1 space-y-2">
@@ -535,6 +537,7 @@ function ContentEditor() {
                             onChange={(e) => update(idx, { desc: e.target.value })}
                             className="mt-1 w-full rounded-md border border-border bg-background px-2 py-1 text-sm"
                           />
+                          <BreakHint />
                         </div>
                         <div>
                           <label className="text-xs font-medium text-muted-foreground">Imagem (opcional)</label>

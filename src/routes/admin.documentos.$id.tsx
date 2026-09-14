@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { BreakHint } from "@/components/BreakHint";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
@@ -190,6 +191,7 @@ function DocumentEdit() {
               onChange={(e) => setForm({ ...form, description: e.target.value })}
               placeholder="Breve resumo ou instruções sobre o documento..."
             />
+            <BreakHint />
           </div>
 
           <div>

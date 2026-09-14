@@ -1631,6 +1631,7 @@ export type Database = {
           email: string | null
           gallery_urls: string[]
           id: string
+          leonic_year: string | null
           message: string | null
           motto: string | null
           name: string
@@ -1652,6 +1653,7 @@ export type Database = {
           email?: string | null
           gallery_urls?: string[]
           id?: string
+          leonic_year?: string | null
           message?: string | null
           motto?: string | null
           name: string
@@ -1673,6 +1675,7 @@ export type Database = {
           email?: string | null
           gallery_urls?: string[]
           id?: string
+          leonic_year?: string | null
           message?: string | null
           motto?: string | null
           name?: string
@@ -1983,6 +1986,7 @@ export type Database = {
           email: string | null
           gallery_urls: string[] | null
           id: string | null
+          leonic_year: string | null
           message: string | null
           motto: string | null
           name: string | null
@@ -2002,6 +2006,7 @@ export type Database = {
           email?: string | null
           gallery_urls?: string[] | null
           id?: string | null
+          leonic_year?: string | null
           message?: string | null
           motto?: string | null
           name?: string | null
@@ -2021,6 +2026,7 @@ export type Database = {
           email?: string | null
           gallery_urls?: string[] | null
           id?: string | null
+          leonic_year?: string | null
           message?: string | null
           motto?: string | null
           name?: string | null

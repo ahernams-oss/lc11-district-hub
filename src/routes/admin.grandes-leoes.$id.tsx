@@ -13,19 +13,25 @@ export const Route = createFileRoute("/admin/grandes-leoes/$id")({
 interface FormState {
   name: string;
   role: string;
+  club_name: string;
   bio: string;
   photo_url: string;
   year_label: string;
+  motto: string;
   order_index: number;
+  gallery_urls: string[];
 }
 
 const EMPTY: FormState = {
   name: "",
   role: "",
+  club_name: "",
   bio: "",
   photo_url: "",
   year_label: "Grande Leão",
+  motto: "",
   order_index: 0,
+  gallery_urls: [],
 };
 
 function GrandeLeaoEditor() {

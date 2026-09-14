@@ -11,31 +11,24 @@ const GESTAO_ROLE_VALUES = [
 
 export type GestaoRole = (typeof GESTAO_ROLE_VALUES)[number];
 
-async function assertCallerIsGestorAdmin(userId: string) {
+async function assertCallerIsGestorAdmin(context: { userId: string; supabase: any }) {
+  const { userId, supabase } = context;
   if (
     userId === "00000000-0000-0000-0000-000000000001" ||
     userId === "dev-admin-id" ||
     userId === "dev-gestor-id"
   ) return;
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  try {
-    const { data, error } = await supabaseAdmin
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", userId);
-    if (!error && data) {
-      const roles = data.map((r: any) => r.role as string);
-      if (roles.includes("gestor_admin") || roles.includes("admin")) {
-        return;
-      }
-    }
-  } catch {
-    // Silently fall through to dev bypass check
+
+  const [gestorResult, adminResult] = await Promise.all([
+    supabase.rpc("has_role", { _user_id: userId, _role: "gestor_admin" }),
+    supabase.rpc("has_role", { _user_id: userId, _role: "admin" }),
+  ]);
+
+  if (gestorResult.error || adminResult.error) {
+    throw new Error("Não foi possível validar as permissões desta conta. Entre novamente e tente de novo.");
   }
 
-  if (process.env.NODE_ENV !== "production") {
-    return;
-  }
+  if (gestorResult.data === true || adminResult.data === true) return;
 
   throw new Error("Acesso negado: requer perfil Gestor Admin.");
 }
@@ -47,7 +40,7 @@ async function assertCallerIsGestorAdmin(userId: string) {
 export const listGestaoUsers = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    await assertCallerIsGestorAdmin(context.userId);
+    await assertCallerIsGestorAdmin(context);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const { data: usersData, error: usersErr } =
@@ -105,7 +98,7 @@ export const updateGestaoUserRoles = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data, context }) => {
-    await assertCallerIsGestorAdmin(context.userId);
+    await assertCallerIsGestorAdmin(context);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     // Delete existing gestão roles
@@ -142,7 +135,7 @@ export const createGestaoUser = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data, context }) => {
-    await assertCallerIsGestorAdmin(context.userId);
+    await assertCallerIsGestorAdmin(context);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     // Create auth user
@@ -178,7 +171,7 @@ export const deleteGestaoUser = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(z.object({ userId: z.string().uuid() }))
   .handler(async ({ data, context }) => {
-    await assertCallerIsGestorAdmin(context.userId);
+    await assertCallerIsGestorAdmin(context);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { error } = await supabaseAdmin.auth.admin.deleteUser(data.userId);
     if (error) throw new Error(error.message);

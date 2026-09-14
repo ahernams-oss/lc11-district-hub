@@ -109,7 +109,7 @@ export const listClubes = createServerFn({ method: "GET" })
         .select("*").in("distrito_id", escopoDistritos)
         .order("nome");
 
-      if (!error && data && data.length > 0) return data;
+      if (!error && data) return data;
     } catch {
       // Dev fallback
     }
@@ -188,7 +188,7 @@ export const listAssociados = createServerFn({ method: "GET" })
         query = query.eq("clube_id", data.clube_id);
       }
       const { data: res, error } = await query;
-      if (!error && res && res.length > 0) return res;
+      if (!error && res) return res;
     } catch {
       // Dev fallback
     }

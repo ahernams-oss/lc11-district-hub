@@ -79,7 +79,7 @@ export const getNominataByClube = createServerFn({ method: "GET" })
         .eq("clube_id", data.clube_id)
         .eq("ano_leonico", data.ano_leonico);
 
-      if (!error && dbData && dbData.length > 0) return dbData;
+      if (!error && dbData) return dbData;
     } catch {
       // Dev fallback
     }
@@ -149,7 +149,7 @@ export const listDocumentosInformativos = createServerFn({ method: "GET" })
         query = query.eq("categoria", data.categoria);
       }
       const { data: dbDocs, error } = await query;
-      if (!error && dbDocs && dbDocs.length > 0) return dbDocs;
+      if (!error && dbDocs) return dbDocs;
     } catch {
       // Dev fallback
     }
@@ -222,7 +222,7 @@ export const listEstruturaDistrital = createServerFn({ method: "GET" })
         .eq("ano_leonico", data?.ano_leonico || "2025/2026")
         .order("ordem", { ascending: true });
 
-      if (!error && dbEst && dbEst.length > 0) return dbEst;
+      if (!error && dbEst) return dbEst;
     } catch {
       // Dev fallback
     }

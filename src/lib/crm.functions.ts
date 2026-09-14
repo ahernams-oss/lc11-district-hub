@@ -118,7 +118,7 @@ export const listCrmContatos = createServerFn({ method: "GET" })
         .select("*").in("distrito_id", escopoDistritos)
         .order("created_at", { ascending: false });
 
-      if (!error && data && data.length > 0) return data;
+      if (!error && data) return data;
     } catch {
       // Dev fallback
     }
@@ -221,7 +221,7 @@ export const listCrmInteracoes = createServerFn({ method: "GET" })
         query = query.eq("contato_id", data.contato_id);
       }
       const { data: res, error } = await query;
-      if (!error && res && res.length > 0) return res;
+      if (!error && res) return res;
     } catch {
       // Dev fallback
     }
@@ -267,7 +267,7 @@ export const listCrmTarefas = createServerFn({ method: "GET" })
         .select("*, crm_contatos(nome, email, telefone)")
         .order("data_vencimento", { ascending: true });
 
-      if (!error && data && data.length > 0) return data;
+      if (!error && data) return data;
     } catch {
       // Dev fallback
     }

@@ -25,6 +25,7 @@ interface FigureDisplay {
   badge: string;
   photo_url?: string | null;
   club_name?: string | null;
+  leonic_year?: string | null;
   gradient?: string;
   iconColor?: string;
   icon?: any;

@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { distritoScope, distritoPadrao } from "@/lib/distritos.functions";
 
 export async function assertAprovacoesAccess(userId: string) {
   if (
@@ -106,11 +107,12 @@ export const listDespesasAprovacao = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     await assertAprovacoesAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     try {
       let query = supabaseAdmin
         .from("fin_contas_pagar")
-        .select("*")
+        .select("*").in("distrito_id", escopoDistritos)
         .order("vencimento", { ascending: true });
 
       if (data?.status_aprovacao && data.status_aprovacao !== "todos") {

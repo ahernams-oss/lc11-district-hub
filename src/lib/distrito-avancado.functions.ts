@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { distritoScope, distritoPadrao } from "@/lib/distritos.functions";
 
 export async function assertDistritoAccess(userId: string) {
   if (
@@ -140,9 +141,10 @@ export const listDocumentosInformativos = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     await assertDistritoAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     try {
-      let query = supabaseAdmin.from("dist_documentos_informativos").select("*").order("created_at", { ascending: false });
+      let query = supabaseAdmin.from("dist_documentos_informativos").select("*").in("distrito_id", escopoDistritos).order("created_at", { ascending: false });
       if (data?.categoria && data.categoria !== "todas") {
         query = query.eq("categoria", data.categoria);
       }
@@ -210,11 +212,12 @@ export const listEstruturaDistrital = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     await assertDistritoAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     try {
       const { data: dbEst, error } = await supabaseAdmin
         .from("dist_estrutura_cargos")
-        .select("*")
+        .select("*").in("distrito_id", escopoDistritos)
         .eq("ano_leonico", data?.ano_leonico || "2025/2026")
         .order("ordem", { ascending: true });
 

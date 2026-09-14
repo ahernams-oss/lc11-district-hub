@@ -310,13 +310,15 @@ function ContentEditor() {
                 />
               )}
               {f.type === "textarea" && (
-                <textarea
-                  rows={f.name === "body" ? 12 : 3}
-                  value={values[f.name] ?? ""}
-                  onChange={(e) => setValues((v) => ({ ...v, [f.name]: e.target.value }))}
-                  className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 font-sans"
-                />
-                <BreakHint />
+                <>
+                  <textarea
+                    rows={f.name === "body" ? 12 : 3}
+                    value={values[f.name] ?? ""}
+                    onChange={(e) => setValues((v) => ({ ...v, [f.name]: e.target.value }))}
+                    className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 font-sans"
+                  />
+                  <BreakHint />
+                </>
               )}
               {f.type === "image" && (
                 <div className="mt-1 space-y-2">

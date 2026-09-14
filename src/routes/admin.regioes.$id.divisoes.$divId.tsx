@@ -1,4 +1,5 @@
 import { createFileRoute, Link, Outlet, useChildMatches, useNavigate, useParams } from "@tanstack/react-router";
+import { BreakHint } from "@/components/BreakHint";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
@@ -154,6 +155,7 @@ function DivisionEditor() {
             onChange={(e) => setForm({ ...form, description: e.target.value })}
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
           />
+          <BreakHint />
         </Field>
         <Field label="Presidente da Divisão">
           <input

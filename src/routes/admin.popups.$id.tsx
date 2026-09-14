@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { BreakHint } from "@/components/BreakHint";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
@@ -118,6 +119,7 @@ function PopupEdit() {
             value={form.content}
             onChange={(e) => setForm({ ...form, content: e.target.value })}
           />
+          <BreakHint />
         </div>
         <div>
           <label className={label}>Imagem</label>

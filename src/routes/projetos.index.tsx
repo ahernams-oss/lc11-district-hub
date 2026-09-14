@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { BreakableText } from "@/components/BreakableText";
 import { useState, useEffect } from "react";
 import { PageHero } from "@/components/PageHero";
 import { Eye, Heart, Leaf, Activity, Baby } from "lucide-react";
@@ -165,7 +166,7 @@ function Projetos() {
                     <h3 className="mt-3 font-display text-xl font-bold text-foreground">{p.title}</h3>
                     {p.description && (
                       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                        {p.description}
+                        <BreakableText text={p.description} />
                       </p>
                     )}
                   </div>

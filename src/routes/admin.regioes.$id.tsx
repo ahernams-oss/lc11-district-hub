@@ -7,6 +7,7 @@ import {
   useParams,
 } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { BreakHint } from "@/components/BreakHint";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDivisions } from "@/lib/regions";
@@ -145,6 +146,7 @@ function RegionEditor() {
             onChange={(e) => setForm({ ...form, description: e.target.value })}
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
           />
+          <BreakHint />
         </Field>
         <Field label="Presidente da Região">
           <input

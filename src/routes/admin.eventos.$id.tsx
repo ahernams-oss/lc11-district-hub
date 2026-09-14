@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate, useParams } from "@tanstack/react-router";
+import { BreakHint } from "@/components/BreakHint";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
@@ -297,6 +298,7 @@ function EventEditor() {
             onChange={(e) => setForm({ ...form, description: e.target.value })}
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
           />
+          <BreakHint />
         </F>
         <F label="Informações sobre o lugar">
           <textarea
@@ -305,6 +307,7 @@ function EventEditor() {
             onChange={(e) => setForm({ ...form, place_info: e.target.value })}
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
           />
+          <BreakHint />
         </F>
         <F label={`Fotos do lugar (até ${MAX_GALLERY})`}>
           <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-5">
@@ -341,6 +344,7 @@ function EventEditor() {
             onChange={(e) => setForm({ ...form, lodging_tips: e.target.value })}
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
           />
+          <BreakHint />
         </F>
         <F label="Dicas gastronômicas">
           <textarea
@@ -349,6 +353,7 @@ function EventEditor() {
             onChange={(e) => setForm({ ...form, food_tips: e.target.value })}
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
           />
+          <BreakHint />
         </F>
         <F label="Dicas de turismo">
           <textarea
@@ -357,6 +362,7 @@ function EventEditor() {
             onChange={(e) => setForm({ ...form, tourism_tips: e.target.value })}
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
           />
+          <BreakHint />
         </F>
         <div className="flex items-center gap-3 pt-2">
           <button

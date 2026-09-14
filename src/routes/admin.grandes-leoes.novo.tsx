@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { BreakHint } from "@/components/BreakHint";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { uploadLeaderPhoto } from "@/lib/leaders";
@@ -238,6 +239,7 @@ function BulkAddGrandesLeoes() {
                     placeholder="Escreva uma breve biografia ou descrição dos feitos leonísticos deste membro..."
                     className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                   />
+                  <BreakHint />
                 </div>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { BreakableText } from "@/components/BreakableText";
 import { PageHero } from "@/components/PageHero";
 import { Eye, Heart, Leaf, Activity, Baby, Plus, ArrowLeft } from "lucide-react";
 import { useProjects } from "@/lib/projects";
@@ -116,7 +117,7 @@ function CausaPage() {
                   <h3 className="mt-3 font-display text-xl font-bold text-foreground">{p.title}</h3>
                   {p.description && (
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                      {p.description}
+                      <BreakableText text={p.description} />
                     </p>
                   )}
                   <span className="mt-4 inline-block text-sm font-semibold text-primary">

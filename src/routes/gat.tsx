@@ -46,6 +46,9 @@ function Gat() {
                 )}
                 <p className="font-semibold text-foreground">{m.name}</p>
                 {m.role && <p className="mt-1 text-sm text-muted-foreground">{m.role}</p>}
+                {m.club_name && (
+                  <p className="mt-1 text-sm font-medium text-primary">{m.club_name}</p>
+                )}
                 {m.bio && <p className="mt-3 text-sm text-muted-foreground whitespace-pre-line">{m.bio}</p>}
                 <div className="mt-4 space-y-1 text-sm text-muted-foreground">
                   {m.email && <p className="flex items-center gap-2"><Mail className="h-4 w-4 text-primary" />{m.email}</p>}

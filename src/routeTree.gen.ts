@@ -49,6 +49,7 @@ import { Route as CampanhasIndexRouteImport } from './routes/campanhas.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ProjetosIdRouteImport } from './routes/projetos.$id'
 import { Route as NoticiasIdRouteImport } from './routes/noticias.$id'
+import { Route as GrandesLeoesIdRouteImport } from './routes/grandes-leoes.$id'
 import { Route as GestaoUsuariosRouteImport } from './routes/gestao.usuarios'
 import { Route as GestaoNominataRouteImport } from './routes/gestao.nominata'
 import { Route as GestaoLoginRouteImport } from './routes/gestao.login'
@@ -325,6 +326,11 @@ const ProjetosIdRoute = ProjetosIdRouteImport.update({
 const NoticiasIdRoute = NoticiasIdRouteImport.update({
   id: '/noticias/$id',
   path: '/noticias/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GrandesLeoesIdRoute = GrandesLeoesIdRouteImport.update({
+  id: '/grandes-leoes/$id',
+  path: '/grandes-leoes/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GestaoUsuariosRoute = GestaoUsuariosRouteImport.update({
@@ -780,6 +786,7 @@ export interface FileRoutesByFullPath {
   '/gestao/login': typeof GestaoLoginRoute
   '/gestao/nominata': typeof GestaoNominataRoute
   '/gestao/usuarios': typeof GestaoUsuariosRoute
+  '/grandes-leoes/$id': typeof GrandesLeoesIdRoute
   '/noticias/$id': typeof NoticiasIdRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
@@ -892,6 +899,7 @@ export interface FileRoutesByTo {
   '/gestao/login': typeof GestaoLoginRoute
   '/gestao/nominata': typeof GestaoNominataRoute
   '/gestao/usuarios': typeof GestaoUsuariosRoute
+  '/grandes-leoes/$id': typeof GrandesLeoesIdRoute
   '/noticias/$id': typeof NoticiasIdRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin': typeof AdminIndexRoute
@@ -1011,6 +1019,7 @@ export interface FileRoutesById {
   '/gestao/login': typeof GestaoLoginRoute
   '/gestao/nominata': typeof GestaoNominataRoute
   '/gestao/usuarios': typeof GestaoUsuariosRoute
+  '/grandes-leoes/$id': typeof GrandesLeoesIdRoute
   '/noticias/$id': typeof NoticiasIdRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
@@ -1131,6 +1140,7 @@ export interface FileRouteTypes {
     | '/gestao/login'
     | '/gestao/nominata'
     | '/gestao/usuarios'
+    | '/grandes-leoes/$id'
     | '/noticias/$id'
     | '/projetos/$id'
     | '/admin/'
@@ -1243,6 +1253,7 @@ export interface FileRouteTypes {
     | '/gestao/login'
     | '/gestao/nominata'
     | '/gestao/usuarios'
+    | '/grandes-leoes/$id'
     | '/noticias/$id'
     | '/projetos/$id'
     | '/admin'
@@ -1361,6 +1372,7 @@ export interface FileRouteTypes {
     | '/gestao/login'
     | '/gestao/nominata'
     | '/gestao/usuarios'
+    | '/grandes-leoes/$id'
     | '/noticias/$id'
     | '/projetos/$id'
     | '/admin/'
@@ -1466,6 +1478,7 @@ export interface RootRouteChildren {
   ClubesRjRoute: typeof ClubesRjRoute
   EventosIdRoute: typeof EventosIdRoute
   ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
+  GrandesLeoesIdRoute: typeof GrandesLeoesIdRoute
   NoticiasIdRoute: typeof NoticiasIdRoute
   ProjetosIdRoute: typeof ProjetosIdRoute
   CampanhasIndexRoute: typeof CampanhasIndexRoute
@@ -1764,6 +1777,13 @@ declare module '@tanstack/react-router' {
       path: '/noticias/$id'
       fullPath: '/noticias/$id'
       preLoaderRoute: typeof NoticiasIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grandes-leoes/$id': {
+      id: '/grandes-leoes/$id'
+      path: '/grandes-leoes/$id'
+      fullPath: '/grandes-leoes/$id'
+      preLoaderRoute: typeof GrandesLeoesIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gestao/usuarios': {
@@ -2546,6 +2566,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClubesRjRoute: ClubesRjRoute,
   EventosIdRoute: EventosIdRoute,
   ExGovernadoresIdRoute: ExGovernadoresIdRoute,
+  GrandesLeoesIdRoute: GrandesLeoesIdRoute,
   NoticiasIdRoute: NoticiasIdRoute,
   ProjetosIdRoute: ProjetosIdRoute,
   CampanhasIndexRoute: CampanhasIndexRoute,

@@ -18,11 +18,13 @@ export const Route = createFileRoute("/clubes/grandes-leoes")({
 });
 
 interface FigureDisplay {
+  id?: string;
   name: string;
   role: string;
   desc: string;
   badge: string;
   photo_url?: string | null;
+  club_name?: string | null;
   gradient?: string;
   iconColor?: string;
   icon?: any;

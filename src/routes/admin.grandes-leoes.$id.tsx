@@ -86,6 +86,29 @@ function GrandeLeaoEditor() {
     }
   }
 
+  async function handleGalleryUpload(files: FileList) {
+    setIsUploading(true);
+    setErrorMsg(null);
+    try {
+      const remaining = 5 - form.gallery_urls.length;
+      if (remaining <= 0) {
+        setErrorMsg("Limite de 5 fotos na galeria atingido.");
+        return;
+      }
+      const toUpload = Array.from(files).slice(0, remaining);
+      const urls = await Promise.all(toUpload.map((f) => uploadLeaderPhoto(f)));
+      setForm((f) => ({ ...f, gallery_urls: [...f.gallery_urls, ...urls].slice(0, 5) }));
+    } catch (err: any) {
+      setErrorMsg(`Erro ao enviar fotos: ${err.message}`);
+    } finally {
+      setIsUploading(false);
+    }
+  }
+
+  function removeGalleryAt(idx: number) {
+    setForm((f) => ({ ...f, gallery_urls: f.gallery_urls.filter((_, i) => i !== idx) }));
+  }
+
   async function handleSave() {
     if (!form.name.trim()) {
       setErrorMsg("O nome é obrigatório.");

@@ -98,10 +98,13 @@ function GrandeLeaoEditor() {
     const payload = {
       name: form.name.trim(),
       role: form.role.trim() || null,
+      club_name: form.club_name.trim() || null,
       bio: form.bio.trim() || null,
       photo_url: form.photo_url.trim() || null,
       year_label: form.year_label.trim() || null,
+      motto: form.motto.trim() || null,
       order_index: form.order_index,
+      gallery_urls: form.gallery_urls,
     };
 
     try {

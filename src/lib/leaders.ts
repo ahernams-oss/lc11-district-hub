@@ -37,6 +37,7 @@ export interface Leader {
   phone: string | null;
   year_label: string | null;
   motto: string | null;
+  leonic_year: string | null;
   order_index: number;
   gallery_urls: string[] | null;
   club_name: string | null;

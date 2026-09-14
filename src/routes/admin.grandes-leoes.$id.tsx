@@ -18,6 +18,7 @@ interface FormState {
   photo_url: string;
   year_label: string;
   motto: string;
+  leonic_year: string;
   order_index: number;
   gallery_urls: string[];
 }
@@ -30,6 +31,7 @@ const EMPTY: FormState = {
   photo_url: "",
   year_label: "Grande Leão",
   motto: "",
+  leonic_year: "",
   order_index: 0,
   gallery_urls: [],
 };
@@ -63,6 +65,7 @@ function GrandeLeaoEditor() {
             photo_url: data.photo_url ?? "",
             year_label: data.year_label ?? "Grande Leão",
             motto: (data as any).motto ?? "",
+            leonic_year: (data as any).leonic_year ?? "",
             order_index: data.order_index ?? 0,
             gallery_urls: ((data as any).gallery_urls ?? []) as string[],
           });
@@ -126,6 +129,7 @@ function GrandeLeaoEditor() {
       photo_url: form.photo_url.trim() || null,
       year_label: form.year_label.trim() || null,
       motto: form.motto.trim() || null,
+      leonic_year: form.leonic_year.trim() || null,
       order_index: form.order_index,
       gallery_urls: form.gallery_urls,
     };
@@ -288,6 +292,17 @@ function GrandeLeaoEditor() {
                     className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-muted-foreground uppercase">Ano Leonístico (exibido abaixo do card)</label>
+                <input
+                  type="text"
+                  value={form.leonic_year}
+                  onChange={(e) => setForm({ ...form, leonic_year: e.target.value })}
+                  placeholder="Ex: 2025-2026"
+                  className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                />
               </div>
 
               <div>

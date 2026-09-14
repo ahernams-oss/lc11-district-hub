@@ -76,7 +76,7 @@ export const upsertPlanoConta = createServerFn({ method: "POST" })
       const { error } = await supabaseAdmin.from("con_plano_contas").update(payload).eq("id", data.id);
       if (error) throw new Error(error.message);
     } else {
-      const { error } = await supabaseAdmin.from("con_plano_contas").insert(payload);
+      const { error } = await supabaseAdmin.from("con_plano_contas").insert({ ...payload, distrito_id: await distritoPadrao(context.userId) });
       if (error) throw new Error(error.message);
     }
     return { ok: true };
@@ -217,7 +217,7 @@ export const upsertLancamento = createServerFn({ method: "POST" })
     } else {
       const { data: newLanc, error: headErr } = await supabaseAdmin
         .from("con_lancamentos")
-        .insert(headerPayload)
+        .insert({ ...headerPayload, distrito_id: await distritoPadrao(context.userId) })
         .select("id")
         .single();
       if (headErr) throw new Error(headErr.message);

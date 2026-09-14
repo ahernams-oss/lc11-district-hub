@@ -148,7 +148,7 @@ export const upsertClube = createServerFn({ method: "POST" })
       if (data.id) {
         await supabaseAdmin.from("dist_clubes").update(data).eq("id", data.id);
       } else {
-        await supabaseAdmin.from("dist_clubes").insert(data);
+        await supabaseAdmin.from("dist_clubes").insert({ ...data, distrito_id: await distritoPadrao(context.userId) });
       }
     } catch {
       // Mock update

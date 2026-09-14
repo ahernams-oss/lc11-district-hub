@@ -188,7 +188,7 @@ export const upsertContaPagar = createServerFn({ method: "POST" })
       const { error } = await supabaseAdmin.from("fin_contas_pagar").update(payload).eq("id", data.id);
       if (error) throw new Error(error.message);
     } else {
-      const { error } = await supabaseAdmin.from("fin_contas_pagar").insert(payload);
+      const { error } = await supabaseAdmin.from("fin_contas_pagar").insert({ ...payload, distrito_id: await distritoPadrao(context.userId) });
       if (error) throw new Error(error.message);
     }
     return { ok: true };
@@ -258,7 +258,7 @@ export const upsertContaReceber = createServerFn({ method: "POST" })
       const { error } = await supabaseAdmin.from("fin_contas_receber").update(payload).eq("id", data.id);
       if (error) throw new Error(error.message);
     } else {
-      const { error } = await supabaseAdmin.from("fin_contas_receber").insert(payload);
+      const { error } = await supabaseAdmin.from("fin_contas_receber").insert({ ...payload, distrito_id: await distritoPadrao(context.userId) });
       if (error) throw new Error(error.message);
     }
     return { ok: true };
@@ -324,7 +324,7 @@ export const upsertMovimentacao = createServerFn({ method: "POST" })
       const { error } = await supabaseAdmin.from("fin_movimentacoes").update(payload).eq("id", data.id);
       if (error) throw new Error(error.message);
     } else {
-      const { error } = await supabaseAdmin.from("fin_movimentacoes").insert(payload);
+      const { error } = await supabaseAdmin.from("fin_movimentacoes").insert({ ...payload, distrito_id: await distritoPadrao(context.userId) });
       if (error) throw new Error(error.message);
     }
     return { ok: true };
@@ -382,7 +382,7 @@ export const upsertOrcamento = createServerFn({ method: "POST" })
       await supabaseAdmin.from("fin_orcamento_itens").delete().eq("orcamento_id", orcId);
     } else {
       const { data: newOrc, error } = await supabaseAdmin.from("fin_orcamento")
-        .insert({ ano: data.ano, descricao: data.descricao, status: data.status, criado_por: context.userId })
+        .insert({ ano: data.ano, descricao: data.descricao, status: data.status, criado_por: context.userId, distrito_id: await distritoPadrao(context.userId) })
         .select("id").single();
       if (error) throw new Error(error.message);
       orcId = newOrc.id;
@@ -437,7 +437,7 @@ export const upsertCobranca = createServerFn({ method: "POST" })
       const { error } = await supabaseAdmin.from("fin_cobrancas").update(payload).eq("id", data.id);
       if (error) throw new Error(error.message);
     } else {
-      const { error } = await supabaseAdmin.from("fin_cobrancas").insert(payload);
+      const { error } = await supabaseAdmin.from("fin_cobrancas").insert({ ...payload, distrito_id: await distritoPadrao(context.userId) });
       if (error) throw new Error(error.message);
     }
     return { ok: true };

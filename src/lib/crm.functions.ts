@@ -153,7 +153,7 @@ export const upsertCrmContato = createServerFn({ method: "POST" })
       if (data.id) {
         await supabaseAdmin.from("crm_contatos").update(data).eq("id", data.id);
       } else {
-        await supabaseAdmin.from("crm_contatos").insert(data);
+        await supabaseAdmin.from("crm_contatos").insert({ ...data, distrito_id: await distritoPadrao(context.userId) });
       }
     } catch {
       // Mock operation in dev

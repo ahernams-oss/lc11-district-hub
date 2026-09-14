@@ -252,7 +252,7 @@ export const upsertCargoDistrital = createServerFn({ method: "POST" })
       if (data.id) {
         await supabaseAdmin.from("dist_estrutura_cargos").update(data).eq("id", data.id);
       } else {
-        await supabaseAdmin.from("dist_estrutura_cargos").insert(data);
+        await supabaseAdmin.from("dist_estrutura_cargos").insert({ ...data, distrito_id: await distritoPadrao(context.userId) });
       }
     } catch {
       // Mock operation

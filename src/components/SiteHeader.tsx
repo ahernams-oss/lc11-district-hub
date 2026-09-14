@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 const lionsLogoUrl = "/lions-logo.png";
 import { useLeaders } from "@/lib/leaders";
 import { useSiteContent, DEFAULT_CONEXAO_SUBMENU, type ConexaoMenuItem } from "@/lib/content";
+import { BreakableText } from "@/components/BreakableText";
 
 const inicioSubmenu = [
   { to: "/lions-internacional", label: "Sobre o Lions Internacional" },

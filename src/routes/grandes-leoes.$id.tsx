@@ -2,7 +2,7 @@ import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { ArrowLeft, ChevronLeft, ChevronRight, Award } from "lucide-react";
 import { useLeader } from "@/lib/leaders";
 import { useEffect, useState } from "react";
-import { BreakableText } from "@/components/BreakableText";
+import { BreakableText, normalizeBreaks } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/grandes-leoes/$id")({
   head: () => ({

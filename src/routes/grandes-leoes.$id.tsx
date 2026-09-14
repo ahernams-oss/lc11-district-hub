@@ -107,7 +107,7 @@ function GrandeLeaoBio() {
           <h2 className="font-display text-xl font-bold text-foreground">História e Trajetória</h2>
           {leader.bio ? (
             <div className="mt-3 whitespace-pre-line leading-relaxed text-foreground/90">
-              {leader.bio}
+              {normalizeBreaks(leader.bio)}
             </div>
           ) : (
             <p className="mt-3 text-muted-foreground">História ainda não cadastrada.</p>

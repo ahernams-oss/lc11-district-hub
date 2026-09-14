@@ -56,6 +56,7 @@ import { Route as GestaoLoginRouteImport } from './routes/gestao.login'
 import { Route as GestaoFinanceiroRouteImport } from './routes/gestao.financeiro'
 import { Route as GestaoEstruturaDistritalRouteImport } from './routes/gestao.estrutura-distrital'
 import { Route as GestaoDocumentosRouteImport } from './routes/gestao.documentos'
+import { Route as GestaoDistritosRouteImport } from './routes/gestao.distritos'
 import { Route as GestaoCrmRouteImport } from './routes/gestao.crm'
 import { Route as GestaoContabilRouteImport } from './routes/gestao.contabil'
 import { Route as ExGovernadoresIdRouteImport } from './routes/ex-governadores.$id'
@@ -362,6 +363,11 @@ const GestaoEstruturaDistritalRoute =
 const GestaoDocumentosRoute = GestaoDocumentosRouteImport.update({
   id: '/documentos',
   path: '/documentos',
+  getParentRoute: () => GestaoRoute,
+} as any)
+const GestaoDistritosRoute = GestaoDistritosRouteImport.update({
+  id: '/distritos',
+  path: '/distritos',
   getParentRoute: () => GestaoRoute,
 } as any)
 const GestaoCrmRoute = GestaoCrmRouteImport.update({
@@ -780,6 +786,7 @@ export interface FileRoutesByFullPath {
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/gestao/contabil': typeof GestaoContabilRouteWithChildren
   '/gestao/crm': typeof GestaoCrmRouteWithChildren
+  '/gestao/distritos': typeof GestaoDistritosRoute
   '/gestao/documentos': typeof GestaoDocumentosRoute
   '/gestao/estrutura-distrital': typeof GestaoEstruturaDistritalRoute
   '/gestao/financeiro': typeof GestaoFinanceiroRouteWithChildren
@@ -894,6 +901,7 @@ export interface FileRoutesByTo {
   '/documentos/$': typeof DocumentosSplatRoute
   '/eventos/$id': typeof EventosIdRoute
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
+  '/gestao/distritos': typeof GestaoDistritosRoute
   '/gestao/documentos': typeof GestaoDocumentosRoute
   '/gestao/estrutura-distrital': typeof GestaoEstruturaDistritalRoute
   '/gestao/login': typeof GestaoLoginRoute
@@ -1013,6 +1021,7 @@ export interface FileRoutesById {
   '/ex-governadores/$id': typeof ExGovernadoresIdRoute
   '/gestao/contabil': typeof GestaoContabilRouteWithChildren
   '/gestao/crm': typeof GestaoCrmRouteWithChildren
+  '/gestao/distritos': typeof GestaoDistritosRoute
   '/gestao/documentos': typeof GestaoDocumentosRoute
   '/gestao/estrutura-distrital': typeof GestaoEstruturaDistritalRoute
   '/gestao/financeiro': typeof GestaoFinanceiroRouteWithChildren
@@ -1134,6 +1143,7 @@ export interface FileRouteTypes {
     | '/ex-governadores/$id'
     | '/gestao/contabil'
     | '/gestao/crm'
+    | '/gestao/distritos'
     | '/gestao/documentos'
     | '/gestao/estrutura-distrital'
     | '/gestao/financeiro'
@@ -1248,6 +1258,7 @@ export interface FileRouteTypes {
     | '/documentos/$'
     | '/eventos/$id'
     | '/ex-governadores/$id'
+    | '/gestao/distritos'
     | '/gestao/documentos'
     | '/gestao/estrutura-distrital'
     | '/gestao/login'
@@ -1366,6 +1377,7 @@ export interface FileRouteTypes {
     | '/ex-governadores/$id'
     | '/gestao/contabil'
     | '/gestao/crm'
+    | '/gestao/distritos'
     | '/gestao/documentos'
     | '/gestao/estrutura-distrital'
     | '/gestao/financeiro'
@@ -1826,6 +1838,13 @@ declare module '@tanstack/react-router' {
       path: '/documentos'
       fullPath: '/gestao/documentos'
       preLoaderRoute: typeof GestaoDocumentosRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/distritos': {
+      id: '/gestao/distritos'
+      path: '/distritos'
+      fullPath: '/gestao/distritos'
+      preLoaderRoute: typeof GestaoDistritosRouteImport
       parentRoute: typeof GestaoRoute
     }
     '/gestao/crm': {
@@ -2499,6 +2518,7 @@ const GestaoFinanceiroRouteWithChildren =
 interface GestaoRouteChildren {
   GestaoContabilRoute: typeof GestaoContabilRouteWithChildren
   GestaoCrmRoute: typeof GestaoCrmRouteWithChildren
+  GestaoDistritosRoute: typeof GestaoDistritosRoute
   GestaoDocumentosRoute: typeof GestaoDocumentosRoute
   GestaoEstruturaDistritalRoute: typeof GestaoEstruturaDistritalRoute
   GestaoFinanceiroRoute: typeof GestaoFinanceiroRouteWithChildren
@@ -2514,6 +2534,7 @@ interface GestaoRouteChildren {
 const GestaoRouteChildren: GestaoRouteChildren = {
   GestaoContabilRoute: GestaoContabilRouteWithChildren,
   GestaoCrmRoute: GestaoCrmRouteWithChildren,
+  GestaoDistritosRoute: GestaoDistritosRoute,
   GestaoDocumentosRoute: GestaoDocumentosRoute,
   GestaoEstruturaDistritalRoute: GestaoEstruturaDistritalRoute,
   GestaoFinanceiroRoute: GestaoFinanceiroRouteWithChildren,

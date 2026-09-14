@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { distritoScope, distritoPadrao } from "@/lib/distritos.functions";
 
 async function assertContabilAccess(userId: string) {
   if (
@@ -42,9 +43,10 @@ export const listPlanoContas = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     await assertContabilAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
     const { data, error } = await supabaseAdmin
       .from("con_plano_contas")
-      .select("*")
+      .select("*").in("distrito_id", escopoDistritos)
       .order("codigo");
     if (error) throw new Error(error.message);
     return data ?? [];
@@ -74,7 +76,7 @@ export const upsertPlanoConta = createServerFn({ method: "POST" })
       const { error } = await supabaseAdmin.from("con_plano_contas").update(payload).eq("id", data.id);
       if (error) throw new Error(error.message);
     } else {
-      const { error } = await supabaseAdmin.from("con_plano_contas").insert(payload);
+      const { error } = await supabaseAdmin.from("con_plano_contas").insert({ ...payload, distrito_id: await distritoPadrao(context.userId) });
       if (error) throw new Error(error.message);
     }
     return { ok: true };
@@ -157,9 +159,10 @@ export const listLancamentos = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     await assertContabilAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
     let q = supabaseAdmin
       .from("con_lancamentos")
-      .select("*, itens:con_lancamento_itens(*, conta:con_plano_contas(id,codigo,nome,tipo))")
+      .select("*, itens:con_lancamento_itens(*, conta:con_plano_contas(id,codigo,nome,tipo))").in("distrito_id", escopoDistritos)
       .order("data", { ascending: false });
     if (data?.status) q = q.eq("status", data.status);
     if (data?.mes) {
@@ -214,7 +217,7 @@ export const upsertLancamento = createServerFn({ method: "POST" })
     } else {
       const { data: newLanc, error: headErr } = await supabaseAdmin
         .from("con_lancamentos")
-        .insert(headerPayload)
+        .insert({ ...headerPayload, distrito_id: await distritoPadrao(context.userId) })
         .select("id")
         .single();
       if (headErr) throw new Error(headErr.message);
@@ -256,6 +259,7 @@ export const getBalancete = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     await assertContabilAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     // Format start and end date of period
     const startIso = `${data.ano}-${String(data.mes).padStart(2, "0")}-01`;
@@ -264,7 +268,7 @@ export const getBalancete = createServerFn({ method: "GET" })
     // Fetch accounts
     const { data: contas, error: contasErr } = await supabaseAdmin
       .from("con_plano_contas")
-      .select("*")
+      .select("*").in("distrito_id", escopoDistritos)
       .order("codigo");
     if (contasErr) throw new Error(contasErr.message);
 
@@ -346,6 +350,7 @@ export const getContabilDashboard = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     await assertContabilAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     const now = new Date();
     const yyyy = now.getFullYear();
@@ -360,7 +365,7 @@ export const getContabilDashboard = createServerFn({ method: "GET" })
     // Lançamentos do mês
     const { data: lancsMes } = await supabaseAdmin
       .from("con_lancamentos")
-      .select("id, status")
+      .select("id, status").in("distrito_id", escopoDistritos)
       .gte("data", `${yyyy}-${mm}-01`)
       .lt("data", nextMonthFirstISO(`${yyyy}-${mm}`));
 
@@ -378,7 +383,7 @@ export const getContabilDashboard = createServerFn({ method: "GET" })
     // Lançamentos recentes
     const { data: recentes } = await supabaseAdmin
       .from("con_lancamentos")
-      .select("*, itens:con_lancamento_itens(*, conta:con_plano_contas(codigo,nome))")
+      .select("*, itens:con_lancamento_itens(*, conta:con_plano_contas(codigo,nome))").in("distrito_id", escopoDistritos)
       .order("created_at", { ascending: false })
       .limit(5);
 
@@ -402,13 +407,14 @@ export const getDreContabil = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     await assertContabilAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     const startIso = `${data.ano}-${String(data.mesInicio).padStart(2, "0")}-01`;
     const endIso = nextMonthFirstISO(`${data.ano}-${String(data.mesFim).padStart(2, "0")}`);
 
     const { data: contas, error: contasErr } = await supabaseAdmin
       .from("con_plano_contas")
-      .select("*")
+      .select("*").in("distrito_id", escopoDistritos)
       .in("tipo", ["receita", "despesa"])
       .order("codigo");
     if (contasErr) throw new Error(contasErr.message);

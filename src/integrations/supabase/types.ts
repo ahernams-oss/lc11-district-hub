@@ -175,6 +175,7 @@ export type Database = {
           created_at: string
           criado_por: string | null
           data: string
+          distrito_id: string | null
           historico: string
           id: string
           status: string
@@ -185,6 +186,7 @@ export type Database = {
           created_at?: string
           criado_por?: string | null
           data: string
+          distrito_id?: string | null
           historico: string
           id?: string
           status?: string
@@ -195,18 +197,28 @@ export type Database = {
           created_at?: string
           criado_por?: string | null
           data?: string
+          distrito_id?: string | null
           historico?: string
           id?: string
           status?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "con_lancamentos_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       con_plano_contas: {
         Row: {
           ativo: boolean
           codigo: string
           created_at: string
+          distrito_id: string | null
           id: string
           natureza: string
           nivel: number
@@ -220,6 +232,7 @@ export type Database = {
           ativo?: boolean
           codigo: string
           created_at?: string
+          distrito_id?: string | null
           id?: string
           natureza: string
           nivel?: number
@@ -233,6 +246,7 @@ export type Database = {
           ativo?: boolean
           codigo?: string
           created_at?: string
+          distrito_id?: string | null
           id?: string
           natureza?: string
           nivel?: number
@@ -243,6 +257,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "con_plano_contas_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "con_plano_contas_pai_id_fkey"
             columns: ["pai_id"]
@@ -257,6 +278,7 @@ export type Database = {
           cargo: string | null
           clube_nome: string | null
           created_at: string
+          distrito_id: string | null
           email: string | null
           estagio_funil: string
           id: string
@@ -274,6 +296,7 @@ export type Database = {
           cargo?: string | null
           clube_nome?: string | null
           created_at?: string
+          distrito_id?: string | null
           email?: string | null
           estagio_funil?: string
           id?: string
@@ -291,6 +314,7 @@ export type Database = {
           cargo?: string | null
           clube_nome?: string | null
           created_at?: string
+          distrito_id?: string | null
           email?: string | null
           estagio_funil?: string
           id?: string
@@ -304,7 +328,15 @@ export type Database = {
           valor_estimado?: number
           whatsapp?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "crm_contatos_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       crm_interacoes: {
         Row: {
@@ -457,6 +489,7 @@ export type Database = {
           created_at: string
           data_admissao: string | null
           data_nascimento: string | null
+          distrito_id: string | null
           email: string | null
           estado_uf: string | null
           foto_url: string | null
@@ -485,6 +518,7 @@ export type Database = {
           created_at?: string
           data_admissao?: string | null
           data_nascimento?: string | null
+          distrito_id?: string | null
           email?: string | null
           estado_uf?: string | null
           foto_url?: string | null
@@ -513,6 +547,7 @@ export type Database = {
           created_at?: string
           data_admissao?: string | null
           data_nascimento?: string | null
+          distrito_id?: string | null
           email?: string | null
           estado_uf?: string | null
           foto_url?: string | null
@@ -534,6 +569,13 @@ export type Database = {
             referencedRelation: "dist_clubes"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "dist_associados_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
+            referencedColumns: ["id"]
+          },
         ]
       }
       dist_clubes: {
@@ -544,6 +586,7 @@ export type Database = {
           codigo_lions: string | null
           created_at: string
           dia_reuniao: string | null
+          distrito_id: string | null
           divisao: string
           email: string | null
           endereco: string | null
@@ -565,6 +608,7 @@ export type Database = {
           codigo_lions?: string | null
           created_at?: string
           dia_reuniao?: string | null
+          distrito_id?: string | null
           divisao?: string
           email?: string | null
           endereco?: string | null
@@ -586,6 +630,7 @@ export type Database = {
           codigo_lions?: string | null
           created_at?: string
           dia_reuniao?: string | null
+          distrito_id?: string | null
           divisao?: string
           email?: string | null
           endereco?: string | null
@@ -600,7 +645,15 @@ export type Database = {
           telefone?: string | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "dist_clubes_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       dist_documentos_informativos: {
         Row: {
@@ -612,6 +665,7 @@ export type Database = {
           created_at: string
           criado_por: string | null
           descricao: string | null
+          distrito_id: string | null
           id: string
           titulo: string
           updated_at: string
@@ -625,6 +679,7 @@ export type Database = {
           created_at?: string
           criado_por?: string | null
           descricao?: string | null
+          distrito_id?: string | null
           id?: string
           titulo: string
           updated_at?: string
@@ -638,11 +693,20 @@ export type Database = {
           created_at?: string
           criado_por?: string | null
           descricao?: string | null
+          distrito_id?: string | null
           id?: string
           titulo?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "dist_documentos_informativos_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       dist_estrutura_cargos: {
         Row: {
@@ -651,6 +715,7 @@ export type Database = {
           categoria_estrutura: string
           clube_origem: string | null
           created_at: string
+          distrito_id: string | null
           email: string | null
           id: string
           nome_titular: string
@@ -664,6 +729,7 @@ export type Database = {
           categoria_estrutura?: string
           clube_origem?: string | null
           created_at?: string
+          distrito_id?: string | null
           email?: string | null
           id?: string
           nome_titular: string
@@ -677,6 +743,7 @@ export type Database = {
           categoria_estrutura?: string
           clube_origem?: string | null
           created_at?: string
+          distrito_id?: string | null
           email?: string | null
           id?: string
           nome_titular?: string
@@ -684,7 +751,15 @@ export type Database = {
           telefone?: string | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "dist_estrutura_cargos_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       dist_nominata_clube: {
         Row: {
@@ -732,6 +807,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      distritos: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          estados: string | null
+          id: string
+          nome: string
+          ordem: number
+          sigla: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          estados?: string | null
+          id?: string
+          nome: string
+          ordem?: number
+          sigla: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          estados?: string | null
+          id?: string
+          nome?: string
+          ordem?: number
+          sigla?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       divisions: {
         Row: {
@@ -1191,6 +1299,7 @@ export type Database = {
           created_at: string
           criado_por: string | null
           descricao: string
+          distrito_id: string | null
           id: string
           observacoes: string | null
           referencia: string | null
@@ -1204,6 +1313,7 @@ export type Database = {
           created_at?: string
           criado_por?: string | null
           descricao: string
+          distrito_id?: string | null
           id?: string
           observacoes?: string | null
           referencia?: string | null
@@ -1217,6 +1327,7 @@ export type Database = {
           created_at?: string
           criado_por?: string | null
           descricao?: string
+          distrito_id?: string | null
           id?: string
           observacoes?: string | null
           referencia?: string | null
@@ -1238,6 +1349,13 @@ export type Database = {
             columns: ["club_id"]
             isOneToOne: false
             referencedRelation: "clubs_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fin_cobrancas_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
             referencedColumns: ["id"]
           },
         ]
@@ -1292,6 +1410,7 @@ export type Database = {
           created_at: string
           criado_por: string | null
           descricao: string
+          distrito_id: string | null
           documento: string | null
           fornecedor: string | null
           id: string
@@ -1316,6 +1435,7 @@ export type Database = {
           created_at?: string
           criado_por?: string | null
           descricao: string
+          distrito_id?: string | null
           documento?: string | null
           fornecedor?: string | null
           id?: string
@@ -1340,6 +1460,7 @@ export type Database = {
           created_at?: string
           criado_por?: string | null
           descricao?: string
+          distrito_id?: string | null
           documento?: string | null
           fornecedor?: string | null
           id?: string
@@ -1369,6 +1490,13 @@ export type Database = {
             referencedRelation: "fin_contas_bancarias"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "fin_contas_pagar_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
+            referencedColumns: ["id"]
+          },
         ]
       }
       fin_contas_receber: {
@@ -1380,6 +1508,7 @@ export type Database = {
           created_at: string
           criado_por: string | null
           descricao: string
+          distrito_id: string | null
           documento: string | null
           id: string
           observacoes: string | null
@@ -1399,6 +1528,7 @@ export type Database = {
           created_at?: string
           criado_por?: string | null
           descricao: string
+          distrito_id?: string | null
           documento?: string | null
           id?: string
           observacoes?: string | null
@@ -1418,6 +1548,7 @@ export type Database = {
           created_at?: string
           criado_por?: string | null
           descricao?: string
+          distrito_id?: string | null
           documento?: string | null
           id?: string
           observacoes?: string | null
@@ -1442,6 +1573,13 @@ export type Database = {
             columns: ["conta_id"]
             isOneToOne: false
             referencedRelation: "fin_contas_bancarias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fin_contas_receber_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
             referencedColumns: ["id"]
           },
         ]
@@ -1496,6 +1634,7 @@ export type Database = {
           criado_por: string | null
           data: string
           descricao: string
+          distrito_id: string | null
           documento: string | null
           id: string
           observacoes: string | null
@@ -1511,6 +1650,7 @@ export type Database = {
           criado_por?: string | null
           data: string
           descricao: string
+          distrito_id?: string | null
           documento?: string | null
           id?: string
           observacoes?: string | null
@@ -1526,6 +1666,7 @@ export type Database = {
           criado_por?: string | null
           data?: string
           descricao?: string
+          distrito_id?: string | null
           documento?: string | null
           id?: string
           observacoes?: string | null
@@ -1548,6 +1689,13 @@ export type Database = {
             referencedRelation: "fin_contas_bancarias"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "fin_movimentacoes_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
+            referencedColumns: ["id"]
+          },
         ]
       }
       fin_orcamento: {
@@ -1556,6 +1704,7 @@ export type Database = {
           created_at: string
           criado_por: string | null
           descricao: string | null
+          distrito_id: string | null
           id: string
           status: string
           updated_at: string
@@ -1565,6 +1714,7 @@ export type Database = {
           created_at?: string
           criado_por?: string | null
           descricao?: string | null
+          distrito_id?: string | null
           id?: string
           status?: string
           updated_at?: string
@@ -1574,11 +1724,20 @@ export type Database = {
           created_at?: string
           criado_por?: string | null
           descricao?: string | null
+          distrito_id?: string | null
           id?: string
           status?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "fin_orcamento_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       fin_orcamento_itens: {
         Row: {
@@ -1913,6 +2072,35 @@ export type Database = {
         }
         Relationships: []
       }
+      usuarios_distritos: {
+        Row: {
+          created_at: string
+          distrito_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          distrito_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          distrito_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "usuarios_distritos_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       clubs_public: {
@@ -2042,6 +2230,10 @@ export type Database = {
       }
     }
     Functions: {
+      can_access_distrito: {
+        Args: { _distrito_id: string; _user_id: string }
+        Returns: boolean
+      }
       can_edit_content: { Args: { _user_id: string }; Returns: boolean }
       can_view_users: { Args: { _user_id: string }; Returns: boolean }
       has_panel_access: { Args: { _user_id: string }; Returns: boolean }
@@ -2052,6 +2244,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_gestor_master: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
       app_role:

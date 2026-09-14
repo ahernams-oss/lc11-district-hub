@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { distritoScope, distritoPadrao } from "@/lib/distritos.functions";
 
 async function assertFinanceiroAccess(userId: string) {
   if (
@@ -145,9 +146,10 @@ export const listContasPagar = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     await assertFinanceiroAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
     let q = supabaseAdmin
       .from("fin_contas_pagar")
-      .select("*, categoria:fin_categorias(id,nome,cor,tipo), conta:fin_contas_bancarias(id,nome,banco)")
+      .select("*, categoria:fin_categorias(id,nome,cor,tipo), conta:fin_contas_bancarias(id,nome,banco)").in("distrito_id", escopoDistritos)
       .order("vencimento");
     if (data?.status) q = q.eq("status", data.status);
     if (data?.categoria_id) q = q.eq("categoria_id", data.categoria_id);
@@ -186,7 +188,7 @@ export const upsertContaPagar = createServerFn({ method: "POST" })
       const { error } = await supabaseAdmin.from("fin_contas_pagar").update(payload).eq("id", data.id);
       if (error) throw new Error(error.message);
     } else {
-      const { error } = await supabaseAdmin.from("fin_contas_pagar").insert(payload);
+      const { error } = await supabaseAdmin.from("fin_contas_pagar").insert({ ...payload, distrito_id: await distritoPadrao(context.userId) });
       if (error) throw new Error(error.message);
     }
     return { ok: true };
@@ -214,9 +216,10 @@ export const listContasReceber = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     await assertFinanceiroAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
     let q = supabaseAdmin
       .from("fin_contas_receber")
-      .select("*, categoria:fin_categorias(id,nome,cor,tipo), conta:fin_contas_bancarias(id,nome,banco)")
+      .select("*, categoria:fin_categorias(id,nome,cor,tipo), conta:fin_contas_bancarias(id,nome,banco)").in("distrito_id", escopoDistritos)
       .order("vencimento");
     if (data?.status) q = q.eq("status", data.status);
     if (data?.categoria_id) q = q.eq("categoria_id", data.categoria_id);
@@ -255,7 +258,7 @@ export const upsertContaReceber = createServerFn({ method: "POST" })
       const { error } = await supabaseAdmin.from("fin_contas_receber").update(payload).eq("id", data.id);
       if (error) throw new Error(error.message);
     } else {
-      const { error } = await supabaseAdmin.from("fin_contas_receber").insert(payload);
+      const { error } = await supabaseAdmin.from("fin_contas_receber").insert({ ...payload, distrito_id: await distritoPadrao(context.userId) });
       if (error) throw new Error(error.message);
     }
     return { ok: true };
@@ -283,9 +286,10 @@ export const listMovimentacoes = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     await assertFinanceiroAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
     let q = supabaseAdmin
       .from("fin_movimentacoes")
-      .select("*, categoria:fin_categorias(id,nome,cor,tipo), conta:fin_contas_bancarias(id,nome,banco)")
+      .select("*, categoria:fin_categorias(id,nome,cor,tipo), conta:fin_contas_bancarias(id,nome,banco)").in("distrito_id", escopoDistritos)
       .order("data", { ascending: false });
     if (data?.conta_id) q = q.eq("conta_id", data.conta_id);
     if (data?.tipo) q = q.eq("tipo", data.tipo);
@@ -320,7 +324,7 @@ export const upsertMovimentacao = createServerFn({ method: "POST" })
       const { error } = await supabaseAdmin.from("fin_movimentacoes").update(payload).eq("id", data.id);
       if (error) throw new Error(error.message);
     } else {
-      const { error } = await supabaseAdmin.from("fin_movimentacoes").insert(payload);
+      const { error } = await supabaseAdmin.from("fin_movimentacoes").insert({ ...payload, distrito_id: await distritoPadrao(context.userId) });
       if (error) throw new Error(error.message);
     }
     return { ok: true };
@@ -343,9 +347,10 @@ export const listOrcamentos = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     await assertFinanceiroAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
     const { data, error } = await supabaseAdmin
       .from("fin_orcamento")
-      .select("*, itens:fin_orcamento_itens(*, categoria:fin_categorias(id,nome,cor,tipo))")
+      .select("*, itens:fin_orcamento_itens(*, categoria:fin_categorias(id,nome,cor,tipo))").in("distrito_id", escopoDistritos)
       .order("ano", { ascending: false });
     if (error) throw new Error(error.message);
     return data ?? [];
@@ -377,7 +382,7 @@ export const upsertOrcamento = createServerFn({ method: "POST" })
       await supabaseAdmin.from("fin_orcamento_itens").delete().eq("orcamento_id", orcId);
     } else {
       const { data: newOrc, error } = await supabaseAdmin.from("fin_orcamento")
-        .insert({ ano: data.ano, descricao: data.descricao, status: data.status, criado_por: context.userId })
+        .insert({ ano: data.ano, descricao: data.descricao, status: data.status, criado_por: context.userId, distrito_id: await distritoPadrao(context.userId) })
         .select("id").single();
       if (error) throw new Error(error.message);
       orcId = newOrc.id;
@@ -400,9 +405,10 @@ export const listCobrancas = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     await assertFinanceiroAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
     let q = supabaseAdmin
       .from("fin_cobrancas")
-      .select("*, clube:clubs(id,name,city)")
+      .select("*, clube:clubs(id,name,city)").in("distrito_id", escopoDistritos)
       .order("vencimento");
     if (data?.status) q = q.eq("status", data.status);
     if (data?.club_id) q = q.eq("club_id", data.club_id);
@@ -431,7 +437,7 @@ export const upsertCobranca = createServerFn({ method: "POST" })
       const { error } = await supabaseAdmin.from("fin_cobrancas").update(payload).eq("id", data.id);
       if (error) throw new Error(error.message);
     } else {
-      const { error } = await supabaseAdmin.from("fin_cobrancas").insert(payload);
+      const { error } = await supabaseAdmin.from("fin_cobrancas").insert({ ...payload, distrito_id: await distritoPadrao(context.userId) });
       if (error) throw new Error(error.message);
     }
     return { ok: true };
@@ -454,6 +460,7 @@ export const getFinanceiroDashboard = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     await assertFinanceiroAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
     const now = new Date();
     const yyyy = now.getFullYear();
     const mm = String(now.getMonth() + 1).padStart(2, "0");
@@ -467,7 +474,7 @@ export const getFinanceiroDashboard = createServerFn({ method: "GET" })
     // Movimentações do mês
     const { data: movs } = await supabaseAdmin
       .from("fin_movimentacoes")
-      .select("tipo,valor")
+      .select("tipo,valor").in("distrito_id", escopoDistritos)
       .gte("data", `${yyyy}-${mm}-01`)
       .lt("data", nextMonthFirstISO(`${yyyy}-${mm}`));
 
@@ -478,7 +485,7 @@ export const getFinanceiroDashboard = createServerFn({ method: "GET" })
     // Contas a vencer em 7 dias
     const { data: aVencer } = await supabaseAdmin
       .from("fin_contas_pagar")
-      .select("valor")
+      .select("valor").in("distrito_id", escopoDistritos)
       .eq("status", "pendente")
       .gte("vencimento", hoje)
       .lte("vencimento", em7dias);
@@ -486,21 +493,21 @@ export const getFinanceiroDashboard = createServerFn({ method: "GET" })
     // Contas vencidas não pagas
     const { data: vencidas } = await supabaseAdmin
       .from("fin_contas_pagar")
-      .select("valor")
+      .select("valor").in("distrito_id", escopoDistritos)
       .eq("status", "pendente")
       .lt("vencimento", hoje);
 
     // Cobranças pendentes
     const { data: cobrancasPendentes } = await supabaseAdmin
       .from("fin_cobrancas")
-      .select("valor")
+      .select("valor").in("distrito_id", escopoDistritos)
       .eq("status", "pendente");
 
     // Fluxo últimos 6 meses (movimentações)
     const sixMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 5, 1).toISOString().split("T")[0];
     const { data: fluxoRows } = await supabaseAdmin
       .from("fin_movimentacoes")
-      .select("tipo,valor,data")
+      .select("tipo,valor,data").in("distrito_id", escopoDistritos)
       .gte("data", sixMonthsAgo)
       .order("data");
 

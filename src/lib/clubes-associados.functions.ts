@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { distritoScope, distritoPadrao } from "@/lib/distritos.functions";
 import { anoLeonicoDe, fimAnoLeonico } from "@/lib/ano-leonico";
 
 export async function assertClubesAccess(userId: string) {
@@ -60,15 +61,16 @@ export const getClubesMetrics = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     await assertClubesAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     let clubes: any[] = MOCK_CLUBES;
     let associados: any[] = MOCK_ASSOCIADOS;
 
     try {
-      const { data: dbClubes } = await supabaseAdmin.from("dist_clubes").select("*");
+      const { data: dbClubes } = await supabaseAdmin.from("dist_clubes").select("*").in("distrito_id", escopoDistritos);
       if (dbClubes && dbClubes.length > 0) clubes = dbClubes;
 
-      const { data: dbAssociados } = await supabaseAdmin.from("dist_associados").select("*");
+      const { data: dbAssociados } = await supabaseAdmin.from("dist_associados").select("*").in("distrito_id", escopoDistritos);
       if (dbAssociados && dbAssociados.length > 0) associados = dbAssociados;
     } catch {
       // Fallback in dev
@@ -99,14 +101,15 @@ export const listClubes = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     await assertClubesAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     try {
       const { data, error } = await supabaseAdmin
         .from("dist_clubes")
-        .select("*")
+        .select("*").in("distrito_id", escopoDistritos)
         .order("nome");
 
-      if (!error && data && data.length > 0) return data;
+      if (!error && data) return data;
     } catch {
       // Dev fallback
     }
@@ -145,7 +148,7 @@ export const upsertClube = createServerFn({ method: "POST" })
       if (data.id) {
         await supabaseAdmin.from("dist_clubes").update(data).eq("id", data.id);
       } else {
-        await supabaseAdmin.from("dist_clubes").insert(data);
+        await supabaseAdmin.from("dist_clubes").insert({ ...data, distrito_id: await distritoPadrao(context.userId) });
       }
     } catch {
       // Mock update
@@ -177,14 +180,15 @@ export const listAssociados = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     await assertClubesAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     try {
-      let query = supabaseAdmin.from("dist_associados").select("*, dist_clubes(nome)").order("nome");
+      let query = supabaseAdmin.from("dist_associados").select("*, dist_clubes(nome)").in("distrito_id", escopoDistritos).order("nome");
       if (data?.clube_id) {
         query = query.eq("clube_id", data.clube_id);
       }
       const { data: res, error } = await query;
-      if (!error && res && res.length > 0) return res;
+      if (!error && res) return res;
     } catch {
       // Dev fallback
     }
@@ -225,6 +229,7 @@ export const upsertAssociado = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertClubesAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     // Cargos anteriores (para detectar mudança e registrar histórico)
     let anterior: any = null;
@@ -234,7 +239,7 @@ export const upsertAssociado = createServerFn({ method: "POST" })
       if (data.id) {
         const { data: prev } = await supabaseAdmin
           .from("dist_associados")
-          .select("cargo_clube, cargo_distrital")
+          .select("cargo_clube, cargo_distrital").in("distrito_id", escopoDistritos)
           .eq("id", data.id)
           .maybeSingle();
         anterior = prev;
@@ -242,7 +247,7 @@ export const upsertAssociado = createServerFn({ method: "POST" })
       } else {
         const { data: inserted } = await supabaseAdmin
           .from("dist_associados")
-          .insert(data)
+          .insert({ ...data, distrito_id: await distritoPadrao(context.userId) })
           .select("id")
           .maybeSingle();
         associadoId = inserted?.id ?? null;
@@ -366,11 +371,12 @@ export const upsertCargoHistorico = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertClubesAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     // O associado precisa existir no banco (registros de demonstração não têm FK válida)
     const { data: assoc } = await supabaseAdmin
       .from("dist_associados")
-      .select("id")
+      .select("id").in("distrito_id", escopoDistritos)
       .eq("id", data.associado_id)
       .maybeSingle();
     if (!assoc) {

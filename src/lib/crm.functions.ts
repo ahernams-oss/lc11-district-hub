@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { distritoScope, distritoPadrao } from "@/lib/distritos.functions";
 
 export async function assertCrmAccess(userId: string) {
   if (
@@ -62,12 +63,13 @@ export const getCrmDashboardMetrics = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     await assertCrmAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     let contatos: any[] = MOCK_CONTATOS;
     let tarefas: any[] = MOCK_TAREFAS;
 
     try {
-      const { data: dbContatos } = await supabaseAdmin.from("crm_contatos").select("*");
+      const { data: dbContatos } = await supabaseAdmin.from("crm_contatos").select("*").in("distrito_id", escopoDistritos);
       if (dbContatos && dbContatos.length > 0) contatos = dbContatos;
 
       const { data: dbTarefas } = await supabaseAdmin.from("crm_tarefas_followup").select("*");
@@ -108,14 +110,15 @@ export const listCrmContatos = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     await assertCrmAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     try {
       const { data, error } = await supabaseAdmin
         .from("crm_contatos")
-        .select("*")
+        .select("*").in("distrito_id", escopoDistritos)
         .order("created_at", { ascending: false });
 
-      if (!error && data && data.length > 0) return data;
+      if (!error && data) return data;
     } catch {
       // Dev fallback
     }
@@ -150,7 +153,7 @@ export const upsertCrmContato = createServerFn({ method: "POST" })
       if (data.id) {
         await supabaseAdmin.from("crm_contatos").update(data).eq("id", data.id);
       } else {
-        await supabaseAdmin.from("crm_contatos").insert(data);
+        await supabaseAdmin.from("crm_contatos").insert({ ...data, distrito_id: await distritoPadrao(context.userId) });
       }
     } catch {
       // Mock operation in dev
@@ -218,7 +221,7 @@ export const listCrmInteracoes = createServerFn({ method: "GET" })
         query = query.eq("contato_id", data.contato_id);
       }
       const { data: res, error } = await query;
-      if (!error && res && res.length > 0) return res;
+      if (!error && res) return res;
     } catch {
       // Dev fallback
     }
@@ -264,7 +267,7 @@ export const listCrmTarefas = createServerFn({ method: "GET" })
         .select("*, crm_contatos(nome, email, telefone)")
         .order("data_vencimento", { ascending: true });
 
-      if (!error && data && data.length > 0) return data;
+      if (!error && data) return data;
     } catch {
       // Dev fallback
     }

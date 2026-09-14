@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { distritoScope, distritoPadrao } from "@/lib/distritos.functions";
 
 export async function assertDistritoAccess(userId: string) {
   if (
@@ -78,7 +79,7 @@ export const getNominataByClube = createServerFn({ method: "GET" })
         .eq("clube_id", data.clube_id)
         .eq("ano_leonico", data.ano_leonico);
 
-      if (!error && dbData && dbData.length > 0) return dbData;
+      if (!error && dbData) return dbData;
     } catch {
       // Dev fallback
     }
@@ -140,14 +141,15 @@ export const listDocumentosInformativos = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     await assertDistritoAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     try {
-      let query = supabaseAdmin.from("dist_documentos_informativos").select("*").order("created_at", { ascending: false });
+      let query = supabaseAdmin.from("dist_documentos_informativos").select("*").in("distrito_id", escopoDistritos).order("created_at", { ascending: false });
       if (data?.categoria && data.categoria !== "todas") {
         query = query.eq("categoria", data.categoria);
       }
       const { data: dbDocs, error } = await query;
-      if (!error && dbDocs && dbDocs.length > 0) return dbDocs;
+      if (!error && dbDocs) return dbDocs;
     } catch {
       // Dev fallback
     }
@@ -179,6 +181,7 @@ export const addDocumentoInformativo = createServerFn({ method: "POST" })
       await supabaseAdmin.from("dist_documentos_informativos").insert({
         ...data,
         criado_por: context.userId,
+        distrito_id: await distritoPadrao(context.userId),
       });
     } catch {
       // Mock insert
@@ -210,15 +213,16 @@ export const listEstruturaDistrital = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     await assertDistritoAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const escopoDistritos = await distritoScope(context.userId);
 
     try {
       const { data: dbEst, error } = await supabaseAdmin
         .from("dist_estrutura_cargos")
-        .select("*")
+        .select("*").in("distrito_id", escopoDistritos)
         .eq("ano_leonico", data?.ano_leonico || "2025/2026")
         .order("ordem", { ascending: true });
 
-      if (!error && dbEst && dbEst.length > 0) return dbEst;
+      if (!error && dbEst) return dbEst;
     } catch {
       // Dev fallback
     }
@@ -249,7 +253,7 @@ export const upsertCargoDistrital = createServerFn({ method: "POST" })
       if (data.id) {
         await supabaseAdmin.from("dist_estrutura_cargos").update(data).eq("id", data.id);
       } else {
-        await supabaseAdmin.from("dist_estrutura_cargos").insert(data);
+        await supabaseAdmin.from("dist_estrutura_cargos").insert({ ...data, distrito_id: await distritoPadrao(context.userId) });
       }
     } catch {
       // Mock operation

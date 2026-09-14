@@ -291,6 +291,17 @@ function GrandeLeaoEditor() {
               </div>
 
               <div>
+                <label className="text-xs font-semibold text-muted-foreground uppercase">Ano Leonístico (exibido abaixo do card)</label>
+                <input
+                  type="text"
+                  value={form.leonic_year}
+                  onChange={(e) => setForm({ ...form, leonic_year: e.target.value })}
+                  placeholder="Ex: 2025-2026"
+                  className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                />
+              </div>
+
+              <div>
                 <label className="text-xs font-semibold text-muted-foreground uppercase">História / Biografia</label>
                 <textarea
                   rows={6}

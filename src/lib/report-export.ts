@@ -125,27 +125,65 @@ export async function exportReportToPdf(spec: ReportSpec) {
   doc.save(`${spec.filename}.pdf`);
 }
 
+/**
+ * Converts a BRL-formatted display string ("R$ 1.234,56", "(R$ 10,00)", "—")
+ * into a real number so spreadsheets can sum/sort the column.
+ * Returns undefined when the value is not a currency/numeric string.
+ */
+function toSpreadsheetNumber(value: unknown): number | undefined {
+  if (typeof value === "number") return Number.isFinite(value) ? value : undefined;
+  if (typeof value !== "string") return undefined;
+  const raw = value.trim();
+  if (!raw || raw === "—" || raw === "-") return 0;
+  if (!/\d/.test(raw)) return undefined;
+  // Only treat as money/number when it looks like BRL or a pt-BR number
+  if (!/^[-(]?\s*(R\$)?\s*[\d.]+(,\d+)?\s*\)?%?$/.test(raw)) return undefined;
+  const negative = /^\(/.test(raw) || raw.startsWith("-");
+  const digits = raw.replace(/[^\d,]/g, "").replace(/\./g, "").replace(",", ".");
+  const n = Number(digits);
+  if (!Number.isFinite(n)) return undefined;
+  return negative ? -n : n;
+}
+
 export async function exportReportToExcel(spec: ReportSpec) {
   const XLSX = await import("xlsx");
 
   const head = spec.columns.map((c) => c.label);
-  const body = [...spec.rows, ...(spec.footerRows ?? [])].map((r) =>
+  const allRows = [...spec.rows, ...(spec.footerRows ?? [])];
+  const body = allRows.map((r) =>
     spec.columns.map((c) => {
       const v = r[c.key];
-      return v == null ? "" : v;
+      if (v == null) return "";
+      const n = toSpreadsheetNumber(v);
+      return n ?? v;
     }),
   );
 
-  const aoa: (string | number)[][] = [
+  const aoa: (string | number | boolean)[][] = [
     [spec.title],
     ...(spec.subtitle ? [[spec.subtitle]] : []),
     [`Emitido em ${new Date().toLocaleString("pt-BR")}`],
     [],
     head,
-    ...(body as (string | number)[][]),
+    ...(body as (string | number | boolean)[][]),
   ];
 
   const ws = XLSX.utils.aoa_to_sheet(aoa);
+
+  // Apply a currency number format to every numeric cell
+  const headerRowIndex = aoa.length - body.length - 1; // 0-based row of the header
+  body.forEach((row, rIdx) => {
+    row.forEach((cell, cIdx) => {
+      if (typeof cell !== "number") return;
+      const ref = XLSX.utils.encode_cell({ r: headerRowIndex + 1 + rIdx, c: cIdx });
+      const target = ws[ref];
+      if (target) {
+        target.t = "n";
+        target.z = 'R$ #,##0.00;[Red](R$ #,##0.00);"—"';
+      }
+    });
+  });
+
   ws["!cols"] = spec.columns.map((c) => ({ wch: Math.max(12, (c.weight ?? 1) * 16) }));
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, spec.title.slice(0, 28) || "Relatório");

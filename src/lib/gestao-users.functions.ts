@@ -50,39 +50,20 @@ export const listGestaoUsers = createServerFn({ method: "GET" })
     await assertCallerIsGestorAdmin(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    let usersList: any[] = [];
-    try {
-      const { data: usersData, error: usersErr } =
-        await supabaseAdmin.auth.admin.listUsers({ page: 1, perPage: 200 });
-      if (!usersErr && usersData?.users) {
-        usersList = usersData.users;
-      }
-    } catch {
-      // Fallback in local dev environment
+    const { data: usersData, error: usersErr } =
+      await supabaseAdmin.auth.admin.listUsers({ page: 1, perPage: 200 });
+    if (usersErr) {
+      throw new Error(
+        `Não foi possível listar as contas: ${usersErr.message}. Verifique a configuração do backend e publique novamente.`,
+      );
     }
+    const usersList: any[] = usersData?.users ?? [];
 
-    if (usersList.length === 0) {
-      usersList = [
-        {
-          id: "00000000-0000-0000-0000-000000000001",
-          email: "ahernams@gmail.com",
-          created_at: new Date().toISOString(),
-          last_sign_in_at: new Date().toISOString(),
-        },
-      ];
-    }
-
-    let rolesRows: any[] = [];
-    try {
-      const { data, error: rolesErr } = await supabaseAdmin
-        .from("user_roles")
-        .select("user_id, role");
-      if (!rolesErr && data) {
-        rolesRows = data;
-      }
-    } catch {
-      // Fallback
-    }
+    const { data: rolesData, error: rolesErr } = await supabaseAdmin
+      .from("user_roles")
+      .select("user_id, role");
+    if (rolesErr) throw new Error(rolesErr.message);
+    const rolesRows: any[] = rolesData ?? [];
 
     // Build per-user role lists (all roles, for display)
     const rolesByUser = new Map<string, string[]>();
@@ -91,11 +72,6 @@ export const listGestaoUsers = createServerFn({ method: "GET" })
       const arr = rolesByUser.get((r as any).user_id) ?? [];
       arr.push(role);
       rolesByUser.set((r as any).user_id, arr);
-    }
-
-    // Ensure dev superadmin has all roles by default
-    if (!rolesByUser.has("00000000-0000-0000-0000-000000000001")) {
-      rolesByUser.set("00000000-0000-0000-0000-000000000001", ["admin", "gestor_admin", "gestor_financeiro", "gestor_contabil", "gestor_crm"]);
     }
 
     return usersList

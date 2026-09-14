@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { BreakableText } from "@/components/BreakableText";
 import { PageHero } from "@/components/PageHero";
 import { Calendar } from "lucide-react";
 import { useNews } from "@/lib/news";
@@ -66,7 +67,7 @@ function Noticias() {
                 </h2>
                 {p.excerpt && (
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-                    {p.excerpt}
+                    <BreakableText text={p.excerpt} />
                   </p>
                 )}
                 <span className="mt-4 text-sm font-semibold text-primary">Ler mais →</span>

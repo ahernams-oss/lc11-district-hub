@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { BreakableText } from "@/components/BreakableText";
 import { PageHero } from "@/components/PageHero";
 import { Calendar, MapPin, Clock } from "lucide-react";
 import { useEvents } from "@/lib/events";
@@ -84,7 +85,7 @@ function Eventos() {
                       )}
                     </div>
                     {e.description && (
-                      <p className="mt-2 text-sm text-muted-foreground">{e.description}</p>
+                      <p className="mt-2 text-sm text-muted-foreground"><BreakableText text={e.description} /></p>
                     )}
                   </div>
                   <Calendar className="hidden h-5 w-5 text-muted-foreground sm:block" />

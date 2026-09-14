@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import type { Leader, LeaderCategory } from "@/lib/leaders";
 import { useLeaders } from "@/lib/leaders";
 import { PageHero } from "@/components/PageHero";
-import { BreakableText } from "@/components/BreakableText";
+import {BreakableText, normalizeBreaks } from "@/components/BreakableText";
 
 interface Defaults {
   eyebrow: string;
@@ -133,7 +133,7 @@ export function LeaderProfile({
 
             <div className="prose prose-lg mt-10 max-w-none text-foreground">
               <h2 className="font-display text-2xl font-bold">Trajetória</h2>
-              <p className="text-muted-foreground whitespace-pre-line">{bio}</p>
+              <p className="text-muted-foreground whitespace-pre-line">{normalizeBreaks(bio)}</p>
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import {BreakableText, normalizeBreaks } from "@/components/BreakableText";
 import { ArrowLeft, Calendar, Pencil } from "lucide-react";
 import { useNewsItem } from "@/lib/news";
 import { useAuth } from "@/hooks/use-auth";
@@ -73,7 +74,7 @@ function NewsDetail() {
       </h1>
 
       {item.excerpt && (
-        <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{item.excerpt}</p>
+        <p className="mt-4 text-lg leading-relaxed text-muted-foreground"><BreakableText text={item.excerpt} /></p>
       )}
 
       {item.cover_url && (
@@ -87,7 +88,7 @@ function NewsDetail() {
 
       {item.content && (
         <div className="mt-8 space-y-4 text-base leading-relaxed text-foreground">
-          {item.content
+          {normalizeBreaks(item.content)
             .split(/\n{2,}/)
             .filter((p) => p.trim())
             .map((p, i) => (

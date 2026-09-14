@@ -21,7 +21,7 @@ const FIELDS: Partial<Record<ContentKey, Field[]>> = {
     { name: "hero_eyebrow", label: "Sobre-título (eyebrow)", type: "text" },
     { name: "hero_title", label: "Título principal", type: "textarea" },
     { name: "hero_description", label: "Descrição", type: "textarea" },
-    { name: "hero_images", label: "Imagens do hero (até 10 - rotação automática)", type: "images_with_links", max: 10, linksField: "hero_image_links" },
+    { name: "hero_images", label: "Imagens do hero (até 20 - rotação automática)", type: "images_with_links", max: 20, linksField: "hero_image_links" },
     { name: "hero_rotation_seconds", label: "Tempo de rotação do banner (segundos)", type: "number", min: 1, help: "Quanto tempo cada imagem fica visível antes de passar para a próxima." },
     { name: "stat1_value", label: "Estatística 1 — valor", type: "text", help: "Ex: 40+" },
     { name: "stat1_label", label: "Estatística 1 — rótulo", type: "text" },

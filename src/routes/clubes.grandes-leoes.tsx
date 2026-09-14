@@ -92,11 +92,13 @@ function GrandesLeoes() {
 
   const displayFigures: FigureDisplay[] = dbLeaders.length > 0
     ? dbLeaders.map((l) => ({
+        id: l.id,
         name: l.name,
         role: l.role ?? "Grande Leão",
         desc: l.bio ?? "",
         badge: l.year_label ?? "Grande Leão",
         photo_url: l.photo_url,
+        club_name: l.club_name,
         gradient: "from-primary/10 to-gold/10 border-primary/20",
         iconColor: "text-primary",
         icon: Award,

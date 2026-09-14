@@ -100,6 +100,7 @@ function GrandesLeoes() {
         badge: l.year_label ?? "Grande Leão",
         photo_url: l.photo_url,
         club_name: l.club_name,
+        leonic_year: (l as any).leonic_year ?? null,
         gradient: "from-primary/10 to-gold/10 border-primary/20",
         iconColor: "text-primary",
         icon: Award,
@@ -133,8 +134,8 @@ function GrandesLeoes() {
             {displayFigures.map((fig) => {
               const Icon = fig.icon || Award;
               return (
+                <div key={fig.id ?? fig.name} className="flex flex-col">
                 <div
-                  key={fig.id ?? fig.name}
                   className={`flex flex-col justify-between rounded-2xl border bg-card p-8 shadow-card transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 bg-gradient-to-br ${fig.gradient}`}
                 >
                   <div className="flex flex-col sm:flex-row gap-8 items-start">

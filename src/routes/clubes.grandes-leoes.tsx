@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
 import { useLeaders } from "@/lib/leaders";
-import { Award, Sparkles, Shield, Heart, Landmark, Compass, UserCheck } from "lucide-react";
+import { Award, Sparkles, Shield, Heart, Landmark, Compass, UserCheck, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/clubes/grandes-leoes")({
   head: () => ({

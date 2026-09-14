@@ -319,6 +319,9 @@ function LeaderEditor() {
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2"
             />
+            <p className="mt-1 text-xs text-muted-foreground">
+              Use <code className="rounded bg-surface px-1">//</code> para quebrar a linha no site.
+            </p>
           </Field>
         )}
 

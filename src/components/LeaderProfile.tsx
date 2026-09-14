@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import type { Leader, LeaderCategory } from "@/lib/leaders";
 import { useLeaders } from "@/lib/leaders";
 import { PageHero } from "@/components/PageHero";
+import { BreakableText } from "@/components/BreakableText";
 
 interface Defaults {
   eyebrow: string;
@@ -124,8 +125,8 @@ export function LeaderProfile({
             {message && (
               <div className="rounded-xl bg-primary p-6 text-primary-foreground shadow-card">
                 <Quote className="h-8 w-8 text-gold" />
-                <p className="mt-3 font-display text-xl italic leading-relaxed sm:text-2xl whitespace-pre-line">
-                  {message}
+                <p className="mt-3 font-display text-xl italic leading-relaxed sm:text-2xl">
+                  <BreakableText text={message} />
                 </p>
               </div>
             )}

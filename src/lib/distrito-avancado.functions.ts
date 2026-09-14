@@ -181,6 +181,7 @@ export const addDocumentoInformativo = createServerFn({ method: "POST" })
       await supabaseAdmin.from("dist_documentos_informativos").insert({
         ...data,
         criado_por: context.userId,
+        distrito_id: await distritoPadrao(context.userId),
       });
     } catch {
       // Mock insert

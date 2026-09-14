@@ -247,7 +247,7 @@ export const upsertAssociado = createServerFn({ method: "POST" })
       } else {
         const { data: inserted } = await supabaseAdmin
           .from("dist_associados")
-          .insert(data)
+          .insert({ ...data, distrito_id: await distritoPadrao(context.userId) })
           .select("id")
           .maybeSingle();
         associadoId = inserted?.id ?? null;

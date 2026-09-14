@@ -58,10 +58,13 @@ function GrandeLeaoEditor() {
           setForm({
             name: data.name ?? "",
             role: data.role ?? "",
+            club_name: (data as any).club_name ?? "",
             bio: data.bio ?? "",
             photo_url: data.photo_url ?? "",
             year_label: data.year_label ?? "Grande Leão",
+            motto: (data as any).motto ?? "",
             order_index: data.order_index ?? 0,
+            gallery_urls: ((data as any).gallery_urls ?? []) as string[],
           });
         } else {
           setErrorMsg("Registro não encontrado.");

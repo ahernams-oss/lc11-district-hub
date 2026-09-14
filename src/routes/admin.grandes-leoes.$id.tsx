@@ -13,19 +13,25 @@ export const Route = createFileRoute("/admin/grandes-leoes/$id")({
 interface FormState {
   name: string;
   role: string;
+  club_name: string;
   bio: string;
   photo_url: string;
   year_label: string;
+  motto: string;
   order_index: number;
+  gallery_urls: string[];
 }
 
 const EMPTY: FormState = {
   name: "",
   role: "",
+  club_name: "",
   bio: "",
   photo_url: "",
   year_label: "Grande Leão",
+  motto: "",
   order_index: 0,
+  gallery_urls: [],
 };
 
 function GrandeLeaoEditor() {
@@ -52,10 +58,13 @@ function GrandeLeaoEditor() {
           setForm({
             name: data.name ?? "",
             role: data.role ?? "",
+            club_name: (data as any).club_name ?? "",
             bio: data.bio ?? "",
             photo_url: data.photo_url ?? "",
             year_label: data.year_label ?? "Grande Leão",
+            motto: (data as any).motto ?? "",
             order_index: data.order_index ?? 0,
+            gallery_urls: ((data as any).gallery_urls ?? []) as string[],
           });
         } else {
           setErrorMsg("Registro não encontrado.");
@@ -77,6 +86,29 @@ function GrandeLeaoEditor() {
     }
   }
 
+  async function handleGalleryUpload(files: FileList) {
+    setIsUploading(true);
+    setErrorMsg(null);
+    try {
+      const remaining = 5 - form.gallery_urls.length;
+      if (remaining <= 0) {
+        setErrorMsg("Limite de 5 fotos na galeria atingido.");
+        return;
+      }
+      const toUpload = Array.from(files).slice(0, remaining);
+      const urls = await Promise.all(toUpload.map((f) => uploadLeaderPhoto(f)));
+      setForm((f) => ({ ...f, gallery_urls: [...f.gallery_urls, ...urls].slice(0, 5) }));
+    } catch (err: any) {
+      setErrorMsg(`Erro ao enviar fotos: ${err.message}`);
+    } finally {
+      setIsUploading(false);
+    }
+  }
+
+  function removeGalleryAt(idx: number) {
+    setForm((f) => ({ ...f, gallery_urls: f.gallery_urls.filter((_, i) => i !== idx) }));
+  }
+
   async function handleSave() {
     if (!form.name.trim()) {
       setErrorMsg("O nome é obrigatório.");
@@ -89,10 +121,13 @@ function GrandeLeaoEditor() {
     const payload = {
       name: form.name.trim(),
       role: form.role.trim() || null,
+      club_name: form.club_name.trim() || null,
       bio: form.bio.trim() || null,
       photo_url: form.photo_url.trim() || null,
       year_label: form.year_label.trim() || null,
+      motto: form.motto.trim() || null,
       order_index: form.order_index,
+      gallery_urls: form.gallery_urls,
     };
 
     try {
@@ -233,14 +268,74 @@ function GrandeLeaoEditor() {
                 />
               </div>
 
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-semibold text-muted-foreground uppercase">Clube</label>
+                  <input
+                    type="text"
+                    value={form.club_name}
+                    onChange={(e) => setForm({ ...form, club_name: e.target.value })}
+                    placeholder="Ex: LC Vitória Centro"
+                    className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-muted-foreground uppercase">Lema (opcional)</label>
+                  <input
+                    type="text"
+                    value={form.motto}
+                    onChange={(e) => setForm({ ...form, motto: e.target.value })}
+                    className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  />
+                </div>
+              </div>
+
               <div>
-                <label className="text-xs font-semibold text-muted-foreground uppercase">Biografia / Descrição</label>
+                <label className="text-xs font-semibold text-muted-foreground uppercase">História / Biografia</label>
                 <textarea
-                  rows={4}
+                  rows={6}
                   value={form.bio}
                   onChange={(e) => setForm({ ...form, bio: e.target.value })}
                   className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                 />
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-muted-foreground uppercase">
+                  Galeria de fotos (até 5) — {form.gallery_urls.length}/5
+                </label>
+                {form.gallery_urls.length > 0 && (
+                  <div className="mt-2 mb-3 grid grid-cols-3 gap-2 sm:grid-cols-5">
+                    {form.gallery_urls.map((url, i) => (
+                      <div key={url + i} className="relative">
+                        <img src={url} alt="" className="aspect-square w-full rounded-md object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => removeGalleryAt(i)}
+                          className="absolute -right-2 -top-2 rounded-full bg-destructive px-2 py-0.5 text-xs text-destructive-foreground"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {form.gallery_urls.length < 5 && (
+                  <label className="mt-2 inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-surface">
+                    {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+                    Adicionar fotos
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      className="hidden"
+                      disabled={isUploading}
+                      onChange={(e) =>
+                        e.target.files && e.target.files.length > 0 && handleGalleryUpload(e.target.files)
+                      }
+                    />
+                  </label>
+                )}
               </div>
             </div>
           </div>

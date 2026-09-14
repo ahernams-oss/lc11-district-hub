@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
 import { useLeaders } from "@/lib/leaders";
-import { Award, Sparkles, Shield, Heart, Landmark, Compass, UserCheck } from "lucide-react";
+import { Award, Sparkles, Shield, Heart, Landmark, Compass, UserCheck, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/clubes/grandes-leoes")({
   head: () => ({
@@ -18,11 +18,13 @@ export const Route = createFileRoute("/clubes/grandes-leoes")({
 });
 
 interface FigureDisplay {
+  id?: string;
   name: string;
   role: string;
   desc: string;
   badge: string;
   photo_url?: string | null;
+  club_name?: string | null;
   gradient?: string;
   iconColor?: string;
   icon?: any;
@@ -90,11 +92,13 @@ function GrandesLeoes() {
 
   const displayFigures: FigureDisplay[] = dbLeaders.length > 0
     ? dbLeaders.map((l) => ({
+        id: l.id,
         name: l.name,
         role: l.role ?? "Grande Leão",
         desc: l.bio ?? "",
         badge: l.year_label ?? "Grande Leão",
         photo_url: l.photo_url,
+        club_name: l.club_name,
         gradient: "from-primary/10 to-gold/10 border-primary/20",
         iconColor: "text-primary",
         icon: Award,
@@ -129,19 +133,19 @@ function GrandesLeoes() {
               const Icon = fig.icon || Award;
               return (
                 <div
-                  key={fig.name}
-                  className={`flex flex-col justify-between rounded-2xl border bg-card p-6 shadow-card transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 bg-gradient-to-br ${fig.gradient}`}
+                  key={fig.id ?? fig.name}
+                  className={`flex flex-col justify-between rounded-2xl border bg-card p-8 shadow-card transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 bg-gradient-to-br ${fig.gradient}`}
                 >
-                  <div className="flex flex-col sm:flex-row gap-6 items-start">
+                  <div className="flex flex-col sm:flex-row gap-8 items-start">
                     {fig.photo_url ? (
                       <img
                         src={fig.photo_url}
                         alt={fig.name}
-                        className="h-28 w-28 shrink-0 rounded-full object-cover ring-4 ring-primary/20 shadow-md self-center sm:self-start"
+                        className="h-40 w-40 shrink-0 rounded-full object-cover ring-4 ring-primary/20 shadow-md self-center sm:self-start"
                       />
                     ) : (
-                      <div className="rounded-full bg-background p-4 h-16 w-16 flex items-center justify-center shadow-sm shrink-0 self-center sm:self-start">
-                        <Icon className={`h-8 w-8 ${fig.iconColor}`} />
+                      <div className="rounded-full bg-background h-24 w-24 flex items-center justify-center shadow-sm shrink-0 self-center sm:self-start">
+                        <Icon className={`h-11 w-11 ${fig.iconColor}`} />
                       </div>
                     )}
                     <div className="flex-1 min-w-0 text-center sm:text-left">
@@ -150,7 +154,19 @@ function GrandesLeoes() {
                       </span>
                       <h3 className="mt-3 font-display text-2xl font-bold text-foreground truncate-2-lines">{fig.name}</h3>
                       <p className="mt-1 text-sm font-semibold text-primary">{fig.role}</p>
-                      <p className="mt-4 text-sm leading-relaxed text-muted-foreground whitespace-pre-line">{fig.desc}</p>
+                      {fig.club_name && (
+                        <p className="mt-1 text-sm font-medium text-muted-foreground">{fig.club_name}</p>
+                      )}
+                      <p className="mt-4 text-sm leading-relaxed text-muted-foreground line-clamp-4 whitespace-pre-line">{fig.desc}</p>
+                      {fig.id && (
+                        <Link
+                          to="/grandes-leoes/$id"
+                          params={{ id: fig.id }}
+                          className="mt-5 inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow transition-colors hover:bg-primary-deep"
+                        >
+                          Ver história completa <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -268,14 +268,74 @@ function GrandeLeaoEditor() {
                 />
               </div>
 
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-semibold text-muted-foreground uppercase">Clube</label>
+                  <input
+                    type="text"
+                    value={form.club_name}
+                    onChange={(e) => setForm({ ...form, club_name: e.target.value })}
+                    placeholder="Ex: LC Vitória Centro"
+                    className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-muted-foreground uppercase">Lema (opcional)</label>
+                  <input
+                    type="text"
+                    value={form.motto}
+                    onChange={(e) => setForm({ ...form, motto: e.target.value })}
+                    className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  />
+                </div>
+              </div>
+
               <div>
-                <label className="text-xs font-semibold text-muted-foreground uppercase">Biografia / Descrição</label>
+                <label className="text-xs font-semibold text-muted-foreground uppercase">História / Biografia</label>
                 <textarea
-                  rows={4}
+                  rows={6}
                   value={form.bio}
                   onChange={(e) => setForm({ ...form, bio: e.target.value })}
                   className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                 />
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-muted-foreground uppercase">
+                  Galeria de fotos (até 5) — {form.gallery_urls.length}/5
+                </label>
+                {form.gallery_urls.length > 0 && (
+                  <div className="mt-2 mb-3 grid grid-cols-3 gap-2 sm:grid-cols-5">
+                    {form.gallery_urls.map((url, i) => (
+                      <div key={url + i} className="relative">
+                        <img src={url} alt="" className="aspect-square w-full rounded-md object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => removeGalleryAt(i)}
+                          className="absolute -right-2 -top-2 rounded-full bg-destructive px-2 py-0.5 text-xs text-destructive-foreground"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {form.gallery_urls.length < 5 && (
+                  <label className="mt-2 inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-surface">
+                    {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+                    Adicionar fotos
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      className="hidden"
+                      disabled={isUploading}
+                      onChange={(e) =>
+                        e.target.files && e.target.files.length > 0 && handleGalleryUpload(e.target.files)
+                      }
+                    />
+                  </label>
+                )}
               </div>
             </div>
           </div>

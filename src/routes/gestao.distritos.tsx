@@ -172,7 +172,7 @@ function DistritosPage() {
                 </div>
                 <div className="flex items-center gap-1 opacity-80 group-hover:opacity-100">
                   <button
-                    onClick={() =>
+                    onClick={() => {
                       setForm({
                         id: d.id,
                         nome: d.nome,
@@ -180,8 +180,9 @@ function DistritosPage() {
                         estados: d.estados ?? "",
                         ordem: d.ordem,
                         ativo: d.ativo,
-                      }) || setDrawer(true)
-                    }
+                      });
+                      setDrawer(true);
+                    }}
                     className="rounded p-1.5 text-slate-400 hover:bg-white/10 hover:text-white"
                     title="Editar"
                   >

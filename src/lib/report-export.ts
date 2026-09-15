@@ -134,12 +134,14 @@ function toSpreadsheetNumber(value: unknown): number | undefined {
   if (typeof value === "number") return Number.isFinite(value) ? value : undefined;
   if (typeof value !== "string") return undefined;
   const raw = value.trim();
-  if (!raw || raw === "—" || raw === "-") return 0;
-  if (!/\d/.test(raw)) return undefined;
-  // Only treat as money/number when it looks like BRL or a pt-BR number
-  if (!/^[-(]?\s*(R\$)?\s*[\d.]+(,\d+)?\s*\)?%?$/.test(raw)) return undefined;
-  const negative = /^\(/.test(raw) || raw.startsWith("-");
-  const digits = raw.replace(/[^\d,]/g, "").replace(/\./g, "").replace(",", ".");
+  if (!raw) return undefined;
+  // Only BRL currency strings become numbers: they must carry "R$" and, when
+  // they group thousands, use strict 3-digit groups. Account codes like
+  // "1.1.01", percentages and plain integers stay as text.
+  const money = /^\(?\s*-?\s*R\$\s*(\d{1,3}(\.\d{3})*|\d+)(,\d{1,2})?\s*\)?$/;
+  if (!money.test(raw)) return undefined;
+  const negative = raw.startsWith("(") || /-/.test(raw);
+  const digits = raw.replace(/[^\d,]/g, "").replace(",", ".");
   const n = Number(digits);
   if (!Number.isFinite(n)) return undefined;
   return negative ? -n : n;

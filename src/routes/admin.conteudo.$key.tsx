@@ -3,7 +3,7 @@ import { BreakHint } from "@/components/BreakHint";
 import { useEffect, useState } from "react";
 import { CONTENT_LABELS, type ContentKey, fetchSiteContent, saveSiteContent } from "@/lib/content";
 import { uploadContentImage } from "@/lib/leaders";
-import { ArrowLeft, Upload } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/admin/conteudo/$key")({
   component: ContentEditor,
@@ -405,6 +405,17 @@ function ContentEditor() {
                     return { ...v, [f.name]: imgs, [linksKey]: lnks };
                   });
                 };
+                const moveAt = (idx: number, dir: -1 | 1) => {
+                  setValues((v) => {
+                    const imgs = Array.isArray(v[f.name]) ? [...v[f.name]] : [];
+                    const lnks = Array.isArray(v[linksKey]) ? [...v[linksKey]] : [];
+                    const target = idx + dir;
+                    if (target < 0 || target >= imgs.length) return v;
+                    [imgs[idx], imgs[target]] = [imgs[target], imgs[idx]];
+                    [lnks[idx], lnks[target]] = [lnks[target], lnks[idx]];
+                    return { ...v, [f.name]: imgs, [linksKey]: lnks };
+                  });
+                };
                 return (
                   <div className="mt-1 space-y-3">
                     {list.length > 0 && (
@@ -420,8 +431,28 @@ function ContentEditor() {
                               >
                                 Remover
                               </button>
-                              <div className="absolute left-1 top-1 rounded bg-black/60 px-1.5 py-0.5 text-xs text-white">
-                                {idx + 1}
+                              <div className="absolute left-1 top-1 flex items-center gap-1">
+                                <span className="rounded bg-black/60 px-1.5 py-0.5 text-xs text-white">
+                                  {idx + 1}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => moveAt(idx, -1)}
+                                  disabled={idx === 0}
+                                  title="Mover para a esquerda"
+                                  className="rounded bg-black/60 p-0.5 text-white hover:bg-black/80 disabled:opacity-30"
+                                >
+                                  <ChevronLeft className="h-3.5 w-3.5" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => moveAt(idx, 1)}
+                                  disabled={idx === list.length - 1}
+                                  title="Mover para a direita"
+                                  className="rounded bg-black/60 p-0.5 text-white hover:bg-black/80 disabled:opacity-30"
+                                >
+                                  <ChevronRight className="h-3.5 w-3.5" />
+                                </button>
                               </div>
                             </div>
                             <label className="mt-2 block text-xs font-medium text-muted-foreground">Link ao clicar (opcional)</label>

@@ -214,7 +214,7 @@ export const setStatusContaPagar = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertFinanceiroAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const update: Record<string, unknown> = { status: data.status };
+    const update: any = { status: data.status };
     if (data.status === "pago") update.pago_em = new Date().toISOString();
     const { error } = await supabaseAdmin.from("fin_contas_pagar").update(update).eq("id", data.id);
     if (error) throw new Error(error.message);

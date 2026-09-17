@@ -3,7 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
-import { listMovimentacoes, listCategorias } from "@/lib/financeiro.functions";
+import { listMovimentacoes, listCategorias, listContasPagar, listContasReceber } from "@/lib/financeiro.functions";
 import { formatBRL, monthLabel, lastNMonths, currentYearMonth } from "@/lib/financeiro.utils";
 import { ExportButtons } from "@/components/gestao/ExportButtons";
 import type { ReportRow } from "@/lib/report-export";
@@ -15,9 +15,56 @@ export const Route = createFileRoute("/gestao/financeiro/relatorios")({
 
 type Report = "dre" | "categorias" | "mensal";
 
+type Linha = {
+  id?: string;
+  tipo: "entrada" | "saida";
+  descricao: string;
+  valor: number;
+  data?: string;
+  categoria_id?: string | null;
+  categoria?: { id: string; nome: string; cor: string; tipo: string } | null;
+};
+
+// Combina movimentações bancárias com contas a pagar (despesas) e a receber (receitas)
+function mergeLancamentos(movs: any[], pagar: any[], receber: any[]): Linha[] {
+  const linhas: Linha[] = (movs ?? []).map((m) => ({
+    tipo: m.tipo,
+    descricao: m.descricao,
+    valor: m.valor,
+    data: m.data,
+    categoria_id: m.categoria_id,
+    categoria: m.categoria,
+  }));
+  for (const c of pagar ?? []) {
+    if (c.status === "cancelado") continue;
+    linhas.push({
+      tipo: "saida",
+      descricao: `${c.descricao} (conta a pagar${c.status === "pago" ? " — paga" : ""})`,
+      valor: c.valor,
+      data: c.vencimento,
+      categoria_id: c.categoria_id,
+      categoria: c.categoria,
+    });
+  }
+  for (const c of receber ?? []) {
+    if (c.status === "cancelado") continue;
+    linhas.push({
+      tipo: "entrada",
+      descricao: `${c.descricao} (conta a receber${c.status === "recebido" ? " — recebida" : ""})`,
+      valor: c.valor,
+      data: c.vencimento,
+      categoria_id: c.categoria_id,
+      categoria: c.categoria,
+    });
+  }
+  return linhas;
+}
+
 function RelatoriosPage() {
   const listMov = useServerFn(listMovimentacoes);
   const listCats = useServerFn(listCategorias);
+  const listPagar = useServerFn(listContasPagar);
+  const listReceber = useServerFn(listContasReceber);
   const [activeReport, setActiveReport] = useState<Report>("dre");
   const [mes, setMes] = useState(currentYearMonth());
   const [period, setPeriod] = useState("12");
@@ -27,14 +74,30 @@ function RelatoriosPage() {
   // Fetch movimentações for selected month (DRE)
   const { data: movsMes, isLoading: loadingMes } = useQuery({
     queryKey: ["movs-relatorio-mes", mes],
-    queryFn: () => listMov({ data: { mes } }),
+    queryFn: async () => {
+      const [movs, pagar, receber] = await Promise.all([
+        listMov({ data: { mes } }),
+        listPagar({ data: { mes } }),
+        listReceber({ data: { mes } }),
+      ]);
+      return mergeLancamentos(movs, pagar, receber);
+    },
   });
 
   // Fetch all movimentos for period (categorias report)
   const { data: movsTodos, isLoading: loadingTodos } = useQuery({
     queryKey: ["movs-relatorio-todos", period],
     queryFn: async () => {
-      const all = await Promise.all(months.map((m) => listMov({ data: { mes: m } })));
+      const all = await Promise.all(
+        months.map(async (m) => {
+          const [movs, pagar, receber] = await Promise.all([
+            listMov({ data: { mes: m } }),
+            listPagar({ data: { mes: m } }),
+            listReceber({ data: { mes: m } }),
+          ]);
+          return mergeLancamentos(movs, pagar, receber);
+        })
+      );
       return all.flat();
     },
     enabled: activeReport === "categorias",

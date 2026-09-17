@@ -2,7 +2,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 
 const VISITOR_ID_KEY = "lc11_visitor_id";
-const BASE_VISITS_OFFSET = 12450; // Initial base counter offset for historic visits
 
 function getVisitorId(): string {
   if (typeof window === "undefined") return "ssr";
@@ -25,10 +24,6 @@ export async function recordSiteVisit(path: string) {
   sessionStorage.setItem(sessionKey, "true");
   const visitorId = getVisitorId();
 
-  // Local fallback counter
-  const localCount = Number(localStorage.getItem("lc11_total_visits") || "0") + 1;
-  localStorage.setItem("lc11_total_visits", String(localCount));
-
   try {
     const { error } = await (supabase as any).from("site_visits").insert({
       path: path || "/",
@@ -49,31 +44,26 @@ export type SiteVisitsStats = {
   topPages: { path: string; count: number }[];
 };
 
+const EMPTY_STATS: SiteVisitsStats = {
+  totalVisits: 0,
+  uniqueVisitors: 0,
+  visitsToday: 0,
+  topPages: [],
+};
+
 export function useSiteVisitsStats() {
   return useQuery({
     queryKey: ["site-visits-stats"],
-    queryFn: async () => {
+    queryFn: async (): Promise<SiteVisitsStats> => {
       try {
         const { data, error, count } = await (supabase as any)
           .from("site_visits")
           .select("*", { count: "exact" });
 
-        if (error || !data) {
-          const localVal = Number(localStorage.getItem("lc11_total_visits") || "0");
-          return {
-            totalVisits: BASE_VISITS_OFFSET + localVal,
-            uniqueVisitors: 1540 + Math.floor(localVal / 3),
-            visitsToday: 84 + (localVal % 20),
-            topPages: [
-              { path: "/", count: Math.floor((BASE_VISITS_OFFSET + localVal) * 0.45) },
-              { path: "/documentos", count: Math.floor((BASE_VISITS_OFFSET + localVal) * 0.25) },
-              { path: "/projetos", count: Math.floor((BASE_VISITS_OFFSET + localVal) * 0.15) },
-              { path: "/clubes", count: Math.floor((BASE_VISITS_OFFSET + localVal) * 0.15) },
-            ],
-          } satisfies SiteVisitsStats;
+        if (error || !data || data.length === 0) {
+          return EMPTY_STATS;
         }
 
-        const totalDbVisits = count ?? data.length;
         const uniqueSet = new Set(data.map((d: any) => d.visitor_id));
         const todayStr = new Date().toISOString().slice(0, 10);
         const todayVisits = data.filter((d: any) => d.created_at?.startsWith(todayStr)).length;
@@ -90,19 +80,13 @@ export function useSiteVisitsStats() {
           .slice(0, 5);
 
         return {
-          totalVisits: BASE_VISITS_OFFSET + totalDbVisits,
-          uniqueVisitors: Math.max(uniqueSet.size, 1500 + Math.floor(totalDbVisits / 2)),
-          visitsToday: Math.max(todayVisits, 42),
+          totalVisits: count ?? data.length,
+          uniqueVisitors: uniqueSet.size,
+          visitsToday: todayVisits,
           topPages,
-        } satisfies SiteVisitsStats;
-      } catch (err) {
-        const localVal = Number(localStorage.getItem("lc11_total_visits") || "0");
-        return {
-          totalVisits: BASE_VISITS_OFFSET + localVal,
-          uniqueVisitors: 1540,
-          visitsToday: 42,
-          topPages: [{ path: "/", count: 5000 }],
-        } satisfies SiteVisitsStats;
+        };
+      } catch {
+        return EMPTY_STATS;
       }
     },
     staleTime: 15_000,

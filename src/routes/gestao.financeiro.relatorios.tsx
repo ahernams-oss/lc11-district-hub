@@ -16,6 +16,7 @@ export const Route = createFileRoute("/gestao/financeiro/relatorios")({
 type Report = "dre" | "categorias" | "mensal";
 
 type Linha = {
+  id?: string;
   tipo: "entrada" | "saida";
   descricao: string;
   valor: number;

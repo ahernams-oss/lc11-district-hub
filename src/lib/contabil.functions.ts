@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { distritoScope, distritoPadrao } from "@/lib/distritos.functions";
+import { assertPeriodoAberto } from "@/lib/exercicios.functions";
 
 async function assertContabilAccess(userId: string) {
   if (
@@ -191,6 +192,7 @@ export const upsertLancamento = createServerFn({ method: "POST" })
   }))
   .handler(async ({ data, context }) => {
     await assertContabilAccess(context.userId);
+    await assertPeriodoAberto("contabil", data.data);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     // Validar método das partidas dobradas (Débitos = Créditos)
@@ -244,6 +246,8 @@ export const deleteLancamento = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertContabilAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: atual } = await supabaseAdmin.from("con_lancamentos").select("data").eq("id", data.id).maybeSingle();
+    await assertPeriodoAberto("contabil", (atual as any)?.data);
     const { error } = await supabaseAdmin.from("con_lancamentos").delete().eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };

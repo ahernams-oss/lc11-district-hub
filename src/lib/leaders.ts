@@ -91,30 +91,28 @@ export function useAllLeaders() {
   });
 }
 
-export async function uploadLeaderPhoto(file: File): Promise<string> {
-  const ext = file.name.split(".").pop() ?? "jpg";
-  const path = `leaders/${crypto.randomUUID()}.${ext}`;
-  const { error } = await supabase.storage.from("site-images").upload(path, file, {
-    upsert: false,
-    contentType: file.type,
+function fileToDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(new Error("Não foi possível ler o arquivo"));
+    reader.readAsDataURL(file);
   });
-  if (error) throw error;
-  const { data } = await supabase.storage
-    .from("site-images")
-    .createSignedUrl(path, 60 * 60 * 24 * 365 * 5);
-  return data?.signedUrl ?? "";
+}
+
+async function uploadViaServer(file: File, folder: string): Promise<string> {
+  const { uploadSiteImage } = await import("@/lib/uploads.functions");
+  const base64 = await fileToDataUrl(file);
+  const res = await uploadSiteImage({
+    data: { file: base64, filename: file.name || "imagem.jpg", folder },
+  });
+  return res.url;
+}
+
+export async function uploadLeaderPhoto(file: File): Promise<string> {
+  return uploadViaServer(file, "leaders");
 }
 
 export async function uploadContentImage(file: File, folder = "content"): Promise<string> {
-  const ext = file.name.split(".").pop() ?? "jpg";
-  const path = `${folder}/${crypto.randomUUID()}.${ext}`;
-  const { error } = await supabase.storage.from("site-images").upload(path, file, {
-    upsert: false,
-    contentType: file.type,
-  });
-  if (error) throw error;
-  const { data } = await supabase.storage
-    .from("site-images")
-    .createSignedUrl(path, 60 * 60 * 24 * 365 * 5);
-  return data?.signedUrl ?? "";
+  return uploadViaServer(file, folder);
 }

@@ -1,8 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
-import { writeFileSync, unlinkSync } from "fs";
-import { execSync } from "child_process";
+
+const FIVE_YEARS = 60 * 60 * 24 * 365 * 5;
 
 const ALLOWED_MIME = [
   "application/pdf",
@@ -37,25 +37,19 @@ export const uploadDocumentFile = createServerFn({ method: "POST" })
     }
 
     const safe = data.filename.replace(/[^\w.\-]+/g, "_");
-    const tmpPath = `/tmp/${Date.now()}-${safe}`;
-    writeFileSync(tmpPath, buffer);
-    try {
-      const result = execSync(
-        `lovable-assets create --file "${tmpPath}" --filename "${safe}" --content-type "${mime}"`,
-        { encoding: "utf-8", timeout: 60000 },
-      );
-      const text = result.trim();
-      const start = text.indexOf("{");
-      const end = text.lastIndexOf("}");
-      if (start === -1 || end === -1 || end <= start) {
-        throw new Error("Saída inválida do upload");
-      }
-      const json = JSON.parse(text.substring(start, end + 1));
-      if (!json.url) throw new Error("Falha ao obter URL do upload");
-      return { url: json.url as string };
-    } finally {
-      try {
-        unlinkSync(tmpPath);
-      } catch {}
+    const path = `documentos/${Date.now()}-${safe}`;
+
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin.storage
+      .from("site-images")
+      .upload(path, buffer, { contentType: mime, upsert: false });
+    if (error) throw new Error(error.message);
+
+    const { data: signed, error: signErr } = await supabaseAdmin.storage
+      .from("site-images")
+      .createSignedUrl(path, FIVE_YEARS);
+    if (signErr || !signed?.signedUrl) {
+      throw new Error("Falha ao obter URL do arquivo");
     }
+    return { url: signed.signedUrl };
   });

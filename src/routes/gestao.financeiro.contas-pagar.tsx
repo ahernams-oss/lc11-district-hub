@@ -93,6 +93,17 @@ function ContasPagarPage() {
     onError: (e: any) => setMsg({ type: "err", text: e?.message ?? "Erro ao excluir." }),
   });
 
+  const statusMut = useMutation({
+    mutationFn: (vars: { id: string; status: string }) =>
+      setStatus({ data: { id: vars.id, status: vars.status as any } }),
+    onSuccess: () => {
+      setMsg({ type: "ok", text: "Status atualizado." });
+      qc.invalidateQueries({ queryKey: ["contas-pagar"] });
+      qc.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
+    },
+    onError: (e: any) => setMsg({ type: "err", text: e?.message ?? "Erro ao atualizar status." }),
+  });
+
   function openNew() {
     setForm({ ...EMPTY_FORM });
     setDrawer(true);
@@ -230,7 +241,20 @@ function ContasPagarPage() {
                     </td>
                     <td className="px-4 py-3 text-slate-300">{formatDate(c.vencimento)}</td>
                     <td className="px-4 py-3 text-right font-mono text-white">{formatBRL(c.valor)}</td>
-                    <td className="px-4 py-3"><StatusBadge status={c.status} /></td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <StatusBadge status={c.status} />
+                        <select
+                          value={c.status}
+                          disabled={statusMut.isPending && statusMut.variables?.id === c.id}
+                          onChange={(e) => statusMut.mutate({ id: c.id, status: e.target.value })}
+                          className="rounded-md border border-white/10 bg-[#0d1321] px-1.5 py-1 text-[11px] text-slate-300 outline-none focus:border-primary disabled:opacity-50"
+                          title="Alterar status"
+                        >
+                          {STATUS_OPTIONS.map((s) => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
+                        </select>
+                      </div>
+                    </td>
                     <td className="px-4 py-3 text-center">
                       {(c as any).anexo_url ? (
                         <a

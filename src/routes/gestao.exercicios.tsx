@@ -35,6 +35,11 @@ const brl = (cents: number) =>
 
 const anoLabel = (ano: string) => ano.replace("-", "/");
 
+const anoSeguinte = (ano: string) => {
+  const inicio = Number(ano.split(/[-/]/)[0]) + 1;
+  return `${inicio}/${inicio + 1}`;
+};
+
 function ExerciciosPage() {
   const qc = useQueryClient();
   const { isAdmin, isGestorAdmin, isGestorFinanceiro, isGestorContabil } = useAuth();

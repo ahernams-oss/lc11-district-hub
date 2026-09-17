@@ -8,7 +8,7 @@ import { StatusBadge } from "@/components/gestao/StatusBadge";
 import { Drawer, Field, FormInput, FormSelect, FormTextarea, FormRow, FormActions } from "@/components/gestao/GestaoForm";
 import { CurrencyInput } from "@/components/gestao/CurrencyInput";
 import { FileUploadInput } from "@/components/gestao/FileUploadInput";
-import { listContasPagar, upsertContaPagar, deleteContaPagar, listCategorias, listContasBancarias } from "@/lib/financeiro.functions";
+import { listContasPagar, upsertContaPagar, deleteContaPagar, setStatusContaPagar, listCategorias, listContasBancarias } from "@/lib/financeiro.functions";
 import { formatBRL, formatDate, currentYearMonth } from "@/lib/financeiro.utils";
 
 export const Route = createFileRoute("/gestao/financeiro/contas-pagar")({
@@ -40,6 +40,7 @@ function ContasPagarPage() {
   const list = useServerFn(listContasPagar);
   const upsert = useServerFn(upsertContaPagar);
   const del = useServerFn(deleteContaPagar);
+  const setStatus = useServerFn(setStatusContaPagar);
   const listCats = useServerFn(listCategorias);
   const listContas = useServerFn(listContasBancarias);
 

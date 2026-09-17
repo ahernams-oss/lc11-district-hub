@@ -15,6 +15,50 @@ export const Route = createFileRoute("/gestao/financeiro/relatorios")({
 
 type Report = "dre" | "categorias" | "mensal";
 
+type Linha = {
+  tipo: "entrada" | "saida";
+  descricao: string;
+  valor: number;
+  data?: string;
+  categoria_id?: string | null;
+  categoria?: { id: string; nome: string; cor: string; tipo: string } | null;
+};
+
+// Combina movimentações bancárias com contas a pagar (despesas) e a receber (receitas)
+function mergeLancamentos(movs: any[], pagar: any[], receber: any[]): Linha[] {
+  const linhas: Linha[] = (movs ?? []).map((m) => ({
+    tipo: m.tipo,
+    descricao: m.descricao,
+    valor: m.valor,
+    data: m.data,
+    categoria_id: m.categoria_id,
+    categoria: m.categoria,
+  }));
+  for (const c of pagar ?? []) {
+    if (c.status === "cancelado") continue;
+    linhas.push({
+      tipo: "saida",
+      descricao: `${c.descricao} (conta a pagar${c.status === "pago" ? " — paga" : ""})`,
+      valor: c.valor,
+      data: c.vencimento,
+      categoria_id: c.categoria_id,
+      categoria: c.categoria,
+    });
+  }
+  for (const c of receber ?? []) {
+    if (c.status === "cancelado") continue;
+    linhas.push({
+      tipo: "entrada",
+      descricao: `${c.descricao} (conta a receber${c.status === "recebido" ? " — recebida" : ""})`,
+      valor: c.valor,
+      data: c.vencimento,
+      categoria_id: c.categoria_id,
+      categoria: c.categoria,
+    });
+  }
+  return linhas;
+}
+
 function RelatoriosPage() {
   const listMov = useServerFn(listMovimentacoes);
   const listCats = useServerFn(listCategorias);

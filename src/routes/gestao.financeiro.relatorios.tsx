@@ -3,7 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
-import { listMovimentacoes, listCategorias } from "@/lib/financeiro.functions";
+import { listMovimentacoes, listCategorias, listContasPagar, listContasReceber } from "@/lib/financeiro.functions";
 import { formatBRL, monthLabel, lastNMonths, currentYearMonth } from "@/lib/financeiro.utils";
 import { ExportButtons } from "@/components/gestao/ExportButtons";
 import type { ReportRow } from "@/lib/report-export";

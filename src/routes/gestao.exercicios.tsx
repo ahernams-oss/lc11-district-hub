@@ -381,7 +381,7 @@ function ExerciciosPage() {
                       </div>
                       <div className="pt-1 text-[11px] text-slate-500">
                         {apuracao.saldos.length} saldo(s) serão transportados para{" "}
-                        {anoLabel(dialog.ano.replace(/^(\d+)/, (m) => String(Number(m) + 1)))}.
+                        {anoSeguinte(dialog.ano)}.
                       </div>
                     </div>
                   ) : null}

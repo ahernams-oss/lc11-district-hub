@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { distritoScope, distritoPadrao } from "@/lib/distritos.functions";
+import { assertPeriodoAberto } from "@/lib/exercicios.functions";
 
 async function assertFinanceiroAccess(userId: string) {
   if (
@@ -182,6 +183,7 @@ export const upsertContaPagar = createServerFn({ method: "POST" })
   }))
   .handler(async ({ data, context }) => {
     await assertFinanceiroAccess(context.userId);
+    await assertPeriodoAberto("financeiro", data.vencimento);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const payload = { ...data, criado_por: context.userId };
     if (data.id) {
@@ -200,6 +202,8 @@ export const deleteContaPagar = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertFinanceiroAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: atual } = await supabaseAdmin.from("fin_contas_pagar").select("vencimento").eq("id", data.id).maybeSingle();
+    await assertPeriodoAberto("financeiro", (atual as any)?.vencimento);
     const { error } = await supabaseAdmin.from("fin_contas_pagar").delete().eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };
@@ -214,6 +218,8 @@ export const setStatusContaPagar = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertFinanceiroAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: atualPagar } = await supabaseAdmin.from("fin_contas_pagar").select("vencimento").eq("id", data.id).maybeSingle();
+    await assertPeriodoAberto("financeiro", (atualPagar as any)?.vencimento);
     const update: any = { status: data.status };
     if (data.status === "pago") update.pago_em = new Date().toISOString();
     const { error } = await supabaseAdmin.from("fin_contas_pagar").update(update).eq("id", data.id);
@@ -268,6 +274,7 @@ export const upsertContaReceber = createServerFn({ method: "POST" })
   }))
   .handler(async ({ data, context }) => {
     await assertFinanceiroAccess(context.userId);
+    await assertPeriodoAberto("financeiro", data.vencimento);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const payload = { ...data, criado_por: context.userId };
     if (data.id) {
@@ -286,6 +293,8 @@ export const deleteContaReceber = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertFinanceiroAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: atual } = await supabaseAdmin.from("fin_contas_receber").select("vencimento").eq("id", data.id).maybeSingle();
+    await assertPeriodoAberto("financeiro", (atual as any)?.vencimento);
     const { error } = await supabaseAdmin.from("fin_contas_receber").delete().eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };
@@ -334,6 +343,7 @@ export const upsertMovimentacao = createServerFn({ method: "POST" })
   }))
   .handler(async ({ data, context }) => {
     await assertFinanceiroAccess(context.userId);
+    await assertPeriodoAberto("financeiro", data.data);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const payload = { ...data, criado_por: context.userId };
     if (data.id) {
@@ -352,6 +362,8 @@ export const deleteMovimentacao = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertFinanceiroAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: atual } = await supabaseAdmin.from("fin_movimentacoes").select("data").eq("id", data.id).maybeSingle();
+    await assertPeriodoAberto("financeiro", (atual as any)?.data);
     const { error } = await supabaseAdmin.from("fin_movimentacoes").delete().eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };

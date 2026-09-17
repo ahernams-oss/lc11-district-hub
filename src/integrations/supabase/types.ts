@@ -1260,6 +1260,165 @@ export type Database = {
         }
         Relationships: []
       }
+      exercicio_eventos: {
+        Row: {
+          acao: string
+          created_at: string
+          exercicio_id: string
+          id: string
+          modulo: string
+          parecer: string | null
+          usuario_email: string | null
+          usuario_id: string | null
+        }
+        Insert: {
+          acao: string
+          created_at?: string
+          exercicio_id: string
+          id?: string
+          modulo: string
+          parecer?: string | null
+          usuario_email?: string | null
+          usuario_id?: string | null
+        }
+        Update: {
+          acao?: string
+          created_at?: string
+          exercicio_id?: string
+          id?: string
+          modulo?: string
+          parecer?: string | null
+          usuario_email?: string | null
+          usuario_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exercicio_eventos_exercicio_id_fkey"
+            columns: ["exercicio_id"]
+            isOneToOne: false
+            referencedRelation: "exercicios_leonicos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      exercicio_saldos_abertura: {
+        Row: {
+          conta_bancaria_id: string | null
+          conta_contabil_id: string | null
+          created_at: string
+          descricao: string
+          exercicio_id: string
+          id: string
+          modulo: string
+          saldo: number
+          updated_at: string
+        }
+        Insert: {
+          conta_bancaria_id?: string | null
+          conta_contabil_id?: string | null
+          created_at?: string
+          descricao: string
+          exercicio_id: string
+          id?: string
+          modulo: string
+          saldo?: number
+          updated_at?: string
+        }
+        Update: {
+          conta_bancaria_id?: string | null
+          conta_contabil_id?: string | null
+          created_at?: string
+          descricao?: string
+          exercicio_id?: string
+          id?: string
+          modulo?: string
+          saldo?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exercicio_saldos_abertura_conta_bancaria_id_fkey"
+            columns: ["conta_bancaria_id"]
+            isOneToOne: false
+            referencedRelation: "fin_contas_bancarias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "exercicio_saldos_abertura_conta_contabil_id_fkey"
+            columns: ["conta_contabil_id"]
+            isOneToOne: false
+            referencedRelation: "con_plano_contas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "exercicio_saldos_abertura_exercicio_id_fkey"
+            columns: ["exercicio_id"]
+            isOneToOne: false
+            referencedRelation: "exercicios_leonicos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      exercicios_leonicos: {
+        Row: {
+          ano_leonico: string
+          con_fechado_em: string | null
+          con_fechado_por: string | null
+          con_parecer: string | null
+          created_at: string
+          data_fim: string
+          data_inicio: string
+          fin_fechado_em: string | null
+          fin_fechado_por: string | null
+          fin_parecer: string | null
+          id: string
+          observacoes: string | null
+          resultado_contabil: Json | null
+          resultado_financeiro: Json | null
+          status_contabil: string
+          status_financeiro: string
+          updated_at: string
+        }
+        Insert: {
+          ano_leonico: string
+          con_fechado_em?: string | null
+          con_fechado_por?: string | null
+          con_parecer?: string | null
+          created_at?: string
+          data_fim: string
+          data_inicio: string
+          fin_fechado_em?: string | null
+          fin_fechado_por?: string | null
+          fin_parecer?: string | null
+          id?: string
+          observacoes?: string | null
+          resultado_contabil?: Json | null
+          resultado_financeiro?: Json | null
+          status_contabil?: string
+          status_financeiro?: string
+          updated_at?: string
+        }
+        Update: {
+          ano_leonico?: string
+          con_fechado_em?: string | null
+          con_fechado_por?: string | null
+          con_parecer?: string | null
+          created_at?: string
+          data_fim?: string
+          data_inicio?: string
+          fin_fechado_em?: string | null
+          fin_fechado_por?: string | null
+          fin_parecer?: string | null
+          id?: string
+          observacoes?: string | null
+          resultado_contabil?: Json | null
+          resultado_financeiro?: Json | null
+          status_contabil?: string
+          status_financeiro?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       fin_categorias: {
         Row: {
           ativo: boolean

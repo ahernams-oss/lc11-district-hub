@@ -26,6 +26,7 @@ import {
   Award,
   ShieldCheck,
   Globe2,
+  CalendarCheck,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -125,6 +126,7 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
   {
     title: "Configurações",
     items: [
+      { to: "/gestao/exercicios", label: "Ano Leonístico", icon: CalendarCheck, exact: false, accessKey: "any" },
       { to: "/gestao/distritos", label: "Distritos", icon: Globe2, exact: false, accessKey: "admin" },
       { to: "/gestao/usuarios", label: "Usuários", icon: Settings, exact: false, accessKey: "admin" },
     ],

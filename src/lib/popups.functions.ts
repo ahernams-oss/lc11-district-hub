@@ -1,17 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
-import { writeFileSync, unlinkSync } from "fs";
-import { execSync } from "child_process";
+
+const FIVE_YEARS = 60 * 60 * 24 * 365 * 5;
 
 export const uploadPopupImage = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(z.object({ file: z.string().min(1), filename: z.string().min(1) }))
   .handler(async ({ data }) => {
-    const base64 = data.file;
-    const filename = data.filename;
-
-    const match = base64.match(/^data:([\w/\-+.]+);base64,(.+)$/);
+    const match = data.file.match(/^data:([\w/\-+.]+);base64,(.+)$/);
     if (!match) {
       throw new Error("Formato base64 inválido");
     }
@@ -24,28 +21,20 @@ export const uploadPopupImage = createServerFn({ method: "POST" })
       throw new Error("Tipo de arquivo não permitido. Use PNG, JPEG, WEBP ou GIF.");
     }
 
-    const tmpPath = `/tmp/${Date.now()}-${filename}`;
-    writeFileSync(tmpPath, buffer);
+    const safe = data.filename.replace(/[^\w.\-]+/g, "_");
+    const path = `popups/${Date.now()}-${safe}`;
 
-    try {
-      const result = execSync(
-        `lovable-assets create --file "${tmpPath}" --filename "${filename}" --content-type "${mime}"`,
-        { encoding: "utf-8", timeout: 30000 }
-      );
-      const text = result.trim();
-      const start = text.indexOf("{");
-      const end = text.lastIndexOf("}");
-      if (start === -1 || end === -1 || end <= start) {
-        throw new Error("Saída inválida do upload");
-      }
-      const json = JSON.parse(text.substring(start, end + 1));
-      if (!json.url) {
-        throw new Error("Falha ao obter URL do upload");
-      }
-      return { url: json.url };
-    } finally {
-      try {
-        unlinkSync(tmpPath);
-      } catch {}
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin.storage
+      .from("site-images")
+      .upload(path, buffer, { contentType: mime, upsert: false });
+    if (error) throw new Error(error.message);
+
+    const { data: signed, error: signErr } = await supabaseAdmin.storage
+      .from("site-images")
+      .createSignedUrl(path, FIVE_YEARS);
+    if (signErr || !signed?.signedUrl) {
+      throw new Error("Falha ao obter URL da imagem");
     }
+    return { url: signed.signedUrl };
   });

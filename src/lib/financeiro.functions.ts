@@ -205,6 +205,22 @@ export const deleteContaPagar = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
+export const setStatusContaPagar = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(z.object({
+    id: z.string().uuid(),
+    status: z.enum(["pendente", "pago", "vencido", "cancelado"]),
+  }))
+  .handler(async ({ data, context }) => {
+    await assertFinanceiroAccess(context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const update: Record<string, unknown> = { status: data.status };
+    if (data.status === "pago") update.pago_em = new Date().toISOString();
+    const { error } = await supabaseAdmin.from("fin_contas_pagar").update(update).eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
 // ─── CONTAS A RECEBER ─────────────────────────────────────────────
 export const listContasReceber = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])

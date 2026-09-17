@@ -18,6 +18,8 @@ type Report = "dre" | "categorias" | "mensal";
 function RelatoriosPage() {
   const listMov = useServerFn(listMovimentacoes);
   const listCats = useServerFn(listCategorias);
+  const listPagar = useServerFn(listContasPagar);
+  const listReceber = useServerFn(listContasReceber);
   const [activeReport, setActiveReport] = useState<Report>("dre");
   const [mes, setMes] = useState(currentYearMonth());
   const [period, setPeriod] = useState("12");
@@ -27,14 +29,30 @@ function RelatoriosPage() {
   // Fetch movimentações for selected month (DRE)
   const { data: movsMes, isLoading: loadingMes } = useQuery({
     queryKey: ["movs-relatorio-mes", mes],
-    queryFn: () => listMov({ data: { mes } }),
+    queryFn: async () => {
+      const [movs, pagar, receber] = await Promise.all([
+        listMov({ data: { mes } }),
+        listPagar({ data: { mes } }),
+        listReceber({ data: { mes } }),
+      ]);
+      return mergeLancamentos(movs, pagar, receber);
+    },
   });
 
   // Fetch all movimentos for period (categorias report)
   const { data: movsTodos, isLoading: loadingTodos } = useQuery({
     queryKey: ["movs-relatorio-todos", period],
     queryFn: async () => {
-      const all = await Promise.all(months.map((m) => listMov({ data: { mes: m } })));
+      const all = await Promise.all(
+        months.map(async (m) => {
+          const [movs, pagar, receber] = await Promise.all([
+            listMov({ data: { mes: m } }),
+            listPagar({ data: { mes: m } }),
+            listReceber({ data: { mes: m } }),
+          ]);
+          return mergeLancamentos(movs, pagar, receber);
+        })
+      );
       return all.flat();
     },
     enabled: activeReport === "categorias",

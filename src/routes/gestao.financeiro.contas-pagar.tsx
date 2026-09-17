@@ -8,7 +8,7 @@ import { StatusBadge } from "@/components/gestao/StatusBadge";
 import { Drawer, Field, FormInput, FormSelect, FormTextarea, FormRow, FormActions } from "@/components/gestao/GestaoForm";
 import { CurrencyInput } from "@/components/gestao/CurrencyInput";
 import { FileUploadInput } from "@/components/gestao/FileUploadInput";
-import { listContasPagar, upsertContaPagar, deleteContaPagar, listCategorias, listContasBancarias } from "@/lib/financeiro.functions";
+import { listContasPagar, upsertContaPagar, deleteContaPagar, setStatusContaPagar, listCategorias, listContasBancarias } from "@/lib/financeiro.functions";
 import { formatBRL, formatDate, currentYearMonth } from "@/lib/financeiro.utils";
 
 export const Route = createFileRoute("/gestao/financeiro/contas-pagar")({
@@ -40,6 +40,7 @@ function ContasPagarPage() {
   const list = useServerFn(listContasPagar);
   const upsert = useServerFn(upsertContaPagar);
   const del = useServerFn(deleteContaPagar);
+  const setStatus = useServerFn(setStatusContaPagar);
   const listCats = useServerFn(listCategorias);
   const listContas = useServerFn(listContasBancarias);
 
@@ -90,6 +91,17 @@ function ContasPagarPage() {
       qc.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
     },
     onError: (e: any) => setMsg({ type: "err", text: e?.message ?? "Erro ao excluir." }),
+  });
+
+  const statusMut = useMutation({
+    mutationFn: (vars: { id: string; status: string }) =>
+      setStatus({ data: { id: vars.id, status: vars.status as any } }),
+    onSuccess: () => {
+      setMsg({ type: "ok", text: "Status atualizado." });
+      qc.invalidateQueries({ queryKey: ["contas-pagar"] });
+      qc.invalidateQueries({ queryKey: ["financeiro-dashboard"] });
+    },
+    onError: (e: any) => setMsg({ type: "err", text: e?.message ?? "Erro ao atualizar status." }),
   });
 
   function openNew() {
@@ -229,7 +241,20 @@ function ContasPagarPage() {
                     </td>
                     <td className="px-4 py-3 text-slate-300">{formatDate(c.vencimento)}</td>
                     <td className="px-4 py-3 text-right font-mono text-white">{formatBRL(c.valor)}</td>
-                    <td className="px-4 py-3"><StatusBadge status={c.status} /></td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <StatusBadge status={c.status} />
+                        <select
+                          value={c.status}
+                          disabled={statusMut.isPending && statusMut.variables?.id === c.id}
+                          onChange={(e) => statusMut.mutate({ id: c.id, status: e.target.value })}
+                          className="rounded-md border border-white/10 bg-[#0d1321] px-1.5 py-1 text-[11px] text-slate-300 outline-none focus:border-primary disabled:opacity-50"
+                          title="Alterar status"
+                        >
+                          {STATUS_OPTIONS.map((s) => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
+                        </select>
+                      </div>
+                    </td>
                     <td className="px-4 py-3 text-center">
                       {(c as any).anexo_url ? (
                         <a

@@ -149,12 +149,14 @@ function Index() {
 
   // Hierarquia de visibilidade por categoria: quanto maior a cota,
   // maior o logo e mais lenta (mais tempo em tela) a passagem.
-  const PARTNER_TIERS: Record<string, { label: string; card: string; img: string; speedFactor: number; badge: string }> = {
+  const PARTNER_TIERS: Record<string, { label: string; card: string; img: string; pad?: string; speedFactor: number; badge: string }> = {
     "Diamante":      { label: "Parceiros Diamante",      card: "h-40 w-64 sm:h-44 sm:w-72", img: "max-h-28 sm:max-h-32", speedFactor: 1.6, badge: "bg-amber-500/15 text-amber-600 border-amber-500/30" },
     "Ouro":          { label: "Parceiros Ouro",          card: "h-32 w-56 sm:h-36 sm:w-64", img: "max-h-24 sm:max-h-28", speedFactor: 1.3, badge: "bg-yellow-500/15 text-yellow-600 border-yellow-500/30" },
     "Prata":         { label: "Parceiros Prata",         card: "h-28 w-48 sm:h-32 sm:w-56", img: "max-h-20 sm:max-h-24", speedFactor: 1.1, badge: "bg-slate-400/15 text-slate-500 border-slate-400/30" },
     "Bronze":        { label: "Parceiros Bronze",        card: "h-24 w-40 sm:h-28 sm:w-48", img: "max-h-16 sm:max-h-20", speedFactor: 0.95, badge: "bg-orange-700/10 text-orange-700 border-orange-700/25" },
-    "Institucional": { label: "Parceiros Institucionais", card: "h-32 w-56 sm:h-36 sm:w-64", img: "max-h-24 sm:max-h-28", speedFactor: 1.3, badge: "bg-primary/10 text-primary border-primary/25" },
+    // Logos institucionais costumam ser quadrados: usam todo o cartão para
+    // ficarem visualmente do mesmo tamanho dos banners largos do Ouro.
+    "Institucional": { label: "Parceiros Institucionais", card: "h-32 w-56 sm:h-36 sm:w-64", img: "h-full max-h-full", pad: "px-2 py-2", speedFactor: 1.3, badge: "bg-primary/10 text-primary border-primary/25" },
   };
   const TIER_ORDER = ["Diamante", "Ouro", "Prata", "Bronze", "Institucional"];
   const partnerRows = TIER_ORDER
@@ -310,7 +312,7 @@ function Index() {
                     <div className="partners-track">
                       {[...items, ...items].map((partner, index) => {
                         const logo = (
-                          <div className={`flex shrink-0 flex-col items-center justify-center gap-2 rounded-lg border border-border bg-card px-5 py-3 shadow-card ${config.card}`}>
+                          <div className={`flex shrink-0 flex-col items-center justify-center gap-2 rounded-lg border border-border bg-card shadow-card ${config.pad ?? "px-5 py-3"} ${config.card}`}>
                             <img src={partner.url} alt={`Logo de parceiro ${partner.category}`} loading="lazy" className={`min-h-0 w-full object-contain ${config.img}`} />
                             <span className="sr-only">Categoria {partner.category}</span>
                           </div>

@@ -71,7 +71,11 @@ export function FornecedorPicker({ value, textValue, onChange, placeholder }: Pr
           placeholder={placeholder ?? "Buscar fornecedor por nome, CNPJ ou cidade..."}
           className="w-full bg-transparent py-2 text-sm text-white outline-none placeholder:text-slate-500"
         />
-        {value && <Check className="h-4 w-4 shrink-0 text-emerald-400" title="Fornecedor cadastrado vinculado" />}
+        {value && (
+          <span title="Fornecedor cadastrado vinculado" className="shrink-0">
+            <Check className="h-4 w-4 text-emerald-400" />
+          </span>
+        )}
         {term && (
           <button
             type="button"

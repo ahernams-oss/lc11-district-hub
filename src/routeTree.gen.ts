@@ -97,6 +97,7 @@ import { Route as GestaoFinanceiroContasReceberRouteImport } from './routes/gest
 import { Route as GestaoFinanceiroContasPagarRouteImport } from './routes/gestao.financeiro.contas-pagar'
 import { Route as GestaoFinanceiroContasBancariasRouteImport } from './routes/gestao.financeiro.contas-bancarias'
 import { Route as GestaoFinanceiroCobrancasRouteImport } from './routes/gestao.financeiro.cobrancas'
+import { Route as GestaoFinanceiroClientesRouteImport } from './routes/gestao.financeiro.clientes'
 import { Route as GestaoFinanceiroCategoriasRouteImport } from './routes/gestao.financeiro.categorias'
 import { Route as GestaoFinanceiroAprovacoesRouteImport } from './routes/gestao.financeiro.aprovacoes'
 import { Route as GestaoCrmTarefasRouteImport } from './routes/gestao.crm.tarefas'
@@ -582,6 +583,12 @@ const GestaoFinanceiroCobrancasRoute =
     path: '/cobrancas',
     getParentRoute: () => GestaoFinanceiroRoute,
   } as any)
+const GestaoFinanceiroClientesRoute =
+  GestaoFinanceiroClientesRouteImport.update({
+    id: '/clientes',
+    path: '/clientes',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
 const GestaoFinanceiroCategoriasRoute =
   GestaoFinanceiroCategoriasRouteImport.update({
     id: '/categorias',
@@ -848,6 +855,7 @@ export interface FileRoutesByFullPath {
   '/gestao/crm/tarefas': typeof GestaoCrmTarefasRoute
   '/gestao/financeiro/aprovacoes': typeof GestaoFinanceiroAprovacoesRoute
   '/gestao/financeiro/categorias': typeof GestaoFinanceiroCategoriasRoute
+  '/gestao/financeiro/clientes': typeof GestaoFinanceiroClientesRoute
   '/gestao/financeiro/cobrancas': typeof GestaoFinanceiroCobrancasRoute
   '/gestao/financeiro/contas-bancarias': typeof GestaoFinanceiroContasBancariasRoute
   '/gestao/financeiro/contas-pagar': typeof GestaoFinanceiroContasPagarRoute
@@ -964,6 +972,7 @@ export interface FileRoutesByTo {
   '/gestao/crm/tarefas': typeof GestaoCrmTarefasRoute
   '/gestao/financeiro/aprovacoes': typeof GestaoFinanceiroAprovacoesRoute
   '/gestao/financeiro/categorias': typeof GestaoFinanceiroCategoriasRoute
+  '/gestao/financeiro/clientes': typeof GestaoFinanceiroClientesRoute
   '/gestao/financeiro/cobrancas': typeof GestaoFinanceiroCobrancasRoute
   '/gestao/financeiro/contas-bancarias': typeof GestaoFinanceiroContasBancariasRoute
   '/gestao/financeiro/contas-pagar': typeof GestaoFinanceiroContasPagarRoute
@@ -1087,6 +1096,7 @@ export interface FileRoutesById {
   '/gestao/crm/tarefas': typeof GestaoCrmTarefasRoute
   '/gestao/financeiro/aprovacoes': typeof GestaoFinanceiroAprovacoesRoute
   '/gestao/financeiro/categorias': typeof GestaoFinanceiroCategoriasRoute
+  '/gestao/financeiro/clientes': typeof GestaoFinanceiroClientesRoute
   '/gestao/financeiro/cobrancas': typeof GestaoFinanceiroCobrancasRoute
   '/gestao/financeiro/contas-bancarias': typeof GestaoFinanceiroContasBancariasRoute
   '/gestao/financeiro/contas-pagar': typeof GestaoFinanceiroContasPagarRoute
@@ -1211,6 +1221,7 @@ export interface FileRouteTypes {
     | '/gestao/crm/tarefas'
     | '/gestao/financeiro/aprovacoes'
     | '/gestao/financeiro/categorias'
+    | '/gestao/financeiro/clientes'
     | '/gestao/financeiro/cobrancas'
     | '/gestao/financeiro/contas-bancarias'
     | '/gestao/financeiro/contas-pagar'
@@ -1327,6 +1338,7 @@ export interface FileRouteTypes {
     | '/gestao/crm/tarefas'
     | '/gestao/financeiro/aprovacoes'
     | '/gestao/financeiro/categorias'
+    | '/gestao/financeiro/clientes'
     | '/gestao/financeiro/cobrancas'
     | '/gestao/financeiro/contas-bancarias'
     | '/gestao/financeiro/contas-pagar'
@@ -1449,6 +1461,7 @@ export interface FileRouteTypes {
     | '/gestao/crm/tarefas'
     | '/gestao/financeiro/aprovacoes'
     | '/gestao/financeiro/categorias'
+    | '/gestao/financeiro/clientes'
     | '/gestao/financeiro/cobrancas'
     | '/gestao/financeiro/contas-bancarias'
     | '/gestao/financeiro/contas-pagar'
@@ -2152,6 +2165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GestaoFinanceiroCobrancasRouteImport
       parentRoute: typeof GestaoFinanceiroRoute
     }
+    '/gestao/financeiro/clientes': {
+      id: '/gestao/financeiro/clientes'
+      path: '/clientes'
+      fullPath: '/gestao/financeiro/clientes'
+      preLoaderRoute: typeof GestaoFinanceiroClientesRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
     '/gestao/financeiro/categorias': {
       id: '/gestao/financeiro/categorias'
       path: '/categorias'
@@ -2526,6 +2546,7 @@ const GestaoCrmRouteWithChildren = GestaoCrmRoute._addFileChildren(
 interface GestaoFinanceiroRouteChildren {
   GestaoFinanceiroAprovacoesRoute: typeof GestaoFinanceiroAprovacoesRoute
   GestaoFinanceiroCategoriasRoute: typeof GestaoFinanceiroCategoriasRoute
+  GestaoFinanceiroClientesRoute: typeof GestaoFinanceiroClientesRoute
   GestaoFinanceiroCobrancasRoute: typeof GestaoFinanceiroCobrancasRoute
   GestaoFinanceiroContasBancariasRoute: typeof GestaoFinanceiroContasBancariasRoute
   GestaoFinanceiroContasPagarRoute: typeof GestaoFinanceiroContasPagarRoute
@@ -2541,6 +2562,7 @@ interface GestaoFinanceiroRouteChildren {
 const GestaoFinanceiroRouteChildren: GestaoFinanceiroRouteChildren = {
   GestaoFinanceiroAprovacoesRoute: GestaoFinanceiroAprovacoesRoute,
   GestaoFinanceiroCategoriasRoute: GestaoFinanceiroCategoriasRoute,
+  GestaoFinanceiroClientesRoute: GestaoFinanceiroClientesRoute,
   GestaoFinanceiroCobrancasRoute: GestaoFinanceiroCobrancasRoute,
   GestaoFinanceiroContasBancariasRoute: GestaoFinanceiroContasBancariasRoute,
   GestaoFinanceiroContasPagarRoute: GestaoFinanceiroContasPagarRoute,

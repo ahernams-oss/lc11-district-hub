@@ -6,3 +6,4 @@ export { CurrencyInput, formatBRL } from "./CurrencyInput";
 export { Drawer, Field, FormInput, FormSelect, FormTextarea, FormRow, FormActions } from "./GestaoForm";
 export { FileUploadInput } from "./FileUploadInput";
 export { FornecedorPicker } from "./FornecedorPicker";
+export { ClientePicker } from "./ClientePicker";

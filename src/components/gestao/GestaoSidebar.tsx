@@ -71,6 +71,7 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
           { to: "/gestao/financeiro/orcamento",      label: "Orçamento",        icon: CalendarDays,   accessKey: "financeiro" },
           { to: "/gestao/financeiro/cobrancas",      label: "Cobranças",        icon: Users2,         accessKey: "financeiro" },
           { to: "/gestao/financeiro/contas-bancarias", label: "Contas Bancárias", icon: Building2,   accessKey: "financeiro" },
+          { to: "/gestao/financeiro/clientes",       label: "Clientes",         icon: Users2,         accessKey: "financeiro" },
           { to: "/gestao/financeiro/fornecedores",   label: "Fornecedores",     icon: Building2,      accessKey: "financeiro" },
           { to: "/gestao/financeiro/categorias",     label: "Categorias",       icon: Tag,            accessKey: "financeiro" },
           { to: "/gestao/financeiro/relatorios",     label: "Relatórios",       icon: FileBarChart,   accessKey: "financeiro" },

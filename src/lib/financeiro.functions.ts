@@ -242,7 +242,7 @@ export const listContasReceber = createServerFn({ method: "GET" })
     const escopoDistritos = await distritoScope(context.userId);
     let q = supabaseAdmin
       .from("fin_contas_receber")
-      .select("*, categoria:fin_categorias(id,nome,cor,tipo), conta:fin_contas_bancarias(id,nome,banco)").in("distrito_id", escopoDistritos)
+      .select("*, categoria:fin_categorias(id,nome,cor,tipo), conta:fin_contas_bancarias(id,nome,banco), cliente_ref:fin_clientes(id,nome,nome_fantasia,documento)").in("distrito_id", escopoDistritos)
       .order("vencimento");
     if (data?.status) q = q.eq("status", data.status);
     if (data?.categoria_id) q = q.eq("categoria_id", data.categoria_id);
@@ -269,6 +269,7 @@ export const upsertContaReceber = createServerFn({ method: "POST" })
     recebido_em: z.string().nullable().optional(),
     valor_recebido: z.number().int().nullable().optional(),
     pagador: z.string().nullable().optional(),
+    cliente_id: z.string().uuid().nullable().optional(),
     documento: z.string().nullable().optional(),
     anexo_url: z.string().nullable().optional(),
     observacoes: z.string().nullable().optional(),

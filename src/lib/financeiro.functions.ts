@@ -150,7 +150,7 @@ export const listContasPagar = createServerFn({ method: "GET" })
     const escopoDistritos = await distritoScope(context.userId);
     let q = supabaseAdmin
       .from("fin_contas_pagar")
-      .select("*, categoria:fin_categorias(id,nome,cor,tipo), conta:fin_contas_bancarias(id,nome,banco)").in("distrito_id", escopoDistritos)
+      .select("*, categoria:fin_categorias(id,nome,cor,tipo), conta:fin_contas_bancarias(id,nome,banco), fornecedor_ref:fin_fornecedores(id,nome,nome_fantasia,documento)").in("distrito_id", escopoDistritos)
       .order("vencimento");
     if (data?.status) q = q.eq("status", data.status);
     if (data?.categoria_id) q = q.eq("categoria_id", data.categoria_id);
@@ -177,6 +177,7 @@ export const upsertContaPagar = createServerFn({ method: "POST" })
     pago_em: z.string().nullable().optional(),
     valor_pago: z.number().int().nullable().optional(),
     fornecedor: z.string().nullable().optional(),
+    fornecedor_id: z.string().uuid().nullable().optional(),
     documento: z.string().nullable().optional(),
     anexo_url: z.string().nullable().optional(),
     observacoes: z.string().nullable().optional(),

@@ -91,6 +91,7 @@ import { Route as ProjetosCausaSlugRouteImport } from './routes/projetos.causa.$
 import { Route as GestaoFinanceiroRelatoriosRouteImport } from './routes/gestao.financeiro.relatorios'
 import { Route as GestaoFinanceiroOrcamentoRouteImport } from './routes/gestao.financeiro.orcamento'
 import { Route as GestaoFinanceiroMovimentacoesRouteImport } from './routes/gestao.financeiro.movimentacoes'
+import { Route as GestaoFinanceiroFornecedoresRouteImport } from './routes/gestao.financeiro.fornecedores'
 import { Route as GestaoFinanceiroFluxoCaixaRouteImport } from './routes/gestao.financeiro.fluxo-caixa'
 import { Route as GestaoFinanceiroContasReceberRouteImport } from './routes/gestao.financeiro.contas-receber'
 import { Route as GestaoFinanceiroContasPagarRouteImport } from './routes/gestao.financeiro.contas-pagar'
@@ -545,6 +546,12 @@ const GestaoFinanceiroMovimentacoesRoute =
     path: '/movimentacoes',
     getParentRoute: () => GestaoFinanceiroRoute,
   } as any)
+const GestaoFinanceiroFornecedoresRoute =
+  GestaoFinanceiroFornecedoresRouteImport.update({
+    id: '/fornecedores',
+    path: '/fornecedores',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
 const GestaoFinanceiroFluxoCaixaRoute =
   GestaoFinanceiroFluxoCaixaRouteImport.update({
     id: '/fluxo-caixa',
@@ -846,6 +853,7 @@ export interface FileRoutesByFullPath {
   '/gestao/financeiro/contas-pagar': typeof GestaoFinanceiroContasPagarRoute
   '/gestao/financeiro/contas-receber': typeof GestaoFinanceiroContasReceberRoute
   '/gestao/financeiro/fluxo-caixa': typeof GestaoFinanceiroFluxoCaixaRoute
+  '/gestao/financeiro/fornecedores': typeof GestaoFinanceiroFornecedoresRoute
   '/gestao/financeiro/movimentacoes': typeof GestaoFinanceiroMovimentacoesRoute
   '/gestao/financeiro/orcamento': typeof GestaoFinanceiroOrcamentoRoute
   '/gestao/financeiro/relatorios': typeof GestaoFinanceiroRelatoriosRoute
@@ -961,6 +969,7 @@ export interface FileRoutesByTo {
   '/gestao/financeiro/contas-pagar': typeof GestaoFinanceiroContasPagarRoute
   '/gestao/financeiro/contas-receber': typeof GestaoFinanceiroContasReceberRoute
   '/gestao/financeiro/fluxo-caixa': typeof GestaoFinanceiroFluxoCaixaRoute
+  '/gestao/financeiro/fornecedores': typeof GestaoFinanceiroFornecedoresRoute
   '/gestao/financeiro/movimentacoes': typeof GestaoFinanceiroMovimentacoesRoute
   '/gestao/financeiro/orcamento': typeof GestaoFinanceiroOrcamentoRoute
   '/gestao/financeiro/relatorios': typeof GestaoFinanceiroRelatoriosRoute
@@ -1083,6 +1092,7 @@ export interface FileRoutesById {
   '/gestao/financeiro/contas-pagar': typeof GestaoFinanceiroContasPagarRoute
   '/gestao/financeiro/contas-receber': typeof GestaoFinanceiroContasReceberRoute
   '/gestao/financeiro/fluxo-caixa': typeof GestaoFinanceiroFluxoCaixaRoute
+  '/gestao/financeiro/fornecedores': typeof GestaoFinanceiroFornecedoresRoute
   '/gestao/financeiro/movimentacoes': typeof GestaoFinanceiroMovimentacoesRoute
   '/gestao/financeiro/orcamento': typeof GestaoFinanceiroOrcamentoRoute
   '/gestao/financeiro/relatorios': typeof GestaoFinanceiroRelatoriosRoute
@@ -1206,6 +1216,7 @@ export interface FileRouteTypes {
     | '/gestao/financeiro/contas-pagar'
     | '/gestao/financeiro/contas-receber'
     | '/gestao/financeiro/fluxo-caixa'
+    | '/gestao/financeiro/fornecedores'
     | '/gestao/financeiro/movimentacoes'
     | '/gestao/financeiro/orcamento'
     | '/gestao/financeiro/relatorios'
@@ -1321,6 +1332,7 @@ export interface FileRouteTypes {
     | '/gestao/financeiro/contas-pagar'
     | '/gestao/financeiro/contas-receber'
     | '/gestao/financeiro/fluxo-caixa'
+    | '/gestao/financeiro/fornecedores'
     | '/gestao/financeiro/movimentacoes'
     | '/gestao/financeiro/orcamento'
     | '/gestao/financeiro/relatorios'
@@ -1442,6 +1454,7 @@ export interface FileRouteTypes {
     | '/gestao/financeiro/contas-pagar'
     | '/gestao/financeiro/contas-receber'
     | '/gestao/financeiro/fluxo-caixa'
+    | '/gestao/financeiro/fornecedores'
     | '/gestao/financeiro/movimentacoes'
     | '/gestao/financeiro/orcamento'
     | '/gestao/financeiro/relatorios'
@@ -2097,6 +2110,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GestaoFinanceiroMovimentacoesRouteImport
       parentRoute: typeof GestaoFinanceiroRoute
     }
+    '/gestao/financeiro/fornecedores': {
+      id: '/gestao/financeiro/fornecedores'
+      path: '/fornecedores'
+      fullPath: '/gestao/financeiro/fornecedores'
+      preLoaderRoute: typeof GestaoFinanceiroFornecedoresRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
     '/gestao/financeiro/fluxo-caixa': {
       id: '/gestao/financeiro/fluxo-caixa'
       path: '/fluxo-caixa'
@@ -2511,6 +2531,7 @@ interface GestaoFinanceiroRouteChildren {
   GestaoFinanceiroContasPagarRoute: typeof GestaoFinanceiroContasPagarRoute
   GestaoFinanceiroContasReceberRoute: typeof GestaoFinanceiroContasReceberRoute
   GestaoFinanceiroFluxoCaixaRoute: typeof GestaoFinanceiroFluxoCaixaRoute
+  GestaoFinanceiroFornecedoresRoute: typeof GestaoFinanceiroFornecedoresRoute
   GestaoFinanceiroMovimentacoesRoute: typeof GestaoFinanceiroMovimentacoesRoute
   GestaoFinanceiroOrcamentoRoute: typeof GestaoFinanceiroOrcamentoRoute
   GestaoFinanceiroRelatoriosRoute: typeof GestaoFinanceiroRelatoriosRoute
@@ -2525,6 +2546,7 @@ const GestaoFinanceiroRouteChildren: GestaoFinanceiroRouteChildren = {
   GestaoFinanceiroContasPagarRoute: GestaoFinanceiroContasPagarRoute,
   GestaoFinanceiroContasReceberRoute: GestaoFinanceiroContasReceberRoute,
   GestaoFinanceiroFluxoCaixaRoute: GestaoFinanceiroFluxoCaixaRoute,
+  GestaoFinanceiroFornecedoresRoute: GestaoFinanceiroFornecedoresRoute,
   GestaoFinanceiroMovimentacoesRoute: GestaoFinanceiroMovimentacoesRoute,
   GestaoFinanceiroOrcamentoRoute: GestaoFinanceiroOrcamentoRoute,
   GestaoFinanceiroRelatoriosRoute: GestaoFinanceiroRelatoriosRoute,

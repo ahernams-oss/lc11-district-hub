@@ -8,6 +8,7 @@ import { StatusBadge } from "@/components/gestao/StatusBadge";
 import { Drawer, Field, FormInput, FormSelect, FormTextarea, FormRow, FormActions } from "@/components/gestao/GestaoForm";
 import { CurrencyInput } from "@/components/gestao/CurrencyInput";
 import { FileUploadInput } from "@/components/gestao/FileUploadInput";
+import { FornecedorPicker } from "@/components/gestao/FornecedorPicker";
 import { listContasPagar, upsertContaPagar, deleteContaPagar, setStatusContaPagar, listCategorias, listContasBancarias } from "@/lib/financeiro.functions";
 import { formatBRL, formatDate, currentYearMonth } from "@/lib/financeiro.utils";
 
@@ -30,6 +31,7 @@ const EMPTY_FORM = {
   pago_em: "" as string | undefined,
   valor_pago: 0,
   fornecedor: "",
+  fornecedor_id: null as string | null,
   documento: "",
   anexo_url: "" as string | undefined,
   observacoes: "",
@@ -69,6 +71,7 @@ function ContasPagarPage() {
         pago_em: d.pago_em || null,
         valor_pago: d.valor_pago || null,
         fornecedor: d.fornecedor || null,
+        fornecedor_id: d.fornecedor_id || null,
         documento: d.documento || null,
         anexo_url: d.anexo_url || null,
         observacoes: d.observacoes || null,
@@ -122,6 +125,7 @@ function ContasPagarPage() {
       pago_em: (c as any).pago_em ?? "",
       valor_pago: (c as any).valor_pago ?? 0,
       fornecedor: (c as any).fornecedor ?? "",
+      fornecedor_id: (c as any).fornecedor_id ?? null,
       documento: (c as any).documento ?? "",
       anexo_url: (c as any).anexo_url ?? "",
       observacoes: (c as any).observacoes ?? "",
@@ -229,7 +233,9 @@ function ContasPagarPage() {
                   <tr key={c.id} className="border-t border-white/5 hover:bg-white/[0.02]">
                     <td className="px-4 py-3">
                       <div className="font-medium text-white">{c.descricao}</div>
-                      {(c as any).fornecedor && <div className="text-xs text-slate-500">{(c as any).fornecedor}</div>}
+                      {((c as any).fornecedor_ref?.nome ?? (c as any).fornecedor) && (
+                        <div className="text-xs text-slate-500">{(c as any).fornecedor_ref?.nome ?? (c as any).fornecedor}</div>
+                      )}
                     </td>
                     <td className="px-4 py-3">
                       {(c as any).categoria ? (
@@ -395,11 +401,17 @@ function ContasPagarPage() {
           )}
 
           <Field label="Fornecedor / Beneficiário">
-            <FormInput
-              value={form.fornecedor ?? ""}
-              onChange={(e) => setForm((f) => ({ ...f, fornecedor: e.target.value }))}
-              placeholder="Nome do fornecedor"
+            <FornecedorPicker
+              value={form.fornecedor_id}
+              textValue={form.fornecedor ?? ""}
+              onChange={(sel) => setForm((f) => ({ ...f, fornecedor_id: sel.id, fornecedor: sel.nome }))}
             />
+            <div className="mt-1.5 flex items-center gap-2 text-[11px] text-slate-500">
+              <span>Digite para buscar um fornecedor cadastrado.</span>
+              <Link to="/gestao/financeiro/fornecedores" target="_blank" className="text-primary underline">
+                Gerenciar fornecedores
+              </Link>
+            </div>
           </Field>
 
           <Field label="Documento (NF, recibo)">

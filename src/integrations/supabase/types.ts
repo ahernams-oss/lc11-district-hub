@@ -1572,6 +1572,7 @@ export type Database = {
           distrito_id: string | null
           documento: string | null
           fornecedor: string | null
+          fornecedor_id: string | null
           id: string
           observacoes: string | null
           pago_em: string | null
@@ -1597,6 +1598,7 @@ export type Database = {
           distrito_id?: string | null
           documento?: string | null
           fornecedor?: string | null
+          fornecedor_id?: string | null
           id?: string
           observacoes?: string | null
           pago_em?: string | null
@@ -1622,6 +1624,7 @@ export type Database = {
           distrito_id?: string | null
           documento?: string | null
           fornecedor?: string | null
+          fornecedor_id?: string | null
           id?: string
           observacoes?: string | null
           pago_em?: string | null
@@ -1654,6 +1657,13 @@ export type Database = {
             columns: ["distrito_id"]
             isOneToOne: false
             referencedRelation: "distritos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fin_contas_pagar_fornecedor_id_fkey"
+            columns: ["fornecedor_id"]
+            isOneToOne: false
+            referencedRelation: "fin_fornecedores"
             referencedColumns: ["id"]
           },
         ]
@@ -1736,6 +1746,111 @@ export type Database = {
           },
           {
             foreignKeyName: "fin_contas_receber_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fin_fornecedores: {
+        Row: {
+          agencia: string | null
+          ativo: boolean
+          bairro: string | null
+          banco: string | null
+          categoria_id: string | null
+          cep: string | null
+          cidade: string | null
+          complemento: string | null
+          conta: string | null
+          contato_nome: string | null
+          created_at: string
+          criado_por: string | null
+          distrito_id: string | null
+          documento: string | null
+          email: string | null
+          estado_uf: string | null
+          id: string
+          logradouro: string | null
+          nome: string
+          nome_fantasia: string | null
+          numero: string | null
+          observacoes: string | null
+          pix: string | null
+          telefone: string | null
+          tipo_pessoa: string
+          updated_at: string
+          whatsapp: string | null
+        }
+        Insert: {
+          agencia?: string | null
+          ativo?: boolean
+          bairro?: string | null
+          banco?: string | null
+          categoria_id?: string | null
+          cep?: string | null
+          cidade?: string | null
+          complemento?: string | null
+          conta?: string | null
+          contato_nome?: string | null
+          created_at?: string
+          criado_por?: string | null
+          distrito_id?: string | null
+          documento?: string | null
+          email?: string | null
+          estado_uf?: string | null
+          id?: string
+          logradouro?: string | null
+          nome: string
+          nome_fantasia?: string | null
+          numero?: string | null
+          observacoes?: string | null
+          pix?: string | null
+          telefone?: string | null
+          tipo_pessoa?: string
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Update: {
+          agencia?: string | null
+          ativo?: boolean
+          bairro?: string | null
+          banco?: string | null
+          categoria_id?: string | null
+          cep?: string | null
+          cidade?: string | null
+          complemento?: string | null
+          conta?: string | null
+          contato_nome?: string | null
+          created_at?: string
+          criado_por?: string | null
+          distrito_id?: string | null
+          documento?: string | null
+          email?: string | null
+          estado_uf?: string | null
+          id?: string
+          logradouro?: string | null
+          nome?: string
+          nome_fantasia?: string | null
+          numero?: string | null
+          observacoes?: string | null
+          pix?: string | null
+          telefone?: string | null
+          tipo_pessoa?: string
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fin_fornecedores_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "fin_categorias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fin_fornecedores_distrito_id_fkey"
             columns: ["distrito_id"]
             isOneToOne: false
             referencedRelation: "distritos"

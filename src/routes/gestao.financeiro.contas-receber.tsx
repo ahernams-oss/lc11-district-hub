@@ -8,6 +8,7 @@ import { StatusBadge } from "@/components/gestao/StatusBadge";
 import { Drawer, Field, FormInput, FormSelect, FormTextarea, FormRow, FormActions } from "@/components/gestao/GestaoForm";
 import { CurrencyInput } from "@/components/gestao/CurrencyInput";
 import { FileUploadInput } from "@/components/gestao/FileUploadInput";
+import { ClientePicker } from "@/components/gestao/ClientePicker";
 import { listContasReceber, upsertContaReceber, deleteContaReceber, listCategorias, listContasBancarias } from "@/lib/financeiro.functions";
 import { formatBRL, formatDate, currentYearMonth } from "@/lib/financeiro.utils";
 
@@ -30,6 +31,7 @@ const EMPTY_FORM = {
   recebido_em: "" as string | undefined,
   valor_recebido: 0,
   pagador: "",
+  cliente_id: null as string | null,
   documento: "",
   anexo_url: "" as string | undefined,
   observacoes: "",
@@ -67,6 +69,7 @@ function ContasReceberPage() {
       recebido_em: d.recebido_em || null,
       valor_recebido: d.valor_recebido || null,
       pagador: d.pagador || null,
+      cliente_id: d.cliente_id || null,
       documento: d.documento || null,
       anexo_url: d.anexo_url || null,
       observacoes: d.observacoes || null,
@@ -104,6 +107,7 @@ function ContasReceberPage() {
       recebido_em: (c as any).recebido_em ?? "",
       valor_recebido: (c as any).valor_recebido ?? 0,
       pagador: (c as any).pagador ?? "",
+      cliente_id: (c as any).cliente_id ?? null,
       documento: (c as any).documento ?? "",
       anexo_url: (c as any).anexo_url ?? "",
       observacoes: (c as any).observacoes ?? "",
@@ -205,7 +209,9 @@ function ContasReceberPage() {
                   <tr key={c.id} className="border-t border-white/5 hover:bg-white/[0.02]">
                     <td className="px-4 py-3">
                       <div className="font-medium text-white">{c.descricao}</div>
-                      {(c as any).pagador && <div className="text-xs text-slate-500">{(c as any).pagador}</div>}
+                      {((c as any).cliente_ref?.nome ?? (c as any).pagador) && (
+                        <div className="text-xs text-slate-500">{(c as any).cliente_ref?.nome ?? (c as any).pagador}</div>
+                      )}
                     </td>
                     <td className="px-4 py-3">
                       {(c as any).categoria ? (
@@ -331,8 +337,18 @@ function ContasReceberPage() {
             </FormRow>
           )}
 
-          <Field label="Pagador / Origem">
-            <FormInput value={form.pagador ?? ""} onChange={(e) => setForm((f) => ({ ...f, pagador: e.target.value }))} placeholder="Nome do pagador" />
+          <Field label="Cliente / Pagador">
+            <ClientePicker
+              value={form.cliente_id}
+              textValue={form.pagador ?? ""}
+              onChange={(sel) => setForm((f) => ({ ...f, cliente_id: sel.id, pagador: sel.nome }))}
+            />
+            <div className="mt-1.5 flex items-center gap-2 text-[11px] text-slate-500">
+              <span>Digite para buscar um cliente cadastrado.</span>
+              <Link to="/gestao/financeiro/clientes" target="_blank" className="text-primary underline">
+                Gerenciar clientes
+              </Link>
+            </div>
           </Field>
 
           <Field label="Anexo / Comprovante">

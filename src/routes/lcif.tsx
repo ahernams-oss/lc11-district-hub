@@ -3,6 +3,7 @@ import { useSiteContent } from "@/lib/content";
 import { PageHero } from "@/components/PageHero";
 import { BreakableText, normalizeBreaks } from "@/components/BreakableText";
 import { Heart } from "lucide-react";
+import coordenadorLcif from "@/assets/alexandre-lcif.jpeg.asset.json";
 
 const DEFAULTS = {
   eyebrow: "Fundação",
@@ -15,7 +16,7 @@ const DEFAULTS = {
     "Combate à cegueira e problemas visuais\nApoio à educação e alfabetização infantil\nAuxílio em desastres naturais\nProgramas de combate à fome\nDiabetes e saúde pública",
   footer_text:
     "Para mais informações ou para contribuir com a LCIF, entre em contato com o Distrito LC-11 ou visite o site oficial da LCIF.",
-  image_url: "",
+  image_url: coordenadorLcif.url,
 };
 
 export const Route = createFileRoute("/lcif")({
@@ -25,6 +26,8 @@ export const Route = createFileRoute("/lcif")({
       { name: "description", content: "Lions Clubs International Foundation - Distrito LC-11" },
       { property: "og:title", content: "LCIF — Distrito LC-11" },
       { property: "og:description", content: "Lions Clubs International Foundation - Distrito LC-11" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: LcifPage,
@@ -42,7 +45,7 @@ function LcifPage() {
         {c.image_url && (
           <img
             src={c.image_url}
-            alt=""
+            alt="Coordenador da LCIF do Distrito LC-11"
             className="mx-auto mb-8 max-h-[480px] w-auto max-w-full rounded-lg object-contain"
           />
         )}

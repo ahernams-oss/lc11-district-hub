@@ -1452,6 +1452,102 @@ export type Database = {
         }
         Relationships: []
       }
+      fin_clientes: {
+        Row: {
+          ativo: boolean
+          bairro: string | null
+          categoria_id: string | null
+          cep: string | null
+          cidade: string | null
+          clube_nome: string | null
+          complemento: string | null
+          contato_nome: string | null
+          created_at: string
+          criado_por: string | null
+          distrito_id: string | null
+          documento: string | null
+          email: string | null
+          estado_uf: string | null
+          id: string
+          logradouro: string | null
+          nome: string
+          nome_fantasia: string | null
+          numero: string | null
+          observacoes: string | null
+          telefone: string | null
+          tipo_pessoa: string
+          updated_at: string
+          whatsapp: string | null
+        }
+        Insert: {
+          ativo?: boolean
+          bairro?: string | null
+          categoria_id?: string | null
+          cep?: string | null
+          cidade?: string | null
+          clube_nome?: string | null
+          complemento?: string | null
+          contato_nome?: string | null
+          created_at?: string
+          criado_por?: string | null
+          distrito_id?: string | null
+          documento?: string | null
+          email?: string | null
+          estado_uf?: string | null
+          id?: string
+          logradouro?: string | null
+          nome: string
+          nome_fantasia?: string | null
+          numero?: string | null
+          observacoes?: string | null
+          telefone?: string | null
+          tipo_pessoa?: string
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Update: {
+          ativo?: boolean
+          bairro?: string | null
+          categoria_id?: string | null
+          cep?: string | null
+          cidade?: string | null
+          clube_nome?: string | null
+          complemento?: string | null
+          contato_nome?: string | null
+          created_at?: string
+          criado_por?: string | null
+          distrito_id?: string | null
+          documento?: string | null
+          email?: string | null
+          estado_uf?: string | null
+          id?: string
+          logradouro?: string | null
+          nome?: string
+          nome_fantasia?: string | null
+          numero?: string | null
+          observacoes?: string | null
+          telefone?: string | null
+          tipo_pessoa?: string
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fin_clientes_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "fin_categorias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fin_clientes_distrito_id_fkey"
+            columns: ["distrito_id"]
+            isOneToOne: false
+            referencedRelation: "distritos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       fin_cobrancas: {
         Row: {
           club_id: string | null
@@ -1672,6 +1768,7 @@ export type Database = {
         Row: {
           anexo_url: string | null
           categoria_id: string | null
+          cliente_id: string | null
           competencia: string | null
           conta_id: string | null
           created_at: string
@@ -1692,6 +1789,7 @@ export type Database = {
         Insert: {
           anexo_url?: string | null
           categoria_id?: string | null
+          cliente_id?: string | null
           competencia?: string | null
           conta_id?: string | null
           created_at?: string
@@ -1712,6 +1810,7 @@ export type Database = {
         Update: {
           anexo_url?: string | null
           categoria_id?: string | null
+          cliente_id?: string | null
           competencia?: string | null
           conta_id?: string | null
           created_at?: string
@@ -1735,6 +1834,13 @@ export type Database = {
             columns: ["categoria_id"]
             isOneToOne: false
             referencedRelation: "fin_categorias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fin_contas_receber_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "fin_clientes"
             referencedColumns: ["id"]
           },
           {

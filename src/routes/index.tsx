@@ -312,7 +312,7 @@ function Index() {
                     <div className="partners-track">
                       {[...items, ...items].map((partner, index) => {
                         const logo = (
-                          <div className={`flex shrink-0 flex-col items-center justify-center gap-2 rounded-lg border border-border bg-card px-5 py-3 shadow-card ${config.card}`}>
+                          <div className={`flex shrink-0 flex-col items-center justify-center gap-2 rounded-lg border border-border bg-card shadow-card ${config.pad ?? "px-5 py-3"} ${config.card}`}>
                             <img src={partner.url} alt={`Logo de parceiro ${partner.category}`} loading="lazy" className={`min-h-0 w-full object-contain ${config.img}`} />
                             <span className="sr-only">Categoria {partner.category}</span>
                           </div>

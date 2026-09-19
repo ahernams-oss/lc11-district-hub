@@ -13,8 +13,7 @@ import juventudeImg from "@/assets/cause-juventude.jpg";
 import saudeMentalImg from "@/assets/cause-saude-mental.jpg";
 import { useSiteContent } from "@/lib/content";
 import { useLeaders } from "@/lib/leaders";
-import { BoldText } from "@/components/BreakableText";
-import { BreakableText, normalizeBreaks } from "@/components/BreakableText";
+import { BoldText, BreakableText, normalizeBreaks } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -280,8 +279,8 @@ function Index() {
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 py-12 sm:px-6 lg:grid-cols-4 lg:px-8">
           {stats.map((s) => (
             <div key={s.label} className="text-center">
-              <div className="font-display text-4xl font-bold text-primary sm:text-5xl">{s.value}</div>
-              <div className="mt-1 text-sm font-medium uppercase tracking-wider text-muted-foreground">{s.label}</div>
+              <div className="font-display text-4xl font-bold text-primary sm:text-5xl"><BreakableText text={s.value} /></div>
+              <div className="mt-1 text-sm font-medium uppercase tracking-wider text-muted-foreground"><BreakableText text={s.label} /></div>
             </div>
           ))}
         </div>
@@ -343,13 +342,13 @@ function Index() {
               <BreakableText text={hero.mission_eyebrow} />
             </p>
             <h2 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl whitespace-pre-line">
-              {normalizeBreaks(hero.mission_title)}
+              <BoldText text={normalizeBreaks(hero.mission_title)} />
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-muted-foreground whitespace-pre-line">
-              {normalizeBreaks(hero.mission_text1)}
+              <BoldText text={normalizeBreaks(hero.mission_text1)} />
             </p>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground whitespace-pre-line">
-              {normalizeBreaks(hero.mission_text2)}
+              <BoldText text={normalizeBreaks(hero.mission_text2)} />
             </p>
             <Link to="/sobre" className="mt-6 inline-flex items-center gap-2 font-semibold text-primary hover:gap-3 transition-all">
               <BreakableText text={hero.mission_cta || "Saiba mais sobre o distrito"} /> <ArrowRight className="h-4 w-4" />
@@ -364,7 +363,7 @@ function Index() {
             ].map((item) => (
               <div key={item.label} className="rounded-xl border border-border bg-card p-6 shadow-card">
                 <item.icon className="h-8 w-8 text-primary" />
-                <div className="mt-3 font-semibold text-foreground">{item.label}</div>
+                <div className="mt-3 font-semibold text-foreground"><BreakableText text={item.label} /></div>
               </div>
             ))}
           </div>

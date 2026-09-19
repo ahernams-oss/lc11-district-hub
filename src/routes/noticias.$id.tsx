@@ -70,7 +70,7 @@ function NewsDetail() {
       </div>
 
       <h1 className="mt-4 font-display text-3xl font-bold leading-tight text-foreground sm:text-4xl">
-        {item.title}
+        <BreakableText text={item.title} />
       </h1>
 
       {item.excerpt && (

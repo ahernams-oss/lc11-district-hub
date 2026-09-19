@@ -51,7 +51,7 @@ function ParceiroBronzePage() {
         )}
         <div className="space-y-6 text-foreground/80">
           {paragraphs.map((p, i) => (
-            <p key={i}>{p}</p>
+            <p key={i}><BreakableText text={p} /></p>
           ))}
           {highlights.length > 0 && (
             <div className="rounded-lg border border-border bg-surface p-6">
@@ -60,7 +60,7 @@ function ParceiroBronzePage() {
               </h2>
               <ul className="mt-4 list-disc space-y-2 pl-5 text-foreground/80">
                 {highlights.map((item, i) => (
-                  <li key={i}>{item}</li>
+                  <li key={i}><BreakableText text={item} /></li>
                 ))}
               </ul>
             </div>

@@ -3,6 +3,7 @@ import { PageHero } from "@/components/PageHero";
 import { User } from "lucide-react";
 import { useSiteContent } from "@/lib/content";
 import { useLeaders } from "@/lib/leaders";
+import { BreakableText } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/ex-governadores/")({
   head: () => ({
@@ -56,8 +57,8 @@ function ExGovernadores() {
                   </span>
                 ))}
               </div>
-              {g.year_label && <div className="mt-1 text-base font-semibold text-primary">{g.year_label}</div>}
-              {g.motto && <div className="mt-2 text-base italic text-muted-foreground">"{g.motto}"</div>}
+              {g.year_label && <div className="mt-1 text-base font-semibold text-primary"><BreakableText text={g.year_label} /></div>}
+              {g.motto && <div className="mt-2 text-base italic text-muted-foreground">“<BreakableText text={g.motto} />”</div>}
               <div className="mt-3 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
                 Ver biografia →
               </div>

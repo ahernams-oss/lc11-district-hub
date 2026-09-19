@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 /**
  * Replaces "//" with newlines for flexible break control in CMS fields.

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useActivePopup } from "@/lib/popups";
 import { X } from "lucide-react";
+import { BreakableText } from "@/components/BreakableText";
 
 export function SitePopup() {
   const { data: popup } = useActivePopup();
@@ -46,10 +47,10 @@ export function SitePopup() {
           </div>
         )}
         <div className="p-5">
-          <h2 className="font-display text-xl font-bold">{popup.title}</h2>
+          <h2 className="font-display text-xl font-bold"><BreakableText text={popup.title} /></h2>
           {popup.content && (
             <p className="mt-2 whitespace-pre-line text-sm text-muted-foreground">
-              {popup.content}
+              <BreakableText text={popup.content} />
             </p>
           )}
           {popup.link_url && (
@@ -59,7 +60,7 @@ export function SitePopup() {
               rel="noreferrer"
               className="mt-4 inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
             >
-              {popup.link_label || "Saiba mais"}
+              <BreakableText text={popup.link_label || "Saiba mais"} />
             </a>
           )}
         </div>

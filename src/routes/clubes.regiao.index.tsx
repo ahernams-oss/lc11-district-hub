@@ -4,6 +4,7 @@ import { MapPin, Users, User } from "lucide-react";
 import { useRegions } from "@/lib/regions";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { BreakableText } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/clubes/regiao/")({
   head: () => ({
@@ -68,13 +69,13 @@ function ClubesRegiao() {
                   className="rounded-xl border border-border bg-card p-5 shadow-card transition-transform hover:-translate-y-1 hover:border-primary"
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <h3 className="font-display text-lg font-bold text-foreground">{r.name}</h3>
+                    <h3 className="font-display text-lg font-bold text-foreground"><BreakableText text={r.name} /></h3>
                     <span className="inline-flex items-center gap-1 rounded-md bg-accent px-2 py-0.5 text-xs font-semibold text-primary">
                       <Users className="h-3 w-3" /> {totalClubs} clube{totalClubs === 1 ? "" : "s"}
                     </span>
                   </div>
                   {r.description && (
-                    <p className="mt-2 text-sm text-muted-foreground">{r.description}</p>
+                    <p className="mt-2 text-sm text-muted-foreground"><BreakableText text={r.description} /></p>
                   )}
                   {(r.president || r.president_photo_url) && (
                     <div className="mt-4 flex items-center gap-3 rounded-lg border border-border bg-surface p-3">

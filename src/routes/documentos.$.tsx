@@ -2,6 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
 import { FileText, ExternalLink, Download } from "lucide-react";
 import { useDocuments, RGD_YEARS, RGD_ITEMS } from "@/lib/documents";
+import { BreakableText } from "@/components/BreakableText";
 
 type DocPageMeta = {
   eyebrow: string;
@@ -138,10 +139,10 @@ function DocumentoPage() {
                 >
                   <FileText className="h-6 w-6 shrink-0 text-primary" />
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-display text-lg font-semibold">{d.title}</h3>
+                    <h3 className="font-display text-lg font-semibold"><BreakableText text={d.title} /></h3>
                     {d.description && (
                       <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground">
-                        {d.description}
+                        <BreakableText text={d.description} />
                       </p>
                     )}
                   </div>

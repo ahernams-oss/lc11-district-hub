@@ -5,6 +5,7 @@ import { FileText, ExternalLink, Download, Search, X, LayoutGrid, List, Eye, Max
 import { useDocuments, useDocumentCategories, buildCategoryTree, flattenCategoryTree, categoryPathLabels, DOCUMENT_CATEGORIES, RGD_YEARS, RGD_ITEMS, type DocumentItem, REQUIRED_ROLE_LABELS } from "@/lib/documents";
 import { useAuth } from "@/hooks/use-auth";
 import { logDocumentAccess } from "@/lib/documents.audit";
+import { BreakableText } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/documentos/")({
   component: DocumentosIndex,
@@ -346,9 +347,9 @@ function DocumentosIndex() {
                         </span>
                       )}
                     </div>
-                    <h3 className="mt-1 font-display text-lg font-semibold">{d.title}</h3>
+                    <h3 className="mt-1 font-display text-lg font-semibold"><BreakableText text={d.title} /></h3>
                     {d.description && (
-                      <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground">{d.description}</p>
+                      <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground"><BreakableText text={d.description} /></p>
                     )}
                   </div>
                   <div className="flex shrink-0 items-center gap-2 self-start">
@@ -383,7 +384,7 @@ function DocumentosIndex() {
             </div>
             <div>
               <span className="text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">Documento Restrito</span>
-              <h2 className="font-display text-xl font-bold text-foreground mt-0.5">{restrictedModalDoc.title}</h2>
+              <h2 className="font-display text-xl font-bold text-foreground mt-0.5"><BreakableText text={restrictedModalDoc.title} /></h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 Este arquivo é de circulação interna e exige autenticação no <strong>Portal de Membros</strong> do Distrito LC-11.
               </p>
@@ -419,7 +420,7 @@ function DocumentosIndex() {
             <div className="flex items-center justify-between border-b px-4 py-3">
               <div className="flex items-center gap-2 min-w-0 pr-4">
                 <FileText className="h-5 w-5 shrink-0 text-primary" />
-                <span className="font-display font-semibold truncate">{previewDoc.title}</span>
+                <span className="font-display font-semibold truncate"><BreakableText text={previewDoc.title} /></span>
                 {previewDoc.is_restricted && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:text-amber-400">
                     <Lock className="h-3 w-3" /> Restrito

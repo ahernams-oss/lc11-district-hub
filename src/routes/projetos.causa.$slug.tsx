@@ -114,7 +114,7 @@ function CausaPage() {
                       {p.tag}
                     </span>
                   )}
-                  <h3 className="mt-3 font-display text-xl font-bold text-foreground">{p.title}</h3>
+                  <h3 className="mt-3 font-display text-xl font-bold text-foreground"><BreakableText text={p.title} /></h3>
                   {p.description && (
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                       <BreakableText text={p.description} />

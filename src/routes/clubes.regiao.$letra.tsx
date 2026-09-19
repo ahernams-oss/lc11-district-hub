@@ -3,6 +3,7 @@ import { PageHero } from "@/components/PageHero";
 import { MapPin, Users, Mail, User } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { BreakableText } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/clubes/regiao/$letra")({
   head: ({ params }) => {
@@ -103,9 +104,9 @@ function RegiaoDetalhe() {
                   <span className="rounded-md bg-primary px-3 py-1 font-display text-sm font-bold text-primary-foreground">
                     {d.code}
                   </span>
-                  <h2 className="font-display text-xl font-bold text-foreground">{d.name}</h2>
+                  <h2 className="font-display text-xl font-bold text-foreground"><BreakableText text={d.name} /></h2>
                 </div>
-                {d.description && <p className="mt-2 text-sm text-muted-foreground">{d.description}</p>}
+                {d.description && <p className="mt-2 text-sm text-muted-foreground"><BreakableText text={d.description} /></p>}
                 <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {(d.clubs ?? [])
                     .sort((a: any, b: any) => a.order_index - b.order_index)
@@ -114,7 +115,7 @@ function RegiaoDetalhe() {
                         key={c.id}
                         className="rounded-xl border border-border bg-card p-5 shadow-card"
                       >
-                        <h3 className="font-display text-lg font-bold text-foreground">{c.name}</h3>
+                        <h3 className="font-display text-lg font-bold text-foreground"><BreakableText text={c.name} /></h3>
                         <div className="mt-2 space-y-1 text-sm text-muted-foreground">
                           {c.city && (
                             <p className="flex items-center gap-2">

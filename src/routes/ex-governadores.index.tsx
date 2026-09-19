@@ -39,16 +39,16 @@ function ExGovernadores() {
               key={g.id}
               to="/ex-governadores/$id"
               params={{ id: String(g.id) }}
-              className="group flex flex-col items-center rounded-xl border border-border bg-card p-6 text-center shadow-card transition-transform hover:-translate-y-1 hover:shadow-elegant"
+              className="group flex flex-col items-center rounded-xl border border-border bg-card p-8 text-center shadow-card transition-transform hover:-translate-y-1 hover:shadow-elegant"
             >
               {g.photo_url ? (
-                <img src={g.photo_url} alt={g.name} className="h-24 w-24 rounded-full object-cover" />
+                <img src={g.photo_url} alt={g.name} className="h-32 w-32 rounded-full object-cover" />
               ) : (
-                <div className="flex h-24 w-24 items-center justify-center rounded-full bg-surface">
-                  <User className="h-12 w-12 text-muted-foreground/60" />
+                <div className="flex h-32 w-32 items-center justify-center rounded-full bg-surface">
+                  <User className="h-16 w-16 text-muted-foreground/60" />
                 </div>
               )}
-              <div className="mt-4 font-display text-lg font-bold text-foreground">
+              <div className="mt-5 font-display text-2xl font-bold text-foreground">
                 {g.name?.split(" // ").map((part: string, i: number, arr: string[]) => (
                   <span key={i}>
                     {part}
@@ -56,8 +56,8 @@ function ExGovernadores() {
                   </span>
                 ))}
               </div>
-              {g.year_label && <div className="mt-1 text-sm font-semibold text-primary">{g.year_label}</div>}
-              {g.motto && <div className="mt-2 text-sm italic text-muted-foreground">"{g.motto}"</div>}
+              {g.year_label && <div className="mt-1 text-base font-semibold text-primary">{g.year_label}</div>}
+              {g.motto && <div className="mt-2 text-base italic text-muted-foreground">"{g.motto}"</div>}
               <div className="mt-3 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
                 Ver biografia →
               </div>

@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import {BreakableText, normalizeBreaks } from "@/components/BreakableText";
+import { BoldText, BreakableText, normalizeBreaks } from "@/components/BreakableText";
 import { ArrowLeft, Calendar, Pencil } from "lucide-react";
 import { useNewsItem } from "@/lib/news";
 import { useAuth } from "@/hooks/use-auth";
@@ -93,7 +93,7 @@ function NewsDetail() {
             .filter((p) => p.trim())
             .map((p, i) => (
               <p key={i} className="whitespace-pre-line">
-                {p}
+                <BoldText text={p} />
               </p>
             ))}
         </div>

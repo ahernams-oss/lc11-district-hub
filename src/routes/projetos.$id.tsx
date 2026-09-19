@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { normalizeBreaks } from "@/components/BreakableText";
+import { BoldText, normalizeBreaks } from "@/components/BreakableText";
 import { useEffect, useState } from "react";
 import { PageHero } from "@/components/PageHero";
 import { useProject } from "@/lib/projects";
@@ -94,7 +94,7 @@ function ProjectDetail() {
 
         {project.content && (
           <article className="prose prose-neutral mt-10 max-w-none whitespace-pre-wrap text-foreground">
-            {normalizeBreaks(project.content)}
+            <BoldText text={normalizeBreaks(project.content)} />
           </article>
         )}
       </section>

@@ -13,6 +13,7 @@ import juventudeImg from "@/assets/cause-juventude.jpg";
 import saudeMentalImg from "@/assets/cause-saude-mental.jpg";
 import { useSiteContent } from "@/lib/content";
 import { useLeaders } from "@/lib/leaders";
+import { BoldText } from "@/components/BreakableText";
 import { BreakableText, normalizeBreaks } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/")({
@@ -208,10 +209,10 @@ function Index() {
                   <BreakableText text={hero.hero_eyebrow} />
                 </p>
                 <h1 className="font-display text-3xl font-bold leading-tight break-words whitespace-pre-line sm:text-4xl lg:text-5xl xl:text-6xl">
-                  {normalizeBreaks(hero.hero_title)}
+                  <BoldText text={normalizeBreaks(hero.hero_title)} />
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed opacity-95 sm:text-xl whitespace-pre-line">
-                  {normalizeBreaks(hero.hero_description)}
+                  <BoldText text={normalizeBreaks(hero.hero_description)} />
                 </p>
                 <div className="mt-10 flex flex-wrap gap-4">
                   <Link

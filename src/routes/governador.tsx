@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import govImg from "@/assets/governador.jpg";
 import { useSiteContent } from "@/lib/content";
 import { useLeaders } from "@/lib/leaders";
-import { normalizeBreaks } from "@/components/BreakableText";
+import { BoldText, normalizeBreaks } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/governador")({
   head: () => ({
@@ -123,13 +123,13 @@ function Governador() {
             <div className="rounded-xl bg-primary p-6 text-primary-foreground shadow-card">
               <Quote className="h-8 w-8 text-gold" />
               <p className="mt-3 font-display text-xl italic leading-relaxed sm:text-2xl whitespace-pre-line">
-                {normalizeBreaks(message)}
+                <BoldText text={normalizeBreaks(message)} />
               </p>
             </div>
 
             <div className="prose prose-lg mt-10 max-w-none text-foreground">
               <h2 className="font-display text-2xl font-bold">Trajetória</h2>
-              <p className="text-muted-foreground whitespace-pre-line">{normalizeBreaks(bio)}</p>
+              <p className="text-muted-foreground whitespace-pre-line"><BoldText text={normalizeBreaks(bio)} /></p>
             </div>
           </div>
         </div>

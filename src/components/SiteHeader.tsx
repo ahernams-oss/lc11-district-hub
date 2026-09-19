@@ -630,7 +630,7 @@ export function SiteHeader() {
             <div className="ml-3 flex flex-col gap-2 border-l border-border pl-3">
               {rgdsConvencaoSubmenu.map((g) => (
                 <div key={g.label}>
-                  <div className="px-3 py-1 text-xs font-medium uppercase tracking-wide text-foreground/60">{g.label}</div>
+                  <div className="px-3 py-1 text-xs font-medium uppercase tracking-wide text-foreground/60"><BreakableText text={g.label} /></div>
                   <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
                     {g.items.map((s) => (
                       <Link

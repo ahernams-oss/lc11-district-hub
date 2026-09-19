@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import {BreakableText, normalizeBreaks } from "@/components/BreakableText";
+import { BoldText, BreakableText, normalizeBreaks } from "@/components/BreakableText";
 import { ArrowLeft, Calendar, Pencil } from "lucide-react";
 import { useNewsItem } from "@/lib/news";
 import { useAuth } from "@/hooks/use-auth";
@@ -70,7 +70,7 @@ function NewsDetail() {
       </div>
 
       <h1 className="mt-4 font-display text-3xl font-bold leading-tight text-foreground sm:text-4xl">
-        {item.title}
+        <BreakableText text={item.title} />
       </h1>
 
       {item.excerpt && (
@@ -93,7 +93,7 @@ function NewsDetail() {
             .filter((p) => p.trim())
             .map((p, i) => (
               <p key={i} className="whitespace-pre-line">
-                {p}
+                <BoldText text={p} />
               </p>
             ))}
         </div>

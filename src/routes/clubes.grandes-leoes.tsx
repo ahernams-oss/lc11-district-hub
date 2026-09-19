@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
 import { useLeaders } from "@/lib/leaders";
 import { Award, Sparkles, Shield, Heart, Landmark, Compass, UserCheck, ArrowRight } from "lucide-react";
+import { BreakableText } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/clubes/grandes-leoes")({
   head: () => ({
@@ -152,14 +153,14 @@ function GrandesLeoes() {
                     )}
                     <div className="flex-1 min-w-0 text-center sm:text-left">
                       <span className="rounded-full bg-background px-3 py-1 text-xs font-semibold text-primary shadow-sm inline-block">
-                        {fig.badge}
+                        <BreakableText text={fig.badge} />
                       </span>
-                      <h3 className="mt-3 font-display text-2xl font-bold text-foreground truncate-2-lines">{fig.name}</h3>
-                      <p className="mt-1 text-sm font-semibold text-primary">{fig.role}</p>
+                      <h3 className="mt-3 font-display text-2xl font-bold text-foreground truncate-2-lines"><BreakableText text={fig.name} /></h3>
+                      <p className="mt-1 text-sm font-semibold text-primary"><BreakableText text={fig.role} /></p>
                       {fig.club_name && (
-                        <p className="mt-1 text-sm font-medium text-muted-foreground">{fig.club_name}</p>
+                        <p className="mt-1 text-sm font-medium text-muted-foreground"><BreakableText text={fig.club_name} /></p>
                       )}
-                      <p className="mt-4 text-sm leading-relaxed text-muted-foreground line-clamp-4 whitespace-pre-line">{fig.desc}</p>
+                      <p className="mt-4 text-sm leading-relaxed text-muted-foreground line-clamp-4 whitespace-pre-line"><BreakableText text={fig.desc} /></p>
                       {fig.id && (
                         <Link
                           to="/grandes-leoes/$id"

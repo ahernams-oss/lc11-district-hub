@@ -2,7 +2,7 @@ import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { ArrowLeft, ChevronLeft, ChevronRight, Award } from "lucide-react";
 import { useLeader } from "@/lib/leaders";
 import { useEffect, useState } from "react";
-import { BreakableText, normalizeBreaks } from "@/components/BreakableText";
+import { BreakableText } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/grandes-leoes/$id")({
   head: () => ({
@@ -80,24 +80,24 @@ function GrandeLeaoBio() {
           )}
           <div className="mt-4 w-full max-w-[15rem] rounded-xl border border-gold/40 bg-gradient-to-b from-gold/10 to-gold/5 p-4 text-center shadow-elegant">
             <h1 className="font-display text-lg font-bold leading-tight text-foreground">
-              {leader.name}
+                <BreakableText text={leader.name} />
             </h1>
             {leader.role && (
-              <div className="mt-1 text-xs font-semibold text-primary">{leader.role}</div>
+              <div className="mt-1 text-xs font-semibold text-primary"><BreakableText text={leader.role} /></div>
             )}
             {leader.club_name && (
               <div className="mt-1 text-xs font-medium text-muted-foreground">
-                {leader.club_name}
+                <BreakableText text={leader.club_name} />
               </div>
             )}
             {leader.year_label && (
               <div className="mt-2 inline-block rounded-full bg-background px-3 py-0.5 text-xs font-semibold uppercase tracking-wide text-primary shadow-sm">
-                {leader.year_label}
+                <BreakableText text={leader.year_label} />
               </div>
             )}
             {leader.motto && (
               <div className="mt-3 border-t border-gold/30 pt-2 text-xs font-bold italic text-muted-foreground">
-                {leader.motto}
+                <BreakableText text={leader.motto} />
               </div>
             )}
           </div>
@@ -107,7 +107,7 @@ function GrandeLeaoBio() {
           <h2 className="font-display text-xl font-bold text-foreground">História e Trajetória</h2>
           {leader.bio ? (
             <div className="mt-3 whitespace-pre-line leading-relaxed text-foreground/90">
-              {normalizeBreaks(leader.bio)}
+              <BreakableText text={leader.bio} />
             </div>
           ) : (
             <p className="mt-3 text-muted-foreground">História ainda não cadastrada.</p>

@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
 import { Mail, Phone } from "lucide-react";
 import { useLeaders } from "@/lib/leaders";
+import { BreakableText } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/assessoria")({
   head: () => ({
@@ -52,8 +53,8 @@ function Assessoria() {
                     </span>
                   ))}
                 </p>
-                {m.role && <p className="mt-1 text-sm text-muted-foreground">{m.role}</p>}
-                {m.bio && <p className="mt-3 text-sm text-muted-foreground whitespace-pre-line">{m.bio}</p>}
+                {m.role && <p className="mt-1 text-sm text-muted-foreground"><BreakableText text={m.role} /></p>}
+                {m.bio && <p className="mt-3 text-sm text-muted-foreground whitespace-pre-line"><BreakableText text={m.bio} /></p>}
                 <div className="mt-4 space-y-1 text-sm text-muted-foreground">
                   {m.email && <p className="flex items-center gap-2"><Mail className="h-4 w-4 text-primary" />{m.email}</p>}
                   {m.phone && <p className="flex items-center gap-2"><Phone className="h-4 w-4 text-primary" />{m.phone}</p>}

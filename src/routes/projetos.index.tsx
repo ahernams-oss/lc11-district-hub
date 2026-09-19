@@ -100,8 +100,8 @@ function Projetos() {
               <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                 <c.icon className="h-6 w-6" />
               </div>
-              <h3 className="mt-4 font-display text-xl font-bold text-foreground">{c.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
+              <h3 className="mt-4 font-display text-xl font-bold text-foreground"><BreakableText text={c.title} /></h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground"><BreakableText text={c.desc} /></p>
               <span className="mt-4 inline-block text-sm font-semibold text-primary">
                 Ver projetos →
               </span>
@@ -163,7 +163,7 @@ function Projetos() {
                         {p.tag}
                       </span>
                     )}
-                    <h3 className="mt-3 font-display text-xl font-bold text-foreground">{p.title}</h3>
+                    <h3 className="mt-3 font-display text-xl font-bold text-foreground"><BreakableText text={p.title} /></h3>
                     {p.description && (
                       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                         <BreakableText text={p.description} />

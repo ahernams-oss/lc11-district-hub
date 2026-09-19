@@ -3,7 +3,7 @@ import { PageHero } from "@/components/PageHero";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { useState } from "react";
 import { useSiteContent } from "@/lib/content";
-import { normalizeBreaks } from "@/components/BreakableText";
+import { BreakableText } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/contato")({
   head: () => ({
@@ -44,17 +44,17 @@ function Contato() {
             <div className="rounded-xl border border-border bg-card p-6 shadow-card">
               <Mail className="h-6 w-6 text-primary" />
               <h3 className="mt-3 font-semibold text-foreground">E-mail</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{c.email}</p>
+              <p className="mt-1 text-sm text-muted-foreground"><BreakableText text={c.email} /></p>
             </div>
             <div className="rounded-xl border border-border bg-card p-6 shadow-card">
               <Phone className="h-6 w-6 text-primary" />
               <h3 className="mt-3 font-semibold text-foreground">Telefone</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{c.phone}</p>
+              <p className="mt-1 text-sm text-muted-foreground"><BreakableText text={c.phone} /></p>
             </div>
             <div className="rounded-xl border border-border bg-card p-6 shadow-card">
               <MapPin className="h-6 w-6 text-primary" />
               <h3 className="mt-3 font-semibold text-foreground">Sede do Distrito</h3>
-              <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground">{normalizeBreaks(c.address)}</p>
+              <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground"><BreakableText text={c.address} /></p>
             </div>
           </div>
 
@@ -68,11 +68,11 @@ function Contato() {
                   <Send className="h-6 w-6 text-primary" />
                 </div>
                 <h3 className="mt-4 font-display text-xl font-bold">Mensagem enviada!</h3>
-                <p className="mt-2 whitespace-pre-line text-muted-foreground">{normalizeBreaks(c.success_message)}</p>
+                <p className="mt-2 whitespace-pre-line text-muted-foreground"><BreakableText text={c.success_message} /></p>
               </div>
             ) : (
               <>
-                <h2 className="font-display text-2xl font-bold text-foreground">{c.form_title}</h2>
+                <h2 className="font-display text-2xl font-bold text-foreground"><BreakableText text={c.form_title} /></h2>
                 <div className="mt-6 grid gap-4 sm:grid-cols-2">
                   <Field label="Nome completo" name="nome" required />
                   <Field label="E-mail" name="email" type="email" required />

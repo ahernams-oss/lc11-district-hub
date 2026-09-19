@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
-import {normalizeBreaks, BreakableText } from "@/components/BreakableText";
+import { BreakableText } from "@/components/BreakableText";
 import { ArrowLeft, ChevronLeft, ChevronRight, User } from "lucide-react";
 import { useLeader } from "@/lib/leaders";
 import { useEffect, useState } from "react";
@@ -80,7 +80,7 @@ function ExGovernadorBio() {
           <h2 className="font-display text-xl font-bold text-foreground">Biografia</h2>
           {leader.bio ? (
             <div className="mt-3 whitespace-pre-line text-foreground/90 leading-relaxed">
-              {normalizeBreaks(leader.bio)}
+              <BreakableText text={leader.bio} />
             </div>
           ) : (
             <p className="mt-3 text-muted-foreground">Biografia ainda não cadastrada.</p>

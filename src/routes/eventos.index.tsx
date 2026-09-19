@@ -71,11 +71,11 @@ function Eventos() {
                         </span>
                       )}
                     </div>
-                    <h3 className="mt-2 font-display text-lg font-bold text-foreground">{e.title}</h3>
+                    <h3 className="mt-2 font-display text-lg font-bold text-foreground"><BreakableText text={e.title} /></h3>
                     <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted-foreground">
                       {e.location && (
                         <span className="flex items-center gap-1">
-                          <MapPin className="h-4 w-4 text-primary" /> {e.location}
+                          <MapPin className="h-4 w-4 text-primary" /> <BreakableText text={e.location} />
                         </span>
                       )}
                       {hora && (

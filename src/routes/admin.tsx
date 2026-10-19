@@ -55,6 +55,7 @@ function AdminLayout() {
   const navItems = [
     { to: "/admin", label: "Início", icon: Home, exact: true, show: true },
     { to: "/admin/conteudo", label: "Conteúdo das Páginas", icon: FileText, show: true },
+    { to: "/admin/subpaginas", label: "Subpáginas dos Menus", icon: FileText, show: true },
     { to: "/admin/lideres", label: "Líderes / Ex-Governadores", icon: Users, show: true },
     { to: "/admin/grandes-leoes", label: "Grandes Leões", icon: Award, show: true },
     { to: "/admin/regioes", label: "Regiões / Divisões / Clubes", icon: MapPin, show: true },

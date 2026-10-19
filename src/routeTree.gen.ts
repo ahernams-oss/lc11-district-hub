@@ -9,188 +9,208 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ViceGovernador2RouteImport } from './routes/vice-governador-2'
-import { Route as ViceGovernador1RouteImport } from './routes/vice-governador-1'
-import { Route as TesoureiroRouteImport } from './routes/tesoureiro'
-import { Route as SobreRouteImport } from './routes/sobre'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as SecretarioRouteImport } from './routes/secretario'
-import { Route as ProtocoloLeonisticoRouteImport } from './routes/protocolo-leonistico'
-import { Route as ParceriaInstitucionalRouteImport } from './routes/parceria-institucional'
-import { Route as ParceiroPrataRouteImport } from './routes/parceiro-prata'
-import { Route as ParceiroOuroRouteImport } from './routes/parceiro-ouro'
-import { Route as ParceiroDiamanteRouteImport } from './routes/parceiro-diamante'
-import { Route as ParceiroBronzeRouteImport } from './routes/parceiro-bronze'
-import { Route as NossasCategoriasDeParceriaRouteImport } from './routes/nossas-categorias-de-parceria'
-import { Route as LionsInternacionalRouteImport } from './routes/lions-internacional'
-import { Route as LcifRouteImport } from './routes/lcif'
-import { Route as HistoriaRouteImport } from './routes/historia'
-import { Route as GovernadorRouteImport } from './routes/governador'
-import { Route as GestaoRouteImport } from './routes/gestao'
-import { Route as GatRouteImport } from './routes/gat'
-import { Route as DocumentosRouteImport } from './routes/documentos'
-import { Route as DoarRouteImport } from './routes/doar'
-import { Route as ContatoRouteImport } from './routes/contato'
-import { Route as ConexaoSolidariaRouteImport } from './routes/conexao-solidaria'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AssessoriaRouteImport } from './routes/assessoria'
-import { Route as AliancasQueTransformamRouteImport } from './routes/aliancas-que-transformam'
-import { Route as AdminRouteImport } from './routes/admin'
-import { Route as AcessoRouteImport } from './routes/acesso'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ProjetosIndexRouteImport } from './routes/projetos.index'
-import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
-import { Route as GestaoIndexRouteImport } from './routes/gestao.index'
-import { Route as ExGovernadoresIndexRouteImport } from './routes/ex-governadores.index'
-import { Route as EventosIndexRouteImport } from './routes/eventos.index'
-import { Route as DocumentosIndexRouteImport } from './routes/documentos.index'
-import { Route as ClubesIndexRouteImport } from './routes/clubes.index'
-import { Route as CampanhasIndexRouteImport } from './routes/campanhas.index'
+import { Route as AcessoRouteImport } from './routes/acesso'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AliancasQueTransformamRouteImport } from './routes/aliancas-que-transformam'
+import { Route as AssessoriaRouteImport } from './routes/assessoria'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ConexaoSolidariaRouteImport } from './routes/conexao-solidaria'
+import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as DoarRouteImport } from './routes/doar'
+import { Route as DocumentosRouteImport } from './routes/documentos'
+import { Route as GatRouteImport } from './routes/gat'
+import { Route as GestaoRouteImport } from './routes/gestao'
+import { Route as GovernadorRouteImport } from './routes/governador'
+import { Route as HistoriaRouteImport } from './routes/historia'
+import { Route as LcifRouteImport } from './routes/lcif'
+import { Route as LionsInternacionalRouteImport } from './routes/lions-internacional'
+import { Route as NossasCategoriasDeParceriaRouteImport } from './routes/nossas-categorias-de-parceria'
+import { Route as ParceiroBronzeRouteImport } from './routes/parceiro-bronze'
+import { Route as ParceiroDiamanteRouteImport } from './routes/parceiro-diamante'
+import { Route as ParceiroOuroRouteImport } from './routes/parceiro-ouro'
+import { Route as ParceiroPrataRouteImport } from './routes/parceiro-prata'
+import { Route as ParceriaInstitucionalRouteImport } from './routes/parceria-institucional'
+import { Route as ProtocoloLeonisticoRouteImport } from './routes/protocolo-leonistico'
+import { Route as SecretarioRouteImport } from './routes/secretario'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as TesoureiroRouteImport } from './routes/tesoureiro'
+import { Route as ViceGovernador1RouteImport } from './routes/vice-governador-1'
+import { Route as ViceGovernador2RouteImport } from './routes/vice-governador-2'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
-import { Route as ProjetosIdRouteImport } from './routes/projetos.$id'
-import { Route as PaginasSlugRouteImport } from './routes/paginas.$slug'
-import { Route as NoticiasIdRouteImport } from './routes/noticias.$id'
-import { Route as GrandesLeoesIdRouteImport } from './routes/grandes-leoes.$id'
-import { Route as GestaoUsuariosRouteImport } from './routes/gestao.usuarios'
-import { Route as GestaoNominataRouteImport } from './routes/gestao.nominata'
-import { Route as GestaoLoginRouteImport } from './routes/gestao.login'
-import { Route as GestaoFinanceiroRouteImport } from './routes/gestao.financeiro'
-import { Route as GestaoExerciciosRouteImport } from './routes/gestao.exercicios'
-import { Route as GestaoEstruturaDistritalRouteImport } from './routes/gestao.estrutura-distrital'
-import { Route as GestaoDocumentosRouteImport } from './routes/gestao.documentos'
-import { Route as GestaoDistritosRouteImport } from './routes/gestao.distritos'
-import { Route as GestaoCrmRouteImport } from './routes/gestao.crm'
-import { Route as GestaoContabilRouteImport } from './routes/gestao.contabil'
-import { Route as ExGovernadoresIdRouteImport } from './routes/ex-governadores.$id'
-import { Route as EventosIdRouteImport } from './routes/eventos.$id'
-import { Route as DocumentosSplatRouteImport } from './routes/documentos.$'
-import { Route as ClubesRjRouteImport } from './routes/clubes.rj'
-import { Route as ClubesGrandesLeoesRouteImport } from './routes/clubes.grandes-leoes'
-import { Route as ClubesEsRouteImport } from './routes/clubes.es'
-import { Route as CheckoutReturnRouteImport } from './routes/checkout/return'
-import { Route as CampanhasSlugRouteImport } from './routes/campanhas.$slug'
-import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
-import { Route as AdminSubpaginasRouteImport } from './routes/admin.subpaginas'
-import { Route as AdminConexaoSolidariaRouteImport } from './routes/admin.conexao-solidaria'
-import { Route as AdminClubesRouteImport } from './routes/admin.clubes'
-import { Route as AdminCampanhasRouteImport } from './routes/admin.campanhas'
 import { Route as AdminAuditoriaRouteImport } from './routes/admin.auditoria'
-import { Route as GestaoFinanceiroIndexRouteImport } from './routes/gestao.financeiro.index'
-import { Route as GestaoCrmIndexRouteImport } from './routes/gestao.crm.index'
-import { Route as GestaoContabilIndexRouteImport } from './routes/gestao.contabil.index'
-import { Route as GestaoClubesAssociadosIndexRouteImport } from './routes/gestao.clubes-associados.index'
-import { Route as ClubesRegiaoIndexRouteImport } from './routes/clubes.regiao.index'
-import { Route as AdminRegioesIndexRouteImport } from './routes/admin.regioes.index'
-import { Route as AdminProjetosIndexRouteImport } from './routes/admin.projetos.index'
-import { Route as AdminPopupsIndexRouteImport } from './routes/admin.popups.index'
-import { Route as AdminNoticiasIndexRouteImport } from './routes/admin.noticias.index'
-import { Route as AdminLideresIndexRouteImport } from './routes/admin.lideres.index'
-import { Route as AdminGrandesLeoesIndexRouteImport } from './routes/admin.grandes-leoes.index'
-import { Route as AdminEventosIndexRouteImport } from './routes/admin.eventos.index'
-import { Route as AdminDocumentosIndexRouteImport } from './routes/admin.documentos.index'
+import { Route as AdminCampanhasRouteImport } from './routes/admin.campanhas'
+import { Route as AdminClubesRouteImport } from './routes/admin.clubes'
+import { Route as AdminConexaoSolidariaRouteImport } from './routes/admin.conexao-solidaria'
+import { Route as AdminSubpaginasRouteImport } from './routes/admin.subpaginas'
+import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
+import { Route as CampanhasIndexRouteImport } from './routes/campanhas.index'
+import { Route as CampanhasSlugRouteImport } from './routes/campanhas.$slug'
+import { Route as CheckoutReturnRouteImport } from './routes/checkout/return'
+import { Route as ClubesIndexRouteImport } from './routes/clubes.index'
+import { Route as ClubesEsRouteImport } from './routes/clubes.es'
+import { Route as ClubesGrandesLeoesRouteImport } from './routes/clubes.grandes-leoes'
+import { Route as ClubesRjRouteImport } from './routes/clubes.rj'
+import { Route as DocumentosIndexRouteImport } from './routes/documentos.index'
+import { Route as DocumentosSplatRouteImport } from './routes/documentos.$'
+import { Route as EventosIndexRouteImport } from './routes/eventos.index'
+import { Route as EventosIdRouteImport } from './routes/eventos.$id'
+import { Route as ExGovernadoresIndexRouteImport } from './routes/ex-governadores.index'
+import { Route as ExGovernadoresIdRouteImport } from './routes/ex-governadores.$id'
+import { Route as GestaoIndexRouteImport } from './routes/gestao.index'
+import { Route as GestaoContabilRouteImport } from './routes/gestao.contabil'
+import { Route as GestaoCrmRouteImport } from './routes/gestao.crm'
+import { Route as GestaoDistritosRouteImport } from './routes/gestao.distritos'
+import { Route as GestaoDocumentosRouteImport } from './routes/gestao.documentos'
+import { Route as GestaoEstruturaDistritalRouteImport } from './routes/gestao.estrutura-distrital'
+import { Route as GestaoExerciciosRouteImport } from './routes/gestao.exercicios'
+import { Route as GestaoFinanceiroRouteImport } from './routes/gestao.financeiro'
+import { Route as GestaoLoginRouteImport } from './routes/gestao.login'
+import { Route as GestaoNominataRouteImport } from './routes/gestao.nominata'
+import { Route as GestaoUsuariosRouteImport } from './routes/gestao.usuarios'
+import { Route as GrandesLeoesIdRouteImport } from './routes/grandes-leoes.$id'
+import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
+import { Route as NoticiasIdRouteImport } from './routes/noticias.$id'
+import { Route as PaginasSlugRouteImport } from './routes/paginas.$slug'
+import { Route as ProjetosIndexRouteImport } from './routes/projetos.index'
+import { Route as ProjetosIdRouteImport } from './routes/projetos.$id'
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
-import { Route as ProjetosCausaSlugRouteImport } from './routes/projetos.causa.$slug'
-import { Route as GestaoFinanceiroRelatoriosRouteImport } from './routes/gestao.financeiro.relatorios'
-import { Route as GestaoFinanceiroOrcamentoRouteImport } from './routes/gestao.financeiro.orcamento'
-import { Route as GestaoFinanceiroMovimentacoesRouteImport } from './routes/gestao.financeiro.movimentacoes'
-import { Route as GestaoFinanceiroFornecedoresRouteImport } from './routes/gestao.financeiro.fornecedores'
-import { Route as GestaoFinanceiroFluxoCaixaRouteImport } from './routes/gestao.financeiro.fluxo-caixa'
-import { Route as GestaoFinanceiroContasReceberRouteImport } from './routes/gestao.financeiro.contas-receber'
-import { Route as GestaoFinanceiroContasPagarRouteImport } from './routes/gestao.financeiro.contas-pagar'
-import { Route as GestaoFinanceiroContasBancariasRouteImport } from './routes/gestao.financeiro.contas-bancarias'
-import { Route as GestaoFinanceiroCobrancasRouteImport } from './routes/gestao.financeiro.cobrancas'
-import { Route as GestaoFinanceiroClientesRouteImport } from './routes/gestao.financeiro.clientes'
-import { Route as GestaoFinanceiroCategoriasRouteImport } from './routes/gestao.financeiro.categorias'
-import { Route as GestaoFinanceiroAprovacoesRouteImport } from './routes/gestao.financeiro.aprovacoes'
-import { Route as GestaoCrmTarefasRouteImport } from './routes/gestao.crm.tarefas'
-import { Route as GestaoCrmInteracoesRouteImport } from './routes/gestao.crm.interacoes'
-import { Route as GestaoCrmFunilRouteImport } from './routes/gestao.crm.funil'
-import { Route as GestaoCrmContatosRouteImport } from './routes/gestao.crm.contatos'
-import { Route as GestaoContabilPlanoContasRouteImport } from './routes/gestao.contabil.plano-contas'
-import { Route as GestaoContabilLancamentosRouteImport } from './routes/gestao.contabil.lancamentos'
-import { Route as GestaoContabilDreRouteImport } from './routes/gestao.contabil.dre'
-import { Route as GestaoContabilBalanceteRouteImport } from './routes/gestao.contabil.balancete'
-import { Route as GestaoClubesAssociadosClubesRouteImport } from './routes/gestao.clubes-associados.clubes'
-import { Route as GestaoClubesAssociadosAssociadosRouteImport } from './routes/gestao.clubes-associados.associados'
-import { Route as ClubesRegiaoLetraRouteImport } from './routes/clubes.regiao.$letra'
-import { Route as ApiPublicProjetosRouteImport } from './routes/api.public.projetos'
-import { Route as ApiPublicLcifRouteImport } from './routes/api.public.lcif'
-import { Route as ApiPublicGovernadoresRouteImport } from './routes/api.public.governadores'
-import { Route as ApiPublicEventosRouteImport } from './routes/api.public.eventos'
-import { Route as AdminRegioesIdRouteImport } from './routes/admin.regioes.$id'
-import { Route as AdminProjetosIdRouteImport } from './routes/admin.projetos.$id'
-import { Route as AdminPopupsIdRouteImport } from './routes/admin.popups.$id'
-import { Route as AdminNoticiasIdRouteImport } from './routes/admin.noticias.$id'
-import { Route as AdminLideresIdRouteImport } from './routes/admin.lideres.$id'
-import { Route as AdminGrandesLeoesNovoRouteImport } from './routes/admin.grandes-leoes.novo'
-import { Route as AdminGrandesLeoesIdRouteImport } from './routes/admin.grandes-leoes.$id'
-import { Route as AdminEventosIdRouteImport } from './routes/admin.eventos.$id'
-import { Route as AdminDocumentosCategoriasRouteImport } from './routes/admin.documentos.categorias'
-import { Route as AdminDocumentosAuditoriaRouteImport } from './routes/admin.documentos.auditoria'
-import { Route as AdminDocumentosIdRouteImport } from './routes/admin.documentos.$id'
 import { Route as AdminConteudoKeyRouteImport } from './routes/admin.conteudo.$key'
+import { Route as AdminDocumentosIndexRouteImport } from './routes/admin.documentos.index'
+import { Route as AdminDocumentosIdRouteImport } from './routes/admin.documentos.$id'
+import { Route as AdminDocumentosAuditoriaRouteImport } from './routes/admin.documentos.auditoria'
+import { Route as AdminDocumentosCategoriasRouteImport } from './routes/admin.documentos.categorias'
+import { Route as AdminEventosIndexRouteImport } from './routes/admin.eventos.index'
+import { Route as AdminEventosIdRouteImport } from './routes/admin.eventos.$id'
+import { Route as AdminGrandesLeoesIndexRouteImport } from './routes/admin.grandes-leoes.index'
+import { Route as AdminGrandesLeoesIdRouteImport } from './routes/admin.grandes-leoes.$id'
+import { Route as AdminGrandesLeoesNovoRouteImport } from './routes/admin.grandes-leoes.novo'
+import { Route as AdminLideresIndexRouteImport } from './routes/admin.lideres.index'
+import { Route as AdminLideresIdRouteImport } from './routes/admin.lideres.$id'
+import { Route as AdminNoticiasIndexRouteImport } from './routes/admin.noticias.index'
+import { Route as AdminNoticiasIdRouteImport } from './routes/admin.noticias.$id'
+import { Route as AdminPopupsIndexRouteImport } from './routes/admin.popups.index'
+import { Route as AdminPopupsIdRouteImport } from './routes/admin.popups.$id'
+import { Route as AdminProjetosIndexRouteImport } from './routes/admin.projetos.index'
+import { Route as AdminProjetosIdRouteImport } from './routes/admin.projetos.$id'
+import { Route as AdminRegioesIndexRouteImport } from './routes/admin.regioes.index'
+import { Route as AdminRegioesIdRouteImport } from './routes/admin.regioes.$id'
+import { Route as ApiPublicEventosRouteImport } from './routes/api.public.eventos'
+import { Route as ApiPublicGovernadoresRouteImport } from './routes/api.public.governadores'
+import { Route as ApiPublicLcifRouteImport } from './routes/api.public.lcif'
+import { Route as ApiPublicProjetosRouteImport } from './routes/api.public.projetos'
+import { Route as ClubesRegiaoIndexRouteImport } from './routes/clubes.regiao.index'
+import { Route as ClubesRegiaoLetraRouteImport } from './routes/clubes.regiao.$letra'
+import { Route as GestaoClubesAssociadosIndexRouteImport } from './routes/gestao.clubes-associados.index'
+import { Route as GestaoClubesAssociadosAssociadosRouteImport } from './routes/gestao.clubes-associados.associados'
+import { Route as GestaoClubesAssociadosClubesRouteImport } from './routes/gestao.clubes-associados.clubes'
+import { Route as GestaoContabilIndexRouteImport } from './routes/gestao.contabil.index'
+import { Route as GestaoContabilBalanceteRouteImport } from './routes/gestao.contabil.balancete'
+import { Route as GestaoContabilDreRouteImport } from './routes/gestao.contabil.dre'
+import { Route as GestaoContabilLancamentosRouteImport } from './routes/gestao.contabil.lancamentos'
+import { Route as GestaoContabilPlanoContasRouteImport } from './routes/gestao.contabil.plano-contas'
+import { Route as GestaoCrmIndexRouteImport } from './routes/gestao.crm.index'
+import { Route as GestaoCrmContatosRouteImport } from './routes/gestao.crm.contatos'
+import { Route as GestaoCrmFunilRouteImport } from './routes/gestao.crm.funil'
+import { Route as GestaoCrmInteracoesRouteImport } from './routes/gestao.crm.interacoes'
+import { Route as GestaoCrmTarefasRouteImport } from './routes/gestao.crm.tarefas'
+import { Route as GestaoFinanceiroIndexRouteImport } from './routes/gestao.financeiro.index'
+import { Route as GestaoFinanceiroAprovacoesRouteImport } from './routes/gestao.financeiro.aprovacoes'
+import { Route as GestaoFinanceiroCategoriasRouteImport } from './routes/gestao.financeiro.categorias'
+import { Route as GestaoFinanceiroClientesRouteImport } from './routes/gestao.financeiro.clientes'
+import { Route as GestaoFinanceiroCobrancasRouteImport } from './routes/gestao.financeiro.cobrancas'
+import { Route as GestaoFinanceiroContasBancariasRouteImport } from './routes/gestao.financeiro.contas-bancarias'
+import { Route as GestaoFinanceiroContasPagarRouteImport } from './routes/gestao.financeiro.contas-pagar'
+import { Route as GestaoFinanceiroContasReceberRouteImport } from './routes/gestao.financeiro.contas-receber'
+import { Route as GestaoFinanceiroFluxoCaixaRouteImport } from './routes/gestao.financeiro.fluxo-caixa'
+import { Route as GestaoFinanceiroFornecedoresRouteImport } from './routes/gestao.financeiro.fornecedores'
+import { Route as GestaoFinanceiroMovimentacoesRouteImport } from './routes/gestao.financeiro.movimentacoes'
+import { Route as GestaoFinanceiroOrcamentoRouteImport } from './routes/gestao.financeiro.orcamento'
+import { Route as GestaoFinanceiroRelatoriosRouteImport } from './routes/gestao.financeiro.relatorios'
+import { Route as ProjetosCausaSlugRouteImport } from './routes/projetos.causa.$slug'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as AdminRegioesIdDivisoesDivIdRouteImport } from './routes/admin.regioes.$id.divisoes.$divId'
 import { Route as AdminRegioesIdDivisoesDivIdClubesClubIdRouteImport } from './routes/admin.regioes.$id.divisoes.$divId.clubes.$clubId'
 
-const ViceGovernador2Route = ViceGovernador2RouteImport.update({
-  id: '/vice-governador-2',
-  path: '/vice-governador-2',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ViceGovernador1Route = ViceGovernador1RouteImport.update({
-  id: '/vice-governador-1',
-  path: '/vice-governador-1',
+const AcessoRoute = AcessoRouteImport.update({
+  id: '/acesso',
+  path: '/acesso',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TesoureiroRoute = TesoureiroRouteImport.update({
-  id: '/tesoureiro',
-  path: '/tesoureiro',
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SobreRoute = SobreRouteImport.update({
-  id: '/sobre',
-  path: '/sobre',
+const AliancasQueTransformamRoute = AliancasQueTransformamRouteImport.update({
+  id: '/aliancas-que-transformam',
+  path: '/aliancas-que-transformam',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
+const AssessoriaRoute = AssessoriaRouteImport.update({
+  id: '/assessoria',
+  path: '/assessoria',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SecretarioRoute = SecretarioRouteImport.update({
-  id: '/secretario',
-  path: '/secretario',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProtocoloLeonisticoRoute = ProtocoloLeonisticoRouteImport.update({
-  id: '/protocolo-leonistico',
-  path: '/protocolo-leonistico',
+const ConexaoSolidariaRoute = ConexaoSolidariaRouteImport.update({
+  id: '/conexao-solidaria',
+  path: '/conexao-solidaria',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ParceriaInstitucionalRoute = ParceriaInstitucionalRouteImport.update({
-  id: '/parceria-institucional',
-  path: '/parceria-institucional',
+const ContatoRoute = ContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ParceiroPrataRoute = ParceiroPrataRouteImport.update({
-  id: '/parceiro-prata',
-  path: '/parceiro-prata',
+const DoarRoute = DoarRouteImport.update({
+  id: '/doar',
+  path: '/doar',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ParceiroOuroRoute = ParceiroOuroRouteImport.update({
-  id: '/parceiro-ouro',
-  path: '/parceiro-ouro',
+const DocumentosRoute = DocumentosRouteImport.update({
+  id: '/documentos',
+  path: '/documentos',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ParceiroDiamanteRoute = ParceiroDiamanteRouteImport.update({
-  id: '/parceiro-diamante',
-  path: '/parceiro-diamante',
+const GatRoute = GatRouteImport.update({
+  id: '/gat',
+  path: '/gat',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ParceiroBronzeRoute = ParceiroBronzeRouteImport.update({
-  id: '/parceiro-bronze',
-  path: '/parceiro-bronze',
+const GestaoRoute = GestaoRouteImport.update({
+  id: '/gestao',
+  path: '/gestao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GovernadorRoute = GovernadorRouteImport.update({
+  id: '/governador',
+  path: '/governador',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoriaRoute = HistoriaRouteImport.update({
+  id: '/historia',
+  path: '/historia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LcifRoute = LcifRouteImport.update({
+  id: '/lcif',
+  path: '/lcif',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LionsInternacionalRoute = LionsInternacionalRouteImport.update({
+  id: '/lions-internacional',
+  path: '/lions-internacional',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NossasCategoriasDeParceriaRoute =
@@ -199,124 +219,64 @@ const NossasCategoriasDeParceriaRoute =
     path: '/nossas-categorias-de-parceria',
     getParentRoute: () => rootRouteImport,
   } as any)
-const LionsInternacionalRoute = LionsInternacionalRouteImport.update({
-  id: '/lions-internacional',
-  path: '/lions-internacional',
+const ParceiroBronzeRoute = ParceiroBronzeRouteImport.update({
+  id: '/parceiro-bronze',
+  path: '/parceiro-bronze',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LcifRoute = LcifRouteImport.update({
-  id: '/lcif',
-  path: '/lcif',
+const ParceiroDiamanteRoute = ParceiroDiamanteRouteImport.update({
+  id: '/parceiro-diamante',
+  path: '/parceiro-diamante',
   getParentRoute: () => rootRouteImport,
 } as any)
-const HistoriaRoute = HistoriaRouteImport.update({
-  id: '/historia',
-  path: '/historia',
+const ParceiroOuroRoute = ParceiroOuroRouteImport.update({
+  id: '/parceiro-ouro',
+  path: '/parceiro-ouro',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GovernadorRoute = GovernadorRouteImport.update({
-  id: '/governador',
-  path: '/governador',
+const ParceiroPrataRoute = ParceiroPrataRouteImport.update({
+  id: '/parceiro-prata',
+  path: '/parceiro-prata',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GestaoRoute = GestaoRouteImport.update({
-  id: '/gestao',
-  path: '/gestao',
+const ParceriaInstitucionalRoute = ParceriaInstitucionalRouteImport.update({
+  id: '/parceria-institucional',
+  path: '/parceria-institucional',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GatRoute = GatRouteImport.update({
-  id: '/gat',
-  path: '/gat',
+const ProtocoloLeonisticoRoute = ProtocoloLeonisticoRouteImport.update({
+  id: '/protocolo-leonistico',
+  path: '/protocolo-leonistico',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DocumentosRoute = DocumentosRouteImport.update({
-  id: '/documentos',
-  path: '/documentos',
+const SecretarioRoute = SecretarioRouteImport.update({
+  id: '/secretario',
+  path: '/secretario',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DoarRoute = DoarRouteImport.update({
-  id: '/doar',
-  path: '/doar',
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ContatoRoute = ContatoRouteImport.update({
-  id: '/contato',
-  path: '/contato',
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ConexaoSolidariaRoute = ConexaoSolidariaRouteImport.update({
-  id: '/conexao-solidaria',
-  path: '/conexao-solidaria',
+const TesoureiroRoute = TesoureiroRouteImport.update({
+  id: '/tesoureiro',
+  path: '/tesoureiro',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
+const ViceGovernador1Route = ViceGovernador1RouteImport.update({
+  id: '/vice-governador-1',
+  path: '/vice-governador-1',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AssessoriaRoute = AssessoriaRouteImport.update({
-  id: '/assessoria',
-  path: '/assessoria',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AliancasQueTransformamRoute = AliancasQueTransformamRouteImport.update({
-  id: '/aliancas-que-transformam',
-  path: '/aliancas-que-transformam',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AcessoRoute = AcessoRouteImport.update({
-  id: '/acesso',
-  path: '/acesso',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProjetosIndexRoute = ProjetosIndexRouteImport.update({
-  id: '/projetos/',
-  path: '/projetos/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NoticiasIndexRoute = NoticiasIndexRouteImport.update({
-  id: '/noticias/',
-  path: '/noticias/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GestaoIndexRoute = GestaoIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => GestaoRoute,
-} as any)
-const ExGovernadoresIndexRoute = ExGovernadoresIndexRouteImport.update({
-  id: '/ex-governadores/',
-  path: '/ex-governadores/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EventosIndexRoute = EventosIndexRouteImport.update({
-  id: '/eventos/',
-  path: '/eventos/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DocumentosIndexRoute = DocumentosIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => DocumentosRoute,
-} as any)
-const ClubesIndexRoute = ClubesIndexRouteImport.update({
-  id: '/clubes/',
-  path: '/clubes/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CampanhasIndexRoute = CampanhasIndexRouteImport.update({
-  id: '/campanhas/',
-  path: '/campanhas/',
+const ViceGovernador2Route = ViceGovernador2RouteImport.update({
+  id: '/vice-governador-2',
+  path: '/vice-governador-2',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -324,49 +284,124 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
-const ProjetosIdRoute = ProjetosIdRouteImport.update({
-  id: '/projetos/$id',
-  path: '/projetos/$id',
-  getParentRoute: () => rootRouteImport,
+const AdminAuditoriaRoute = AdminAuditoriaRouteImport.update({
+  id: '/auditoria',
+  path: '/auditoria',
+  getParentRoute: () => AdminRoute,
 } as any)
-const PaginasSlugRoute = PaginasSlugRouteImport.update({
-  id: '/paginas/$slug',
-  path: '/paginas/$slug',
-  getParentRoute: () => rootRouteImport,
+const AdminCampanhasRoute = AdminCampanhasRouteImport.update({
+  id: '/campanhas',
+  path: '/campanhas',
+  getParentRoute: () => AdminRoute,
 } as any)
-const NoticiasIdRoute = NoticiasIdRouteImport.update({
-  id: '/noticias/$id',
-  path: '/noticias/$id',
-  getParentRoute: () => rootRouteImport,
+const AdminClubesRoute = AdminClubesRouteImport.update({
+  id: '/clubes',
+  path: '/clubes',
+  getParentRoute: () => AdminRoute,
 } as any)
-const GrandesLeoesIdRoute = GrandesLeoesIdRouteImport.update({
-  id: '/grandes-leoes/$id',
-  path: '/grandes-leoes/$id',
-  getParentRoute: () => rootRouteImport,
+const AdminConexaoSolidariaRoute = AdminConexaoSolidariaRouteImport.update({
+  id: '/conexao-solidaria',
+  path: '/conexao-solidaria',
+  getParentRoute: () => AdminRoute,
 } as any)
-const GestaoUsuariosRoute = GestaoUsuariosRouteImport.update({
+const AdminSubpaginasRoute = AdminSubpaginasRouteImport.update({
+  id: '/subpaginas',
+  path: '/subpaginas',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
   id: '/usuarios',
   path: '/usuarios',
+  getParentRoute: () => AdminRoute,
+} as any)
+const CampanhasIndexRoute = CampanhasIndexRouteImport.update({
+  id: '/campanhas/',
+  path: '/campanhas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampanhasSlugRoute = CampanhasSlugRouteImport.update({
+  id: '/campanhas/$slug',
+  path: '/campanhas/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
+  id: '/checkout/return',
+  path: '/checkout/return',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClubesIndexRoute = ClubesIndexRouteImport.update({
+  id: '/clubes/',
+  path: '/clubes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClubesEsRoute = ClubesEsRouteImport.update({
+  id: '/clubes/es',
+  path: '/clubes/es',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClubesGrandesLeoesRoute = ClubesGrandesLeoesRouteImport.update({
+  id: '/clubes/grandes-leoes',
+  path: '/clubes/grandes-leoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClubesRjRoute = ClubesRjRouteImport.update({
+  id: '/clubes/rj',
+  path: '/clubes/rj',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocumentosIndexRoute = DocumentosIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DocumentosRoute,
+} as any)
+const DocumentosSplatRoute = DocumentosSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => DocumentosRoute,
+} as any)
+const EventosIndexRoute = EventosIndexRouteImport.update({
+  id: '/eventos/',
+  path: '/eventos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventosIdRoute = EventosIdRouteImport.update({
+  id: '/eventos/$id',
+  path: '/eventos/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExGovernadoresIndexRoute = ExGovernadoresIndexRouteImport.update({
+  id: '/ex-governadores/',
+  path: '/ex-governadores/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExGovernadoresIdRoute = ExGovernadoresIdRouteImport.update({
+  id: '/ex-governadores/$id',
+  path: '/ex-governadores/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GestaoIndexRoute = GestaoIndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => GestaoRoute,
 } as any)
-const GestaoNominataRoute = GestaoNominataRouteImport.update({
-  id: '/nominata',
-  path: '/nominata',
+const GestaoContabilRoute = GestaoContabilRouteImport.update({
+  id: '/contabil',
+  path: '/contabil',
   getParentRoute: () => GestaoRoute,
 } as any)
-const GestaoLoginRoute = GestaoLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+const GestaoCrmRoute = GestaoCrmRouteImport.update({
+  id: '/crm',
+  path: '/crm',
   getParentRoute: () => GestaoRoute,
 } as any)
-const GestaoFinanceiroRoute = GestaoFinanceiroRouteImport.update({
-  id: '/financeiro',
-  path: '/financeiro',
+const GestaoDistritosRoute = GestaoDistritosRouteImport.update({
+  id: '/distritos',
+  path: '/distritos',
   getParentRoute: () => GestaoRoute,
 } as any)
-const GestaoExerciciosRoute = GestaoExerciciosRouteImport.update({
-  id: '/exercicios',
-  path: '/exercicios',
+const GestaoDocumentosRoute = GestaoDocumentosRouteImport.update({
+  id: '/documentos',
+  path: '/documentos',
   getParentRoute: () => GestaoRoute,
 } as any)
 const GestaoEstruturaDistritalRoute =
@@ -375,155 +410,69 @@ const GestaoEstruturaDistritalRoute =
     path: '/estrutura-distrital',
     getParentRoute: () => GestaoRoute,
   } as any)
-const GestaoDocumentosRoute = GestaoDocumentosRouteImport.update({
-  id: '/documentos',
-  path: '/documentos',
+const GestaoExerciciosRoute = GestaoExerciciosRouteImport.update({
+  id: '/exercicios',
+  path: '/exercicios',
   getParentRoute: () => GestaoRoute,
 } as any)
-const GestaoDistritosRoute = GestaoDistritosRouteImport.update({
-  id: '/distritos',
-  path: '/distritos',
+const GestaoFinanceiroRoute = GestaoFinanceiroRouteImport.update({
+  id: '/financeiro',
+  path: '/financeiro',
   getParentRoute: () => GestaoRoute,
 } as any)
-const GestaoCrmRoute = GestaoCrmRouteImport.update({
-  id: '/crm',
-  path: '/crm',
+const GestaoLoginRoute = GestaoLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => GestaoRoute,
 } as any)
-const GestaoContabilRoute = GestaoContabilRouteImport.update({
-  id: '/contabil',
-  path: '/contabil',
+const GestaoNominataRoute = GestaoNominataRouteImport.update({
+  id: '/nominata',
+  path: '/nominata',
   getParentRoute: () => GestaoRoute,
 } as any)
-const ExGovernadoresIdRoute = ExGovernadoresIdRouteImport.update({
-  id: '/ex-governadores/$id',
-  path: '/ex-governadores/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EventosIdRoute = EventosIdRouteImport.update({
-  id: '/eventos/$id',
-  path: '/eventos/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DocumentosSplatRoute = DocumentosSplatRouteImport.update({
-  id: '/$',
-  path: '/$',
-  getParentRoute: () => DocumentosRoute,
-} as any)
-const ClubesRjRoute = ClubesRjRouteImport.update({
-  id: '/clubes/rj',
-  path: '/clubes/rj',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ClubesGrandesLeoesRoute = ClubesGrandesLeoesRouteImport.update({
-  id: '/clubes/grandes-leoes',
-  path: '/clubes/grandes-leoes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ClubesEsRoute = ClubesEsRouteImport.update({
-  id: '/clubes/es',
-  path: '/clubes/es',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
-  id: '/checkout/return',
-  path: '/checkout/return',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CampanhasSlugRoute = CampanhasSlugRouteImport.update({
-  id: '/campanhas/$slug',
-  path: '/campanhas/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
+const GestaoUsuariosRoute = GestaoUsuariosRouteImport.update({
   id: '/usuarios',
   path: '/usuarios',
-  getParentRoute: () => AdminRoute,
+  getParentRoute: () => GestaoRoute,
 } as any)
-const AdminSubpaginasRoute = AdminSubpaginasRouteImport.update({
-  id: '/subpaginas',
-  path: '/subpaginas',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminConexaoSolidariaRoute = AdminConexaoSolidariaRouteImport.update({
-  id: '/conexao-solidaria',
-  path: '/conexao-solidaria',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminClubesRoute = AdminClubesRouteImport.update({
-  id: '/clubes',
-  path: '/clubes',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminCampanhasRoute = AdminCampanhasRouteImport.update({
-  id: '/campanhas',
-  path: '/campanhas',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAuditoriaRoute = AdminAuditoriaRouteImport.update({
-  id: '/auditoria',
-  path: '/auditoria',
-  getParentRoute: () => AdminRoute,
-} as any)
-const GestaoFinanceiroIndexRoute = GestaoFinanceiroIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => GestaoFinanceiroRoute,
-} as any)
-const GestaoCrmIndexRoute = GestaoCrmIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => GestaoCrmRoute,
-} as any)
-const GestaoContabilIndexRoute = GestaoContabilIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => GestaoContabilRoute,
-} as any)
-const GestaoClubesAssociadosIndexRoute =
-  GestaoClubesAssociadosIndexRouteImport.update({
-    id: '/clubes-associados/',
-    path: '/clubes-associados/',
-    getParentRoute: () => GestaoRoute,
-  } as any)
-const ClubesRegiaoIndexRoute = ClubesRegiaoIndexRouteImport.update({
-  id: '/clubes/regiao/',
-  path: '/clubes/regiao/',
+const GrandesLeoesIdRoute = GrandesLeoesIdRouteImport.update({
+  id: '/grandes-leoes/$id',
+  path: '/grandes-leoes/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminRegioesIndexRoute = AdminRegioesIndexRouteImport.update({
-  id: '/regioes/',
-  path: '/regioes/',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminProjetosIndexRoute = AdminProjetosIndexRouteImport.update({
-  id: '/projetos/',
-  path: '/projetos/',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminPopupsIndexRoute = AdminPopupsIndexRouteImport.update({
-  id: '/popups/',
-  path: '/popups/',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminNoticiasIndexRoute = AdminNoticiasIndexRouteImport.update({
+const NoticiasIndexRoute = NoticiasIndexRouteImport.update({
   id: '/noticias/',
   path: '/noticias/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticiasIdRoute = NoticiasIdRouteImport.update({
+  id: '/noticias/$id',
+  path: '/noticias/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaginasSlugRoute = PaginasSlugRouteImport.update({
+  id: '/paginas/$slug',
+  path: '/paginas/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjetosIndexRoute = ProjetosIndexRouteImport.update({
+  id: '/projetos/',
+  path: '/projetos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjetosIdRoute = ProjetosIdRouteImport.update({
+  id: '/projetos/$id',
+  path: '/projetos/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminConteudoIndexRoute = AdminConteudoIndexRouteImport.update({
+  id: '/conteudo/',
+  path: '/conteudo/',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminLideresIndexRoute = AdminLideresIndexRouteImport.update({
-  id: '/lideres/',
-  path: '/lideres/',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminGrandesLeoesIndexRoute = AdminGrandesLeoesIndexRouteImport.update({
-  id: '/grandes-leoes/',
-  path: '/grandes-leoes/',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminEventosIndexRoute = AdminEventosIndexRouteImport.update({
-  id: '/eventos/',
-  path: '/eventos/',
+const AdminConteudoKeyRoute = AdminConteudoKeyRouteImport.update({
+  id: '/conteudo/$key',
+  path: '/conteudo/$key',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminDocumentosIndexRoute = AdminDocumentosIndexRouteImport.update({
@@ -531,134 +480,132 @@ const AdminDocumentosIndexRoute = AdminDocumentosIndexRouteImport.update({
   path: '/documentos/',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminConteudoIndexRoute = AdminConteudoIndexRouteImport.update({
-  id: '/conteudo/',
-  path: '/conteudo/',
+const AdminDocumentosIdRoute = AdminDocumentosIdRouteImport.update({
+  id: '/documentos/$id',
+  path: '/documentos/$id',
   getParentRoute: () => AdminRoute,
 } as any)
-const ProjetosCausaSlugRoute = ProjetosCausaSlugRouteImport.update({
-  id: '/projetos/causa/$slug',
-  path: '/projetos/causa/$slug',
+const AdminDocumentosAuditoriaRoute =
+  AdminDocumentosAuditoriaRouteImport.update({
+    id: '/documentos/auditoria',
+    path: '/documentos/auditoria',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminDocumentosCategoriasRoute =
+  AdminDocumentosCategoriasRouteImport.update({
+    id: '/documentos/categorias',
+    path: '/documentos/categorias',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminEventosIndexRoute = AdminEventosIndexRouteImport.update({
+  id: '/eventos/',
+  path: '/eventos/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEventosIdRoute = AdminEventosIdRouteImport.update({
+  id: '/eventos/$id',
+  path: '/eventos/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminGrandesLeoesIndexRoute = AdminGrandesLeoesIndexRouteImport.update({
+  id: '/grandes-leoes/',
+  path: '/grandes-leoes/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminGrandesLeoesIdRoute = AdminGrandesLeoesIdRouteImport.update({
+  id: '/grandes-leoes/$id',
+  path: '/grandes-leoes/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminGrandesLeoesNovoRoute = AdminGrandesLeoesNovoRouteImport.update({
+  id: '/grandes-leoes/novo',
+  path: '/grandes-leoes/novo',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLideresIndexRoute = AdminLideresIndexRouteImport.update({
+  id: '/lideres/',
+  path: '/lideres/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLideresIdRoute = AdminLideresIdRouteImport.update({
+  id: '/lideres/$id',
+  path: '/lideres/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminNoticiasIndexRoute = AdminNoticiasIndexRouteImport.update({
+  id: '/noticias/',
+  path: '/noticias/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminNoticiasIdRoute = AdminNoticiasIdRouteImport.update({
+  id: '/noticias/$id',
+  path: '/noticias/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPopupsIndexRoute = AdminPopupsIndexRouteImport.update({
+  id: '/popups/',
+  path: '/popups/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPopupsIdRoute = AdminPopupsIdRouteImport.update({
+  id: '/popups/$id',
+  path: '/popups/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProjetosIndexRoute = AdminProjetosIndexRouteImport.update({
+  id: '/projetos/',
+  path: '/projetos/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProjetosIdRoute = AdminProjetosIdRouteImport.update({
+  id: '/projetos/$id',
+  path: '/projetos/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminRegioesIndexRoute = AdminRegioesIndexRouteImport.update({
+  id: '/regioes/',
+  path: '/regioes/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminRegioesIdRoute = AdminRegioesIdRouteImport.update({
+  id: '/regioes/$id',
+  path: '/regioes/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const ApiPublicEventosRoute = ApiPublicEventosRouteImport.update({
+  id: '/api/public/eventos',
+  path: '/api/public/eventos',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GestaoFinanceiroRelatoriosRoute =
-  GestaoFinanceiroRelatoriosRouteImport.update({
-    id: '/relatorios',
-    path: '/relatorios',
-    getParentRoute: () => GestaoFinanceiroRoute,
-  } as any)
-const GestaoFinanceiroOrcamentoRoute =
-  GestaoFinanceiroOrcamentoRouteImport.update({
-    id: '/orcamento',
-    path: '/orcamento',
-    getParentRoute: () => GestaoFinanceiroRoute,
-  } as any)
-const GestaoFinanceiroMovimentacoesRoute =
-  GestaoFinanceiroMovimentacoesRouteImport.update({
-    id: '/movimentacoes',
-    path: '/movimentacoes',
-    getParentRoute: () => GestaoFinanceiroRoute,
-  } as any)
-const GestaoFinanceiroFornecedoresRoute =
-  GestaoFinanceiroFornecedoresRouteImport.update({
-    id: '/fornecedores',
-    path: '/fornecedores',
-    getParentRoute: () => GestaoFinanceiroRoute,
-  } as any)
-const GestaoFinanceiroFluxoCaixaRoute =
-  GestaoFinanceiroFluxoCaixaRouteImport.update({
-    id: '/fluxo-caixa',
-    path: '/fluxo-caixa',
-    getParentRoute: () => GestaoFinanceiroRoute,
-  } as any)
-const GestaoFinanceiroContasReceberRoute =
-  GestaoFinanceiroContasReceberRouteImport.update({
-    id: '/contas-receber',
-    path: '/contas-receber',
-    getParentRoute: () => GestaoFinanceiroRoute,
-  } as any)
-const GestaoFinanceiroContasPagarRoute =
-  GestaoFinanceiroContasPagarRouteImport.update({
-    id: '/contas-pagar',
-    path: '/contas-pagar',
-    getParentRoute: () => GestaoFinanceiroRoute,
-  } as any)
-const GestaoFinanceiroContasBancariasRoute =
-  GestaoFinanceiroContasBancariasRouteImport.update({
-    id: '/contas-bancarias',
-    path: '/contas-bancarias',
-    getParentRoute: () => GestaoFinanceiroRoute,
-  } as any)
-const GestaoFinanceiroCobrancasRoute =
-  GestaoFinanceiroCobrancasRouteImport.update({
-    id: '/cobrancas',
-    path: '/cobrancas',
-    getParentRoute: () => GestaoFinanceiroRoute,
-  } as any)
-const GestaoFinanceiroClientesRoute =
-  GestaoFinanceiroClientesRouteImport.update({
-    id: '/clientes',
-    path: '/clientes',
-    getParentRoute: () => GestaoFinanceiroRoute,
-  } as any)
-const GestaoFinanceiroCategoriasRoute =
-  GestaoFinanceiroCategoriasRouteImport.update({
-    id: '/categorias',
-    path: '/categorias',
-    getParentRoute: () => GestaoFinanceiroRoute,
-  } as any)
-const GestaoFinanceiroAprovacoesRoute =
-  GestaoFinanceiroAprovacoesRouteImport.update({
-    id: '/aprovacoes',
-    path: '/aprovacoes',
-    getParentRoute: () => GestaoFinanceiroRoute,
-  } as any)
-const GestaoCrmTarefasRoute = GestaoCrmTarefasRouteImport.update({
-  id: '/tarefas',
-  path: '/tarefas',
-  getParentRoute: () => GestaoCrmRoute,
+const ApiPublicGovernadoresRoute = ApiPublicGovernadoresRouteImport.update({
+  id: '/api/public/governadores',
+  path: '/api/public/governadores',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const GestaoCrmInteracoesRoute = GestaoCrmInteracoesRouteImport.update({
-  id: '/interacoes',
-  path: '/interacoes',
-  getParentRoute: () => GestaoCrmRoute,
+const ApiPublicLcifRoute = ApiPublicLcifRouteImport.update({
+  id: '/api/public/lcif',
+  path: '/api/public/lcif',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const GestaoCrmFunilRoute = GestaoCrmFunilRouteImport.update({
-  id: '/funil',
-  path: '/funil',
-  getParentRoute: () => GestaoCrmRoute,
+const ApiPublicProjetosRoute = ApiPublicProjetosRouteImport.update({
+  id: '/api/public/projetos',
+  path: '/api/public/projetos',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const GestaoCrmContatosRoute = GestaoCrmContatosRouteImport.update({
-  id: '/contatos',
-  path: '/contatos',
-  getParentRoute: () => GestaoCrmRoute,
+const ClubesRegiaoIndexRoute = ClubesRegiaoIndexRouteImport.update({
+  id: '/clubes/regiao/',
+  path: '/clubes/regiao/',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const GestaoContabilPlanoContasRoute =
-  GestaoContabilPlanoContasRouteImport.update({
-    id: '/plano-contas',
-    path: '/plano-contas',
-    getParentRoute: () => GestaoContabilRoute,
-  } as any)
-const GestaoContabilLancamentosRoute =
-  GestaoContabilLancamentosRouteImport.update({
-    id: '/lancamentos',
-    path: '/lancamentos',
-    getParentRoute: () => GestaoContabilRoute,
-  } as any)
-const GestaoContabilDreRoute = GestaoContabilDreRouteImport.update({
-  id: '/dre',
-  path: '/dre',
-  getParentRoute: () => GestaoContabilRoute,
+const ClubesRegiaoLetraRoute = ClubesRegiaoLetraRouteImport.update({
+  id: '/clubes/regiao/$letra',
+  path: '/clubes/regiao/$letra',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const GestaoContabilBalanceteRoute = GestaoContabilBalanceteRouteImport.update({
-  id: '/balancete',
-  path: '/balancete',
-  getParentRoute: () => GestaoContabilRoute,
-} as any)
-const GestaoClubesAssociadosClubesRoute =
-  GestaoClubesAssociadosClubesRouteImport.update({
-    id: '/clubes-associados/clubes',
-    path: '/clubes-associados/clubes',
+const GestaoClubesAssociadosIndexRoute =
+  GestaoClubesAssociadosIndexRouteImport.update({
+    id: '/clubes-associados/',
+    path: '/clubes-associados/',
     getParentRoute: () => GestaoRoute,
   } as any)
 const GestaoClubesAssociadosAssociadosRoute =
@@ -667,92 +614,145 @@ const GestaoClubesAssociadosAssociadosRoute =
     path: '/clubes-associados/associados',
     getParentRoute: () => GestaoRoute,
   } as any)
-const ClubesRegiaoLetraRoute = ClubesRegiaoLetraRouteImport.update({
-  id: '/clubes/regiao/$letra',
-  path: '/clubes/regiao/$letra',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicProjetosRoute = ApiPublicProjetosRouteImport.update({
-  id: '/api/public/projetos',
-  path: '/api/public/projetos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicLcifRoute = ApiPublicLcifRouteImport.update({
-  id: '/api/public/lcif',
-  path: '/api/public/lcif',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicGovernadoresRoute = ApiPublicGovernadoresRouteImport.update({
-  id: '/api/public/governadores',
-  path: '/api/public/governadores',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicEventosRoute = ApiPublicEventosRouteImport.update({
-  id: '/api/public/eventos',
-  path: '/api/public/eventos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRegioesIdRoute = AdminRegioesIdRouteImport.update({
-  id: '/regioes/$id',
-  path: '/regioes/$id',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminProjetosIdRoute = AdminProjetosIdRouteImport.update({
-  id: '/projetos/$id',
-  path: '/projetos/$id',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminPopupsIdRoute = AdminPopupsIdRouteImport.update({
-  id: '/popups/$id',
-  path: '/popups/$id',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminNoticiasIdRoute = AdminNoticiasIdRouteImport.update({
-  id: '/noticias/$id',
-  path: '/noticias/$id',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminLideresIdRoute = AdminLideresIdRouteImport.update({
-  id: '/lideres/$id',
-  path: '/lideres/$id',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminGrandesLeoesNovoRoute = AdminGrandesLeoesNovoRouteImport.update({
-  id: '/grandes-leoes/novo',
-  path: '/grandes-leoes/novo',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminGrandesLeoesIdRoute = AdminGrandesLeoesIdRouteImport.update({
-  id: '/grandes-leoes/$id',
-  path: '/grandes-leoes/$id',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminEventosIdRoute = AdminEventosIdRouteImport.update({
-  id: '/eventos/$id',
-  path: '/eventos/$id',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminDocumentosCategoriasRoute =
-  AdminDocumentosCategoriasRouteImport.update({
-    id: '/documentos/categorias',
-    path: '/documentos/categorias',
-    getParentRoute: () => AdminRoute,
+const GestaoClubesAssociadosClubesRoute =
+  GestaoClubesAssociadosClubesRouteImport.update({
+    id: '/clubes-associados/clubes',
+    path: '/clubes-associados/clubes',
+    getParentRoute: () => GestaoRoute,
   } as any)
-const AdminDocumentosAuditoriaRoute =
-  AdminDocumentosAuditoriaRouteImport.update({
-    id: '/documentos/auditoria',
-    path: '/documentos/auditoria',
-    getParentRoute: () => AdminRoute,
-  } as any)
-const AdminDocumentosIdRoute = AdminDocumentosIdRouteImport.update({
-  id: '/documentos/$id',
-  path: '/documentos/$id',
-  getParentRoute: () => AdminRoute,
+const GestaoContabilIndexRoute = GestaoContabilIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GestaoContabilRoute,
 } as any)
-const AdminConteudoKeyRoute = AdminConteudoKeyRouteImport.update({
-  id: '/conteudo/$key',
-  path: '/conteudo/$key',
-  getParentRoute: () => AdminRoute,
+const GestaoContabilBalanceteRoute = GestaoContabilBalanceteRouteImport.update({
+  id: '/balancete',
+  path: '/balancete',
+  getParentRoute: () => GestaoContabilRoute,
+} as any)
+const GestaoContabilDreRoute = GestaoContabilDreRouteImport.update({
+  id: '/dre',
+  path: '/dre',
+  getParentRoute: () => GestaoContabilRoute,
+} as any)
+const GestaoContabilLancamentosRoute =
+  GestaoContabilLancamentosRouteImport.update({
+    id: '/lancamentos',
+    path: '/lancamentos',
+    getParentRoute: () => GestaoContabilRoute,
+  } as any)
+const GestaoContabilPlanoContasRoute =
+  GestaoContabilPlanoContasRouteImport.update({
+    id: '/plano-contas',
+    path: '/plano-contas',
+    getParentRoute: () => GestaoContabilRoute,
+  } as any)
+const GestaoCrmIndexRoute = GestaoCrmIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GestaoCrmRoute,
+} as any)
+const GestaoCrmContatosRoute = GestaoCrmContatosRouteImport.update({
+  id: '/contatos',
+  path: '/contatos',
+  getParentRoute: () => GestaoCrmRoute,
+} as any)
+const GestaoCrmFunilRoute = GestaoCrmFunilRouteImport.update({
+  id: '/funil',
+  path: '/funil',
+  getParentRoute: () => GestaoCrmRoute,
+} as any)
+const GestaoCrmInteracoesRoute = GestaoCrmInteracoesRouteImport.update({
+  id: '/interacoes',
+  path: '/interacoes',
+  getParentRoute: () => GestaoCrmRoute,
+} as any)
+const GestaoCrmTarefasRoute = GestaoCrmTarefasRouteImport.update({
+  id: '/tarefas',
+  path: '/tarefas',
+  getParentRoute: () => GestaoCrmRoute,
+} as any)
+const GestaoFinanceiroIndexRoute = GestaoFinanceiroIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GestaoFinanceiroRoute,
+} as any)
+const GestaoFinanceiroAprovacoesRoute =
+  GestaoFinanceiroAprovacoesRouteImport.update({
+    id: '/aprovacoes',
+    path: '/aprovacoes',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroCategoriasRoute =
+  GestaoFinanceiroCategoriasRouteImport.update({
+    id: '/categorias',
+    path: '/categorias',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroClientesRoute =
+  GestaoFinanceiroClientesRouteImport.update({
+    id: '/clientes',
+    path: '/clientes',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroCobrancasRoute =
+  GestaoFinanceiroCobrancasRouteImport.update({
+    id: '/cobrancas',
+    path: '/cobrancas',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroContasBancariasRoute =
+  GestaoFinanceiroContasBancariasRouteImport.update({
+    id: '/contas-bancarias',
+    path: '/contas-bancarias',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroContasPagarRoute =
+  GestaoFinanceiroContasPagarRouteImport.update({
+    id: '/contas-pagar',
+    path: '/contas-pagar',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroContasReceberRoute =
+  GestaoFinanceiroContasReceberRouteImport.update({
+    id: '/contas-receber',
+    path: '/contas-receber',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroFluxoCaixaRoute =
+  GestaoFinanceiroFluxoCaixaRouteImport.update({
+    id: '/fluxo-caixa',
+    path: '/fluxo-caixa',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroFornecedoresRoute =
+  GestaoFinanceiroFornecedoresRouteImport.update({
+    id: '/fornecedores',
+    path: '/fornecedores',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroMovimentacoesRoute =
+  GestaoFinanceiroMovimentacoesRouteImport.update({
+    id: '/movimentacoes',
+    path: '/movimentacoes',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroOrcamentoRoute =
+  GestaoFinanceiroOrcamentoRouteImport.update({
+    id: '/orcamento',
+    path: '/orcamento',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const GestaoFinanceiroRelatoriosRoute =
+  GestaoFinanceiroRelatoriosRouteImport.update({
+    id: '/relatorios',
+    path: '/relatorios',
+    getParentRoute: () => GestaoFinanceiroRoute,
+  } as any)
+const ProjetosCausaSlugRoute = ProjetosCausaSlugRouteImport.update({
+  id: '/projetos/causa/$slug',
+  path: '/projetos/causa/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicPaymentsWebhookRoute =
   ApiPublicPaymentsWebhookRouteImport.update({
@@ -1574,193 +1574,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/vice-governador-2': {
-      id: '/vice-governador-2'
-      path: '/vice-governador-2'
-      fullPath: '/vice-governador-2'
-      preLoaderRoute: typeof ViceGovernador2RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/vice-governador-1': {
-      id: '/vice-governador-1'
-      path: '/vice-governador-1'
-      fullPath: '/vice-governador-1'
-      preLoaderRoute: typeof ViceGovernador1RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tesoureiro': {
-      id: '/tesoureiro'
-      path: '/tesoureiro'
-      fullPath: '/tesoureiro'
-      preLoaderRoute: typeof TesoureiroRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sobre': {
-      id: '/sobre'
-      path: '/sobre'
-      fullPath: '/sobre'
-      preLoaderRoute: typeof SobreRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/secretario': {
-      id: '/secretario'
-      path: '/secretario'
-      fullPath: '/secretario'
-      preLoaderRoute: typeof SecretarioRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/protocolo-leonistico': {
-      id: '/protocolo-leonistico'
-      path: '/protocolo-leonistico'
-      fullPath: '/protocolo-leonistico'
-      preLoaderRoute: typeof ProtocoloLeonisticoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/parceria-institucional': {
-      id: '/parceria-institucional'
-      path: '/parceria-institucional'
-      fullPath: '/parceria-institucional'
-      preLoaderRoute: typeof ParceriaInstitucionalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/parceiro-prata': {
-      id: '/parceiro-prata'
-      path: '/parceiro-prata'
-      fullPath: '/parceiro-prata'
-      preLoaderRoute: typeof ParceiroPrataRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/parceiro-ouro': {
-      id: '/parceiro-ouro'
-      path: '/parceiro-ouro'
-      fullPath: '/parceiro-ouro'
-      preLoaderRoute: typeof ParceiroOuroRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/parceiro-diamante': {
-      id: '/parceiro-diamante'
-      path: '/parceiro-diamante'
-      fullPath: '/parceiro-diamante'
-      preLoaderRoute: typeof ParceiroDiamanteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/parceiro-bronze': {
-      id: '/parceiro-bronze'
-      path: '/parceiro-bronze'
-      fullPath: '/parceiro-bronze'
-      preLoaderRoute: typeof ParceiroBronzeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/nossas-categorias-de-parceria': {
-      id: '/nossas-categorias-de-parceria'
-      path: '/nossas-categorias-de-parceria'
-      fullPath: '/nossas-categorias-de-parceria'
-      preLoaderRoute: typeof NossasCategoriasDeParceriaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/lions-internacional': {
-      id: '/lions-internacional'
-      path: '/lions-internacional'
-      fullPath: '/lions-internacional'
-      preLoaderRoute: typeof LionsInternacionalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/lcif': {
-      id: '/lcif'
-      path: '/lcif'
-      fullPath: '/lcif'
-      preLoaderRoute: typeof LcifRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/historia': {
-      id: '/historia'
-      path: '/historia'
-      fullPath: '/historia'
-      preLoaderRoute: typeof HistoriaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/governador': {
-      id: '/governador'
-      path: '/governador'
-      fullPath: '/governador'
-      preLoaderRoute: typeof GovernadorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gestao': {
-      id: '/gestao'
-      path: '/gestao'
-      fullPath: '/gestao'
-      preLoaderRoute: typeof GestaoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gat': {
-      id: '/gat'
-      path: '/gat'
-      fullPath: '/gat'
-      preLoaderRoute: typeof GatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/documentos': {
-      id: '/documentos'
-      path: '/documentos'
-      fullPath: '/documentos'
-      preLoaderRoute: typeof DocumentosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/doar': {
-      id: '/doar'
-      path: '/doar'
-      fullPath: '/doar'
-      preLoaderRoute: typeof DoarRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contato': {
-      id: '/contato'
-      path: '/contato'
-      fullPath: '/contato'
-      preLoaderRoute: typeof ContatoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/conexao-solidaria': {
-      id: '/conexao-solidaria'
-      path: '/conexao-solidaria'
-      fullPath: '/conexao-solidaria'
-      preLoaderRoute: typeof ConexaoSolidariaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/assessoria': {
-      id: '/assessoria'
-      path: '/assessoria'
-      fullPath: '/assessoria'
-      preLoaderRoute: typeof AssessoriaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/aliancas-que-transformam': {
-      id: '/aliancas-que-transformam'
-      path: '/aliancas-que-transformam'
-      fullPath: '/aliancas-que-transformam'
-      preLoaderRoute: typeof AliancasQueTransformamRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/acesso': {
@@ -1770,67 +1588,193 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AcessoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/projetos/': {
-      id: '/projetos/'
-      path: '/projetos'
-      fullPath: '/projetos/'
-      preLoaderRoute: typeof ProjetosIndexRouteImport
+    '/aliancas-que-transformam': {
+      id: '/aliancas-que-transformam'
+      path: '/aliancas-que-transformam'
+      fullPath: '/aliancas-que-transformam'
+      preLoaderRoute: typeof AliancasQueTransformamRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/noticias/': {
-      id: '/noticias/'
-      path: '/noticias'
-      fullPath: '/noticias/'
-      preLoaderRoute: typeof NoticiasIndexRouteImport
+    '/assessoria': {
+      id: '/assessoria'
+      path: '/assessoria'
+      fullPath: '/assessoria'
+      preLoaderRoute: typeof AssessoriaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/gestao/': {
-      id: '/gestao/'
-      path: '/'
-      fullPath: '/gestao/'
-      preLoaderRoute: typeof GestaoIndexRouteImport
-      parentRoute: typeof GestaoRoute
-    }
-    '/ex-governadores/': {
-      id: '/ex-governadores/'
-      path: '/ex-governadores'
-      fullPath: '/ex-governadores/'
-      preLoaderRoute: typeof ExGovernadoresIndexRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/eventos/': {
-      id: '/eventos/'
-      path: '/eventos'
-      fullPath: '/eventos/'
-      preLoaderRoute: typeof EventosIndexRouteImport
+    '/conexao-solidaria': {
+      id: '/conexao-solidaria'
+      path: '/conexao-solidaria'
+      fullPath: '/conexao-solidaria'
+      preLoaderRoute: typeof ConexaoSolidariaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/documentos/': {
-      id: '/documentos/'
-      path: '/'
-      fullPath: '/documentos/'
-      preLoaderRoute: typeof DocumentosIndexRouteImport
-      parentRoute: typeof DocumentosRoute
-    }
-    '/clubes/': {
-      id: '/clubes/'
-      path: '/clubes'
-      fullPath: '/clubes/'
-      preLoaderRoute: typeof ClubesIndexRouteImport
+    '/contato': {
+      id: '/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/campanhas/': {
-      id: '/campanhas/'
-      path: '/campanhas'
-      fullPath: '/campanhas/'
-      preLoaderRoute: typeof CampanhasIndexRouteImport
+    '/doar': {
+      id: '/doar'
+      path: '/doar'
+      fullPath: '/doar'
+      preLoaderRoute: typeof DoarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/documentos': {
+      id: '/documentos'
+      path: '/documentos'
+      fullPath: '/documentos'
+      preLoaderRoute: typeof DocumentosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gat': {
+      id: '/gat'
+      path: '/gat'
+      fullPath: '/gat'
+      preLoaderRoute: typeof GatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gestao': {
+      id: '/gestao'
+      path: '/gestao'
+      fullPath: '/gestao'
+      preLoaderRoute: typeof GestaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/governador': {
+      id: '/governador'
+      path: '/governador'
+      fullPath: '/governador'
+      preLoaderRoute: typeof GovernadorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/historia': {
+      id: '/historia'
+      path: '/historia'
+      fullPath: '/historia'
+      preLoaderRoute: typeof HistoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lcif': {
+      id: '/lcif'
+      path: '/lcif'
+      fullPath: '/lcif'
+      preLoaderRoute: typeof LcifRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lions-internacional': {
+      id: '/lions-internacional'
+      path: '/lions-internacional'
+      fullPath: '/lions-internacional'
+      preLoaderRoute: typeof LionsInternacionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nossas-categorias-de-parceria': {
+      id: '/nossas-categorias-de-parceria'
+      path: '/nossas-categorias-de-parceria'
+      fullPath: '/nossas-categorias-de-parceria'
+      preLoaderRoute: typeof NossasCategoriasDeParceriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parceiro-bronze': {
+      id: '/parceiro-bronze'
+      path: '/parceiro-bronze'
+      fullPath: '/parceiro-bronze'
+      preLoaderRoute: typeof ParceiroBronzeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parceiro-diamante': {
+      id: '/parceiro-diamante'
+      path: '/parceiro-diamante'
+      fullPath: '/parceiro-diamante'
+      preLoaderRoute: typeof ParceiroDiamanteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parceiro-ouro': {
+      id: '/parceiro-ouro'
+      path: '/parceiro-ouro'
+      fullPath: '/parceiro-ouro'
+      preLoaderRoute: typeof ParceiroOuroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parceiro-prata': {
+      id: '/parceiro-prata'
+      path: '/parceiro-prata'
+      fullPath: '/parceiro-prata'
+      preLoaderRoute: typeof ParceiroPrataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parceria-institucional': {
+      id: '/parceria-institucional'
+      path: '/parceria-institucional'
+      fullPath: '/parceria-institucional'
+      preLoaderRoute: typeof ParceriaInstitucionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/protocolo-leonistico': {
+      id: '/protocolo-leonistico'
+      path: '/protocolo-leonistico'
+      fullPath: '/protocolo-leonistico'
+      preLoaderRoute: typeof ProtocoloLeonisticoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/secretario': {
+      id: '/secretario'
+      path: '/secretario'
+      fullPath: '/secretario'
+      preLoaderRoute: typeof SecretarioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tesoureiro': {
+      id: '/tesoureiro'
+      path: '/tesoureiro'
+      fullPath: '/tesoureiro'
+      preLoaderRoute: typeof TesoureiroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vice-governador-1': {
+      id: '/vice-governador-1'
+      path: '/vice-governador-1'
+      fullPath: '/vice-governador-1'
+      preLoaderRoute: typeof ViceGovernador1RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vice-governador-2': {
+      id: '/vice-governador-2'
+      path: '/vice-governador-2'
+      fullPath: '/vice-governador-2'
+      preLoaderRoute: typeof ViceGovernador2RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -1840,186 +1784,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/projetos/$id': {
-      id: '/projetos/$id'
-      path: '/projetos/$id'
-      fullPath: '/projetos/$id'
-      preLoaderRoute: typeof ProjetosIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/paginas/$slug': {
-      id: '/paginas/$slug'
-      path: '/paginas/$slug'
-      fullPath: '/paginas/$slug'
-      preLoaderRoute: typeof PaginasSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/noticias/$id': {
-      id: '/noticias/$id'
-      path: '/noticias/$id'
-      fullPath: '/noticias/$id'
-      preLoaderRoute: typeof NoticiasIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/grandes-leoes/$id': {
-      id: '/grandes-leoes/$id'
-      path: '/grandes-leoes/$id'
-      fullPath: '/grandes-leoes/$id'
-      preLoaderRoute: typeof GrandesLeoesIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gestao/usuarios': {
-      id: '/gestao/usuarios'
-      path: '/usuarios'
-      fullPath: '/gestao/usuarios'
-      preLoaderRoute: typeof GestaoUsuariosRouteImport
-      parentRoute: typeof GestaoRoute
-    }
-    '/gestao/nominata': {
-      id: '/gestao/nominata'
-      path: '/nominata'
-      fullPath: '/gestao/nominata'
-      preLoaderRoute: typeof GestaoNominataRouteImport
-      parentRoute: typeof GestaoRoute
-    }
-    '/gestao/login': {
-      id: '/gestao/login'
-      path: '/login'
-      fullPath: '/gestao/login'
-      preLoaderRoute: typeof GestaoLoginRouteImport
-      parentRoute: typeof GestaoRoute
-    }
-    '/gestao/financeiro': {
-      id: '/gestao/financeiro'
-      path: '/financeiro'
-      fullPath: '/gestao/financeiro'
-      preLoaderRoute: typeof GestaoFinanceiroRouteImport
-      parentRoute: typeof GestaoRoute
-    }
-    '/gestao/exercicios': {
-      id: '/gestao/exercicios'
-      path: '/exercicios'
-      fullPath: '/gestao/exercicios'
-      preLoaderRoute: typeof GestaoExerciciosRouteImport
-      parentRoute: typeof GestaoRoute
-    }
-    '/gestao/estrutura-distrital': {
-      id: '/gestao/estrutura-distrital'
-      path: '/estrutura-distrital'
-      fullPath: '/gestao/estrutura-distrital'
-      preLoaderRoute: typeof GestaoEstruturaDistritalRouteImport
-      parentRoute: typeof GestaoRoute
-    }
-    '/gestao/documentos': {
-      id: '/gestao/documentos'
-      path: '/documentos'
-      fullPath: '/gestao/documentos'
-      preLoaderRoute: typeof GestaoDocumentosRouteImport
-      parentRoute: typeof GestaoRoute
-    }
-    '/gestao/distritos': {
-      id: '/gestao/distritos'
-      path: '/distritos'
-      fullPath: '/gestao/distritos'
-      preLoaderRoute: typeof GestaoDistritosRouteImport
-      parentRoute: typeof GestaoRoute
-    }
-    '/gestao/crm': {
-      id: '/gestao/crm'
-      path: '/crm'
-      fullPath: '/gestao/crm'
-      preLoaderRoute: typeof GestaoCrmRouteImport
-      parentRoute: typeof GestaoRoute
-    }
-    '/gestao/contabil': {
-      id: '/gestao/contabil'
-      path: '/contabil'
-      fullPath: '/gestao/contabil'
-      preLoaderRoute: typeof GestaoContabilRouteImport
-      parentRoute: typeof GestaoRoute
-    }
-    '/ex-governadores/$id': {
-      id: '/ex-governadores/$id'
-      path: '/ex-governadores/$id'
-      fullPath: '/ex-governadores/$id'
-      preLoaderRoute: typeof ExGovernadoresIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/eventos/$id': {
-      id: '/eventos/$id'
-      path: '/eventos/$id'
-      fullPath: '/eventos/$id'
-      preLoaderRoute: typeof EventosIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/documentos/$': {
-      id: '/documentos/$'
-      path: '/$'
-      fullPath: '/documentos/$'
-      preLoaderRoute: typeof DocumentosSplatRouteImport
-      parentRoute: typeof DocumentosRoute
-    }
-    '/clubes/rj': {
-      id: '/clubes/rj'
-      path: '/clubes/rj'
-      fullPath: '/clubes/rj'
-      preLoaderRoute: typeof ClubesRjRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/clubes/grandes-leoes': {
-      id: '/clubes/grandes-leoes'
-      path: '/clubes/grandes-leoes'
-      fullPath: '/clubes/grandes-leoes'
-      preLoaderRoute: typeof ClubesGrandesLeoesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/clubes/es': {
-      id: '/clubes/es'
-      path: '/clubes/es'
-      fullPath: '/clubes/es'
-      preLoaderRoute: typeof ClubesEsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/checkout/return': {
-      id: '/checkout/return'
-      path: '/checkout/return'
-      fullPath: '/checkout/return'
-      preLoaderRoute: typeof CheckoutReturnRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/campanhas/$slug': {
-      id: '/campanhas/$slug'
-      path: '/campanhas/$slug'
-      fullPath: '/campanhas/$slug'
-      preLoaderRoute: typeof CampanhasSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/usuarios': {
-      id: '/admin/usuarios'
-      path: '/usuarios'
-      fullPath: '/admin/usuarios'
-      preLoaderRoute: typeof AdminUsuariosRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/subpaginas': {
-      id: '/admin/subpaginas'
-      path: '/subpaginas'
-      fullPath: '/admin/subpaginas'
-      preLoaderRoute: typeof AdminSubpaginasRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/conexao-solidaria': {
-      id: '/admin/conexao-solidaria'
-      path: '/conexao-solidaria'
-      fullPath: '/admin/conexao-solidaria'
-      preLoaderRoute: typeof AdminConexaoSolidariaRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/clubes': {
-      id: '/admin/clubes'
-      path: '/clubes'
-      fullPath: '/admin/clubes'
-      preLoaderRoute: typeof AdminClubesRouteImport
+    '/admin/auditoria': {
+      id: '/admin/auditoria'
+      path: '/auditoria'
+      fullPath: '/admin/auditoria'
+      preLoaderRoute: typeof AdminAuditoriaRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/campanhas': {
@@ -2029,95 +1798,256 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCampanhasRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/auditoria': {
-      id: '/admin/auditoria'
-      path: '/auditoria'
-      fullPath: '/admin/auditoria'
-      preLoaderRoute: typeof AdminAuditoriaRouteImport
+    '/admin/clubes': {
+      id: '/admin/clubes'
+      path: '/clubes'
+      fullPath: '/admin/clubes'
+      preLoaderRoute: typeof AdminClubesRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/gestao/financeiro/': {
-      id: '/gestao/financeiro/'
-      path: '/'
-      fullPath: '/gestao/financeiro/'
-      preLoaderRoute: typeof GestaoFinanceiroIndexRouteImport
-      parentRoute: typeof GestaoFinanceiroRoute
+    '/admin/conexao-solidaria': {
+      id: '/admin/conexao-solidaria'
+      path: '/conexao-solidaria'
+      fullPath: '/admin/conexao-solidaria'
+      preLoaderRoute: typeof AdminConexaoSolidariaRouteImport
+      parentRoute: typeof AdminRoute
     }
-    '/gestao/crm/': {
-      id: '/gestao/crm/'
-      path: '/'
-      fullPath: '/gestao/crm/'
-      preLoaderRoute: typeof GestaoCrmIndexRouteImport
-      parentRoute: typeof GestaoCrmRoute
+    '/admin/subpaginas': {
+      id: '/admin/subpaginas'
+      path: '/subpaginas'
+      fullPath: '/admin/subpaginas'
+      preLoaderRoute: typeof AdminSubpaginasRouteImport
+      parentRoute: typeof AdminRoute
     }
-    '/gestao/contabil/': {
-      id: '/gestao/contabil/'
-      path: '/'
-      fullPath: '/gestao/contabil/'
-      preLoaderRoute: typeof GestaoContabilIndexRouteImport
-      parentRoute: typeof GestaoContabilRoute
+    '/admin/usuarios': {
+      id: '/admin/usuarios'
+      path: '/usuarios'
+      fullPath: '/admin/usuarios'
+      preLoaderRoute: typeof AdminUsuariosRouteImport
+      parentRoute: typeof AdminRoute
     }
-    '/gestao/clubes-associados/': {
-      id: '/gestao/clubes-associados/'
-      path: '/clubes-associados'
-      fullPath: '/gestao/clubes-associados/'
-      preLoaderRoute: typeof GestaoClubesAssociadosIndexRouteImport
-      parentRoute: typeof GestaoRoute
-    }
-    '/clubes/regiao/': {
-      id: '/clubes/regiao/'
-      path: '/clubes/regiao'
-      fullPath: '/clubes/regiao/'
-      preLoaderRoute: typeof ClubesRegiaoIndexRouteImport
+    '/campanhas/': {
+      id: '/campanhas/'
+      path: '/campanhas'
+      fullPath: '/campanhas/'
+      preLoaderRoute: typeof CampanhasIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/regioes/': {
-      id: '/admin/regioes/'
-      path: '/regioes'
-      fullPath: '/admin/regioes/'
-      preLoaderRoute: typeof AdminRegioesIndexRouteImport
-      parentRoute: typeof AdminRoute
+    '/campanhas/$slug': {
+      id: '/campanhas/$slug'
+      path: '/campanhas/$slug'
+      fullPath: '/campanhas/$slug'
+      preLoaderRoute: typeof CampanhasSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/projetos/': {
-      id: '/admin/projetos/'
-      path: '/projetos'
-      fullPath: '/admin/projetos/'
-      preLoaderRoute: typeof AdminProjetosIndexRouteImport
-      parentRoute: typeof AdminRoute
+    '/checkout/return': {
+      id: '/checkout/return'
+      path: '/checkout/return'
+      fullPath: '/checkout/return'
+      preLoaderRoute: typeof CheckoutReturnRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/popups/': {
-      id: '/admin/popups/'
-      path: '/popups'
-      fullPath: '/admin/popups/'
-      preLoaderRoute: typeof AdminPopupsIndexRouteImport
-      parentRoute: typeof AdminRoute
+    '/clubes/': {
+      id: '/clubes/'
+      path: '/clubes'
+      fullPath: '/clubes/'
+      preLoaderRoute: typeof ClubesIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/noticias/': {
-      id: '/admin/noticias/'
-      path: '/noticias'
-      fullPath: '/admin/noticias/'
-      preLoaderRoute: typeof AdminNoticiasIndexRouteImport
-      parentRoute: typeof AdminRoute
+    '/clubes/es': {
+      id: '/clubes/es'
+      path: '/clubes/es'
+      fullPath: '/clubes/es'
+      preLoaderRoute: typeof ClubesEsRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/lideres/': {
-      id: '/admin/lideres/'
-      path: '/lideres'
-      fullPath: '/admin/lideres/'
-      preLoaderRoute: typeof AdminLideresIndexRouteImport
-      parentRoute: typeof AdminRoute
+    '/clubes/grandes-leoes': {
+      id: '/clubes/grandes-leoes'
+      path: '/clubes/grandes-leoes'
+      fullPath: '/clubes/grandes-leoes'
+      preLoaderRoute: typeof ClubesGrandesLeoesRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/grandes-leoes/': {
-      id: '/admin/grandes-leoes/'
-      path: '/grandes-leoes'
-      fullPath: '/admin/grandes-leoes/'
-      preLoaderRoute: typeof AdminGrandesLeoesIndexRouteImport
-      parentRoute: typeof AdminRoute
+    '/clubes/rj': {
+      id: '/clubes/rj'
+      path: '/clubes/rj'
+      fullPath: '/clubes/rj'
+      preLoaderRoute: typeof ClubesRjRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/eventos/': {
-      id: '/admin/eventos/'
+    '/documentos/': {
+      id: '/documentos/'
+      path: '/'
+      fullPath: '/documentos/'
+      preLoaderRoute: typeof DocumentosIndexRouteImport
+      parentRoute: typeof DocumentosRoute
+    }
+    '/documentos/$': {
+      id: '/documentos/$'
+      path: '/$'
+      fullPath: '/documentos/$'
+      preLoaderRoute: typeof DocumentosSplatRouteImport
+      parentRoute: typeof DocumentosRoute
+    }
+    '/eventos/': {
+      id: '/eventos/'
       path: '/eventos'
-      fullPath: '/admin/eventos/'
-      preLoaderRoute: typeof AdminEventosIndexRouteImport
+      fullPath: '/eventos/'
+      preLoaderRoute: typeof EventosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eventos/$id': {
+      id: '/eventos/$id'
+      path: '/eventos/$id'
+      fullPath: '/eventos/$id'
+      preLoaderRoute: typeof EventosIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ex-governadores/': {
+      id: '/ex-governadores/'
+      path: '/ex-governadores'
+      fullPath: '/ex-governadores/'
+      preLoaderRoute: typeof ExGovernadoresIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ex-governadores/$id': {
+      id: '/ex-governadores/$id'
+      path: '/ex-governadores/$id'
+      fullPath: '/ex-governadores/$id'
+      preLoaderRoute: typeof ExGovernadoresIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gestao/': {
+      id: '/gestao/'
+      path: '/'
+      fullPath: '/gestao/'
+      preLoaderRoute: typeof GestaoIndexRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/contabil': {
+      id: '/gestao/contabil'
+      path: '/contabil'
+      fullPath: '/gestao/contabil'
+      preLoaderRoute: typeof GestaoContabilRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/crm': {
+      id: '/gestao/crm'
+      path: '/crm'
+      fullPath: '/gestao/crm'
+      preLoaderRoute: typeof GestaoCrmRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/distritos': {
+      id: '/gestao/distritos'
+      path: '/distritos'
+      fullPath: '/gestao/distritos'
+      preLoaderRoute: typeof GestaoDistritosRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/documentos': {
+      id: '/gestao/documentos'
+      path: '/documentos'
+      fullPath: '/gestao/documentos'
+      preLoaderRoute: typeof GestaoDocumentosRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/estrutura-distrital': {
+      id: '/gestao/estrutura-distrital'
+      path: '/estrutura-distrital'
+      fullPath: '/gestao/estrutura-distrital'
+      preLoaderRoute: typeof GestaoEstruturaDistritalRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/exercicios': {
+      id: '/gestao/exercicios'
+      path: '/exercicios'
+      fullPath: '/gestao/exercicios'
+      preLoaderRoute: typeof GestaoExerciciosRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/financeiro': {
+      id: '/gestao/financeiro'
+      path: '/financeiro'
+      fullPath: '/gestao/financeiro'
+      preLoaderRoute: typeof GestaoFinanceiroRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/login': {
+      id: '/gestao/login'
+      path: '/login'
+      fullPath: '/gestao/login'
+      preLoaderRoute: typeof GestaoLoginRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/nominata': {
+      id: '/gestao/nominata'
+      path: '/nominata'
+      fullPath: '/gestao/nominata'
+      preLoaderRoute: typeof GestaoNominataRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/usuarios': {
+      id: '/gestao/usuarios'
+      path: '/usuarios'
+      fullPath: '/gestao/usuarios'
+      preLoaderRoute: typeof GestaoUsuariosRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/grandes-leoes/$id': {
+      id: '/grandes-leoes/$id'
+      path: '/grandes-leoes/$id'
+      fullPath: '/grandes-leoes/$id'
+      preLoaderRoute: typeof GrandesLeoesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/noticias/': {
+      id: '/noticias/'
+      path: '/noticias'
+      fullPath: '/noticias/'
+      preLoaderRoute: typeof NoticiasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/noticias/$id': {
+      id: '/noticias/$id'
+      path: '/noticias/$id'
+      fullPath: '/noticias/$id'
+      preLoaderRoute: typeof NoticiasIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/paginas/$slug': {
+      id: '/paginas/$slug'
+      path: '/paginas/$slug'
+      fullPath: '/paginas/$slug'
+      preLoaderRoute: typeof PaginasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projetos/': {
+      id: '/projetos/'
+      path: '/projetos'
+      fullPath: '/projetos/'
+      preLoaderRoute: typeof ProjetosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projetos/$id': {
+      id: '/projetos/$id'
+      path: '/projetos/$id'
+      fullPath: '/projetos/$id'
+      preLoaderRoute: typeof ProjetosIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/conteudo/': {
+      id: '/admin/conteudo/'
+      path: '/conteudo'
+      fullPath: '/admin/conteudo/'
+      preLoaderRoute: typeof AdminConteudoIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/conteudo/$key': {
+      id: '/admin/conteudo/$key'
+      path: '/conteudo/$key'
+      fullPath: '/admin/conteudo/$key'
+      preLoaderRoute: typeof AdminConteudoKeyRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/documentos/': {
@@ -2127,270 +2057,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDocumentosIndexRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/conteudo/': {
-      id: '/admin/conteudo/'
-      path: '/conteudo'
-      fullPath: '/admin/conteudo/'
-      preLoaderRoute: typeof AdminConteudoIndexRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/projetos/causa/$slug': {
-      id: '/projetos/causa/$slug'
-      path: '/projetos/causa/$slug'
-      fullPath: '/projetos/causa/$slug'
-      preLoaderRoute: typeof ProjetosCausaSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gestao/financeiro/relatorios': {
-      id: '/gestao/financeiro/relatorios'
-      path: '/relatorios'
-      fullPath: '/gestao/financeiro/relatorios'
-      preLoaderRoute: typeof GestaoFinanceiroRelatoriosRouteImport
-      parentRoute: typeof GestaoFinanceiroRoute
-    }
-    '/gestao/financeiro/orcamento': {
-      id: '/gestao/financeiro/orcamento'
-      path: '/orcamento'
-      fullPath: '/gestao/financeiro/orcamento'
-      preLoaderRoute: typeof GestaoFinanceiroOrcamentoRouteImport
-      parentRoute: typeof GestaoFinanceiroRoute
-    }
-    '/gestao/financeiro/movimentacoes': {
-      id: '/gestao/financeiro/movimentacoes'
-      path: '/movimentacoes'
-      fullPath: '/gestao/financeiro/movimentacoes'
-      preLoaderRoute: typeof GestaoFinanceiroMovimentacoesRouteImport
-      parentRoute: typeof GestaoFinanceiroRoute
-    }
-    '/gestao/financeiro/fornecedores': {
-      id: '/gestao/financeiro/fornecedores'
-      path: '/fornecedores'
-      fullPath: '/gestao/financeiro/fornecedores'
-      preLoaderRoute: typeof GestaoFinanceiroFornecedoresRouteImport
-      parentRoute: typeof GestaoFinanceiroRoute
-    }
-    '/gestao/financeiro/fluxo-caixa': {
-      id: '/gestao/financeiro/fluxo-caixa'
-      path: '/fluxo-caixa'
-      fullPath: '/gestao/financeiro/fluxo-caixa'
-      preLoaderRoute: typeof GestaoFinanceiroFluxoCaixaRouteImport
-      parentRoute: typeof GestaoFinanceiroRoute
-    }
-    '/gestao/financeiro/contas-receber': {
-      id: '/gestao/financeiro/contas-receber'
-      path: '/contas-receber'
-      fullPath: '/gestao/financeiro/contas-receber'
-      preLoaderRoute: typeof GestaoFinanceiroContasReceberRouteImport
-      parentRoute: typeof GestaoFinanceiroRoute
-    }
-    '/gestao/financeiro/contas-pagar': {
-      id: '/gestao/financeiro/contas-pagar'
-      path: '/contas-pagar'
-      fullPath: '/gestao/financeiro/contas-pagar'
-      preLoaderRoute: typeof GestaoFinanceiroContasPagarRouteImport
-      parentRoute: typeof GestaoFinanceiroRoute
-    }
-    '/gestao/financeiro/contas-bancarias': {
-      id: '/gestao/financeiro/contas-bancarias'
-      path: '/contas-bancarias'
-      fullPath: '/gestao/financeiro/contas-bancarias'
-      preLoaderRoute: typeof GestaoFinanceiroContasBancariasRouteImport
-      parentRoute: typeof GestaoFinanceiroRoute
-    }
-    '/gestao/financeiro/cobrancas': {
-      id: '/gestao/financeiro/cobrancas'
-      path: '/cobrancas'
-      fullPath: '/gestao/financeiro/cobrancas'
-      preLoaderRoute: typeof GestaoFinanceiroCobrancasRouteImport
-      parentRoute: typeof GestaoFinanceiroRoute
-    }
-    '/gestao/financeiro/clientes': {
-      id: '/gestao/financeiro/clientes'
-      path: '/clientes'
-      fullPath: '/gestao/financeiro/clientes'
-      preLoaderRoute: typeof GestaoFinanceiroClientesRouteImport
-      parentRoute: typeof GestaoFinanceiroRoute
-    }
-    '/gestao/financeiro/categorias': {
-      id: '/gestao/financeiro/categorias'
-      path: '/categorias'
-      fullPath: '/gestao/financeiro/categorias'
-      preLoaderRoute: typeof GestaoFinanceiroCategoriasRouteImport
-      parentRoute: typeof GestaoFinanceiroRoute
-    }
-    '/gestao/financeiro/aprovacoes': {
-      id: '/gestao/financeiro/aprovacoes'
-      path: '/aprovacoes'
-      fullPath: '/gestao/financeiro/aprovacoes'
-      preLoaderRoute: typeof GestaoFinanceiroAprovacoesRouteImport
-      parentRoute: typeof GestaoFinanceiroRoute
-    }
-    '/gestao/crm/tarefas': {
-      id: '/gestao/crm/tarefas'
-      path: '/tarefas'
-      fullPath: '/gestao/crm/tarefas'
-      preLoaderRoute: typeof GestaoCrmTarefasRouteImport
-      parentRoute: typeof GestaoCrmRoute
-    }
-    '/gestao/crm/interacoes': {
-      id: '/gestao/crm/interacoes'
-      path: '/interacoes'
-      fullPath: '/gestao/crm/interacoes'
-      preLoaderRoute: typeof GestaoCrmInteracoesRouteImport
-      parentRoute: typeof GestaoCrmRoute
-    }
-    '/gestao/crm/funil': {
-      id: '/gestao/crm/funil'
-      path: '/funil'
-      fullPath: '/gestao/crm/funil'
-      preLoaderRoute: typeof GestaoCrmFunilRouteImport
-      parentRoute: typeof GestaoCrmRoute
-    }
-    '/gestao/crm/contatos': {
-      id: '/gestao/crm/contatos'
-      path: '/contatos'
-      fullPath: '/gestao/crm/contatos'
-      preLoaderRoute: typeof GestaoCrmContatosRouteImport
-      parentRoute: typeof GestaoCrmRoute
-    }
-    '/gestao/contabil/plano-contas': {
-      id: '/gestao/contabil/plano-contas'
-      path: '/plano-contas'
-      fullPath: '/gestao/contabil/plano-contas'
-      preLoaderRoute: typeof GestaoContabilPlanoContasRouteImport
-      parentRoute: typeof GestaoContabilRoute
-    }
-    '/gestao/contabil/lancamentos': {
-      id: '/gestao/contabil/lancamentos'
-      path: '/lancamentos'
-      fullPath: '/gestao/contabil/lancamentos'
-      preLoaderRoute: typeof GestaoContabilLancamentosRouteImport
-      parentRoute: typeof GestaoContabilRoute
-    }
-    '/gestao/contabil/dre': {
-      id: '/gestao/contabil/dre'
-      path: '/dre'
-      fullPath: '/gestao/contabil/dre'
-      preLoaderRoute: typeof GestaoContabilDreRouteImport
-      parentRoute: typeof GestaoContabilRoute
-    }
-    '/gestao/contabil/balancete': {
-      id: '/gestao/contabil/balancete'
-      path: '/balancete'
-      fullPath: '/gestao/contabil/balancete'
-      preLoaderRoute: typeof GestaoContabilBalanceteRouteImport
-      parentRoute: typeof GestaoContabilRoute
-    }
-    '/gestao/clubes-associados/clubes': {
-      id: '/gestao/clubes-associados/clubes'
-      path: '/clubes-associados/clubes'
-      fullPath: '/gestao/clubes-associados/clubes'
-      preLoaderRoute: typeof GestaoClubesAssociadosClubesRouteImport
-      parentRoute: typeof GestaoRoute
-    }
-    '/gestao/clubes-associados/associados': {
-      id: '/gestao/clubes-associados/associados'
-      path: '/clubes-associados/associados'
-      fullPath: '/gestao/clubes-associados/associados'
-      preLoaderRoute: typeof GestaoClubesAssociadosAssociadosRouteImport
-      parentRoute: typeof GestaoRoute
-    }
-    '/clubes/regiao/$letra': {
-      id: '/clubes/regiao/$letra'
-      path: '/clubes/regiao/$letra'
-      fullPath: '/clubes/regiao/$letra'
-      preLoaderRoute: typeof ClubesRegiaoLetraRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/projetos': {
-      id: '/api/public/projetos'
-      path: '/api/public/projetos'
-      fullPath: '/api/public/projetos'
-      preLoaderRoute: typeof ApiPublicProjetosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/lcif': {
-      id: '/api/public/lcif'
-      path: '/api/public/lcif'
-      fullPath: '/api/public/lcif'
-      preLoaderRoute: typeof ApiPublicLcifRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/governadores': {
-      id: '/api/public/governadores'
-      path: '/api/public/governadores'
-      fullPath: '/api/public/governadores'
-      preLoaderRoute: typeof ApiPublicGovernadoresRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/eventos': {
-      id: '/api/public/eventos'
-      path: '/api/public/eventos'
-      fullPath: '/api/public/eventos'
-      preLoaderRoute: typeof ApiPublicEventosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/regioes/$id': {
-      id: '/admin/regioes/$id'
-      path: '/regioes/$id'
-      fullPath: '/admin/regioes/$id'
-      preLoaderRoute: typeof AdminRegioesIdRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/projetos/$id': {
-      id: '/admin/projetos/$id'
-      path: '/projetos/$id'
-      fullPath: '/admin/projetos/$id'
-      preLoaderRoute: typeof AdminProjetosIdRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/popups/$id': {
-      id: '/admin/popups/$id'
-      path: '/popups/$id'
-      fullPath: '/admin/popups/$id'
-      preLoaderRoute: typeof AdminPopupsIdRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/noticias/$id': {
-      id: '/admin/noticias/$id'
-      path: '/noticias/$id'
-      fullPath: '/admin/noticias/$id'
-      preLoaderRoute: typeof AdminNoticiasIdRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/lideres/$id': {
-      id: '/admin/lideres/$id'
-      path: '/lideres/$id'
-      fullPath: '/admin/lideres/$id'
-      preLoaderRoute: typeof AdminLideresIdRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/grandes-leoes/novo': {
-      id: '/admin/grandes-leoes/novo'
-      path: '/grandes-leoes/novo'
-      fullPath: '/admin/grandes-leoes/novo'
-      preLoaderRoute: typeof AdminGrandesLeoesNovoRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/grandes-leoes/$id': {
-      id: '/admin/grandes-leoes/$id'
-      path: '/grandes-leoes/$id'
-      fullPath: '/admin/grandes-leoes/$id'
-      preLoaderRoute: typeof AdminGrandesLeoesIdRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/eventos/$id': {
-      id: '/admin/eventos/$id'
-      path: '/eventos/$id'
-      fullPath: '/admin/eventos/$id'
-      preLoaderRoute: typeof AdminEventosIdRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/documentos/categorias': {
-      id: '/admin/documentos/categorias'
-      path: '/documentos/categorias'
-      fullPath: '/admin/documentos/categorias'
-      preLoaderRoute: typeof AdminDocumentosCategoriasRouteImport
+    '/admin/documentos/$id': {
+      id: '/admin/documentos/$id'
+      path: '/documentos/$id'
+      fullPath: '/admin/documentos/$id'
+      preLoaderRoute: typeof AdminDocumentosIdRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/documentos/auditoria': {
@@ -2400,19 +2071,348 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDocumentosAuditoriaRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/documentos/$id': {
-      id: '/admin/documentos/$id'
-      path: '/documentos/$id'
-      fullPath: '/admin/documentos/$id'
-      preLoaderRoute: typeof AdminDocumentosIdRouteImport
+    '/admin/documentos/categorias': {
+      id: '/admin/documentos/categorias'
+      path: '/documentos/categorias'
+      fullPath: '/admin/documentos/categorias'
+      preLoaderRoute: typeof AdminDocumentosCategoriasRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/conteudo/$key': {
-      id: '/admin/conteudo/$key'
-      path: '/conteudo/$key'
-      fullPath: '/admin/conteudo/$key'
-      preLoaderRoute: typeof AdminConteudoKeyRouteImport
+    '/admin/eventos/': {
+      id: '/admin/eventos/'
+      path: '/eventos'
+      fullPath: '/admin/eventos/'
+      preLoaderRoute: typeof AdminEventosIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/admin/eventos/$id': {
+      id: '/admin/eventos/$id'
+      path: '/eventos/$id'
+      fullPath: '/admin/eventos/$id'
+      preLoaderRoute: typeof AdminEventosIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/grandes-leoes/': {
+      id: '/admin/grandes-leoes/'
+      path: '/grandes-leoes'
+      fullPath: '/admin/grandes-leoes/'
+      preLoaderRoute: typeof AdminGrandesLeoesIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/grandes-leoes/$id': {
+      id: '/admin/grandes-leoes/$id'
+      path: '/grandes-leoes/$id'
+      fullPath: '/admin/grandes-leoes/$id'
+      preLoaderRoute: typeof AdminGrandesLeoesIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/grandes-leoes/novo': {
+      id: '/admin/grandes-leoes/novo'
+      path: '/grandes-leoes/novo'
+      fullPath: '/admin/grandes-leoes/novo'
+      preLoaderRoute: typeof AdminGrandesLeoesNovoRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/lideres/': {
+      id: '/admin/lideres/'
+      path: '/lideres'
+      fullPath: '/admin/lideres/'
+      preLoaderRoute: typeof AdminLideresIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/lideres/$id': {
+      id: '/admin/lideres/$id'
+      path: '/lideres/$id'
+      fullPath: '/admin/lideres/$id'
+      preLoaderRoute: typeof AdminLideresIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/noticias/': {
+      id: '/admin/noticias/'
+      path: '/noticias'
+      fullPath: '/admin/noticias/'
+      preLoaderRoute: typeof AdminNoticiasIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/noticias/$id': {
+      id: '/admin/noticias/$id'
+      path: '/noticias/$id'
+      fullPath: '/admin/noticias/$id'
+      preLoaderRoute: typeof AdminNoticiasIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/popups/': {
+      id: '/admin/popups/'
+      path: '/popups'
+      fullPath: '/admin/popups/'
+      preLoaderRoute: typeof AdminPopupsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/popups/$id': {
+      id: '/admin/popups/$id'
+      path: '/popups/$id'
+      fullPath: '/admin/popups/$id'
+      preLoaderRoute: typeof AdminPopupsIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/projetos/': {
+      id: '/admin/projetos/'
+      path: '/projetos'
+      fullPath: '/admin/projetos/'
+      preLoaderRoute: typeof AdminProjetosIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/projetos/$id': {
+      id: '/admin/projetos/$id'
+      path: '/projetos/$id'
+      fullPath: '/admin/projetos/$id'
+      preLoaderRoute: typeof AdminProjetosIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/regioes/': {
+      id: '/admin/regioes/'
+      path: '/regioes'
+      fullPath: '/admin/regioes/'
+      preLoaderRoute: typeof AdminRegioesIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/regioes/$id': {
+      id: '/admin/regioes/$id'
+      path: '/regioes/$id'
+      fullPath: '/admin/regioes/$id'
+      preLoaderRoute: typeof AdminRegioesIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/api/public/eventos': {
+      id: '/api/public/eventos'
+      path: '/api/public/eventos'
+      fullPath: '/api/public/eventos'
+      preLoaderRoute: typeof ApiPublicEventosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/governadores': {
+      id: '/api/public/governadores'
+      path: '/api/public/governadores'
+      fullPath: '/api/public/governadores'
+      preLoaderRoute: typeof ApiPublicGovernadoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/lcif': {
+      id: '/api/public/lcif'
+      path: '/api/public/lcif'
+      fullPath: '/api/public/lcif'
+      preLoaderRoute: typeof ApiPublicLcifRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/projetos': {
+      id: '/api/public/projetos'
+      path: '/api/public/projetos'
+      fullPath: '/api/public/projetos'
+      preLoaderRoute: typeof ApiPublicProjetosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clubes/regiao/': {
+      id: '/clubes/regiao/'
+      path: '/clubes/regiao'
+      fullPath: '/clubes/regiao/'
+      preLoaderRoute: typeof ClubesRegiaoIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clubes/regiao/$letra': {
+      id: '/clubes/regiao/$letra'
+      path: '/clubes/regiao/$letra'
+      fullPath: '/clubes/regiao/$letra'
+      preLoaderRoute: typeof ClubesRegiaoLetraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gestao/clubes-associados/': {
+      id: '/gestao/clubes-associados/'
+      path: '/clubes-associados'
+      fullPath: '/gestao/clubes-associados/'
+      preLoaderRoute: typeof GestaoClubesAssociadosIndexRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/clubes-associados/associados': {
+      id: '/gestao/clubes-associados/associados'
+      path: '/clubes-associados/associados'
+      fullPath: '/gestao/clubes-associados/associados'
+      preLoaderRoute: typeof GestaoClubesAssociadosAssociadosRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/clubes-associados/clubes': {
+      id: '/gestao/clubes-associados/clubes'
+      path: '/clubes-associados/clubes'
+      fullPath: '/gestao/clubes-associados/clubes'
+      preLoaderRoute: typeof GestaoClubesAssociadosClubesRouteImport
+      parentRoute: typeof GestaoRoute
+    }
+    '/gestao/contabil/': {
+      id: '/gestao/contabil/'
+      path: '/'
+      fullPath: '/gestao/contabil/'
+      preLoaderRoute: typeof GestaoContabilIndexRouteImport
+      parentRoute: typeof GestaoContabilRoute
+    }
+    '/gestao/contabil/balancete': {
+      id: '/gestao/contabil/balancete'
+      path: '/balancete'
+      fullPath: '/gestao/contabil/balancete'
+      preLoaderRoute: typeof GestaoContabilBalanceteRouteImport
+      parentRoute: typeof GestaoContabilRoute
+    }
+    '/gestao/contabil/dre': {
+      id: '/gestao/contabil/dre'
+      path: '/dre'
+      fullPath: '/gestao/contabil/dre'
+      preLoaderRoute: typeof GestaoContabilDreRouteImport
+      parentRoute: typeof GestaoContabilRoute
+    }
+    '/gestao/contabil/lancamentos': {
+      id: '/gestao/contabil/lancamentos'
+      path: '/lancamentos'
+      fullPath: '/gestao/contabil/lancamentos'
+      preLoaderRoute: typeof GestaoContabilLancamentosRouteImport
+      parentRoute: typeof GestaoContabilRoute
+    }
+    '/gestao/contabil/plano-contas': {
+      id: '/gestao/contabil/plano-contas'
+      path: '/plano-contas'
+      fullPath: '/gestao/contabil/plano-contas'
+      preLoaderRoute: typeof GestaoContabilPlanoContasRouteImport
+      parentRoute: typeof GestaoContabilRoute
+    }
+    '/gestao/crm/': {
+      id: '/gestao/crm/'
+      path: '/'
+      fullPath: '/gestao/crm/'
+      preLoaderRoute: typeof GestaoCrmIndexRouteImport
+      parentRoute: typeof GestaoCrmRoute
+    }
+    '/gestao/crm/contatos': {
+      id: '/gestao/crm/contatos'
+      path: '/contatos'
+      fullPath: '/gestao/crm/contatos'
+      preLoaderRoute: typeof GestaoCrmContatosRouteImport
+      parentRoute: typeof GestaoCrmRoute
+    }
+    '/gestao/crm/funil': {
+      id: '/gestao/crm/funil'
+      path: '/funil'
+      fullPath: '/gestao/crm/funil'
+      preLoaderRoute: typeof GestaoCrmFunilRouteImport
+      parentRoute: typeof GestaoCrmRoute
+    }
+    '/gestao/crm/interacoes': {
+      id: '/gestao/crm/interacoes'
+      path: '/interacoes'
+      fullPath: '/gestao/crm/interacoes'
+      preLoaderRoute: typeof GestaoCrmInteracoesRouteImport
+      parentRoute: typeof GestaoCrmRoute
+    }
+    '/gestao/crm/tarefas': {
+      id: '/gestao/crm/tarefas'
+      path: '/tarefas'
+      fullPath: '/gestao/crm/tarefas'
+      preLoaderRoute: typeof GestaoCrmTarefasRouteImport
+      parentRoute: typeof GestaoCrmRoute
+    }
+    '/gestao/financeiro/': {
+      id: '/gestao/financeiro/'
+      path: '/'
+      fullPath: '/gestao/financeiro/'
+      preLoaderRoute: typeof GestaoFinanceiroIndexRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/aprovacoes': {
+      id: '/gestao/financeiro/aprovacoes'
+      path: '/aprovacoes'
+      fullPath: '/gestao/financeiro/aprovacoes'
+      preLoaderRoute: typeof GestaoFinanceiroAprovacoesRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/categorias': {
+      id: '/gestao/financeiro/categorias'
+      path: '/categorias'
+      fullPath: '/gestao/financeiro/categorias'
+      preLoaderRoute: typeof GestaoFinanceiroCategoriasRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/clientes': {
+      id: '/gestao/financeiro/clientes'
+      path: '/clientes'
+      fullPath: '/gestao/financeiro/clientes'
+      preLoaderRoute: typeof GestaoFinanceiroClientesRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/cobrancas': {
+      id: '/gestao/financeiro/cobrancas'
+      path: '/cobrancas'
+      fullPath: '/gestao/financeiro/cobrancas'
+      preLoaderRoute: typeof GestaoFinanceiroCobrancasRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/contas-bancarias': {
+      id: '/gestao/financeiro/contas-bancarias'
+      path: '/contas-bancarias'
+      fullPath: '/gestao/financeiro/contas-bancarias'
+      preLoaderRoute: typeof GestaoFinanceiroContasBancariasRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/contas-pagar': {
+      id: '/gestao/financeiro/contas-pagar'
+      path: '/contas-pagar'
+      fullPath: '/gestao/financeiro/contas-pagar'
+      preLoaderRoute: typeof GestaoFinanceiroContasPagarRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/contas-receber': {
+      id: '/gestao/financeiro/contas-receber'
+      path: '/contas-receber'
+      fullPath: '/gestao/financeiro/contas-receber'
+      preLoaderRoute: typeof GestaoFinanceiroContasReceberRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/fluxo-caixa': {
+      id: '/gestao/financeiro/fluxo-caixa'
+      path: '/fluxo-caixa'
+      fullPath: '/gestao/financeiro/fluxo-caixa'
+      preLoaderRoute: typeof GestaoFinanceiroFluxoCaixaRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/fornecedores': {
+      id: '/gestao/financeiro/fornecedores'
+      path: '/fornecedores'
+      fullPath: '/gestao/financeiro/fornecedores'
+      preLoaderRoute: typeof GestaoFinanceiroFornecedoresRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/movimentacoes': {
+      id: '/gestao/financeiro/movimentacoes'
+      path: '/movimentacoes'
+      fullPath: '/gestao/financeiro/movimentacoes'
+      preLoaderRoute: typeof GestaoFinanceiroMovimentacoesRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/orcamento': {
+      id: '/gestao/financeiro/orcamento'
+      path: '/orcamento'
+      fullPath: '/gestao/financeiro/orcamento'
+      preLoaderRoute: typeof GestaoFinanceiroOrcamentoRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/gestao/financeiro/relatorios': {
+      id: '/gestao/financeiro/relatorios'
+      path: '/relatorios'
+      fullPath: '/gestao/financeiro/relatorios'
+      preLoaderRoute: typeof GestaoFinanceiroRelatoriosRouteImport
+      parentRoute: typeof GestaoFinanceiroRoute
+    }
+    '/projetos/causa/$slug': {
+      id: '/projetos/causa/$slug'
+      path: '/projetos/causa/$slug'
+      fullPath: '/projetos/causa/$slug'
+      preLoaderRoute: typeof ProjetosCausaSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/public/payments/webhook': {
       id: '/api/public/payments/webhook'

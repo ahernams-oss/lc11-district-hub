@@ -22,6 +22,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Distrito LC-11: clubes Lions servindo nossas comunidades com projetos de visão, combate à fome, meio ambiente, diabetes e câncer infantil." },
       { property: "og:title", content: "Distrito LC-11 — Lions Clubs International" },
       { property: "og:description", content: "Nós Servimos. Conheça os clubes, projetos e eventos do Distrito LC-11." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],

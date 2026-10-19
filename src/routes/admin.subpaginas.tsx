@@ -83,8 +83,8 @@ function SubpagesAdmin() {
         <label className="text-sm font-medium">Nome no menu<input className={fieldClass} value={draft.menu_label} placeholder={draft.title} onChange={(event) => patch({ menu_label: event.target.value })} /></label>
         <label className="text-sm font-medium">Endereço da página<input required pattern="[a-z0-9]+(-[a-z0-9]+)*" className={fieldClass} value={draft.slug} onChange={(event) => patch({ slug: event.target.value })} /><span className="mt-1 block text-xs text-muted-foreground">/paginas/{draft.slug}</span></label>
       </div>
-      <label className="block text-sm font-medium">Descrição<textarea className={fieldClass} rows={2} value={draft.description} onChange={(event) => patch({ description: event.target.value })} /></label>
-      <label className="block text-sm font-medium">Conteúdo<textarea className={fieldClass} rows={12} value={draft.body} onChange={(event) => patch({ body: event.target.value })} /></label>
+      <label className="block text-sm font-medium">Descrição<textarea aria-label="Descrição" className={fieldClass} rows={2} value={draft.description} onChange={(event) => patch({ description: event.target.value })} /></label>
+      <label className="block text-sm font-medium">Conteúdo<textarea aria-label="Conteúdo" className={fieldClass} rows={12} value={draft.body} onChange={(event) => patch({ body: event.target.value })} /></label>
       <div className="flex flex-wrap items-center gap-3">
         <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border border-input px-3 py-2 text-sm"><Upload className="h-4 w-4" />Imagem<input type="file" accept="image/*" className="sr-only" disabled={busy} onChange={(event) => {
           const file = event.target.files?.[0]; if (!file) return;

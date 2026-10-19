@@ -48,6 +48,7 @@ import { Route as ClubesIndexRouteImport } from './routes/clubes.index'
 import { Route as CampanhasIndexRouteImport } from './routes/campanhas.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ProjetosIdRouteImport } from './routes/projetos.$id'
+import { Route as PaginasSlugRouteImport } from './routes/paginas.$slug'
 import { Route as NoticiasIdRouteImport } from './routes/noticias.$id'
 import { Route as GrandesLeoesIdRouteImport } from './routes/grandes-leoes.$id'
 import { Route as GestaoUsuariosRouteImport } from './routes/gestao.usuarios'
@@ -325,6 +326,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
 const ProjetosIdRoute = ProjetosIdRouteImport.update({
   id: '/projetos/$id',
   path: '/projetos/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaginasSlugRoute = PaginasSlugRouteImport.update({
+  id: '/paginas/$slug',
+  path: '/paginas/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NoticiasIdRoute = NoticiasIdRouteImport.update({
@@ -816,6 +822,7 @@ export interface FileRoutesByFullPath {
   '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/grandes-leoes/$id': typeof GrandesLeoesIdRoute
   '/noticias/$id': typeof NoticiasIdRoute
+  '/paginas/$slug': typeof PaginasSlugRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
   '/campanhas/': typeof CampanhasIndexRoute
@@ -933,6 +940,7 @@ export interface FileRoutesByTo {
   '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/grandes-leoes/$id': typeof GrandesLeoesIdRoute
   '/noticias/$id': typeof NoticiasIdRoute
+  '/paginas/$slug': typeof PaginasSlugRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin': typeof AdminIndexRoute
   '/campanhas': typeof CampanhasIndexRoute
@@ -1057,6 +1065,7 @@ export interface FileRoutesById {
   '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/grandes-leoes/$id': typeof GrandesLeoesIdRoute
   '/noticias/$id': typeof NoticiasIdRoute
+  '/paginas/$slug': typeof PaginasSlugRoute
   '/projetos/$id': typeof ProjetosIdRoute
   '/admin/': typeof AdminIndexRoute
   '/campanhas/': typeof CampanhasIndexRoute
@@ -1182,6 +1191,7 @@ export interface FileRouteTypes {
     | '/gestao/usuarios'
     | '/grandes-leoes/$id'
     | '/noticias/$id'
+    | '/paginas/$slug'
     | '/projetos/$id'
     | '/admin/'
     | '/campanhas/'
@@ -1299,6 +1309,7 @@ export interface FileRouteTypes {
     | '/gestao/usuarios'
     | '/grandes-leoes/$id'
     | '/noticias/$id'
+    | '/paginas/$slug'
     | '/projetos/$id'
     | '/admin'
     | '/campanhas'
@@ -1422,6 +1433,7 @@ export interface FileRouteTypes {
     | '/gestao/usuarios'
     | '/grandes-leoes/$id'
     | '/noticias/$id'
+    | '/paginas/$slug'
     | '/projetos/$id'
     | '/admin/'
     | '/campanhas/'
@@ -1530,6 +1542,7 @@ export interface RootRouteChildren {
   ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
   GrandesLeoesIdRoute: typeof GrandesLeoesIdRoute
   NoticiasIdRoute: typeof NoticiasIdRoute
+  PaginasSlugRoute: typeof PaginasSlugRoute
   ProjetosIdRoute: typeof ProjetosIdRoute
   CampanhasIndexRoute: typeof CampanhasIndexRoute
   ClubesIndexRoute: typeof ClubesIndexRoute
@@ -1820,6 +1833,13 @@ declare module '@tanstack/react-router' {
       path: '/projetos/$id'
       fullPath: '/projetos/$id'
       preLoaderRoute: typeof ProjetosIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/paginas/$slug': {
+      id: '/paginas/$slug'
+      path: '/paginas/$slug'
+      fullPath: '/paginas/$slug'
+      preLoaderRoute: typeof PaginasSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/noticias/$id': {
@@ -2654,6 +2674,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExGovernadoresIdRoute: ExGovernadoresIdRoute,
   GrandesLeoesIdRoute: GrandesLeoesIdRoute,
   NoticiasIdRoute: NoticiasIdRoute,
+  PaginasSlugRoute: PaginasSlugRoute,
   ProjetosIdRoute: ProjetosIdRoute,
   CampanhasIndexRoute: CampanhasIndexRoute,
   ClubesIndexRoute: ClubesIndexRoute,

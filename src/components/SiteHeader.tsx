@@ -6,6 +6,7 @@ const lionsLogoUrl = "/lions-logo.png";
 import { useLeaders } from "@/lib/leaders";
 import { useSiteContent, DEFAULT_CONEXAO_SUBMENU, type ConexaoMenuItem } from "@/lib/content";
 import { BreakableText } from "@/components/BreakableText";
+import { SubpageMenuLinks, SubpageDropdown } from "@/components/SubpageMenuLinks";
 
 const inicioSubmenu = [
   { to: "/lions-internacional", label: "Sobre o Lions Internacional" },
@@ -143,6 +144,7 @@ function DesktopNav() {
         </Link>
         {inicioOpen && (
           <div className="absolute left-0 top-full w-64 rounded-md border border-border bg-background py-2 shadow-card">
+            <SubpageMenuLinks menu="inicio" />
             {inicioSubmenu.map((s) => (
               <Link
                 key={s.to}
@@ -170,6 +172,7 @@ function DesktopNav() {
         </button>
         {lideresOpen && (
           <div className="absolute left-0 top-full w-56 rounded-md border border-border bg-background py-2 shadow-card">
+            <SubpageMenuLinks menu="lideres" />
             <div className="group/gov relative">
               <Link
                 to="/governador"
@@ -218,6 +221,7 @@ function DesktopNav() {
         </button>
         {clubesOpen && (
           <div className="absolute left-0 top-full w-56 rounded-md border border-border bg-background py-2 shadow-card">
+            <SubpageMenuLinks menu="clubes" />
             <Link
               to="/clubes/grandes-leoes"
               className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
@@ -285,6 +289,7 @@ function DesktopNav() {
         </Link>
         {documentosOpen && (
           <div className="absolute left-0 top-full w-72 rounded-md border border-border bg-background py-2 shadow-card">
+            <SubpageMenuLinks menu="documentos" />
             <div className="group/atos relative">
               <button
                 type="button"
@@ -352,14 +357,15 @@ function DesktopNav() {
       </div>
 
       {nav.map((item) => (
+        <SubpageDropdown key={item.to} menu={item.to === "/projetos" ? "projetos" : item.to === "/noticias" ? "noticias" : "eventos"}>
         <Link
-          key={item.to}
           to={item.to}
           className="rounded-md px-2 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-surface hover:text-primary 2xl:px-3"
           activeProps={{ className: "text-primary bg-surface" }}
         >
           {item.label}
         </Link>
+        </SubpageDropdown>
       ))}
       <div
         className="relative"
@@ -376,24 +382,25 @@ function DesktopNav() {
         {conexaoOpen && (
           <div className="absolute left-0 top-full z-50 w-64 rounded-md border border-border bg-card p-2 shadow-elegant">
             <ConexaoSubmenuItems items={conexaoItems} />
+            <SubpageMenuLinks menu="conexao" />
           </div>
         )}
       </div>
-      <a
+      <SubpageDropdown menu="dados"><a
         href="https://lookerstudio.google.com/reporting/59bed738-bb40-496a-99a1-ff4b9dd931e3/page/dfKpF"
         target="_blank"
         rel="noreferrer"
         className="inline-flex items-center gap-1 rounded-md border-2 border-primary bg-gold px-3 py-2 text-sm font-semibold text-gold-foreground shadow-sm transition-colors hover:bg-gold/90 2xl:px-4"
       >
         Dados <ExternalLink className="h-3.5 w-3.5" />
-      </a>
-      <Link
+      </a></SubpageDropdown>
+      <SubpageDropdown menu="lcif"><Link
         to="/lcif"
         className="rounded-md border-2 border-gold bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary-deep 2xl:px-4"
         activeProps={{ className: "bg-primary-deep border-gold ring-2 ring-gold/50" }}
       >
         LCIF
-      </Link>
+      </Link></SubpageDropdown>
     </nav>
   );
 }
@@ -506,6 +513,7 @@ export function SiteHeader() {
             Início
           </Link>
           <div className="ml-3 flex flex-col gap-2 border-l border-border pl-3">
+            <SubpageMenuLinks menu="inicio" onClick={() => setOpen(false)} />
             {inicioSubmenu.map((s) => (
               <Link
                 key={s.to}
@@ -520,6 +528,7 @@ export function SiteHeader() {
           </div>
           <div className="mt-2 px-3 py-2 text-base font-medium text-foreground">Líderes</div>
           <div className="ml-3 flex flex-col gap-2 border-l border-border pl-3">
+            <SubpageMenuLinks menu="lideres" onClick={() => setOpen(false)} />
             <Link
               to="/governador"
               onClick={() => setOpen(false)}
@@ -555,6 +564,7 @@ export function SiteHeader() {
           </div>
           <div className="mt-1 px-3 py-2 text-base font-medium text-foreground">Clubes e Leões</div>
           <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+            <SubpageMenuLinks menu="clubes" onClick={() => setOpen(false)} />
             <Link
               to="/clubes/grandes-leoes"
               onClick={() => setOpen(false)}
@@ -612,6 +622,7 @@ export function SiteHeader() {
             Documentos
           </Link>
           <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
+            <SubpageMenuLinks menu="documentos" onClick={() => setOpen(false)} />
             <div className="px-3 py-1 text-sm font-medium text-foreground/70">Atos do(a) Governador(a)</div>
             <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">
               {atosGovernadorSubmenu.map((s) => (
@@ -660,8 +671,8 @@ export function SiteHeader() {
             ))}
           </div>
           {nav.map((item) => (
+            <div key={item.to}>
             <Link
-              key={item.to}
               to={item.to}
               onClick={() => setOpen(false)}
               className="rounded-md px-3 py-2 text-base font-medium text-foreground hover:bg-surface"
@@ -669,6 +680,8 @@ export function SiteHeader() {
             >
               {item.label}
             </Link>
+            <div className="ml-3 border-l border-border pl-3"><SubpageMenuLinks menu={item.to === "/projetos" ? "projetos" : item.to === "/noticias" ? "noticias" : "eventos"} onClick={() => setOpen(false)} /></div>
+            </div>
           ))}
           <Link
             to="/conexao-solidaria"
@@ -679,6 +692,7 @@ export function SiteHeader() {
             Conexão Solidária
           </Link>
           <ConexaoSubmenuItems items={conexaoItems} mobile onClick={() => setOpen(false)} />
+          <SubpageMenuLinks menu="conexao" onClick={() => setOpen(false)} />
           <a
             href="https://lookerstudio.google.com/reporting/59bed738-bb40-496a-99a1-ff4b9dd931e3/page/dfKpF"
             target="_blank"
@@ -687,6 +701,7 @@ export function SiteHeader() {
           >
             Dados <ExternalLink className="h-4 w-4" />
           </a>
+          <SubpageMenuLinks menu="dados" onClick={() => setOpen(false)} />
           <Link
             to="/lcif"
             onClick={() => setOpen(false)}
@@ -695,6 +710,7 @@ export function SiteHeader() {
           >
             LCIF
           </Link>
+          <SubpageMenuLinks menu="lcif" onClick={() => setOpen(false)} />
           <Link
             to="/doar"
             onClick={() => setOpen(false)}

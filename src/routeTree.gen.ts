@@ -70,6 +70,7 @@ import { Route as ClubesEsRouteImport } from './routes/clubes.es'
 import { Route as CheckoutReturnRouteImport } from './routes/checkout/return'
 import { Route as CampanhasSlugRouteImport } from './routes/campanhas.$slug'
 import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
+import { Route as AdminSubpaginasRouteImport } from './routes/admin.subpaginas'
 import { Route as AdminConexaoSolidariaRouteImport } from './routes/admin.conexao-solidaria'
 import { Route as AdminClubesRouteImport } from './routes/admin.clubes'
 import { Route as AdminCampanhasRouteImport } from './routes/admin.campanhas'
@@ -439,6 +440,11 @@ const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
   path: '/usuarios',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSubpaginasRoute = AdminSubpaginasRouteImport.update({
+  id: '/subpaginas',
+  path: '/subpaginas',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminConexaoSolidariaRoute = AdminConexaoSolidariaRouteImport.update({
   id: '/conexao-solidaria',
   path: '/conexao-solidaria',
@@ -801,6 +807,7 @@ export interface FileRoutesByFullPath {
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/conexao-solidaria': typeof AdminConexaoSolidariaRoute
+  '/admin/subpaginas': typeof AdminSubpaginasRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/campanhas/$slug': typeof CampanhasSlugRoute
   '/checkout/return': typeof CheckoutReturnRoute
@@ -922,6 +929,7 @@ export interface FileRoutesByTo {
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/conexao-solidaria': typeof AdminConexaoSolidariaRoute
+  '/admin/subpaginas': typeof AdminSubpaginasRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/campanhas/$slug': typeof CampanhasSlugRoute
   '/checkout/return': typeof CheckoutReturnRoute
@@ -1044,6 +1052,7 @@ export interface FileRoutesById {
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/conexao-solidaria': typeof AdminConexaoSolidariaRoute
+  '/admin/subpaginas': typeof AdminSubpaginasRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/campanhas/$slug': typeof CampanhasSlugRoute
   '/checkout/return': typeof CheckoutReturnRoute
@@ -1170,6 +1179,7 @@ export interface FileRouteTypes {
     | '/admin/campanhas'
     | '/admin/clubes'
     | '/admin/conexao-solidaria'
+    | '/admin/subpaginas'
     | '/admin/usuarios'
     | '/campanhas/$slug'
     | '/checkout/return'
@@ -1291,6 +1301,7 @@ export interface FileRouteTypes {
     | '/admin/campanhas'
     | '/admin/clubes'
     | '/admin/conexao-solidaria'
+    | '/admin/subpaginas'
     | '/admin/usuarios'
     | '/campanhas/$slug'
     | '/checkout/return'
@@ -1412,6 +1423,7 @@ export interface FileRouteTypes {
     | '/admin/campanhas'
     | '/admin/clubes'
     | '/admin/conexao-solidaria'
+    | '/admin/subpaginas'
     | '/admin/usuarios'
     | '/campanhas/$slug'
     | '/checkout/return'
@@ -1989,6 +2001,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsuariosRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/subpaginas': {
+      id: '/admin/subpaginas'
+      path: '/subpaginas'
+      fullPath: '/admin/subpaginas'
+      preLoaderRoute: typeof AdminSubpaginasRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/conexao-solidaria': {
       id: '/admin/conexao-solidaria'
       path: '/conexao-solidaria'
@@ -2452,6 +2471,7 @@ interface AdminRouteChildren {
   AdminCampanhasRoute: typeof AdminCampanhasRoute
   AdminClubesRoute: typeof AdminClubesRoute
   AdminConexaoSolidariaRoute: typeof AdminConexaoSolidariaRoute
+  AdminSubpaginasRoute: typeof AdminSubpaginasRoute
   AdminUsuariosRoute: typeof AdminUsuariosRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminConteudoKeyRoute: typeof AdminConteudoKeyRoute
@@ -2482,6 +2502,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminCampanhasRoute: AdminCampanhasRoute,
   AdminClubesRoute: AdminClubesRoute,
   AdminConexaoSolidariaRoute: AdminConexaoSolidariaRoute,
+  AdminSubpaginasRoute: AdminSubpaginasRoute,
   AdminUsuariosRoute: AdminUsuariosRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminConteudoKeyRoute: AdminConteudoKeyRoute,

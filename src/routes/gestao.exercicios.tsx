@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
 import { useAuth } from "@/hooks/use-auth";
-import { opcoesAnosLeonicos } from "@/lib/ano-leonico";
+import { opcoesAnosLeonicos, anoLeonicoDe } from "@/lib/ano-leonico";
 import {
   listExercicios,
   abrirExercicio,
@@ -53,7 +53,7 @@ function ExerciciosPage() {
   const previa = useServerFn(previewApuracao);
 
   const [msg, setMsg] = useState<{ type: "ok" | "err"; text: string } | null>(null);
-  const [novoAno, setNovoAno] = useState(opcoesAnosLeonicos()[0]);
+  const [novoAno, setNovoAno] = useState(anoLeonicoDe());
   const [dialog, setDialog] = useState<
     | { acao: "fechar" | "reabrir"; ano: string; modulo: Modulo }
     | null

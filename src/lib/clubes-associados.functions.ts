@@ -142,9 +142,7 @@ export const upsertClube = createServerFn({ method: "POST" })
       dia_reuniao: z.string().optional().nullable(),
       horario_reuniao: z.string().optional().nullable(),
       local_reuniao: z.string().optional().nullable(),
-      status: z
-        .enum(["ativo", "inativo", "em_processo", "status_quo", "suspenso"])
-        .default("ativo"),
+      status: z.enum(CLUBE_STATUS_VALUES as [ClubeStatus, ...ClubeStatus[]]).default("ativo"),
       observacoes: z.string().optional().nullable(),
     })
   )

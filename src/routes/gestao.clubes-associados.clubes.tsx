@@ -18,18 +18,12 @@ import {
 } from "lucide-react";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
 import { listClubes, upsertClube, deleteClube } from "@/lib/clubes-associados.functions";
-
-type ClubeStatus = "ativo" | "inativo" | "em_processo" | "status_quo" | "suspenso";
-
-const CLUBE_STATUS: Record<ClubeStatus, { label: string; color: string }> = {
-  ativo: { label: "Ativo", color: "text-emerald-400" },
-  inativo: { label: "Inativo", color: "text-slate-400" },
-  em_processo: { label: "Em Processo de Fundação", color: "text-amber-400" },
-  status_quo: { label: "Status quo", color: "text-sky-400" },
-  suspenso: { label: "Suspenso", color: "text-rose-400" },
-};
-
-const CLUBE_STATUS_VALUES = Object.keys(CLUBE_STATUS) as ClubeStatus[];
+import {
+  CLUBE_STATUS,
+  CLUBE_STATUS_VALUES,
+  clubeStatusInfo,
+  type ClubeStatus,
+} from "@/lib/clube-status";
 
 export const Route = createFileRoute("/gestao/clubes-associados/clubes")({
   component: GestaoClubesPage,
@@ -243,13 +237,10 @@ function GestaoClubesPage() {
                 <div className="mt-5 pt-3 border-t border-white/8 flex items-center justify-between">
                   <span
                     className={`inline-flex items-center gap-1 text-xs font-semibold ${
-                      (CLUBE_STATUS[clube.status as ClubeStatus] ?? CLUBE_STATUS.ativo).color
+                      clubeStatusInfo(clube.status).color
                     }`}
                   >
-                    ●{" "}
-                    <span>
-                      {(CLUBE_STATUS[clube.status as ClubeStatus] ?? CLUBE_STATUS.ativo).label}
-                    </span>
+                    ● <span>{clubeStatusInfo(clube.status).label}</span>
                   </span>
 
                   <div className="flex items-center gap-2">

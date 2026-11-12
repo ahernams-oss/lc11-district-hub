@@ -4,6 +4,7 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { distritoScope, distritoPadrao } from "@/lib/distritos.functions";
 import { clubeScope, assertClubePermitido, assertSemRestricaoClube, clubeDoAssociado } from "@/lib/clube-scope";
 import { anoLeonicoDe, fimAnoLeonico } from "@/lib/ano-leonico";
+import { CLUBE_STATUS_VALUES, type ClubeStatus } from "@/lib/clube-status";
 
 export async function assertClubesAccess(userId: string) {
   if (

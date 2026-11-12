@@ -152,15 +152,21 @@ export const upsertClube = createServerFn({ method: "POST" })
     if (data.id) await assertClubePermitido(context.userId, data.id); else await assertSemRestricaoClube(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    try {
-      if (data.id) {
-        await supabaseAdmin.from("dist_clubes").update(data).eq("id", data.id);
-      } else {
-        await supabaseAdmin.from("dist_clubes").insert({ ...data, distrito_id: await distritoPadrao(context.userId) });
-      }
-    } catch {
-      // Mock update
+    const payload: Record<string, unknown> = { ...data };
+    for (const key of Object.keys(payload)) {
+      if (payload[key] === "") payload[key] = null;
     }
+
+    let error: { message: string } | null = null;
+    if (data.id) {
+      const { id, ...rest } = payload;
+      ({ error } = await supabaseAdmin.from("dist_clubes").update(rest).eq("id", id));
+    } else {
+      ({ error } = await supabaseAdmin
+        .from("dist_clubes")
+        .insert({ ...payload, distrito_id: await distritoPadrao(context.userId) }));
+    }
+    if (error) throw new Error(error.message);
 
     return { ok: true };
   });

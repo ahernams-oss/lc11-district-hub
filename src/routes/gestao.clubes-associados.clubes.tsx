@@ -17,6 +17,7 @@ import {
   Filter,
 } from "lucide-react";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
+import { toast } from "sonner";
 import { listClubes, upsertClube, deleteClube } from "@/lib/clubes-associados.functions";
 import {
   CLUBE_STATUS,
@@ -68,6 +69,8 @@ function GestaoClubesPage() {
       setDrawerOpen(false);
       resetForm();
     },
+    onError: (e: any) =>
+      toast.error(e?.message || "Não foi possível salvar o clube."),
   });
 
   const deleteMutation = useMutation({

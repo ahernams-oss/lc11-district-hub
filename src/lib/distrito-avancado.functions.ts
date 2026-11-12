@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { assertClubePermitido, clubeDaNominata, assertSemRestricaoClube } from "@/lib/clube-scope";
 import { distritoScope, distritoPadrao } from "@/lib/distritos.functions";
 
 export async function assertDistritoAccess(userId: string) {
@@ -71,6 +72,7 @@ export const getNominataByClube = createServerFn({ method: "GET" })
   .inputValidator(z.object({ clube_id: z.string().uuid(), ano_leonico: z.string().default("2025/2026") }))
   .handler(async ({ data, context }) => {
     await assertDistritoAccess(context.userId);
+    await assertClubePermitido(context.userId, data.clube_id);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     try {
@@ -104,6 +106,8 @@ export const upsertNominataCargo = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     await assertDistritoAccess(context.userId);
+    await assertClubePermitido(context.userId, data.clube_id);
+    if (data.id) await assertClubePermitido(context.userId, await clubeDaNominata(data.id));
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     try {
@@ -124,6 +128,7 @@ export const deleteNominataCargo = createServerFn({ method: "POST" })
   .inputValidator(z.object({ id: z.string().uuid() }))
   .handler(async ({ data, context }) => {
     await assertDistritoAccess(context.userId);
+    await assertClubePermitido(context.userId, await clubeDaNominata(data.id));
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     try {
@@ -176,6 +181,7 @@ export const addDocumentoInformativo = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     await assertDistritoAccess(context.userId);
+    await assertSemRestricaoClube(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     try {
@@ -196,6 +202,7 @@ export const deleteDocumentoInformativo = createServerFn({ method: "POST" })
   .inputValidator(z.object({ id: z.string().uuid() }))
   .handler(async ({ data, context }) => {
     await assertDistritoAccess(context.userId);
+    await assertSemRestricaoClube(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     try {
@@ -248,6 +255,7 @@ export const upsertCargoDistrital = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     await assertDistritoAccess(context.userId);
+    await assertSemRestricaoClube(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     try {
@@ -268,6 +276,7 @@ export const deleteCargoDistrital = createServerFn({ method: "POST" })
   .inputValidator(z.object({ id: z.string().uuid() }))
   .handler(async ({ data, context }) => {
     await assertDistritoAccess(context.userId);
+    await assertSemRestricaoClube(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     try {

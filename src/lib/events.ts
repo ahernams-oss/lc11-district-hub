@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 export interface EventItem {
   id: string;
+  ano_leonistico: string;
   title: string;
   description: string | null;
   location: string | null;
@@ -43,7 +44,8 @@ export function useEvent(id: string | undefined) {
     queryKey: ["event", id],
     enabled: !!id,
     queryFn: async () => {
-      const { data, error } = await supabase.from("events").select("*").eq("id", id!).maybeSingle();
+      if (!id) return null;
+      const { data, error } = await supabase.from("events").select("*").eq("id", id).maybeSingle();
       if (error) throw error;
       return data as EventItem | null;
     },

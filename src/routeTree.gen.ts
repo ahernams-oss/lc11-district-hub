@@ -102,6 +102,7 @@ import { Route as ApiPublicLcifRouteImport } from './routes/api.public.lcif'
 import { Route as ApiPublicProjetosRouteImport } from './routes/api.public.projetos'
 import { Route as ClubesRegiaoIndexRouteImport } from './routes/clubes.regiao.index'
 import { Route as ClubesRegiaoLetraRouteImport } from './routes/clubes.regiao.$letra'
+import { Route as EventosAnoAnoRouteImport } from './routes/eventos.ano.$ano'
 import { Route as GestaoClubesAssociadosIndexRouteImport } from './routes/gestao.clubes-associados.index'
 import { Route as GestaoClubesAssociadosAssociadosRouteImport } from './routes/gestao.clubes-associados.associados'
 import { Route as GestaoClubesAssociadosClubesRouteImport } from './routes/gestao.clubes-associados.clubes'
@@ -129,6 +130,7 @@ import { Route as GestaoFinanceiroMovimentacoesRouteImport } from './routes/gest
 import { Route as GestaoFinanceiroOrcamentoRouteImport } from './routes/gestao.financeiro.orcamento'
 import { Route as GestaoFinanceiroRelatoriosRouteImport } from './routes/gestao.financeiro.relatorios'
 import { Route as ProjetosCausaSlugRouteImport } from './routes/projetos.causa.$slug'
+import { Route as AdminEventosAnoAnoRouteImport } from './routes/admin.eventos.ano.$ano'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as AdminRegioesIdDivisoesDivIdRouteImport } from './routes/admin.regioes.$id.divisoes.$divId'
 import { Route as AdminRegioesIdDivisoesDivIdClubesClubIdRouteImport } from './routes/admin.regioes.$id.divisoes.$divId.clubes.$clubId'
@@ -602,6 +604,11 @@ const ClubesRegiaoLetraRoute = ClubesRegiaoLetraRouteImport.update({
   path: '/clubes/regiao/$letra',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventosAnoAnoRoute = EventosAnoAnoRouteImport.update({
+  id: '/eventos/ano/$ano',
+  path: '/eventos/ano/$ano',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GestaoClubesAssociadosIndexRoute =
   GestaoClubesAssociadosIndexRouteImport.update({
     id: '/clubes-associados/',
@@ -754,6 +761,11 @@ const ProjetosCausaSlugRoute = ProjetosCausaSlugRouteImport.update({
   path: '/projetos/causa/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminEventosAnoAnoRoute = AdminEventosAnoAnoRouteImport.update({
+  id: '/eventos/ano/$ano',
+  path: '/eventos/ano/$ano',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ApiPublicPaymentsWebhookRoute =
   ApiPublicPaymentsWebhookRouteImport.update({
     id: '/api/public/payments/webhook',
@@ -857,6 +869,7 @@ export interface FileRoutesByFullPath {
   '/api/public/lcif': typeof ApiPublicLcifRoute
   '/api/public/projetos': typeof ApiPublicProjetosRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
+  '/eventos/ano/$ano': typeof EventosAnoAnoRoute
   '/gestao/clubes-associados/associados': typeof GestaoClubesAssociadosAssociadosRoute
   '/gestao/clubes-associados/clubes': typeof GestaoClubesAssociadosClubesRoute
   '/gestao/contabil/balancete': typeof GestaoContabilBalanceteRoute
@@ -894,6 +907,7 @@ export interface FileRoutesByFullPath {
   '/gestao/contabil/': typeof GestaoContabilIndexRoute
   '/gestao/crm/': typeof GestaoCrmIndexRoute
   '/gestao/financeiro/': typeof GestaoFinanceiroIndexRoute
+  '/admin/eventos/ano/$ano': typeof AdminEventosAnoAnoRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
@@ -976,6 +990,7 @@ export interface FileRoutesByTo {
   '/api/public/lcif': typeof ApiPublicLcifRoute
   '/api/public/projetos': typeof ApiPublicProjetosRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
+  '/eventos/ano/$ano': typeof EventosAnoAnoRoute
   '/gestao/clubes-associados/associados': typeof GestaoClubesAssociadosAssociadosRoute
   '/gestao/clubes-associados/clubes': typeof GestaoClubesAssociadosClubesRoute
   '/gestao/contabil/balancete': typeof GestaoContabilBalanceteRoute
@@ -1013,6 +1028,7 @@ export interface FileRoutesByTo {
   '/gestao/contabil': typeof GestaoContabilIndexRoute
   '/gestao/crm': typeof GestaoCrmIndexRoute
   '/gestao/financeiro': typeof GestaoFinanceiroIndexRoute
+  '/admin/eventos/ano/$ano': typeof AdminEventosAnoAnoRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
@@ -1102,6 +1118,7 @@ export interface FileRoutesById {
   '/api/public/lcif': typeof ApiPublicLcifRoute
   '/api/public/projetos': typeof ApiPublicProjetosRoute
   '/clubes/regiao/$letra': typeof ClubesRegiaoLetraRoute
+  '/eventos/ano/$ano': typeof EventosAnoAnoRoute
   '/gestao/clubes-associados/associados': typeof GestaoClubesAssociadosAssociadosRoute
   '/gestao/clubes-associados/clubes': typeof GestaoClubesAssociadosClubesRoute
   '/gestao/contabil/balancete': typeof GestaoContabilBalanceteRoute
@@ -1139,6 +1156,7 @@ export interface FileRoutesById {
   '/gestao/contabil/': typeof GestaoContabilIndexRoute
   '/gestao/crm/': typeof GestaoCrmIndexRoute
   '/gestao/financeiro/': typeof GestaoFinanceiroIndexRoute
+  '/admin/eventos/ano/$ano': typeof AdminEventosAnoAnoRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin/regioes/$id/divisoes/$divId': typeof AdminRegioesIdDivisoesDivIdRouteWithChildren
   '/admin/regioes/$id/divisoes/$divId/clubes/$clubId': typeof AdminRegioesIdDivisoesDivIdClubesClubIdRoute
@@ -1229,6 +1247,7 @@ export interface FileRouteTypes {
     | '/api/public/lcif'
     | '/api/public/projetos'
     | '/clubes/regiao/$letra'
+    | '/eventos/ano/$ano'
     | '/gestao/clubes-associados/associados'
     | '/gestao/clubes-associados/clubes'
     | '/gestao/contabil/balancete'
@@ -1266,6 +1285,7 @@ export interface FileRouteTypes {
     | '/gestao/contabil/'
     | '/gestao/crm/'
     | '/gestao/financeiro/'
+    | '/admin/eventos/ano/$ano'
     | '/api/public/payments/webhook'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
@@ -1348,6 +1368,7 @@ export interface FileRouteTypes {
     | '/api/public/lcif'
     | '/api/public/projetos'
     | '/clubes/regiao/$letra'
+    | '/eventos/ano/$ano'
     | '/gestao/clubes-associados/associados'
     | '/gestao/clubes-associados/clubes'
     | '/gestao/contabil/balancete'
@@ -1385,6 +1406,7 @@ export interface FileRouteTypes {
     | '/gestao/contabil'
     | '/gestao/crm'
     | '/gestao/financeiro'
+    | '/admin/eventos/ano/$ano'
     | '/api/public/payments/webhook'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
@@ -1473,6 +1495,7 @@ export interface FileRouteTypes {
     | '/api/public/lcif'
     | '/api/public/projetos'
     | '/clubes/regiao/$letra'
+    | '/eventos/ano/$ano'
     | '/gestao/clubes-associados/associados'
     | '/gestao/clubes-associados/clubes'
     | '/gestao/contabil/balancete'
@@ -1510,6 +1533,7 @@ export interface FileRouteTypes {
     | '/gestao/contabil/'
     | '/gestao/crm/'
     | '/gestao/financeiro/'
+    | '/admin/eventos/ano/$ano'
     | '/api/public/payments/webhook'
     | '/admin/regioes/$id/divisoes/$divId'
     | '/admin/regioes/$id/divisoes/$divId/clubes/$clubId'
@@ -1567,6 +1591,7 @@ export interface RootRouteChildren {
   ApiPublicLcifRoute: typeof ApiPublicLcifRoute
   ApiPublicProjetosRoute: typeof ApiPublicProjetosRoute
   ClubesRegiaoLetraRoute: typeof ClubesRegiaoLetraRoute
+  EventosAnoAnoRoute: typeof EventosAnoAnoRoute
   ProjetosCausaSlugRoute: typeof ProjetosCausaSlugRoute
   ClubesRegiaoIndexRoute: typeof ClubesRegiaoIndexRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
@@ -2225,6 +2250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClubesRegiaoLetraRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/eventos/ano/$ano': {
+      id: '/eventos/ano/$ano'
+      path: '/eventos/ano/$ano'
+      fullPath: '/eventos/ano/$ano'
+      preLoaderRoute: typeof EventosAnoAnoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gestao/clubes-associados/': {
       id: '/gestao/clubes-associados/'
       path: '/clubes-associados'
@@ -2414,6 +2446,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjetosCausaSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/eventos/ano/$ano': {
+      id: '/admin/eventos/ano/$ano'
+      path: '/eventos/ano/$ano'
+      fullPath: '/admin/eventos/ano/$ano'
+      preLoaderRoute: typeof AdminEventosAnoAnoRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/api/public/payments/webhook': {
       id: '/api/public/payments/webhook'
       path: '/api/public/payments/webhook'
@@ -2495,6 +2534,7 @@ interface AdminRouteChildren {
   AdminPopupsIndexRoute: typeof AdminPopupsIndexRoute
   AdminProjetosIndexRoute: typeof AdminProjetosIndexRoute
   AdminRegioesIndexRoute: typeof AdminRegioesIndexRoute
+  AdminEventosAnoAnoRoute: typeof AdminEventosAnoAnoRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -2526,6 +2566,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminPopupsIndexRoute: AdminPopupsIndexRoute,
   AdminProjetosIndexRoute: AdminProjetosIndexRoute,
   AdminRegioesIndexRoute: AdminRegioesIndexRoute,
+  AdminEventosAnoAnoRoute: AdminEventosAnoAnoRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
@@ -2708,6 +2749,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicLcifRoute: ApiPublicLcifRoute,
   ApiPublicProjetosRoute: ApiPublicProjetosRoute,
   ClubesRegiaoLetraRoute: ClubesRegiaoLetraRoute,
+  EventosAnoAnoRoute: EventosAnoAnoRoute,
   ProjetosCausaSlugRoute: ProjetosCausaSlugRoute,
   ClubesRegiaoIndexRoute: ClubesRegiaoIndexRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,

@@ -1190,6 +1190,7 @@ export type Database = {
       }
       events: {
         Row: {
+          ano_leonistico: string
           cover_url: string | null
           created_at: string
           description: string | null
@@ -1213,6 +1214,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          ano_leonistico?: string
           cover_url?: string | null
           created_at?: string
           description?: string | null
@@ -1236,6 +1238,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          ano_leonistico?: string
           cover_url?: string | null
           created_at?: string
           description?: string | null

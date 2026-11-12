@@ -29,6 +29,13 @@
       "when": 1794445973463,
       "tag": "0003_create_usuarios_clubes",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794447464704,
+      "tag": "0004_events_leonistic_year",
+      "breakpoints": true
     }
   ]
 }

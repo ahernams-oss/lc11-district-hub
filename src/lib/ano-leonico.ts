@@ -21,6 +21,7 @@ export function fimAnoLeonico(ano: string): string {
 export function opcoesAnosLeonicos(range = 6): string[] {
   const atual = Number(anoLeonicoDe().split("-")[0]);
   const anos: string[] = [];
-  for (let i = atual + 1; i >= atual - range; i--) anos.push(`${i}-${i + 1}`);
+  const ultimo = Math.max(atual + 1, 2035);
+  for (let i = ultimo; i >= atual - range; i--) anos.push(`${i}-${i + 1}`);
   return anos;
 }

@@ -8,6 +8,8 @@ import {
   updateGestaoUserRoles,
   createGestaoUser,
   deleteGestaoUser,
+  getUserClubes,
+  setUserClubes,
   type GestaoRole,
 } from "@/lib/gestao-users.functions";
 import { useAuth } from "@/hooks/use-auth";
@@ -84,6 +86,9 @@ function UsersManager({ currentUser }: { currentUser: any }) {
     onError: (e: any) => setMsg({ type: "err", text: e?.message ?? "Erro ao criar usuário." }),
   });
 
+  const [editClubes, setEditClubes] = useState<string[] | null>(null);
+  const saveClubes = useServerFn(setUserClubes);
+
   const updateRolesMut = useMutation({
     mutationFn: (vars: { userId: string; roles: GestaoRole[] }) => updateRoles({ data: vars }),
     onSuccess: () => {
@@ -107,6 +112,7 @@ function UsersManager({ currentUser }: { currentUser: any }) {
   function openEditRoles(userItem: any) {
     setEditRolesUser(userItem);
     setEditRoles(userItem.gestao_roles ?? []);
+    setEditClubes(null);
   }
 
   function toggleRoleInNewForm(roleId: GestaoRole) {
@@ -451,9 +457,16 @@ function UsersManager({ currentUser }: { currentUser: any }) {
             })}
           </div>
 
+          {editRolesUser && (
+            <ClubeRestricao userId={editRolesUser.id} value={editClubes} onChange={setEditClubes} />
+          )}
+
           <FormActions
             onCancel={() => setEditRolesUser(null)}
-            onSubmit={() => updateRolesMut.mutate({ userId: editRolesUser.id, roles: editRoles })}
+            onSubmit={async () => {
+              if (editClubes) await saveClubes({ data: { userId: editRolesUser.id, clubeIds: editClubes } });
+              updateRolesMut.mutate({ userId: editRolesUser.id, roles: editRoles });
+            }}
             submitLabel={updateRolesMut.isPending ? "Salvando..." : "Salvar Permissões"}
             loading={updateRolesMut.isPending}
           />
@@ -492,3 +505,45 @@ function UsersManager({ currentUser }: { currentUser: any }) {
   );
 }
 
+
+function ClubeRestricao({ userId, value, onChange }: { userId: string; value: string[] | null; onChange: (v: string[]) => void }) {
+  const fetchClubes = useServerFn(getUserClubes);
+  const [busca, setBusca] = useState("");
+  const { data, isLoading } = useQuery({
+    queryKey: ["user-clubes", userId],
+    queryFn: () => fetchClubes({ data: { userId } }),
+  });
+  const selected = value ?? data?.selected ?? [];
+  const toggle = (id: string) => onChange(selected.includes(id) ? selected.filter((x) => x !== id) : [...selected, id]);
+  const lista = (data?.clubes ?? []).filter((c) => c.nome.toLowerCase().includes(busca.toLowerCase()));
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/5 p-4 space-y-3">
+      <div className="flex items-center gap-2">
+        <Building2 className="h-4 w-4 text-primary" />
+        <div>
+          <div className="text-xs font-semibold text-white">Restringir ao(s) clube(s)</div>
+          <div className="text-[11px] text-slate-400">
+            Marcando clubes, o usuário só verá e alterará dados desses clubes (associados, nominata e cadastro). Deixe vazio para acesso a todos.
+          </div>
+        </div>
+      </div>
+      <input
+        value={busca}
+        onChange={(e) => setBusca(e.target.value)}
+        placeholder="Buscar clube..."
+        className="w-full rounded-lg border border-white/10 bg-slate-900 px-3 py-2 text-xs text-white"
+      />
+      <div className="max-h-56 overflow-y-auto space-y-1">
+        {isLoading && <div className="text-[11px] text-slate-400">Carregando clubes...</div>}
+        {lista.map((c) => (
+          <label key={c.id} className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-xs text-slate-200 hover:bg-white/5 cursor-pointer">
+            <input type="checkbox" checked={selected.includes(c.id)} onChange={() => toggle(c.id)} className="h-3.5 w-3.5" />
+            {c.nome}{c.cidade ? <span className="text-slate-500">— {c.cidade}</span> : null}
+          </label>
+        ))}
+        {!isLoading && lista.length === 0 && <div className="text-[11px] text-slate-400">Nenhum clube encontrado.</div>}
+      </div>
+      <div className="text-[11px] text-slate-400">{selected.length ? `${selected.length} clube(s) selecionado(s)` : "Sem restrição de clube"}</div>
+    </div>
+  );
+}

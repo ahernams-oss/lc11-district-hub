@@ -422,6 +422,8 @@ export const deleteCargoHistorico = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertClubesAccess(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: cg } = await supabaseAdmin.from("dist_associado_cargos").select("associado_id").eq("id", data.id).maybeSingle();
+    if (cg) await assertClubePermitido(context.userId, await clubeDoAssociado(cg.associado_id));
     const { error } = await supabaseAdmin.from("dist_associado_cargos").delete().eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };

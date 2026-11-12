@@ -514,7 +514,7 @@ function ClubeRestricao({ userId, value, onChange }: { userId: string; value: st
     queryFn: () => fetchClubes({ data: { userId } }),
   });
   const selected = value ?? data?.selected ?? [];
-  const toggle = (id: string) => onChange(selected.includes(id) ? selected.filter((x) => x !== id) : [...selected, id]);
+  const toggle = (id: string) => onChange(selected.includes(id) ? selected.filter((x: string) => x !== id) : [...selected, id]);
   const lista = (data?.clubes ?? []).filter((c) => c.nome.toLowerCase().includes(busca.toLowerCase()));
   return (
     <div className="rounded-xl border border-white/10 bg-white/5 p-4 space-y-3">

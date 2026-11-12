@@ -5,14 +5,18 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { uploadContentImage } from "@/lib/leaders";
 import { ArrowLeft, Upload } from "lucide-react";
+import { DEFAULT_EVENT_YEAR, EVENT_YEARS, eventYearFromSlug, eventYearHead } from "@/lib/event-years";
 
 export const Route = createFileRoute("/admin/eventos/$id")({
+  validateSearch: (search: Record<string, unknown>): { ano?: string } => ({ ano: typeof search.ano === "string" ? search.ano : undefined }),
+  head: () => eventYearHead("Cadastro", true),
   component: EventEditor,
 });
 
 const MAX_GALLERY = 10;
 
 interface Form {
+  ano_leonistico: string;
   title: string;
   description: string;
   location: string;
@@ -43,9 +47,11 @@ function toLocalDT(iso: string | null): string {
 function EventEditor() {
   const { id } = useParams({ from: "/admin/eventos/$id" });
   const isNew = id === "novo";
+  const { ano } = Route.useSearch();
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [form, setForm] = useState<Form>({
+    ano_leonistico: eventYearFromSlug(ano ?? "") ?? DEFAULT_EVENT_YEAR,
     title: "",
     description: "",
     location: "",
@@ -80,6 +86,7 @@ function EventEditor() {
         if (data) {
           const d = data as any;
           setForm({
+            ano_leonistico: d.ano_leonistico ?? DEFAULT_EVENT_YEAR,
             title: d.title,
             description: d.description ?? "",
             location: d.location ?? "",
@@ -109,6 +116,7 @@ function EventEditor() {
     setMsg(null);
     try {
       const payload = {
+        ano_leonistico: form.ano_leonistico,
         title: form.title,
         description: form.description,
         location: form.location,
@@ -139,6 +147,7 @@ function EventEditor() {
         const { error } = await supabase.from("events").update(payload).eq("id", id);
         if (error) throw error;
         qc.invalidateQueries({ queryKey: ["events"] });
+        qc.invalidateQueries({ queryKey: ["event", id] });
         setMsg("Salvo!");
       }
     } catch (e: any) {
@@ -179,7 +188,8 @@ function EventEditor() {
   return (
     <div className="max-w-3xl">
       <Link
-        to="/admin/eventos"
+        to="/admin/eventos/ano/$ano"
+        params={{ ano: form.ano_leonistico.replace("/", "-") }}
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary"
       >
         <ArrowLeft className="h-4 w-4" /> Eventos
@@ -188,6 +198,11 @@ function EventEditor() {
         {isNew ? "Novo evento" : "Editar evento"}
       </h1>
       <div className="mt-6 space-y-4">
+        <F label="Ano leonístico">
+          <select aria-label="Ano leonístico" value={form.ano_leonistico} onChange={(e) => setForm({ ...form, ano_leonistico: e.target.value })} className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2">
+            {EVENT_YEARS.map((year) => <option key={year} value={year}>AL {year}</option>)}
+          </select>
+        </F>
         <F label="Imagem de capa">
           {form.cover_url && (
             <img src={form.cover_url} className="mb-2 h-32 rounded-md object-cover" alt="" />

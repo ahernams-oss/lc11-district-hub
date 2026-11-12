@@ -1,8 +1,8 @@
 # Roadmap
 
-- [ ] Criar subpáginas anuais dos eventos no site e no painel
+- [x] Criar subpáginas anuais dos eventos no site e no painel
 - [x] Transferir os eventos existentes para AL 2026/2027
-- [ ] Verificar navegação, separação e gravação do ano
+- [x] Verificar navegação, separação e gravação do ano
 
 - [x] Criar cadastro de subpáginas com edição, publicação e ordenação
 - [x] Exibir subpáginas nos menus principais e páginas públicas

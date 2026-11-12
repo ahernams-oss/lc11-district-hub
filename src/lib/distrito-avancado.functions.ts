@@ -23,7 +23,7 @@ export async function assertDistritoAccess(userId: string) {
         roles.includes("gestor_financeiro") ||
         roles.includes("gestor_contabil") ||
         roles.includes("gestor_crm") ||
-        roles.includes("gestor_clubes") ||
+        roles.some((r) => r.startsWith("gestor_clubes") || ["gestor_associados","gestor_nominata","gestor_estrutura"].includes(r)) ||
         roles.includes("admin")
       ) {
         return;

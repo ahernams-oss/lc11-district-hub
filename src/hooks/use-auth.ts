@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 
-export type AppRole = "admin" | "avancado" | "intermediario" | "basico" | "user" | "gestor_financeiro" | "gestor_contabil" | "gestor_crm" | "gestor_clubes" | "gestor_admin";
+export type AppRole = "admin" | "avancado" | "intermediario" | "basico" | "user" | "gestor_financeiro" | "gestor_contabil" | "gestor_crm" | "gestor_clubes" | "gestor_clubes_lista" | "gestor_associados" | "gestor_nominata" | "gestor_estrutura" | "gestor_admin";
 
 export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
@@ -104,7 +104,12 @@ export function useAuth() {
   const isGestorFinanceiro = isGestorAdmin || roles.includes("gestor_financeiro");
   const isGestorContabil = isGestorAdmin || roles.includes("gestor_contabil");
   const isGestorCRM = isGestorAdmin || roles.includes("gestor_crm");
-  const isGestorClubes = isGestorAdmin || roles.includes("gestor_clubes") || roles.includes("gestor_crm") || roles.includes("gestor_financeiro");
+  const clubesFull = isGestorAdmin || roles.includes("gestor_clubes") || roles.includes("gestor_crm") || roles.includes("gestor_financeiro");
+  const canClubesLista = clubesFull || roles.includes("gestor_clubes_lista");
+  const canAssociados = clubesFull || roles.includes("gestor_associados");
+  const canNominata = clubesFull || roles.includes("gestor_nominata");
+  const canEstrutura = clubesFull || roles.includes("gestor_estrutura");
+  const isGestorClubes = canClubesLista || canAssociados || canNominata || canEstrutura;
   const hasGestaoAccess = isGestorAdmin || isGestorFinanceiro || isGestorContabil || isGestorCRM || isGestorClubes;
 
   const signOut = async () => {
@@ -135,6 +140,10 @@ export function useAuth() {
     isGestorContabil,
     isGestorCRM,
     isGestorClubes,
+    canClubesLista,
+    canAssociados,
+    canNominata,
+    canEstrutura,
     hasGestaoAccess,
     signOut,
   };

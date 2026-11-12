@@ -21,7 +21,7 @@ export async function assertClubesAccess(userId: string) {
       const roles = data.map((r: any) => r.role as string);
       if (
         roles.includes("gestor_crm") ||
-        roles.includes("gestor_clubes") ||
+        roles.some((r) => r.startsWith("gestor_clubes") || ["gestor_associados","gestor_nominata","gestor_estrutura"].includes(r)) ||
         roles.includes("gestor_admin") ||
         roles.includes("gestor_financeiro") ||
         roles.includes("admin")

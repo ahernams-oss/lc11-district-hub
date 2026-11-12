@@ -2683,6 +2683,10 @@ export type Database = {
         | "gestor_contabil"
         | "gestor_crm"
         | "gestor_clubes"
+        | "gestor_clubes_lista"
+        | "gestor_associados"
+        | "gestor_nominata"
+        | "gestor_estrutura"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -2821,6 +2825,10 @@ export const Constants = {
         "gestor_contabil",
         "gestor_crm",
         "gestor_clubes",
+        "gestor_clubes_lista",
+        "gestor_associados",
+        "gestor_nominata",
+        "gestor_estrutura",
       ],
     },
   },

@@ -134,6 +134,7 @@ export function useAuth() {
     isGestorFinanceiro,
     isGestorContabil,
     isGestorCRM,
+    isGestorClubes,
     hasGestaoAccess,
     signOut,
   };

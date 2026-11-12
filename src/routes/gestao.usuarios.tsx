@@ -23,6 +23,7 @@ const ROLES_LIST: { id: GestaoRole; label: string; desc: string; cls: string }[]
   { id: "gestor_financeiro", label: "Gestor Financeiro", desc: "Acesso ao módulo financeiro, contas, fluxo de caixa e relatórios", cls: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" },
   { id: "gestor_contabil",   label: "Gestor Contábil",   desc: "Acesso ao plano de contas, lançamentos e balancete", cls: "bg-blue-500/15 text-blue-400 border-blue-500/30" },
   { id: "gestor_crm",        label: "Gestor CRM",        desc: "Acesso ao CRM, membros, prospecção e pipeline de contatos", cls: "bg-violet-500/15 text-violet-400 border-violet-500/30" },
+  { id: "gestor_clubes",     label: "Gestor Clubes & Distrito", desc: "Acesso a Clubes do Distrito, Associados, Nominata do Clube e Estrutura Distrital", cls: "bg-amber-500/15 text-amber-400 border-amber-500/30" },
 ];
 
 function GestaoUsersPage() {
@@ -193,6 +194,7 @@ function UsersManager({ currentUser }: { currentUser: any }) {
             <option value="gestor_financeiro" className="bg-slate-900">Gestor Financeiro</option>
             <option value="gestor_contabil" className="bg-slate-900">Gestor Contábil</option>
             <option value="gestor_crm" className="bg-slate-900">Gestor CRM</option>
+            <option value="gestor_clubes" className="bg-slate-900">Gestor Clubes & Distrito</option>
           </select>
         </div>
 

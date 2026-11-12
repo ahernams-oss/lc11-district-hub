@@ -42,7 +42,7 @@ type NavItem = {
   label: string;
   icon: React.ElementType;
   exact?: boolean;
-  accessKey: "any" | "admin" | "financeiro" | "contabil" | "crm";
+  accessKey: "any" | "admin" | "financeiro" | "contabil" | "crm" | "clubes";
   children?: NavItem[];
 };
 
@@ -108,12 +108,12 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
         label: "Clubes & Distrito",
         icon: Building2,
         exact: false,
-        accessKey: "any",
+        accessKey: "clubes",
         children: [
-          { to: "/gestao/clubes-associados/clubes",     label: "Clubes do Distrito", icon: Building2, accessKey: "any" },
-          { to: "/gestao/clubes-associados/associados", label: "Associados / Leões", icon: Users2,     accessKey: "any" },
-          { to: "/gestao/nominata",                     label: "Nominata do Clube",  icon: FileBarChart,accessKey: "any" },
-          { to: "/gestao/estrutura-distrital",          label: "Estrutura Distrital",icon: Award,     accessKey: "any" },
+          { to: "/gestao/clubes-associados/clubes",     label: "Clubes do Distrito", icon: Building2, accessKey: "clubes" },
+          { to: "/gestao/clubes-associados/associados", label: "Associados / Leões", icon: Users2,     accessKey: "clubes" },
+          { to: "/gestao/nominata",                     label: "Nominata do Clube",  icon: FileBarChart,accessKey: "clubes" },
+          { to: "/gestao/estrutura-distrital",          label: "Estrutura Distrital",icon: Award,     accessKey: "clubes" },
         ],
       },
       {
@@ -137,7 +137,7 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
 
 export function GestaoSidebar({ pathname, onSignOut, mobileOpen = false, onCloseMobile }: GestaoSidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
-  const { user, isGestorAdmin, isGestorFinanceiro, isGestorContabil, isGestorCRM } = useAuth();
+  const { user, isGestorAdmin, isGestorFinanceiro, isGestorContabil, isGestorCRM, isGestorClubes } = useAuth();
 
   // Track which parent sections are open
   const [openSections, setOpenSections] = useState<Set<string>>(() => {
@@ -165,6 +165,7 @@ export function GestaoSidebar({ pathname, onSignOut, mobileOpen = false, onClose
     if (key === "financeiro") return isGestorFinanceiro;
     if (key === "contabil") return isGestorContabil;
     if (key === "crm") return isGestorCRM;
+    if (key === "clubes") return isGestorClubes;
     return false;
   };
 
@@ -174,6 +175,7 @@ export function GestaoSidebar({ pathname, onSignOut, mobileOpen = false, onClose
         isGestorFinanceiro && "Financeiro",
         isGestorContabil && "Contábil",
         isGestorCRM && "CRM",
+        isGestorClubes && !isGestorCRM && "Clubes",
       ]
         .filter(Boolean)
         .join(", ") || "Gestor";

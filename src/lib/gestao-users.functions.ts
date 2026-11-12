@@ -6,6 +6,7 @@ const GESTAO_ROLE_VALUES = [
   "gestor_financeiro",
   "gestor_contabil",
   "gestor_crm",
+  "gestor_clubes",
   "gestor_admin",
 ] as const;
 
@@ -94,7 +95,7 @@ export const updateGestaoUserRoles = createServerFn({ method: "POST" })
   .inputValidator(
     z.object({
       userId: z.string().uuid(),
-      roles: z.array(z.enum(["gestor_financeiro", "gestor_contabil", "gestor_crm", "gestor_admin"])),
+      roles: z.array(z.enum(GESTAO_ROLE_VALUES)),
     }),
   )
   .handler(async ({ data, context }) => {
@@ -131,7 +132,7 @@ export const createGestaoUser = createServerFn({ method: "POST" })
       nome: z.string().optional(),
       cargo: z.string().optional(),
       clube: z.string().optional(),
-      roles: z.array(z.enum(["gestor_financeiro", "gestor_contabil", "gestor_crm", "gestor_admin"])),
+      roles: z.array(z.enum(GESTAO_ROLE_VALUES)),
     }),
   )
   .handler(async ({ data, context }) => {
@@ -217,7 +218,7 @@ export const ensureSuperadminCreated = createServerFn({ method: "POST" }).handle
     }
 
     if (user) {
-      const allRoles = ["admin", "gestor_admin", "gestor_financeiro", "gestor_contabil", "gestor_crm", "avancado"];
+      const allRoles = ["admin", "gestor_admin", "gestor_financeiro", "gestor_contabil", "gestor_crm", "gestor_clubes", "avancado"];
       for (const role of allRoles) {
         await supabaseAdmin.from("user_roles").upsert(
           { user_id: user.id, role: role as any },

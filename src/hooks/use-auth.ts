@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 
-export type AppRole = "admin" | "avancado" | "intermediario" | "basico" | "user" | "gestor_financeiro" | "gestor_contabil" | "gestor_crm" | "gestor_admin";
+export type AppRole = "admin" | "avancado" | "intermediario" | "basico" | "user" | "gestor_financeiro" | "gestor_contabil" | "gestor_crm" | "gestor_clubes" | "gestor_admin";
 
 export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
@@ -104,7 +104,8 @@ export function useAuth() {
   const isGestorFinanceiro = isGestorAdmin || roles.includes("gestor_financeiro");
   const isGestorContabil = isGestorAdmin || roles.includes("gestor_contabil");
   const isGestorCRM = isGestorAdmin || roles.includes("gestor_crm");
-  const hasGestaoAccess = isGestorAdmin || isGestorFinanceiro || isGestorContabil || isGestorCRM;
+  const isGestorClubes = isGestorAdmin || roles.includes("gestor_clubes") || roles.includes("gestor_crm") || roles.includes("gestor_financeiro");
+  const hasGestaoAccess = isGestorAdmin || isGestorFinanceiro || isGestorContabil || isGestorCRM || isGestorClubes;
 
   const signOut = async () => {
     localStorage.removeItem("dev_admin_bypass");

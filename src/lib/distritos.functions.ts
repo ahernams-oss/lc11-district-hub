@@ -149,6 +149,7 @@ export const listDistritoUsuarios = createServerFn({ method: "GET" })
       "gestor_financeiro",
       "gestor_contabil",
       "gestor_crm",
+      "gestor_clubes",
     ]);
 
     return (usersData?.users ?? [])

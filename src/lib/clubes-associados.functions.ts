@@ -152,15 +152,24 @@ export const upsertClube = createServerFn({ method: "POST" })
     if (data.id) await assertClubePermitido(context.userId, data.id); else await assertSemRestricaoClube(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    const payload: Record<string, unknown> = { ...data };
-    for (const key of Object.keys(payload)) {
-      if (payload[key] === "") payload[key] = null;
-    }
+    const payload = {
+      ...data,
+      codigo_lions: data.codigo_lions || null,
+      charter_date: data.charter_date || null,
+      cep: data.cep || null,
+      endereco: data.endereco || null,
+      email: data.email || null,
+      telefone: data.telefone || null,
+      dia_reuniao: data.dia_reuniao || null,
+      horario_reuniao: data.horario_reuniao || null,
+      local_reuniao: data.local_reuniao || null,
+      observacoes: data.observacoes || null,
+    };
 
     let error: { message: string } | null = null;
     if (data.id) {
-      const { id, ...rest } = payload;
-      ({ error } = await supabaseAdmin.from("dist_clubes").update(rest).eq("id", id));
+      const { id: _id, ...rest } = payload;
+      ({ error } = await supabaseAdmin.from("dist_clubes").update(rest).eq("id", data.id));
     } else {
       ({ error } = await supabaseAdmin
         .from("dist_clubes")

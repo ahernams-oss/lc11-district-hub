@@ -17,7 +17,14 @@ import {
   Filter,
 } from "lucide-react";
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
+import { toast } from "sonner";
 import { listClubes, upsertClube, deleteClube } from "@/lib/clubes-associados.functions";
+import {
+  CLUBE_STATUS,
+  CLUBE_STATUS_VALUES,
+  clubeStatusInfo,
+  type ClubeStatus,
+} from "@/lib/clube-status";
 
 export const Route = createFileRoute("/gestao/clubes-associados/clubes")({
   component: GestaoClubesPage,
@@ -45,7 +52,7 @@ function GestaoClubesPage() {
     dia_reuniao: "",
     horario_reuniao: "",
     local_reuniao: "",
-    status: "ativo" as "ativo" | "inativo" | "em_processo",
+    status: "ativo" as ClubeStatus,
     observacoes: "",
   });
 
@@ -62,6 +69,8 @@ function GestaoClubesPage() {
       setDrawerOpen(false);
       resetForm();
     },
+    onError: (e: any) =>
+      toast.error(e?.message || "Não foi possível salvar o clube."),
   });
 
   const deleteMutation = useMutation({
@@ -109,7 +118,7 @@ function GestaoClubesPage() {
       dia_reuniao: clube.dia_reuniao || "",
       horario_reuniao: clube.horario_reuniao || "",
       local_reuniao: clube.local_reuniao || "",
-      status: clube.status || "ativo",
+      status: (clube.status || "ativo") as ClubeStatus,
       observacoes: clube.observacoes || "",
     });
     setDrawerOpen(true);
@@ -231,10 +240,10 @@ function GestaoClubesPage() {
                 <div className="mt-5 pt-3 border-t border-white/8 flex items-center justify-between">
                   <span
                     className={`inline-flex items-center gap-1 text-xs font-semibold ${
-                      clube.status === "ativo" ? "text-emerald-400" : "text-amber-400"
+                      clubeStatusInfo(clube.status).color
                     }`}
                   >
-                    ● <span className="capitalize">{clube.status}</span>
+                    ● <span>{clubeStatusInfo(clube.status).label}</span>
                   </span>
 
                   <div className="flex items-center gap-2">
@@ -429,9 +438,11 @@ function GestaoClubesPage() {
                     onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
                     className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary focus:outline-none"
                   >
-                    <option value="ativo">Ativo</option>
-                    <option value="inativo">Inativo</option>
-                    <option value="em_processo">Em Processo de Fundação</option>
+                    {CLUBE_STATUS_VALUES.map((value) => (
+                      <option key={value} value={value}>
+                        {CLUBE_STATUS[value].label}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </form>

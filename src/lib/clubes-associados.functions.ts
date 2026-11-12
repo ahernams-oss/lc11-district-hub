@@ -4,6 +4,7 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { distritoScope, distritoPadrao } from "@/lib/distritos.functions";
 import { clubeScope, assertClubePermitido, assertSemRestricaoClube, clubeDoAssociado } from "@/lib/clube-scope";
 import { anoLeonicoDe, fimAnoLeonico } from "@/lib/ano-leonico";
+import { CLUBE_STATUS_VALUES, type ClubeStatus } from "@/lib/clube-status";
 
 export async function assertClubesAccess(userId: string) {
   if (
@@ -142,7 +143,7 @@ export const upsertClube = createServerFn({ method: "POST" })
       dia_reuniao: z.string().optional().nullable(),
       horario_reuniao: z.string().optional().nullable(),
       local_reuniao: z.string().optional().nullable(),
-      status: z.enum(["ativo", "inativo", "em_processo"]).default("ativo"),
+      status: z.enum(CLUBE_STATUS_VALUES as [ClubeStatus, ...ClubeStatus[]]).default("ativo"),
       observacoes: z.string().optional().nullable(),
     })
   )
@@ -151,15 +152,30 @@ export const upsertClube = createServerFn({ method: "POST" })
     if (data.id) await assertClubePermitido(context.userId, data.id); else await assertSemRestricaoClube(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    try {
-      if (data.id) {
-        await supabaseAdmin.from("dist_clubes").update(data).eq("id", data.id);
-      } else {
-        await supabaseAdmin.from("dist_clubes").insert({ ...data, distrito_id: await distritoPadrao(context.userId) });
-      }
-    } catch {
-      // Mock update
+    const payload = {
+      ...data,
+      codigo_lions: data.codigo_lions || null,
+      charter_date: data.charter_date || null,
+      cep: data.cep || null,
+      endereco: data.endereco || null,
+      email: data.email || null,
+      telefone: data.telefone || null,
+      dia_reuniao: data.dia_reuniao || null,
+      horario_reuniao: data.horario_reuniao || null,
+      local_reuniao: data.local_reuniao || null,
+      observacoes: data.observacoes || null,
+    };
+
+    let error: { message: string } | null = null;
+    if (data.id) {
+      const { id: _id, ...rest } = payload;
+      ({ error } = await supabaseAdmin.from("dist_clubes").update(rest).eq("id", data.id));
+    } else {
+      ({ error } = await supabaseAdmin
+        .from("dist_clubes")
+        .insert({ ...payload, distrito_id: await distritoPadrao(context.userId) }));
     }
+    if (error) throw new Error(error.message);
 
     return { ok: true };
   });

@@ -4,6 +4,7 @@ import { Building2, Users2, Award, MapPin, Plus, ArrowRight, ShieldCheck, CheckC
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
 import { GestaoStatCard } from "@/components/gestao/GestaoStatCard";
 import { getClubesMetrics, listClubes, listAssociados } from "@/lib/clubes-associados.functions";
+import { clubeStatusInfo } from "@/lib/clube-status";
 
 export const Route = createFileRoute("/gestao/clubes-associados/")({
   component: ClubesAssociadosIndexPage,
@@ -126,7 +127,9 @@ function ClubesAssociadosIndexPage() {
                     </div>
                     <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400">
                       <span>Reuniões: {clube.dia_reuniao || "A definir"}</span>
-                      <span className="text-emerald-400 font-medium capitalize">● {clube.status}</span>
+                      <span className={`font-medium ${clubeStatusInfo(clube.status).color}`}>
+                        ● {clubeStatusInfo(clube.status).label}
+                      </span>
                     </div>
                   </div>
                 ))}

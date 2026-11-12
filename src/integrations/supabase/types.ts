@@ -2497,6 +2497,35 @@ export type Database = {
         }
         Relationships: []
       }
+      usuarios_clubes: {
+        Row: {
+          clube_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          clube_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          clube_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "usuarios_clubes_clube_id_fkey"
+            columns: ["clube_id"]
+            isOneToOne: false
+            referencedRelation: "dist_clubes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       usuarios_distritos: {
         Row: {
           created_at: string

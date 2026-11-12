@@ -45,7 +45,7 @@ function GestaoClubesPage() {
     dia_reuniao: "",
     horario_reuniao: "",
     local_reuniao: "",
-    status: "ativo" as "ativo" | "inativo" | "em_processo",
+    status: "ativo" as ClubeStatus,
     observacoes: "",
   });
 

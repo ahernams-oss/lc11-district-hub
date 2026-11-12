@@ -19,6 +19,18 @@ import {
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
 import { listClubes, upsertClube, deleteClube } from "@/lib/clubes-associados.functions";
 
+type ClubeStatus = "ativo" | "inativo" | "em_processo" | "status_quo" | "suspenso";
+
+const CLUBE_STATUS: Record<ClubeStatus, { label: string; color: string }> = {
+  ativo: { label: "Ativo", color: "text-emerald-400" },
+  inativo: { label: "Inativo", color: "text-slate-400" },
+  em_processo: { label: "Em Processo de Fundação", color: "text-amber-400" },
+  status_quo: { label: "Status quo", color: "text-sky-400" },
+  suspenso: { label: "Suspenso", color: "text-rose-400" },
+};
+
+const CLUBE_STATUS_VALUES = Object.keys(CLUBE_STATUS) as ClubeStatus[];
+
 export const Route = createFileRoute("/gestao/clubes-associados/clubes")({
   component: GestaoClubesPage,
 });
@@ -109,7 +121,7 @@ function GestaoClubesPage() {
       dia_reuniao: clube.dia_reuniao || "",
       horario_reuniao: clube.horario_reuniao || "",
       local_reuniao: clube.local_reuniao || "",
-      status: clube.status || "ativo",
+      status: (clube.status || "ativo") as ClubeStatus,
       observacoes: clube.observacoes || "",
     });
     setDrawerOpen(true);
@@ -231,10 +243,13 @@ function GestaoClubesPage() {
                 <div className="mt-5 pt-3 border-t border-white/8 flex items-center justify-between">
                   <span
                     className={`inline-flex items-center gap-1 text-xs font-semibold ${
-                      clube.status === "ativo" ? "text-emerald-400" : "text-amber-400"
+                      (CLUBE_STATUS[clube.status as ClubeStatus] ?? CLUBE_STATUS.ativo).color
                     }`}
                   >
-                    ● <span className="capitalize">{clube.status}</span>
+                    ●{" "}
+                    <span>
+                      {(CLUBE_STATUS[clube.status as ClubeStatus] ?? CLUBE_STATUS.ativo).label}
+                    </span>
                   </span>
 
                   <div className="flex items-center gap-2">
@@ -429,9 +444,11 @@ function GestaoClubesPage() {
                     onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
                     className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-primary focus:outline-none"
                   >
-                    <option value="ativo">Ativo</option>
-                    <option value="inativo">Inativo</option>
-                    <option value="em_processo">Em Processo de Fundação</option>
+                    {CLUBE_STATUS_VALUES.map((value) => (
+                      <option key={value} value={value}>
+                        {CLUBE_STATUS[value].label}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </form>

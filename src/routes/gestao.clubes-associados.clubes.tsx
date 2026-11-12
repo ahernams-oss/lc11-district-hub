@@ -19,6 +19,7 @@ import {
 import { GestaoHeader } from "@/components/gestao/GestaoHeader";
 import { toast } from "sonner";
 import { listClubes, upsertClube, deleteClube } from "@/lib/clubes-associados.functions";
+import { correspondeRegiao, normalizarRegiao, opcoesRegioes } from "@/lib/clube-regioes";
 import {
   CLUBE_STATUS,
   CLUBE_STATUS_VALUES,
@@ -28,6 +29,16 @@ import {
 
 export const Route = createFileRoute("/gestao/clubes-associados/clubes")({
   component: GestaoClubesPage,
+  head: () => ({
+    meta: [
+      { title: "Cadastro de Clubes | LionPortal" },
+      { name: "description", content: "Gestão dos clubes do distrito no LionPortal, com busca e filtros por região." },
+      { property: "og:title", content: "Cadastro de Clubes | LionPortal" },
+      { property: "og:description", content: "Gestão dos clubes do distrito no LionPortal, com busca e filtros por região." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
 });
 
 function GestaoClubesPage() {
@@ -132,12 +143,13 @@ function GestaoClubesPage() {
     });
   };
 
+  const regioes = opcoesRegioes(clubes ?? []);
   const filteredClubes = clubes?.filter((clube) => {
     const matchesSearch =
       clube.nome.toLowerCase().includes(search.toLowerCase()) ||
       clube.cidade.toLowerCase().includes(search.toLowerCase()) ||
       (clube.codigo_lions && clube.codigo_lions.includes(search));
-    const matchesRegiao = regiaoFilter === "todos" || clube.regiao === regiaoFilter;
+    const matchesRegiao = correspondeRegiao(clube.regiao, regiaoFilter);
     return matchesSearch && matchesRegiao;
   });
 
@@ -160,14 +172,15 @@ function GestaoClubesPage() {
               />
             </div>
             <select
+              aria-label="Filtrar por região"
               value={regiaoFilter}
               onChange={(e) => setRegiaoFilter(e.target.value)}
               className="rounded-lg border border-white/10 bg-[#0d1321] px-3 py-2 text-sm text-slate-100 focus:border-primary focus:outline-none [&>option]:bg-[#0d1321] [&>option]:text-white"
             >
               <option value="todos" className="bg-[#0d1321] text-white">Todas as Regiões</option>
-              <option value="Região A" className="bg-[#0d1321] text-white">Região A</option>
-              <option value="Região B" className="bg-[#0d1321] text-white">Região B</option>
-              <option value="Região C" className="bg-[#0d1321] text-white">Região C</option>
+              {regioes.map((regiao) => (
+                <option key={regiao} value={regiao}>{regiao}</option>
+              ))}
             </select>
           </div>
 
@@ -329,14 +342,14 @@ function GestaoClubesPage() {
                   <div>
                     <label className="block text-slate-300 font-medium mb-1">Região</label>
                     <select
-                      value={formData.regiao}
+                      aria-label="Região do clube"
+                      value={normalizarRegiao(formData.regiao)}
                       onChange={(e) => setFormData({ ...formData, regiao: e.target.value })}
                       className="w-full rounded-lg border border-white/10 bg-[#0d1321] px-3 py-2 text-sm text-white focus:border-primary focus:outline-none [&>option]:bg-[#0d1321] [&>option]:text-white"
                     >
-                      <option value="Região A" className="bg-[#0d1321] text-white">Região A</option>
-                      <option value="Região B" className="bg-[#0d1321] text-white">Região B</option>
-                      <option value="Região C" className="bg-[#0d1321] text-white">Região C</option>
-                      <option value="Região D" className="bg-[#0d1321] text-white">Região D</option>
+                      {regioes.map((regiao) => (
+                        <option key={regiao} value={regiao}>{regiao}</option>
+                      ))}
                     </select>
                   </div>
                   <div>

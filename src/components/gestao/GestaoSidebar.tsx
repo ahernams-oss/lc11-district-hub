@@ -42,7 +42,7 @@ type NavItem = {
   label: string;
   icon: React.ElementType;
   exact?: boolean;
-  accessKey: "any" | "admin" | "financeiro" | "contabil" | "crm" | "clubes";
+  accessKey: "any" | "admin" | "financeiro" | "contabil" | "crm" | "clubes" | "clubes_lista" | "associados" | "nominata" | "estrutura";
   children?: NavItem[];
 };
 
@@ -110,10 +110,10 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
         exact: false,
         accessKey: "clubes",
         children: [
-          { to: "/gestao/clubes-associados/clubes",     label: "Clubes do Distrito", icon: Building2, accessKey: "clubes" },
-          { to: "/gestao/clubes-associados/associados", label: "Associados / Leões", icon: Users2,     accessKey: "clubes" },
-          { to: "/gestao/nominata",                     label: "Nominata do Clube",  icon: FileBarChart,accessKey: "clubes" },
-          { to: "/gestao/estrutura-distrital",          label: "Estrutura Distrital",icon: Award,     accessKey: "clubes" },
+          { to: "/gestao/clubes-associados/clubes",     label: "Clubes do Distrito", icon: Building2, accessKey: "clubes_lista" },
+          { to: "/gestao/clubes-associados/associados", label: "Associados / Leões", icon: Users2,     accessKey: "associados" },
+          { to: "/gestao/nominata",                     label: "Nominata do Clube",  icon: FileBarChart,accessKey: "nominata" },
+          { to: "/gestao/estrutura-distrital",          label: "Estrutura Distrital",icon: Award,     accessKey: "estrutura" },
         ],
       },
       {
@@ -137,7 +137,7 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
 
 export function GestaoSidebar({ pathname, onSignOut, mobileOpen = false, onCloseMobile }: GestaoSidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
-  const { user, isGestorAdmin, isGestorFinanceiro, isGestorContabil, isGestorCRM, isGestorClubes } = useAuth();
+  const { user, isGestorAdmin, isGestorFinanceiro, isGestorContabil, isGestorCRM, isGestorClubes, canClubesLista, canAssociados, canNominata, canEstrutura } = useAuth();
 
   // Track which parent sections are open
   const [openSections, setOpenSections] = useState<Set<string>>(() => {
@@ -166,6 +166,10 @@ export function GestaoSidebar({ pathname, onSignOut, mobileOpen = false, onClose
     if (key === "contabil") return isGestorContabil;
     if (key === "crm") return isGestorCRM;
     if (key === "clubes") return isGestorClubes;
+    if (key === "clubes_lista") return canClubesLista;
+    if (key === "associados") return canAssociados;
+    if (key === "nominata") return canNominata;
+    if (key === "estrutura") return canEstrutura;
     return false;
   };
 

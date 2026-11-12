@@ -7,6 +7,10 @@ const GESTAO_ROLE_VALUES = [
   "gestor_contabil",
   "gestor_crm",
   "gestor_clubes",
+  "gestor_clubes_lista",
+  "gestor_associados",
+  "gestor_nominata",
+  "gestor_estrutura",
   "gestor_admin",
 ] as const;
 

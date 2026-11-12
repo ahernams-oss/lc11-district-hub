@@ -22,6 +22,13 @@
       "when": 1794445608572,
       "tag": "0002_add_clubes_submenu_roles",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794445973463,
+      "tag": "0003_create_usuarios_clubes",
+      "breakpoints": true
     }
   ]
 }

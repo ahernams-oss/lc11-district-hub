@@ -237,3 +237,36 @@ export const ensureSuperadminCreated = createServerFn({ method: "POST" }).handle
   }
 });
 
+
+/** Clubes aos quais o usuário fica restrito (vazio = sem restrição). */
+export const getUserClubes = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(z.object({ userId: z.string().uuid() }))
+  .handler(async ({ data, context }) => {
+    await assertCallerIsGestorAdmin(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const [{ data: links }, { data: clubes }] = await Promise.all([
+      (supabaseAdmin as any).from("usuarios_clubes").select("clube_id").eq("user_id", data.userId),
+      supabaseAdmin.from("dist_clubes").select("id, nome, cidade").order("nome"),
+    ]);
+    return {
+      selected: (links ?? []).map((l: any) => l.clube_id as string),
+      clubes: (clubes ?? []) as { id: string; nome: string; cidade: string | null }[],
+    };
+  });
+
+export const setUserClubes = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(z.object({ userId: z.string().uuid(), clubeIds: z.array(z.string().uuid()) }))
+  .handler(async ({ data, context }) => {
+    await assertCallerIsGestorAdmin(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const db = supabaseAdmin as any;
+    const { error: delErr } = await db.from("usuarios_clubes").delete().eq("user_id", data.userId);
+    if (delErr) throw new Error(delErr.message);
+    if (data.clubeIds.length) {
+      const { error } = await db.from("usuarios_clubes").insert(data.clubeIds.map((clube_id) => ({ user_id: data.userId, clube_id })));
+      if (error) throw new Error(error.message);
+    }
+    return { ok: true };
+  });

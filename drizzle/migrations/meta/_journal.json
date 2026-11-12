@@ -15,6 +15,13 @@
       "when": 1794445431046,
       "tag": "0001_add_gestor_clubes_role",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794445608572,
+      "tag": "0002_add_clubes_submenu_roles",
+      "breakpoints": true
     }
   ]
 }

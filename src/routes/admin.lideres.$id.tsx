@@ -65,7 +65,7 @@ function LeaderEditor() {
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
-  const [cropModal, setCropModal] = useState<{ url: string; field: "photo" | "pin" } | null>(null);
+  const [cropModal, setCropModal] = useState<{ url: string; field: "photo" } | null>(null);
 
   useEffect(() => {
     if (isNew) {
@@ -245,7 +245,8 @@ function LeaderEditor() {
                 className="hidden"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
-                  if (file) setCropModal({ url: URL.createObjectURL(file), field: "pin" });
+                  if (file) handlePin(file);
+                  e.target.value = "";
                 }}
               />
             </label>
@@ -408,8 +409,8 @@ function LeaderEditor() {
       {cropModal && (
         <ImageCropModal
           imageUrl={cropModal.url}
-          aspect={cropModal.field === "photo" ? 1 : 4 / 3}
-          cropShape={cropModal.field === "photo" ? "round" : "rect"}
+          aspect={1}
+          cropShape="round"
           onClose={() => {
             URL.revokeObjectURL(cropModal.url);
             setCropModal(null);
@@ -417,8 +418,7 @@ function LeaderEditor() {
           onConfirm={(file) => {
             URL.revokeObjectURL(cropModal.url);
             setCropModal(null);
-            if (cropModal.field === "photo") handlePhoto(file);
-            else handlePin(file);
+            handlePhoto(file);
           }}
         />
       )}

@@ -2,7 +2,7 @@ import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tan
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
-import { LogOut, FileText, Users, Home, MapPin, Newspaper, Calendar, Sparkles, ShieldCheck, MessageSquare, FolderArchive, Building2, Award, Activity, HeartHandshake} from "lucide-react";
+import { LogOut, FileText, Users, Home, MapPin, Newspaper, Calendar, Sparkles, ShieldCheck, MessageSquare, FolderArchive, Building2, Award, Activity, HeartHandshake, Music} from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
   ssr: false,
@@ -64,6 +64,7 @@ function AdminLayout() {
     { to: "/admin/eventos", label: "Eventos", icon: Calendar, show: true },
     { to: "/admin/projetos", label: "Projetos", icon: Sparkles, show: true },
     { to: "/admin/popups", label: "Pop-ups", icon: MessageSquare, show: true },
+    { to: "/admin/musica", label: "Música do Site", icon: Music, show: true },
     { to: "/admin/conexao-solidaria", label: "Conexão Solidária", icon: HeartHandshake, show: true },
     { to: "/admin/documentos", label: "Documentos", icon: FolderArchive, show: true },
     { to: "/admin/campanhas", label: "Campanhas de Doação", icon: HeartHandshake, show: true },

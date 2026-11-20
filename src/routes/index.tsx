@@ -13,6 +13,7 @@ import juventudeImg from "@/assets/cause-juventude.jpg";
 import saudeMentalImg from "@/assets/cause-saude-mental.jpg";
 import { useSiteContent } from "@/lib/content";
 import { useLeaders } from "@/lib/leaders";
+import { SiteMusicPlayer } from "@/components/SiteMusicPlayer";
 import { BoldText, BreakableText, normalizeBreaks } from "@/components/BreakableText";
 
 export const Route = createFileRoute("/")({
@@ -187,6 +188,7 @@ function Index() {
 
   return (
     <>
+      <SiteMusicPlayer />
       {/* HERO */}
       <section className="relative overflow-hidden bg-primary text-primary-foreground">
         <div className="relative mx-auto max-w-7xl px-4 pt-4 pb-16 sm:px-6 sm:pt-6 sm:pb-24 lg:px-8 lg:pt-8 lg:pb-28">

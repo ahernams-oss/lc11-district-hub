@@ -2413,6 +2413,45 @@ export type Database = {
         }
         Relationships: []
       }
+      site_music: {
+        Row: {
+          active: boolean
+          created_at: string
+          end_at: string
+          file_url: string
+          id: string
+          loop: boolean
+          start_at: string
+          title: string
+          updated_at: string
+          volume: number
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          end_at: string
+          file_url: string
+          id?: string
+          loop?: boolean
+          start_at: string
+          title: string
+          updated_at?: string
+          volume?: number
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          end_at?: string
+          file_url?: string
+          id?: string
+          loop?: boolean
+          start_at?: string
+          title?: string
+          updated_at?: string
+          volume?: number
+        }
+        Relationships: []
+      }
       site_pages: {
         Row: {
           body: string

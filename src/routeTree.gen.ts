@@ -43,6 +43,7 @@ import { Route as AdminAuditoriaRouteImport } from './routes/admin.auditoria'
 import { Route as AdminCampanhasRouteImport } from './routes/admin.campanhas'
 import { Route as AdminClubesRouteImport } from './routes/admin.clubes'
 import { Route as AdminConexaoSolidariaRouteImport } from './routes/admin.conexao-solidaria'
+import { Route as AdminMusicaRouteImport } from './routes/admin.musica'
 import { Route as AdminSubpaginasRouteImport } from './routes/admin.subpaginas'
 import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
 import { Route as CampanhasIndexRouteImport } from './routes/campanhas.index'
@@ -304,6 +305,11 @@ const AdminClubesRoute = AdminClubesRouteImport.update({
 const AdminConexaoSolidariaRoute = AdminConexaoSolidariaRouteImport.update({
   id: '/conexao-solidaria',
   path: '/conexao-solidaria',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMusicaRoute = AdminMusicaRouteImport.update({
+  id: '/musica',
+  path: '/musica',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminSubpaginasRoute = AdminSubpaginasRouteImport.update({
@@ -819,6 +825,7 @@ export interface FileRoutesByFullPath {
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/conexao-solidaria': typeof AdminConexaoSolidariaRoute
+  '/admin/musica': typeof AdminMusicaRoute
   '/admin/subpaginas': typeof AdminSubpaginasRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/campanhas/$slug': typeof CampanhasSlugRoute
@@ -943,6 +950,7 @@ export interface FileRoutesByTo {
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/conexao-solidaria': typeof AdminConexaoSolidariaRoute
+  '/admin/musica': typeof AdminMusicaRoute
   '/admin/subpaginas': typeof AdminSubpaginasRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/campanhas/$slug': typeof CampanhasSlugRoute
@@ -1068,6 +1076,7 @@ export interface FileRoutesById {
   '/admin/campanhas': typeof AdminCampanhasRoute
   '/admin/clubes': typeof AdminClubesRoute
   '/admin/conexao-solidaria': typeof AdminConexaoSolidariaRoute
+  '/admin/musica': typeof AdminMusicaRoute
   '/admin/subpaginas': typeof AdminSubpaginasRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/campanhas/$slug': typeof CampanhasSlugRoute
@@ -1197,6 +1206,7 @@ export interface FileRouteTypes {
     | '/admin/campanhas'
     | '/admin/clubes'
     | '/admin/conexao-solidaria'
+    | '/admin/musica'
     | '/admin/subpaginas'
     | '/admin/usuarios'
     | '/campanhas/$slug'
@@ -1321,6 +1331,7 @@ export interface FileRouteTypes {
     | '/admin/campanhas'
     | '/admin/clubes'
     | '/admin/conexao-solidaria'
+    | '/admin/musica'
     | '/admin/subpaginas'
     | '/admin/usuarios'
     | '/campanhas/$slug'
@@ -1445,6 +1456,7 @@ export interface FileRouteTypes {
     | '/admin/campanhas'
     | '/admin/clubes'
     | '/admin/conexao-solidaria'
+    | '/admin/musica'
     | '/admin/subpaginas'
     | '/admin/usuarios'
     | '/campanhas/$slug'
@@ -1835,6 +1847,13 @@ declare module '@tanstack/react-router' {
       path: '/conexao-solidaria'
       fullPath: '/admin/conexao-solidaria'
       preLoaderRoute: typeof AdminConexaoSolidariaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/musica': {
+      id: '/admin/musica'
+      path: '/musica'
+      fullPath: '/admin/musica'
+      preLoaderRoute: typeof AdminMusicaRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/subpaginas': {
@@ -2510,6 +2529,7 @@ interface AdminRouteChildren {
   AdminCampanhasRoute: typeof AdminCampanhasRoute
   AdminClubesRoute: typeof AdminClubesRoute
   AdminConexaoSolidariaRoute: typeof AdminConexaoSolidariaRoute
+  AdminMusicaRoute: typeof AdminMusicaRoute
   AdminSubpaginasRoute: typeof AdminSubpaginasRoute
   AdminUsuariosRoute: typeof AdminUsuariosRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -2542,6 +2562,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminCampanhasRoute: AdminCampanhasRoute,
   AdminClubesRoute: AdminClubesRoute,
   AdminConexaoSolidariaRoute: AdminConexaoSolidariaRoute,
+  AdminMusicaRoute: AdminMusicaRoute,
   AdminSubpaginasRoute: AdminSubpaginasRoute,
   AdminUsuariosRoute: AdminUsuariosRoute,
   AdminIndexRoute: AdminIndexRoute,

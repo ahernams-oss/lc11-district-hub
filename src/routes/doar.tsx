@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
 import { Heart, ShieldCheck, Sparkles, Repeat, Loader2 } from "lucide-react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { donationAmountInCents, isValidDonationAmount, formatDonationMoney } from "@/lib/donation-flow";
 import { useQuery } from "@tanstack/react-query";
 import { StripeEmbeddedCheckout, type CheckoutConfig } from "@/components/StripeEmbeddedCheckout";
 import { PixQrCode } from "@/components/PixQrCode";
@@ -52,7 +54,7 @@ function Doar() {
   });
 
   const amountInCents = custom
-    ? Math.round(parseFloat(custom.replace(",", ".")) * 100)
+    ? donationAmountInCents(custom)
     : (valor ?? 0) * 100;
 
   const campanhaSelecionada = campanhas.find((c) => c.id === campanhaId) ?? campanhas[0];
@@ -87,7 +89,7 @@ function Doar() {
     <>
       <PageHero
         eyebrow="Apoie nossa causa"
-        title="Sua doação alimenta o serviço."
+        title="Doações — Distrito LC-11"
         description="100% do que arrecadamos é direcionado aos projetos do Distrito LC-11 e da Fundação Lions Clubs International (LCIF)."
       />
 
@@ -120,32 +122,32 @@ function Doar() {
                 placeholder="seu@email.com"
                 className="mt-3 w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
               />
-              <button
+              <Button
                 onClick={abrirPortal}
                 disabled={portalLoading || !portalEmail}
                 className="mt-2 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50"
               >
                 {portalLoading && <Loader2 className="h-4 w-4 animate-spin" />}
                 Gerenciar meu apoio
-              </button>
+              </Button>
               {portalErro && <p className="mt-2 text-xs text-destructive">{portalErro}</p>}
             </div>
           </div>
 
-          <div className="rounded-2xl border border-border bg-primary p-8 text-primary-foreground shadow-elegant">
+          <div className="min-w-0 rounded-lg border border-border bg-primary p-5 text-primary-foreground shadow-elegant sm:p-8">
             {!checkout ? (
               <>
                 <div className="flex flex-wrap gap-2">
                   {abas.map((a) => (
-                    <button
+                    <Button
                       key={a.id}
                       onClick={() => setAba(a.id)}
-                      className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
-                        aba === a.id ? "bg-gold text-gold-foreground" : "bg-white/10 hover:bg-white/20"
+                      className={`h-auto rounded-md px-3 py-2 text-sm font-semibold transition-colors ${
+                        aba === a.id ? "bg-gold text-gold-foreground" : "bg-primary-foreground/10 hover:bg-primary-foreground/20"
                       }`}
                     >
                       {a.label}
-                    </button>
+                    </Button>
                   ))}
                 </div>
 
@@ -156,41 +158,44 @@ function Doar() {
 
                     <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
                       {valores.map((v) => (
-                        <button
+                        <Button
                           key={v}
                           onClick={() => { setValor(v); setCustom(""); }}
-                          className={`rounded-lg border-2 px-3 py-3 font-display text-lg font-bold transition-all ${
-                            valor === v ? "border-gold bg-gold text-gold-foreground" : "border-white/30 hover:border-gold"
+                          className={`h-auto rounded-lg border-2 px-3 py-3 font-display text-lg font-bold transition-all ${
+                            valor === v ? "border-gold bg-gold text-gold-foreground" : "border-primary-foreground/30 hover:border-gold"
                           }`}
                         >
                           R$ {v}
-                        </button>
+                        </Button>
                       ))}
                     </div>
 
                     <div className="mt-4">
                       <label className="text-xs font-semibold uppercase tracking-wider opacity-80">Outro valor</label>
-                      <div className="mt-2 flex items-center rounded-lg border-2 border-white/30 bg-white/5 px-3 focus-within:border-gold">
+                      <div className="mt-2 flex items-center rounded-lg border-2 border-primary-foreground/30 bg-primary-foreground/5 px-3 focus-within:border-gold">
                         <span className="font-semibold">R$</span>
                         <input
-                          type="number"
+                          type="text"
+                          inputMode="decimal"
+                          aria-label="Outro valor de doação"
                           value={custom}
                           onChange={(e) => { setCustom(e.target.value); setValor(null); }}
                           placeholder="0,00"
-                          className="w-full bg-transparent px-2 py-3 text-lg outline-none placeholder:text-white/50"
+                          className="w-full bg-transparent px-2 py-3 text-lg outline-none placeholder:text-primary-foreground/50"
                         />
                       </div>
                     </div>
 
-                    <button
+                    <Button
                       type="button"
                       onClick={() => setCheckout({ tipo: "doacao", amountInCents })}
-                      disabled={amountInCents < 500}
-                      className="mt-6 w-full rounded-lg bg-gold py-3.5 font-display text-lg font-bold text-gold-foreground shadow-card transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
+                      disabled={!isValidDonationAmount(amountInCents)}
+                      className="mt-6 h-auto w-full whitespace-normal rounded-lg bg-gold py-3.5 font-display text-lg font-bold text-gold-foreground shadow-card transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      Doar R$ {custom || valor || 0}
-                    </button>
+                      Doar {formatDonationMoney(amountInCents)}
+                    </Button>
 
+                    <p className="mt-2 text-xs opacity-80">Valor mínimo: R$ 5,00.</p>
                     <div className="mt-6">
                       <PixQrCode amountInCents={amountInCents} title="Prefere pagar com PIX?" />
                     </div>
@@ -204,26 +209,26 @@ function Doar() {
 
                     <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
                       {planosMensais.map((p) => (
-                        <button
+                        <Button
                           key={p.priceId}
                           onClick={() => setPlano(p.priceId)}
-                          className={`rounded-lg border-2 px-3 py-3 font-display text-lg font-bold transition-all ${
-                            plano === p.priceId ? "border-gold bg-gold text-gold-foreground" : "border-white/30 hover:border-gold"
+                          className={`h-auto rounded-lg border-2 px-3 py-3 font-display text-lg font-bold transition-all ${
+                            plano === p.priceId ? "border-gold bg-gold text-gold-foreground" : "border-primary-foreground/30 hover:border-gold"
                           }`}
                         >
                           {p.label}
                           <span className="block text-xs font-normal opacity-80">/mês</span>
-                        </button>
+                        </Button>
                       ))}
                     </div>
 
-                    <button
+                    <Button
                       type="button"
                       onClick={() => setCheckout({ tipo: "apoio_mensal", priceId: plano })}
-                      className="mt-6 w-full rounded-lg bg-gold py-3.5 font-display text-lg font-bold text-gold-foreground shadow-card transition-transform hover:scale-[1.02]"
+                      className="mt-6 h-auto w-full whitespace-normal rounded-lg bg-gold py-3.5 font-display text-lg font-bold text-gold-foreground shadow-card transition-transform hover:scale-[1.02]"
                     >
                       Apoiar mensalmente
-                    </button>
+                    </Button>
                   </>
                 )}
 
@@ -237,34 +242,36 @@ function Doar() {
                         <p className="mt-2 text-sm opacity-90">Direcione sua contribuição para uma causa específica.</p>
                         <div className="mt-4 space-y-2">
                           {campanhas.map((c) => (
-                            <button
+                            <Button
                               key={c.id}
                               onClick={() => setCampanhaId(c.id)}
-                              className={`w-full rounded-lg border-2 px-4 py-3 text-left transition-all ${
-                                (campanhaSelecionada?.id === c.id) ? "border-gold bg-white/10" : "border-white/30 hover:border-gold"
+                              className={`h-auto w-full whitespace-normal rounded-lg border-2 px-4 py-3 text-left transition-all ${
+                                (campanhaSelecionada?.id === c.id) ? "border-gold bg-primary-foreground/10" : "border-primary-foreground/30 hover:border-gold"
                               }`}
                             >
-                              <span className="font-display font-bold">{c.titulo}</span>
+                              <span className="block font-display font-bold">{c.titulo}</span>
                               {c.descricao && <span className="block text-xs opacity-80">{c.descricao}</span>}
-                            </button>
+                            </Button>
                           ))}
                         </div>
 
                         <div className="mt-4">
                           <label className="text-xs font-semibold uppercase tracking-wider opacity-80">Valor</label>
-                          <div className="mt-2 flex items-center rounded-lg border-2 border-white/30 bg-white/5 px-3 focus-within:border-gold">
+                          <div className="mt-2 flex items-center rounded-lg border-2 border-primary-foreground/30 bg-primary-foreground/5 px-3 focus-within:border-gold">
                             <span className="font-semibold">R$</span>
                             <input
-                              type="number"
+                              type="text"
+                              inputMode="decimal"
+                              aria-label="Valor para campanha"
                               value={custom}
                               onChange={(e) => { setCustom(e.target.value); setValor(null); }}
                               placeholder="0,00"
-                              className="w-full bg-transparent px-2 py-3 text-lg outline-none placeholder:text-white/50"
+                              className="w-full bg-transparent px-2 py-3 text-lg outline-none placeholder:text-primary-foreground/50"
                             />
                           </div>
                         </div>
 
-                        <button
+                        <Button
                           type="button"
                           onClick={() =>
                             campanhaSelecionada &&
@@ -275,11 +282,11 @@ function Doar() {
                               campanhaTitulo: campanhaSelecionada.titulo,
                             })
                           }
-                          disabled={amountInCents < 500 || !campanhaSelecionada}
-                          className="mt-6 w-full rounded-lg bg-gold py-3.5 font-display text-lg font-bold text-gold-foreground shadow-card transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
+                          disabled={!isValidDonationAmount(amountInCents) || !campanhaSelecionada}
+                          className="mt-6 h-auto w-full whitespace-normal rounded-lg bg-gold py-3.5 font-display text-lg font-bold text-gold-foreground shadow-card transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
                         >
                           Doar para {campanhaSelecionada?.titulo ?? "a campanha"}
-                        </button>
+                        </Button>
 
                         <div className="mt-6">
                           <PixQrCode amountInCents={amountInCents} title="Prefere pagar com PIX?" />
@@ -298,17 +305,20 @@ function Doar() {
               </>
             ) : (
               <>
-                <h2 className="font-display text-2xl font-bold">Finalizar contribuição</h2>
+                <div className="flex items-center gap-2 text-xs"><ShieldCheck className="h-4 w-4" /> Pagamento seguro · Stripe</div>
+                <h2 className="mt-3 font-display text-2xl font-bold">Finalizar contribuição</h2>
+                <p className="mt-3 font-semibold">{checkout.tipo === "doacao" ? formatDonationMoney(checkout.amountInCents) : planosMensais.find((p) => p.priceId === (checkout.tipo === "apoio_mensal" ? checkout.priceId : ""))?.label} {checkout.tipo === "apoio_mensal" ? "/ mês" : ""}</p>
+                {checkout.tipo === "doacao" && checkout.campanhaTitulo && <p className="text-sm">{checkout.campanhaTitulo}</p>}
                 <p className="mt-2 text-sm opacity-90">Preencha seus dados abaixo de forma segura.</p>
                 <div className="mt-6">
                   <StripeEmbeddedCheckout {...checkout} />
                 </div>
-                <button
+                <Button
                   onClick={() => setCheckout(null)}
                   className="mt-4 text-sm underline opacity-80 hover:opacity-100"
                 >
                   Voltar
-                </button>
+                </Button>
               </>
             )}
           </div>

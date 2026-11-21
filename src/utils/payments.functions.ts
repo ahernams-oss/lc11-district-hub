@@ -2,6 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import Stripe from "stripe";
 import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib/stripe.server";
 
+import { isValidDonationAmount } from "@/lib/donation-flow";
+
 type CheckoutSessionResult = { clientSecret: string } | { error: string };
 
 export type DonationKind = "doacao_unica" | "campanha" | "apoio_mensal" | "inscricao_evento";
@@ -16,7 +18,7 @@ export const createDonationCheckout = createServerFn({ method: "POST" })
     campanhaId?: string;
     campanhaTitulo?: string;
   }) => {
-    if (!data.amountInCents || data.amountInCents < 500) {
+    if (!isValidDonationAmount(data.amountInCents)) {
       throw new Error("O valor mínimo da doação é R$ 5,00");
     }
     return data;
@@ -77,6 +79,7 @@ export const createSubscriptionCheckout = createServerFn({ method: "POST" })
       const prices = await stripe.prices.list({ lookup_keys: [data.priceId] });
       if (!prices.data.length) throw new Error("Plano de apoio não encontrado");
       const price = prices.data[0];
+      if (!price) throw new Error("Plano de apoio não encontrado");
 
       const session = await stripe.checkout.sessions.create({
         line_items: [{ price: price.id, quantity: 1 }],
@@ -200,6 +203,7 @@ export type DonationReceipt = {
   description: string;
   receiptNumber: string;
   paymentIntentId: string | null;
+  receiptUrl: string | null;
 };
 
 type ReceiptResult = { receipt: DonationReceipt } | { error: string };
@@ -215,7 +219,7 @@ export const getDonationReceipt = createServerFn({ method: "GET" })
     try {
       const stripe = createStripeClient(data.environment);
       const session = await stripe.checkout.sessions.retrieve(data.sessionId, {
-        expand: ["payment_intent", "customer_details"],
+        expand: ["payment_intent.latest_charge"],
       });
 
       const pi = typeof session.payment_intent === "object" && session.payment_intent
@@ -233,6 +237,7 @@ export const getDonationReceipt = createServerFn({ method: "GET" })
           customerName: session.customer_details?.name ?? null,
           createdAt: session.created,
           description: session.metadata?.description ?? "Doação — Distrito LC-11",
+          receiptUrl: pi && typeof pi.latest_charge === "object" && pi.latest_charge ? pi.latest_charge.receipt_url : null,
           receiptNumber: session.id.replace(/^cs_(test|live)_/, "").slice(0, 12).toUpperCase(),
           paymentIntentId: pi?.id ?? (typeof session.payment_intent === "string" ? session.payment_intent : null),
         },

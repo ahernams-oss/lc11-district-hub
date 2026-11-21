@@ -68,6 +68,7 @@ function AdminLayout() {
     { to: "/admin/conexao-solidaria", label: "Conexão Solidária", icon: HeartHandshake, show: true },
     { to: "/admin/documentos", label: "Documentos", icon: FolderArchive, show: true },
     { to: "/admin/campanhas", label: "Campanhas de Doação", icon: HeartHandshake, show: true },
+    { to: "/admin/doacoes", label: "Doações & Comprovantes", icon: Activity, show: isAdmin },
 
     { to: "/admin/auditoria", label: "Dashboard de Auditoria", icon: Activity, show: canViewUsers },
     { to: "/admin/usuarios", label: "Usuários & Acessos", icon: ShieldCheck, show: canViewUsers },

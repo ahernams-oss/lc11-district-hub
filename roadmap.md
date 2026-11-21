@@ -1,5 +1,11 @@
 # Roadmap
 
+- [ ] Melhorar seleção de valores e estados de carregamento/erro do checkout
+- [ ] Melhorar confirmação e download de comprovantes apenas após pagamento
+- [ ] Adicionar acompanhamento de doações com filtros, totais e exportação
+- [ ] Configurar emails personalizados (aguarda domínio de envio do usuário)
+- [ ] Verificar fluxo público e painel com sessão real
+
 - [x] Criar subpáginas anuais dos eventos no site e no painel
 - [x] Transferir os eventos existentes para AL 2026/2027
 - [x] Verificar navegação, separação e gravação do ano

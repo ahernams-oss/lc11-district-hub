@@ -1,10 +1,11 @@
 # Roadmap
 
-- [ ] Melhorar seleção de valores e estados de carregamento/erro do checkout
-- [ ] Melhorar confirmação e download de comprovantes apenas após pagamento
-- [ ] Adicionar acompanhamento de doações com filtros, totais e exportação
+- [x] Melhorar seleção de valores e estados de carregamento/erro do checkout
+- [x] Melhorar confirmação e download de comprovantes apenas após pagamento
+- [x] Adicionar acompanhamento de doações com filtros, totais e exportação
 - [ ] Configurar emails personalizados (aguarda domínio de envio do usuário)
-- [ ] Verificar fluxo público e painel com sessão real
+- [x] Verificar painel com sessão real e apresentação no celular (sem doações registradas)
+- [ ] Concluir pagamento de teste, confirmar comprovante e leitura no painel (conta de pagamentos bloqueia por configuração tributária pendente)
 
 - [x] Criar subpáginas anuais dos eventos no site e no painel
 - [x] Transferir os eventos existentes para AL 2026/2027

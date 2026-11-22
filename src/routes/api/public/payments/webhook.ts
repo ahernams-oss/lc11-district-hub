@@ -176,6 +176,7 @@ export const Route = createFileRoute("/api/public/payments/webhook")({
             case "checkout.session.completed":
             case "checkout.session.async_payment_succeeded":
             case "checkout.session.async_payment_failed":
+            case "checkout.session.expired":
               await persistDonation(event.data.object, env);
               break;
             case "customer.subscription.created":

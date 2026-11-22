@@ -33,14 +33,14 @@ function defaultReturnUrl() {
 
 export function StripeEmbeddedCheckout(props: CheckoutConfig) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
   const serialized = JSON.stringify(props);
 
   useEffect(() => {
     let cancelled = false;
     setClientSecret(null);
-    setError(false);
+    setError(null);
     const config: CheckoutConfig = JSON.parse(serialized);
     const prepare = async () => {
     const environment = getStripeEnvironment();
@@ -84,13 +84,17 @@ export function StripeEmbeddedCheckout(props: CheckoutConfig) {
     if (!result.clientSecret) throw new Error("Stripe não retornou o client secret");
     if (!cancelled) setClientSecret(result.clientSecret);
     };
-    void prepare().catch(() => { if (!cancelled) setError(true); });
+    void prepare().catch((cause: unknown) => {
+      if (!cancelled) setError(cause instanceof Error ? cause.message : "Pagamento indisponível");
+    });
     return () => { cancelled = true; };
   }, [serialized, attempt]);
 
   if (error) return (
     <div role="alert" className="rounded-md bg-background p-6 text-center text-foreground">
       <p>Não foi possível abrir o pagamento. Nenhuma cobrança foi realizada nesta etapa.</p>
+      {error.includes("stripe_tax_inactive") && <p className="mt-2 text-sm">A conta de pagamentos ainda precisa concluir sua configuração tributária.</p>}
+      <details className="mt-3 text-left text-xs text-muted-foreground"><summary className="cursor-pointer">Detalhes do erro</summary><p className="mt-2 break-words">{error}</p></details>
       <Button className="mt-4" onClick={() => setAttempt((value) => value + 1)}><RefreshCw /> Tentar novamente</Button>
     </div>
   );

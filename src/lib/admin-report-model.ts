@@ -4,6 +4,7 @@ export type ReportTable = keyof Database["public"]["Tables"];
 export type ReportSource = {
   id: string; label: string; table?: ReportTable;
   filter?: { column: string; value: string; exclude?: boolean };
+  keyPrefix?: string;
   access?: "users" | "admin";
 };
 export const ADMIN_REPORT_SOURCES: ReportSource[] = [
@@ -22,6 +23,7 @@ export const ADMIN_REPORT_SOURCES: ReportSource[] = [
   { id: "popups", label: "Pop-ups", table: "popups" },
   { id: "musica", label: "Música do Site", table: "site_music" },
   { id: "conexao", label: "Conexão Solidária", table: "site_content" },
+  { id: "protocolo", label: "Protocolo Leonístico — Temas", table: "site_content", keyPrefix: "protocolo_topic_" },
   { id: "documentos", label: "Documentos", table: "documents" },
   { id: "categorias", label: "Documentos — Categorias", table: "document_categories" },
   { id: "campanhas", label: "Campanhas de Doação", table: "campanhas" },

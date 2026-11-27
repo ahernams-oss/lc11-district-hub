@@ -14,3 +14,4 @@
 
 - Manage institutional leadership and IDLL members as categories of the existing leaders table through the shared leader list/editor; public category pages and biography/curriculum/gallery views read leaders_public, while site_content remains optional page-level copy.
 - Share protocol topic definitions between desktop/mobile nested navigation and the un-nested dynamic topic route; preserve the existing protocol overview URL and avoid inventing unpublished content.
+- Keep protocol topic copy in `site_content` under one shared key prefix, with an explicit publication flag, so the panel list, the public topic pages and the report export all read the same rows and unpublished text never reaches the site.

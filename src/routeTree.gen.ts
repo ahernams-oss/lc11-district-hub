@@ -103,6 +103,9 @@ import { Route as AdminPopupsIndexRouteImport } from './routes/admin.popups.inde
 import { Route as AdminPopupsIdRouteImport } from './routes/admin.popups.$id'
 import { Route as AdminProjetosIndexRouteImport } from './routes/admin.projetos.index'
 import { Route as AdminProjetosIdRouteImport } from './routes/admin.projetos.$id'
+import { Route as AdminProtocoloIndexRouteImport } from './routes/admin.protocolo.index'
+import { Route as AdminProtocoloSlugRouteImport } from './routes/admin.protocolo.$slug'
+import { Route as AdminProtocoloVisaoGeralRouteImport } from './routes/admin.protocolo.visao-geral'
 import { Route as AdminRegioesIndexRouteImport } from './routes/admin.regioes.index'
 import { Route as AdminRegioesIdRouteImport } from './routes/admin.regioes.$id'
 import { Route as ApiPublicEventosRouteImport } from './routes/api.public.eventos'
@@ -619,6 +622,22 @@ const AdminProjetosIdRoute = AdminProjetosIdRouteImport.update({
   path: '/projetos/$id',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminProtocoloIndexRoute = AdminProtocoloIndexRouteImport.update({
+  id: '/protocolo/',
+  path: '/protocolo/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProtocoloSlugRoute = AdminProtocoloSlugRouteImport.update({
+  id: '/protocolo/$slug',
+  path: '/protocolo/$slug',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProtocoloVisaoGeralRoute =
+  AdminProtocoloVisaoGeralRouteImport.update({
+    id: '/protocolo/visao-geral',
+    path: '/protocolo/visao-geral',
+    getParentRoute: () => AdminRoute,
+  } as any)
 const AdminRegioesIndexRoute = AdminRegioesIndexRouteImport.update({
   id: '/regioes/',
   path: '/regioes/',
@@ -927,6 +946,8 @@ export interface FileRoutesByFullPath {
   '/admin/noticias/$id': typeof AdminNoticiasIdRoute
   '/admin/popups/$id': typeof AdminPopupsIdRoute
   '/admin/projetos/$id': typeof AdminProjetosIdRoute
+  '/admin/protocolo/$slug': typeof AdminProtocoloSlugRoute
+  '/admin/protocolo/visao-geral': typeof AdminProtocoloVisaoGeralRoute
   '/admin/regioes/$id': typeof AdminRegioesIdRouteWithChildren
   '/api/public/eventos': typeof ApiPublicEventosRoute
   '/api/public/governadores': typeof ApiPublicGovernadoresRoute
@@ -965,6 +986,7 @@ export interface FileRoutesByFullPath {
   '/admin/noticias/': typeof AdminNoticiasIndexRoute
   '/admin/popups/': typeof AdminPopupsIndexRoute
   '/admin/projetos/': typeof AdminProjetosIndexRoute
+  '/admin/protocolo/': typeof AdminProtocoloIndexRoute
   '/admin/regioes/': typeof AdminRegioesIndexRoute
   '/clubes/regiao/': typeof ClubesRegiaoIndexRoute
   '/gestao/clubes-associados/': typeof GestaoClubesAssociadosIndexRoute
@@ -1057,6 +1079,8 @@ export interface FileRoutesByTo {
   '/admin/noticias/$id': typeof AdminNoticiasIdRoute
   '/admin/popups/$id': typeof AdminPopupsIdRoute
   '/admin/projetos/$id': typeof AdminProjetosIdRoute
+  '/admin/protocolo/$slug': typeof AdminProtocoloSlugRoute
+  '/admin/protocolo/visao-geral': typeof AdminProtocoloVisaoGeralRoute
   '/admin/regioes/$id': typeof AdminRegioesIdRouteWithChildren
   '/api/public/eventos': typeof ApiPublicEventosRoute
   '/api/public/governadores': typeof ApiPublicGovernadoresRoute
@@ -1095,6 +1119,7 @@ export interface FileRoutesByTo {
   '/admin/noticias': typeof AdminNoticiasIndexRoute
   '/admin/popups': typeof AdminPopupsIndexRoute
   '/admin/projetos': typeof AdminProjetosIndexRoute
+  '/admin/protocolo': typeof AdminProtocoloIndexRoute
   '/admin/regioes': typeof AdminRegioesIndexRoute
   '/clubes/regiao': typeof ClubesRegiaoIndexRoute
   '/gestao/clubes-associados': typeof GestaoClubesAssociadosIndexRoute
@@ -1194,6 +1219,8 @@ export interface FileRoutesById {
   '/admin/noticias/$id': typeof AdminNoticiasIdRoute
   '/admin/popups/$id': typeof AdminPopupsIdRoute
   '/admin/projetos/$id': typeof AdminProjetosIdRoute
+  '/admin/protocolo/$slug': typeof AdminProtocoloSlugRoute
+  '/admin/protocolo/visao-geral': typeof AdminProtocoloVisaoGeralRoute
   '/admin/regioes/$id': typeof AdminRegioesIdRouteWithChildren
   '/api/public/eventos': typeof ApiPublicEventosRoute
   '/api/public/governadores': typeof ApiPublicGovernadoresRoute
@@ -1232,6 +1259,7 @@ export interface FileRoutesById {
   '/admin/noticias/': typeof AdminNoticiasIndexRoute
   '/admin/popups/': typeof AdminPopupsIndexRoute
   '/admin/projetos/': typeof AdminProjetosIndexRoute
+  '/admin/protocolo/': typeof AdminProtocoloIndexRoute
   '/admin/regioes/': typeof AdminRegioesIndexRoute
   '/clubes/regiao/': typeof ClubesRegiaoIndexRoute
   '/gestao/clubes-associados/': typeof GestaoClubesAssociadosIndexRoute
@@ -1332,6 +1360,8 @@ export interface FileRouteTypes {
     | '/admin/noticias/$id'
     | '/admin/popups/$id'
     | '/admin/projetos/$id'
+    | '/admin/protocolo/$slug'
+    | '/admin/protocolo/visao-geral'
     | '/admin/regioes/$id'
     | '/api/public/eventos'
     | '/api/public/governadores'
@@ -1370,6 +1400,7 @@ export interface FileRouteTypes {
     | '/admin/noticias/'
     | '/admin/popups/'
     | '/admin/projetos/'
+    | '/admin/protocolo/'
     | '/admin/regioes/'
     | '/clubes/regiao/'
     | '/gestao/clubes-associados/'
@@ -1462,6 +1493,8 @@ export interface FileRouteTypes {
     | '/admin/noticias/$id'
     | '/admin/popups/$id'
     | '/admin/projetos/$id'
+    | '/admin/protocolo/$slug'
+    | '/admin/protocolo/visao-geral'
     | '/admin/regioes/$id'
     | '/api/public/eventos'
     | '/api/public/governadores'
@@ -1500,6 +1533,7 @@ export interface FileRouteTypes {
     | '/admin/noticias'
     | '/admin/popups'
     | '/admin/projetos'
+    | '/admin/protocolo'
     | '/admin/regioes'
     | '/clubes/regiao'
     | '/gestao/clubes-associados'
@@ -1598,6 +1632,8 @@ export interface FileRouteTypes {
     | '/admin/noticias/$id'
     | '/admin/popups/$id'
     | '/admin/projetos/$id'
+    | '/admin/protocolo/$slug'
+    | '/admin/protocolo/visao-geral'
     | '/admin/regioes/$id'
     | '/api/public/eventos'
     | '/api/public/governadores'
@@ -1636,6 +1672,7 @@ export interface FileRouteTypes {
     | '/admin/noticias/'
     | '/admin/popups/'
     | '/admin/projetos/'
+    | '/admin/protocolo/'
     | '/admin/regioes/'
     | '/clubes/regiao/'
     | '/gestao/clubes-associados/'
@@ -2372,6 +2409,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminProjetosIdRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/protocolo/': {
+      id: '/admin/protocolo/'
+      path: '/protocolo'
+      fullPath: '/admin/protocolo/'
+      preLoaderRoute: typeof AdminProtocoloIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/protocolo/$slug': {
+      id: '/admin/protocolo/$slug'
+      path: '/protocolo/$slug'
+      fullPath: '/admin/protocolo/$slug'
+      preLoaderRoute: typeof AdminProtocoloSlugRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/protocolo/visao-geral': {
+      id: '/admin/protocolo/visao-geral'
+      path: '/protocolo/visao-geral'
+      fullPath: '/admin/protocolo/visao-geral'
+      preLoaderRoute: typeof AdminProtocoloVisaoGeralRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/regioes/': {
       id: '/admin/regioes/'
       path: '/regioes'
@@ -2705,6 +2763,8 @@ interface AdminRouteChildren {
   AdminNoticiasIdRoute: typeof AdminNoticiasIdRoute
   AdminPopupsIdRoute: typeof AdminPopupsIdRoute
   AdminProjetosIdRoute: typeof AdminProjetosIdRoute
+  AdminProtocoloSlugRoute: typeof AdminProtocoloSlugRoute
+  AdminProtocoloVisaoGeralRoute: typeof AdminProtocoloVisaoGeralRoute
   AdminRegioesIdRoute: typeof AdminRegioesIdRouteWithChildren
   AdminConteudoIndexRoute: typeof AdminConteudoIndexRoute
   AdminDocumentosIndexRoute: typeof AdminDocumentosIndexRoute
@@ -2714,6 +2774,7 @@ interface AdminRouteChildren {
   AdminNoticiasIndexRoute: typeof AdminNoticiasIndexRoute
   AdminPopupsIndexRoute: typeof AdminPopupsIndexRoute
   AdminProjetosIndexRoute: typeof AdminProjetosIndexRoute
+  AdminProtocoloIndexRoute: typeof AdminProtocoloIndexRoute
   AdminRegioesIndexRoute: typeof AdminRegioesIndexRoute
   AdminEventosAnoAnoRoute: typeof AdminEventosAnoAnoRoute
 }
@@ -2740,6 +2801,8 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminNoticiasIdRoute: AdminNoticiasIdRoute,
   AdminPopupsIdRoute: AdminPopupsIdRoute,
   AdminProjetosIdRoute: AdminProjetosIdRoute,
+  AdminProtocoloSlugRoute: AdminProtocoloSlugRoute,
+  AdminProtocoloVisaoGeralRoute: AdminProtocoloVisaoGeralRoute,
   AdminRegioesIdRoute: AdminRegioesIdRouteWithChildren,
   AdminConteudoIndexRoute: AdminConteudoIndexRoute,
   AdminDocumentosIndexRoute: AdminDocumentosIndexRoute,
@@ -2749,6 +2812,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminNoticiasIndexRoute: AdminNoticiasIndexRoute,
   AdminPopupsIndexRoute: AdminPopupsIndexRoute,
   AdminProjetosIndexRoute: AdminProjetosIndexRoute,
+  AdminProtocoloIndexRoute: AdminProtocoloIndexRoute,
   AdminRegioesIndexRoute: AdminRegioesIndexRoute,
   AdminEventosAnoAnoRoute: AdminEventosAnoAnoRoute,
 }

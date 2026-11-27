@@ -39,3 +39,5 @@
 - [x] Adicionar menus administrativos dos três grupos; editores e navegação móvel verificados, texto salvo e relido na página pública, conteúdo de teste removido.
 
 - [x] Aplicar cadastro individual aos três grupos; criação, edição, publicação, biografia e exclusão verificadas com sessão real, sem manter cadastros de teste.
+
+- [x] Atualizar a área Admin com os novos menus: cadastro de conteúdo para os 17 temas de Protocolo Leonístico, página de visão geral editável, item no menu lateral e no início do painel, e área própria de relatório; salvamento, publicação, leitura pública e retirada do ar verificados com sessão real.

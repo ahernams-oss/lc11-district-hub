@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
+import { BreakableText } from "@/components/BreakableText";
+import { DEFAULT_PROTOCOL_OVERVIEW, useProtocolOverview } from "@/lib/protocol-content";
 
 export const Route = createFileRoute("/protocolo-leonistico")({
   head: () => ({
@@ -57,13 +59,24 @@ const cerimonial = [
 ];
 
 function ProtocoloLeonistico() {
+  const { data } = useProtocolOverview();
+  const overview = { ...DEFAULT_PROTOCOL_OVERVIEW, ...(data ?? {}) };
+
   return (
     <>
       <PageHero
-        eyebrow="Cerimonial e protocolo"
-        title="Protocolo Leonístico"
-        description="Diretrizes de precedência, cerimonial e conduta nas reuniões e eventos oficiais do Distrito LC-11."
+        eyebrow={overview.eyebrow}
+        title={overview.title}
+        description={overview.description}
       />
+
+      {overview.intro.trim() !== "" && (
+        <section className="mx-auto max-w-4xl px-4 pt-12 sm:px-6 lg:px-8">
+          <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <BreakableText text={overview.intro} />
+          </p>
+        </section>
+      )}
 
       <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
         <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">

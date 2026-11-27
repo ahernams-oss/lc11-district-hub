@@ -9,6 +9,7 @@ export async function readAdminReportSource(source: ReportSource) {
     if (source.filter) query = source.filter.exclude
       ? query.neq(source.filter.column, source.filter.value)
       : query.eq(source.filter.column, source.filter.value);
+    if (source.keyPrefix) query = query.like("key", `${source.keyPrefix}%`);
     if (source.id === "conexao") query = query.in("key", ["conexao-solidaria", "conexao-solidaria-menu", "aliancas-que-transformam", "nossas-categorias-de-parceria", "parceria-institucional", "parceiro-diamante", "parceiro-ouro", "parceiro-prata", "parceiro-bronze"]);
     const { data, error } = await query;
     if (error) throw new Error(`Não foi possível consultar ${source.label}.`);

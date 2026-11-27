@@ -22,6 +22,12 @@ const lideresSubmenu = [
   { to: "/ex-governadores", label: "Galeria de Ex-Governadores" },
 ] as const;
 
+const lideresInstitucionaisSubmenu = [
+  { to: "/lideres-lions-internacional", label: "Líderes Lions Internacional" },
+  { to: "/lideres-area-iii", label: "Líderes Área III" },
+  { to: "/lideres-dmlc", label: "Líderes DMLC" },
+] as const;
+
 const equipeGovernadorSubmenu = [
   { to: "/secretario", label: "Secretário Distrital" },
   { to: "/tesoureiro", label: "Tesoureiro Distrital" },
@@ -171,7 +177,7 @@ function DesktopNav() {
           Líderes <ChevronDown className="h-3.5 w-3.5" />
         </button>
         {lideresOpen && (
-          <div className="absolute left-0 top-full w-56 rounded-md border border-border bg-background py-2 shadow-card">
+          <div className="absolute left-0 top-full w-72 rounded-md border border-border bg-background py-2 shadow-card">
             <SubpageMenuLinks menu="lideres" />
             <div className="group/gov relative">
               <Link
@@ -204,6 +210,15 @@ function DesktopNav() {
                 {s.label}
               </Link>
             ))}
+            <div className="mt-2 border-t border-border pt-2" aria-label="Lideranças institucionais">
+              {lideresInstitucionaisSubmenu.map((s) => (
+                <Link key={s.to} to={s.to}
+                  className="block px-4 py-2 text-sm text-foreground/80 hover:bg-surface hover:text-primary"
+                  activeProps={{ className: "text-primary bg-surface" }}>
+                  {s.label}
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </div>
@@ -561,6 +576,15 @@ export function SiteHeader() {
                 {s.label}
               </Link>
             ))}
+            <div className="mt-2 flex flex-col gap-2 border-t border-border pt-2" aria-label="Lideranças institucionais">
+              {lideresInstitucionaisSubmenu.map((s) => (
+                <Link key={s.to} to={s.to} onClick={() => setOpen(false)}
+                  className="rounded-md px-3 py-2 text-sm text-foreground/80 hover:bg-surface"
+                  activeProps={{ className: "text-primary bg-surface" }}>
+                  {s.label}
+                </Link>
+              ))}
+            </div>
           </div>
           <div className="mt-1 px-3 py-2 text-base font-medium text-foreground">Clubes e Leões</div>
           <div className="ml-3 flex flex-col gap-1 border-l border-border pl-3">

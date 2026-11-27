@@ -10,3 +10,5 @@
 - Centralize admin report sources and paginated RLS-scoped reads; export nested fields to separate Excel sheets and full-length PDF record layouts, preparing Excel automatically after consultation and all files before download to retain mobile user activation.
 
 - Use the shared document download control on all public document lists: request storage attachments without previews or new tabs, and fetch external files only on demand with an explicit ready-to-download step on touch devices.
+
+- Keep institutional leadership links in a separate shared menu group on desktop and mobile, with dedicated public routes and a shared empty-content page until official profiles are supplied.

@@ -6,6 +6,14 @@ import { uploadContentImage } from "@/lib/leaders";
 import { ArrowLeft, ChevronLeft, ChevronRight, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/admin/conteudo/$key")({
+  head: ({ params }) => ({ meta: [
+    { title: `${CONTENT_LABELS[params.key as ContentKey] ?? "Conteúdo"} — Painel Admin LC-11` },
+    { name: "description", content: "Edição de conteúdo das páginas do Distrito LC-11." },
+    { property: "og:title", content: `${CONTENT_LABELS[params.key as ContentKey] ?? "Conteúdo"} — Painel Admin LC-11` },
+    { property: "og:description", content: "Edição de conteúdo das páginas do Distrito LC-11." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: ContentEditor,
 });
 
@@ -16,7 +24,18 @@ const CAUSE_ICON_OPTIONS = [
   "Heart", "Droplet", "LifeBuoy", "Leaf", "HandHeart", "Utensils", "Eye", "Sparkles", "Brain", "Activity", "Users", "Calendar", "Trophy",
 ] as const;
 
+const LEADERSHIP_FIELDS: Field[] = [
+  { name: "eyebrow", label: "Sobre-título", type: "text" },
+  { name: "title", label: "Título", type: "textarea" },
+  { name: "description", label: "Descrição", type: "textarea" },
+  { name: "body", label: "Texto da página", type: "textarea" },
+  { name: "image_url", label: "Imagem (opcional)", type: "image" },
+];
+
 const FIELDS: Partial<Record<ContentKey, Field[]>> = {
+  "lideres-lions-internacional": LEADERSHIP_FIELDS,
+  "lideres-area-iii": LEADERSHIP_FIELDS,
+  "lideres-dmlc": LEADERSHIP_FIELDS,
   home: [
     { name: "hero_eyebrow", label: "Sobre-título (eyebrow)", type: "text" },
     { name: "hero_title", label: "Título principal", type: "textarea" },

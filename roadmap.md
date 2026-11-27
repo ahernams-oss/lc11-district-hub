@@ -27,3 +27,5 @@
 - [x] Trocar visualização e novas abas de documentos por download direto; ata real baixada nas duas listas, PDF válido de 9 páginas, sem novas abas ou erros.
 
 - [x] Adicionar bloco separado de líderes Lions Internacional, Área III e DMLC; três páginas e navegação verificadas no computador e celular, sem erros.
+
+- [x] Adicionar menus administrativos dos três grupos; editores e navegação móvel verificados, texto salvo e relido na página pública, conteúdo de teste removido.

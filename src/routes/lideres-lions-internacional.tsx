@@ -10,5 +10,5 @@ export const Route = createFileRoute('/lideres-lions-internacional')({
     { property: 'og:type', content: 'website' },
     { name: 'twitter:card', content: 'summary' },
   ] }),
-  component: () => <LeadershipGroupPage title="Líderes Lions Internacional" />,
+  component: () => <LeadershipGroupPage contentKey="lideres-lions-internacional" title="Líderes Lions Internacional" />,
 });

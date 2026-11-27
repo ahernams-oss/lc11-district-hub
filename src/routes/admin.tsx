@@ -97,7 +97,7 @@ function AdminLayout() {
         </div>
         <div className={`${navOpen ? "block" : "hidden"} space-y-1 lg:block`}>
         {navItems.map((item) => {
-          const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
+          const active = item.exact ? pathname === item.to : pathname.startsWith(item.to) && !pathname.startsWith("/admin/conteudo/lideres-");
           return (
             <Link
               key={item.to}
@@ -111,6 +111,19 @@ function AdminLayout() {
             </Link>
           );
         })}
+        <div className="mt-3 border-t border-border pt-3" aria-label="Lideranças institucionais">
+          {([
+            { key: "lideres-lions-internacional", label: "Líderes Lions Internacional" },
+            { key: "lideres-area-iii", label: "Líderes Área III" },
+            { key: "lideres-dmlc", label: "Líderes DMLC" },
+          ] as const).map((item) => (
+            <Link key={item.key} to="/admin/conteudo/$key" params={{ key: item.key }}
+              onClick={() => setNavOpen(false)}
+              className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm ${pathname === `/admin/conteudo/${item.key}` ? "bg-primary text-primary-foreground" : "hover:bg-surface"}`}>
+              <Users className="h-4 w-4 shrink-0" /> {item.label}
+            </Link>
+          ))}
+        </div>
         </div>
 
         <button

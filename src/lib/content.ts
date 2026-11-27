@@ -2,6 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
 export type ContentKey =
+  | "lideres-lions-internacional"
+  | "lideres-area-iii"
+  | "lideres-dmlc"
   | "home"
   | "lions-internacional"
   | "sobre"
@@ -25,6 +28,9 @@ export type ContentKey =
   | "contato";
 
 export const CONTENT_LABELS: Record<ContentKey, string> = {
+  "lideres-lions-internacional": "Líderes Lions Internacional",
+  "lideres-area-iii": "Líderes Área III",
+  "lideres-dmlc": "Líderes DMLC",
   home: "Página Início (hero)",
   "lions-internacional": "Sobre o Lions Internacional",
   sobre: "Sobre o Distrito LC-11",

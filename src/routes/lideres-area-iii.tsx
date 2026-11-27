@@ -10,5 +10,5 @@ export const Route = createFileRoute('/lideres-area-iii')({
     { property: 'og:type', content: 'website' },
     { name: 'twitter:card', content: 'summary' },
   ] }),
-  component: () => <LeadershipGroupPage title="Líderes Área III" />,
+  component: () => <LeadershipGroupPage contentKey="lideres-area-iii" title="Líderes Área III" />,
 });

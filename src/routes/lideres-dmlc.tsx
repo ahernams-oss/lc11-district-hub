@@ -10,5 +10,5 @@ export const Route = createFileRoute('/lideres-dmlc')({
     { property: 'og:type', content: 'website' },
     { name: 'twitter:card', content: 'summary' },
   ] }),
-  component: () => <LeadershipGroupPage title="Líderes DMLC" />,
+  component: () => <LeadershipGroupPage contentKey="lideres-dmlc" title="Líderes DMLC" />,
 });

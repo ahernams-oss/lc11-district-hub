@@ -8,6 +8,8 @@ export const Route = createFileRoute("/protocolo-leonistico")({
       { name: "description", content: "Normas de protocolo, precedência e cerimonial nas reuniões e eventos do Lions Clubs International - Distrito LC-11." },
       { property: "og:title", content: "Protocolo Leonístico — Distrito LC-11" },
       { property: "og:description", content: "Diretrizes de protocolo e cerimonial leonístico." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/protocolo-leonistico" }],
   }),

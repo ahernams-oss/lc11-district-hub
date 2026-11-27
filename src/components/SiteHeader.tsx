@@ -7,12 +7,12 @@ import { useLeaders } from "@/lib/leaders";
 import { useSiteContent, DEFAULT_CONEXAO_SUBMENU, type ConexaoMenuItem } from "@/lib/content";
 import { BreakableText } from "@/components/BreakableText";
 import { SubpageMenuLinks, SubpageDropdown } from "@/components/SubpageMenuLinks";
+import { ProtocolMenu } from "@/components/ProtocolMenu";
 
 const inicioSubmenu = [
   { to: "/lions-internacional", label: "Sobre o Lions Internacional" },
   { to: "/sobre", label: "Sobre o Distrito LC-11" },
   { to: "/historia", label: "Nossa História" },
-  { to: "/protocolo-leonistico", label: "Protocolo Leonístico" },
 ] as const;
 
 const lideresSubmenu = [
@@ -139,6 +139,7 @@ function DesktopNav() {
         className="relative"
         onMouseEnter={() => setInicioOpen(true)}
         onMouseLeave={() => setInicioOpen(false)}
+        onFocus={() => setInicioOpen(true)}
       >
         <Link
           to="/"
@@ -161,6 +162,7 @@ function DesktopNav() {
                 {s.label}
               </Link>
             ))}
+            <ProtocolMenu />
           </div>
         )}
       </div>
@@ -516,7 +518,7 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <div className={cn("border-t border-border 2xl:hidden", open ? "block" : "hidden")}>
+      <div className={cn("max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-border 2xl:hidden", open ? "block" : "hidden")}>
         <nav className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:px-6">
           <Link
             to="/"
@@ -540,6 +542,7 @@ export function SiteHeader() {
                 {s.label}
               </Link>
             ))}
+            <ProtocolMenu mobile onNavigate={() => setOpen(false)} />
           </div>
           <div className="mt-2 px-3 py-2 text-base font-medium text-foreground">Líderes</div>
           <div className="ml-3 flex flex-col gap-2 border-l border-border pl-3">

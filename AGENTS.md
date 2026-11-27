@@ -13,3 +13,4 @@
 - Use the shared document download control on all public document lists: request storage attachments without previews or new tabs, and fetch external files only on demand with an explicit ready-to-download step on touch devices.
 
 - Manage institutional leadership as categories of the existing leaders table through the shared leader list/editor; public category pages and biography/gallery views read leaders_public, while site_content remains optional page-level copy.
+- Share protocol topic definitions between desktop/mobile nested navigation and the un-nested dynamic topic route; preserve the existing protocol overview URL and avoid inventing unpublished content.

@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Criar e verificar os 17 submenus de Protocolo Leonístico da imagem no computador e celular, preservando a página atual; todos os destinos conferidos, sem erros nem cortes horizontais.
+
 - [x] Corrigir cartões de Clubes do ES e Clubes do RJ para exibir a região acima da divisão; 40 cartões verificados no computador e celular, sem cortes nem erros.
 
 - [x] Pausar novos pagamentos Stripe no site e no servidor, preservando PIX, registros e gerenciamento de apoios existentes; botões bloqueados e ausência de formulário Stripe verificados, 4 testes passaram.

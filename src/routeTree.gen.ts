@@ -82,6 +82,7 @@ import { Route as NoticiasIdRouteImport } from './routes/noticias.$id'
 import { Route as PaginasSlugRouteImport } from './routes/paginas.$slug'
 import { Route as ProjetosIndexRouteImport } from './routes/projetos.index'
 import { Route as ProjetosIdRouteImport } from './routes/projetos.$id'
+import { Route as ProtocoloLeonisticoSlugRouteImport } from './routes/protocolo-leonistico_.$slug'
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
 import { Route as AdminConteudoKeyRouteImport } from './routes/admin.conteudo.$key'
 import { Route as AdminDocumentosIndexRouteImport } from './routes/admin.documentos.index'
@@ -510,6 +511,11 @@ const ProjetosIdRoute = ProjetosIdRouteImport.update({
   path: '/projetos/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProtocoloLeonisticoSlugRoute = ProtocoloLeonisticoSlugRouteImport.update({
+  id: '/protocolo-leonistico_/$slug',
+  path: '/protocolo-leonistico/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminConteudoIndexRoute = AdminConteudoIndexRouteImport.update({
   id: '/conteudo/',
   path: '/conteudo/',
@@ -893,6 +899,7 @@ export interface FileRoutesByFullPath {
   '/noticias/$id': typeof NoticiasIdRoute
   '/paginas/$slug': typeof PaginasSlugRoute
   '/projetos/$id': typeof ProjetosIdRoute
+  '/protocolo-leonistico/$slug': typeof ProtocoloLeonisticoSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/campanhas/': typeof CampanhasIndexRoute
   '/clubes/': typeof ClubesIndexRoute
@@ -1021,6 +1028,7 @@ export interface FileRoutesByTo {
   '/noticias/$id': typeof NoticiasIdRoute
   '/paginas/$slug': typeof PaginasSlugRoute
   '/projetos/$id': typeof ProjetosIdRoute
+  '/protocolo-leonistico/$slug': typeof ProtocoloLeonisticoSlugRoute
   '/admin': typeof AdminIndexRoute
   '/campanhas': typeof CampanhasIndexRoute
   '/clubes': typeof ClubesIndexRoute
@@ -1156,6 +1164,7 @@ export interface FileRoutesById {
   '/noticias/$id': typeof NoticiasIdRoute
   '/paginas/$slug': typeof PaginasSlugRoute
   '/projetos/$id': typeof ProjetosIdRoute
+  '/protocolo-leonistico_/$slug': typeof ProtocoloLeonisticoSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/campanhas/': typeof CampanhasIndexRoute
   '/clubes/': typeof ClubesIndexRoute
@@ -1292,6 +1301,7 @@ export interface FileRouteTypes {
     | '/noticias/$id'
     | '/paginas/$slug'
     | '/projetos/$id'
+    | '/protocolo-leonistico/$slug'
     | '/admin/'
     | '/campanhas/'
     | '/clubes/'
@@ -1420,6 +1430,7 @@ export interface FileRouteTypes {
     | '/noticias/$id'
     | '/paginas/$slug'
     | '/projetos/$id'
+    | '/protocolo-leonistico/$slug'
     | '/admin'
     | '/campanhas'
     | '/clubes'
@@ -1554,6 +1565,7 @@ export interface FileRouteTypes {
     | '/noticias/$id'
     | '/paginas/$slug'
     | '/projetos/$id'
+    | '/protocolo-leonistico_/$slug'
     | '/admin/'
     | '/campanhas/'
     | '/clubes/'
@@ -1669,6 +1681,7 @@ export interface RootRouteChildren {
   NoticiasIdRoute: typeof NoticiasIdRoute
   PaginasSlugRoute: typeof PaginasSlugRoute
   ProjetosIdRoute: typeof ProjetosIdRoute
+  ProtocoloLeonisticoSlugRoute: typeof ProtocoloLeonisticoSlugRoute
   CampanhasIndexRoute: typeof CampanhasIndexRoute
   ClubesIndexRoute: typeof ClubesIndexRoute
   EventosIndexRoute: typeof EventosIndexRoute
@@ -2197,6 +2210,13 @@ declare module '@tanstack/react-router' {
       path: '/projetos/$id'
       fullPath: '/projetos/$id'
       preLoaderRoute: typeof ProjetosIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/protocolo-leonistico_/$slug': {
+      id: '/protocolo-leonistico_/$slug'
+      path: '/protocolo-leonistico/$slug'
+      fullPath: '/protocolo-leonistico/$slug'
+      preLoaderRoute: typeof ProtocoloLeonisticoSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/conteudo/': {
@@ -2886,6 +2906,7 @@ const rootRouteChildren: RootRouteChildren = {
   NoticiasIdRoute: NoticiasIdRoute,
   PaginasSlugRoute: PaginasSlugRoute,
   ProjetosIdRoute: ProjetosIdRoute,
+  ProtocoloLeonisticoSlugRoute: ProtocoloLeonisticoSlugRoute,
   CampanhasIndexRoute: CampanhasIndexRoute,
   ClubesIndexRoute: ClubesIndexRoute,
   EventosIndexRoute: EventosIndexRoute,

@@ -135,22 +135,30 @@ function GrandesLeoes() {
             {displayFigures.map((fig) => {
               const Icon = fig.icon || Award;
               return (
-                <div key={fig.id ?? fig.name} className="flex flex-col">
                 <div
+                  key={fig.id ?? fig.name}
                   className={`flex flex-col justify-between rounded-2xl border bg-card p-8 shadow-card transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 bg-gradient-to-br ${fig.gradient}`}
                 >
                   <div className="flex flex-col sm:flex-row gap-8 items-start">
-                    {fig.photo_url ? (
-                      <img
-                        src={fig.photo_url}
-                        alt={fig.name}
-                        className="h-40 w-40 shrink-0 rounded-full object-cover ring-4 ring-primary/20 shadow-md self-center sm:self-start"
-                      />
-                    ) : (
-                      <div className="rounded-full bg-background h-24 w-24 flex items-center justify-center shadow-sm shrink-0 self-center sm:self-start">
-                        <Icon className={`h-11 w-11 ${fig.iconColor}`} />
-                      </div>
-                    )}
+                    <div className="flex shrink-0 flex-col items-center gap-3 self-center sm:self-start">
+                      {fig.photo_url ? (
+                        <img
+                          src={fig.photo_url}
+                          alt={fig.name}
+                          className="h-40 w-40 shrink-0 rounded-full object-cover ring-4 ring-primary/20 shadow-md"
+                        />
+                      ) : (
+                        <div className="rounded-full bg-background h-24 w-24 flex items-center justify-center shadow-sm shrink-0">
+                          <Icon className={`h-11 w-11 ${fig.iconColor}`} />
+                        </div>
+                      )}
+                      {fig.leonic_year && (
+                        <div className="rounded-xl border border-gold/40 bg-gold/10 px-4 py-1.5 text-center">
+                          <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Ano Leonístico</span>
+                          <p className="font-display text-sm font-bold text-foreground">{fig.leonic_year}</p>
+                        </div>
+                      )}
+                    </div>
                     <div className="flex-1 min-w-0 text-center sm:text-left">
                       <span className="rounded-full bg-background px-3 py-1 text-xs font-semibold text-primary shadow-sm inline-block">
                         <BreakableText text={fig.badge} />
@@ -172,13 +180,6 @@ function GrandesLeoes() {
                       )}
                     </div>
                   </div>
-                </div>
-                {fig.leonic_year && (
-                  <div className="mt-3 self-center rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-center">
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Ano Leonístico</span>
-                    <p className="font-display text-sm font-bold text-foreground">{fig.leonic_year}</p>
-                  </div>
-                )}
                 </div>
               );
             })}

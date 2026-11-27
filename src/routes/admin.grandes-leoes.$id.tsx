@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate, useParams, Link } from "@tanstack/react-r
 import { BreakHint } from "@/components/BreakHint";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { uploadLeaderPhoto } from "@/lib/leaders";
+import { uploadGrandeLeaoPhoto } from "@/lib/leaders";
 import { useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Upload, Loader2, Save } from "lucide-react";
 import ImageCropModal from "@/components/ImageCropModal";
@@ -81,7 +81,7 @@ function GrandeLeaoEditor() {
     setIsUploading(true);
     setErrorMsg(null);
     try {
-      const url = await uploadLeaderPhoto(file);
+      const url = await uploadGrandeLeaoPhoto(file);
       setForm((f) => ({ ...f, photo_url: url }));
     } catch (err: any) {
       setErrorMsg(`Erro ao enviar foto: ${err.message}`);
@@ -100,7 +100,7 @@ function GrandeLeaoEditor() {
         return;
       }
       const toUpload = Array.from(files).slice(0, remaining);
-      const urls = await Promise.all(toUpload.map((f) => uploadLeaderPhoto(f)));
+      const urls = await Promise.all(toUpload.map((f) => uploadGrandeLeaoPhoto(f)));
       setForm((f) => ({ ...f, gallery_urls: [...f.gallery_urls, ...urls].slice(0, 5) }));
     } catch (err: any) {
       setErrorMsg(`Erro ao enviar fotos: ${err.message}`);

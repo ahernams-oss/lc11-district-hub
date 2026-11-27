@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { BreakHint } from "@/components/BreakHint";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { uploadLeaderPhoto } from "@/lib/leaders";
+import { uploadGrandeLeaoPhoto } from "@/lib/leaders";
 import { useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Plus, Trash2, Upload, Loader2, Save } from "lucide-react";
 
@@ -51,7 +51,7 @@ function BulkAddGrandesLeoes() {
     updateEntry(id, "isUploading", true);
     setErrorMsg(null);
     try {
-      const url = await uploadLeaderPhoto(file);
+      const url = await uploadGrandeLeaoPhoto(file);
       updateEntry(id, "photo_url", url);
     } catch (err: any) {
       setErrorMsg(`Erro ao enviar foto: ${err.message}`);

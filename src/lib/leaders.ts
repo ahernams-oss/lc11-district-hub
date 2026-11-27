@@ -116,3 +116,10 @@ export async function uploadLeaderPhoto(file: File): Promise<string> {
 export async function uploadContentImage(file: File, folder = "content"): Promise<string> {
   return uploadViaServer(file, folder);
 }
+
+export async function uploadGrandeLeaoPhoto(file: File): Promise<string> {
+  const { uploadGrandeLeaoPhotoToDrive } = await import("@/lib/drive-upload.functions");
+  const base64 = await fileToDataUrl(file);
+  const res = await uploadGrandeLeaoPhotoToDrive({ data: { file: base64, filename: file.name || "imagem.jpg" } });
+  return res.url;
+}

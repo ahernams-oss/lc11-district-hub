@@ -8,6 +8,7 @@ import { useSiteContent, DEFAULT_CONEXAO_SUBMENU, type ConexaoMenuItem } from "@
 import { BreakableText } from "@/components/BreakableText";
 import { SubpageMenuLinks, SubpageDropdown } from "@/components/SubpageMenuLinks";
 import { ProtocolMenu } from "@/components/ProtocolMenu";
+import { Button } from "@/components/ui/button";
 
 const inicioSubmenu = [
   { to: "/lions-internacional", label: "Sobre o Lions Internacional" },
@@ -418,6 +419,9 @@ function DesktopNav() {
       >
         LCIF
       </Link></SubpageDropdown>
+      <Button asChild variant="outline" className="border-2 border-primary bg-gold text-gold-foreground shadow-sm hover:bg-gold/90">
+        <Link to="/idll" activeProps={{ className: "ring-2 ring-primary/30" }}>IDLL</Link>
+      </Button>
     </nav>
   );
 }
@@ -738,6 +742,9 @@ export function SiteHeader() {
             LCIF
           </Link>
           <SubpageMenuLinks menu="lcif" onClick={() => setOpen(false)} />
+          <Button asChild variant="outline" className="border-2 border-primary bg-gold text-gold-foreground hover:bg-gold/90">
+            <Link to="/idll" onClick={() => setOpen(false)}>IDLL</Link>
+          </Button>
           <Link
             to="/doar"
             onClick={() => setOpen(false)}

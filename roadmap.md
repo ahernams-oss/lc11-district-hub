@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Adicionar botão IDLL ao lado de LCIF e cadastro de membros com fotos e currículos; criação com foto, leitura pública, currículo formatado e exclusão verificados com sessão real no computador e celular, sem registros de teste restantes.
+
 - [x] Criar e verificar os 17 submenus de Protocolo Leonístico da imagem no computador e celular, preservando a página atual; todos os destinos conferidos, sem erros nem cortes horizontais.
 
 - [x] Corrigir cartões de Clubes do ES e Clubes do RJ para exibir a região acima da divisão; 40 cartões verificados no computador e celular, sem cortes nem erros.

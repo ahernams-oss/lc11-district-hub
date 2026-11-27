@@ -13,9 +13,11 @@ export type LeaderCategory =
   | "grande_leao"
   | "lions_internacional"
   | "area_iii"
-  | "dmlc";
+  | "dmlc"
+  | "idll";
 
 export const CATEGORY_LABELS: Record<LeaderCategory, string> = {
+  idll: "IDLL — Membros",
   lions_internacional: "Líderes Lions Internacional",
   area_iii: "Líderes Área III",
   dmlc: "Líderes DMLC",
@@ -130,7 +132,7 @@ export async function uploadGrandeLeaoPhoto(file: File): Promise<string> {
   return res.url;
 }
 
-export const INSTITUTIONAL_CATEGORIES = ["lions_internacional", "area_iii", "dmlc"] as const;
+export const INSTITUTIONAL_CATEGORIES = ["lions_internacional", "area_iii", "dmlc", "idll"] as const;
 export function isInstitutionalCategory(value: unknown): value is typeof INSTITUTIONAL_CATEGORIES[number] {
   return INSTITUTIONAL_CATEGORIES.some((category) => category === value);
 }

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
 export type ContentKey =
+  | "idll"
   | "lideres-lions-internacional"
   | "lideres-area-iii"
   | "lideres-dmlc"
@@ -28,6 +29,7 @@ export type ContentKey =
   | "contato";
 
 export const CONTENT_LABELS: Record<ContentKey, string> = {
+  idll: "IDLL — Instituto Distrital de Liderança Leonística",
   "lideres-lions-internacional": "Líderes Lions Internacional",
   "lideres-area-iii": "Líderes Área III",
   "lideres-dmlc": "Líderes DMLC",

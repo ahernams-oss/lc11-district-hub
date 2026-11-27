@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 export function InstitutionalLeaderBio({ id }: { id: string }) {
   const { data: leader, isLoading } = useLeader(id);
-  const back = leader?.category === "lions_internacional" ? "/lideres-lions-internacional" : leader?.category === "area_iii" ? "/lideres-area-iii" : "/lideres-dmlc";
+  const back = leader?.category === "idll" ? "/idll" : leader?.category === "lions_internacional" ? "/lideres-lions-internacional" : leader?.category === "area_iii" ? "/lideres-area-iii" : "/lideres-dmlc";
   const [lightbox, setLightbox] = useState<string | null>(null);
   const gallery = (leader?.gallery_urls ?? []).filter(Boolean);
   const [slide, setSlide] = useState(0);
@@ -36,7 +36,7 @@ export function InstitutionalLeaderBio({ id }: { id: string }) {
         to={back}
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary"
       >
-        <ArrowLeft className="h-4 w-4" /> Voltar aos líderes
+        <ArrowLeft className="h-4 w-4" /> {leader.category === 'idll' ? 'Voltar ao IDLL' : 'Voltar aos líderes'}
       </Link>
 
       <div className="mt-6 grid gap-8 md:grid-cols-[180px_1fr]">
@@ -68,13 +68,13 @@ export function InstitutionalLeaderBio({ id }: { id: string }) {
 
         <div>
           {leader.role && <p className="mb-3 font-semibold text-primary"><BreakableText text={leader.role} /></p>}
-          <h2 className="font-display text-xl font-bold text-foreground">Biografia</h2>
+          <h2 className="font-display text-xl font-bold text-foreground">{leader.category === 'idll' ? 'Currículo' : 'Biografia'}</h2>
           {leader.bio ? (
             <div className="mt-3 whitespace-pre-line text-foreground/90 leading-relaxed">
               <BreakableText text={leader.bio} />
             </div>
           ) : (
-            <p className="mt-3 text-muted-foreground">Biografia ainda não cadastrada.</p>
+            <p className="mt-3 text-muted-foreground">{leader.category === 'idll' ? 'Currículo ainda não cadastrado.' : 'Biografia ainda não cadastrada.'}</p>
           )}
         </div>
       </div>

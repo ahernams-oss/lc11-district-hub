@@ -198,7 +198,7 @@ function LeaderEditor() {
         <ArrowLeft className="h-4 w-4" /> Voltar
       </Link>
       <h1 className="mt-2 font-display text-2xl font-bold">
-        {isNew ? "Novo líder" : "Editar líder"}
+        {form.category === 'idll' ? (isNew ? 'Novo membro do IDLL' : 'Editar membro do IDLL') : (isNew ? "Novo líder" : "Editar líder")}
       </h1>
 
       <div className="mt-6 space-y-4">
@@ -335,7 +335,7 @@ function LeaderEditor() {
           </Field>
         )}
 
-        <Field label="Biografia / trajetória">
+        <Field label={form.category === 'idll' ? 'Currículo / trajetória' : 'Biografia / trajetória'}>
           <textarea
             rows={6}
             value={form.bio}

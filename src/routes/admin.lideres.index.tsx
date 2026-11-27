@@ -49,7 +49,7 @@ function LeadersList() {
           to="/admin/lideres/$id" params={{ id: "novo" }} search={category ? { category } : {}}
           className="inline-flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
         >
-          <Plus className="h-4 w-4" /> Adicionar líder
+          <Plus className="h-4 w-4" /> {category === 'idll' ? 'Adicionar membro' : 'Adicionar líder'}
         </Link>
       </div>
 

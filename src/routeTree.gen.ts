@@ -23,6 +23,7 @@ import { Route as GatRouteImport } from './routes/gat'
 import { Route as GestaoRouteImport } from './routes/gestao'
 import { Route as GovernadorRouteImport } from './routes/governador'
 import { Route as HistoriaRouteImport } from './routes/historia'
+import { Route as IdllRouteImport } from './routes/idll'
 import { Route as LcifRouteImport } from './routes/lcif'
 import { Route as LideresAreaIiiRouteImport } from './routes/lideres-area-iii'
 import { Route as LideresDmlcRouteImport } from './routes/lideres-dmlc'
@@ -211,6 +212,11 @@ const GovernadorRoute = GovernadorRouteImport.update({
 const HistoriaRoute = HistoriaRouteImport.update({
   id: '/historia',
   path: '/historia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IdllRoute = IdllRouteImport.update({
+  id: '/idll',
+  path: '/idll',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LcifRoute = LcifRouteImport.update({
@@ -849,6 +855,7 @@ export interface FileRoutesByFullPath {
   '/gestao': typeof GestaoRouteWithChildren
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
+  '/idll': typeof IdllRoute
   '/lcif': typeof LcifRoute
   '/lideres-area-iii': typeof LideresAreaIiiRoute
   '/lideres-dmlc': typeof LideresDmlcRoute
@@ -981,6 +988,7 @@ export interface FileRoutesByTo {
   '/gat': typeof GatRoute
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
+  '/idll': typeof IdllRoute
   '/lcif': typeof LcifRoute
   '/lideres-area-iii': typeof LideresAreaIiiRoute
   '/lideres-dmlc': typeof LideresDmlcRoute
@@ -1114,6 +1122,7 @@ export interface FileRoutesById {
   '/gestao': typeof GestaoRouteWithChildren
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
+  '/idll': typeof IdllRoute
   '/lcif': typeof LcifRoute
   '/lideres-area-iii': typeof LideresAreaIiiRoute
   '/lideres-dmlc': typeof LideresDmlcRoute
@@ -1251,6 +1260,7 @@ export interface FileRouteTypes {
     | '/gestao'
     | '/governador'
     | '/historia'
+    | '/idll'
     | '/lcif'
     | '/lideres-area-iii'
     | '/lideres-dmlc'
@@ -1383,6 +1393,7 @@ export interface FileRouteTypes {
     | '/gat'
     | '/governador'
     | '/historia'
+    | '/idll'
     | '/lcif'
     | '/lideres-area-iii'
     | '/lideres-dmlc'
@@ -1515,6 +1526,7 @@ export interface FileRouteTypes {
     | '/gestao'
     | '/governador'
     | '/historia'
+    | '/idll'
     | '/lcif'
     | '/lideres-area-iii'
     | '/lideres-dmlc'
@@ -1651,6 +1663,7 @@ export interface RootRouteChildren {
   GestaoRoute: typeof GestaoRouteWithChildren
   GovernadorRoute: typeof GovernadorRoute
   HistoriaRoute: typeof HistoriaRoute
+  IdllRoute: typeof IdllRoute
   LcifRoute: typeof LcifRoute
   LideresAreaIiiRoute: typeof LideresAreaIiiRoute
   LideresDmlcRoute: typeof LideresDmlcRoute
@@ -1797,6 +1810,13 @@ declare module '@tanstack/react-router' {
       path: '/historia'
       fullPath: '/historia'
       preLoaderRoute: typeof HistoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/idll': {
+      id: '/idll'
+      path: '/idll'
+      fullPath: '/idll'
+      preLoaderRoute: typeof IdllRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lcif': {
@@ -2876,6 +2896,7 @@ const rootRouteChildren: RootRouteChildren = {
   GestaoRoute: GestaoRouteWithChildren,
   GovernadorRoute: GovernadorRoute,
   HistoriaRoute: HistoriaRoute,
+  IdllRoute: IdllRoute,
   LcifRoute: LcifRoute,
   LideresAreaIiiRoute: LideresAreaIiiRoute,
   LideresDmlcRoute: LideresDmlcRoute,

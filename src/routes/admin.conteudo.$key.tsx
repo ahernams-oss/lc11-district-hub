@@ -39,6 +39,7 @@ const LEADERSHIP_FIELDS: Field[] = [
 ];
 
 const FIELDS: Partial<Record<ContentKey, Field[]>> = {
+  idll: LEADERSHIP_FIELDS,
   "lideres-lions-internacional": LEADERSHIP_FIELDS,
   "lideres-area-iii": LEADERSHIP_FIELDS,
   "lideres-dmlc": LEADERSHIP_FIELDS,

@@ -117,6 +117,7 @@ function AdminLayout() {
             { key: "lions_internacional", label: "Líderes Lions Internacional" },
             { key: "area_iii", label: "Líderes Área III" },
             { key: "dmlc", label: "Líderes DMLC" },
+            { key: "idll", label: "IDLL — Membros" },
           ] as const).map((item) => (
             <Link key={item.key} to="/admin/lideres" search={{ category: item.key }}
               onClick={() => setNavOpen(false)}

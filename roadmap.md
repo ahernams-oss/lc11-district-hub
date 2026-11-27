@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Simplificar download Excel com preparação automática após consulta; download verificado no computador e celular, 27 abas, 40 clubes e nenhum erro de célula
+
 - [x] Criar central de relatórios Excel/PDF para todos os menus administrativos
 - [x] Verificar downloads com sessão administrativa real: 26 áreas, 27 abas Excel, 40 clubes e 1.317 visitas; PDFs revisados sem cortes nas páginas examinadas
 

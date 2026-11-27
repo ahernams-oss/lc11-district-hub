@@ -49,6 +49,14 @@ function AdminReports() {
         result.push({ ...section, rows: section.rows.filter((row) => !term || Object.values(row).some((value) => String(value).toLocaleLowerCase("pt-BR").includes(term))) });
       }
       setSections(result);
+      setBusy("excel");
+      const context = search.trim() ? `Busca: ${search.trim()}` : "Todos os registros das áreas selecionadas";
+      try {
+        const excel = await buildAdminExcel(result, context);
+        setFiles({ excel });
+      } catch (err) {
+        setError(err instanceof Error ? `Não foi possível preparar o Excel: ${err.message}` : "Não foi possível preparar o Excel. Clique em Gerar Excel para tentar novamente.");
+      }
     } catch (err) { setError(err instanceof Error ? err.message : "Não foi possível consultar os registros."); }
     finally { setBusy(null); }
   }

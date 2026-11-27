@@ -8,3 +8,5 @@
 - Read donation tracking through the authenticated browser client with existing administrator-only RLS; never expose donor details through public report functions.
 - Order Grandes Leões through the shared seeded 24-hour shuffle and browser clock hook; stable UTC periods synchronize visitors without scheduled database work or hydration mismatches.
 - Centralize admin report sources and paginated RLS-scoped reads; export nested fields to separate Excel sheets and full-length PDF record layouts, preparing Excel automatically after consultation and all files before download to retain mobile user activation.
+
+- Use the shared document download control on all public document lists: request storage attachments without previews or new tabs, and fetch external files only on demand with an explicit ready-to-download step on touch devices.

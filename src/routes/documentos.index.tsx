@@ -1,13 +1,23 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { PageHero } from "@/components/PageHero";
-import { FileText, ExternalLink, Download, Search, X, LayoutGrid, List, Eye, Maximize2, Lock, ShieldCheck, Key } from "lucide-react";
+import { FileText, Search, X, LayoutGrid, List, Lock, ShieldCheck, Key } from "lucide-react";
 import { useDocuments, useDocumentCategories, buildCategoryTree, flattenCategoryTree, categoryPathLabels, DOCUMENT_CATEGORIES, RGD_YEARS, RGD_ITEMS, type DocumentItem, REQUIRED_ROLE_LABELS } from "@/lib/documents";
 import { useAuth } from "@/hooks/use-auth";
 import { logDocumentAccess } from "@/lib/documents.audit";
 import { BreakableText } from "@/components/BreakableText";
 
+import { DocumentDownloadButton } from "@/components/DocumentDownloadButton";
+
 export const Route = createFileRoute("/documentos/")({
+  head: () => ({ meta: [
+    { title: "Documentos do Distrito — Distrito LC-11" },
+    { name: "description", content: "Atos, estatutos, regulamentos e documentos do Distrito LC-11 para download." },
+    { property: "og:title", content: "Documentos do Distrito — Distrito LC-11" },
+    { property: "og:description", content: "Atos, estatutos, regulamentos e documentos do Distrito LC-11 para download." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: DocumentosIndex,
 });
 
@@ -61,7 +71,6 @@ function DocumentosIndex() {
   const [category, setCategory] = useState<string>("all");
   const [year, setYear] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
-  const [previewDoc, setPreviewDoc] = useState<DocumentItem | null>(null);
   const [restrictedModalDoc, setRestrictedModalDoc] = useState<DocumentItem | null>(null);
 
   const years = useMemo(() => {
@@ -103,11 +112,11 @@ function DocumentosIndex() {
 
   const hasFilters = query !== "" || category !== "all" || year !== "all";
 
-  function handleAction(doc: DocumentItem, action: "VIEW" | "DOWNLOAD") {
+  function handleDownload(doc: DocumentItem) {
     // If restricted and user is not logged in, prompt to log in via Member Portal /acesso
     if (doc.is_restricted && !user) {
       setRestrictedModalDoc(doc);
-      return;
+      return false;
     }
 
     // Log audit event if document is restricted or if user is logged in
@@ -116,16 +125,11 @@ function DocumentosIndex() {
         documentId: doc.id,
         documentTitle: doc.title,
         user: { id: user.id, email: user.email ?? "sem-email" },
-        action,
+        action: "DOWNLOAD",
       });
     }
 
-    if (action === "VIEW") {
-      setPreviewDoc(doc);
-    } else {
-      const href = doc.file_url || doc.external_url || "#";
-      window.open(href, "_blank", "noreferrer");
-    }
+    return true;
   }
 
   return (
@@ -251,7 +255,6 @@ function DocumentosIndex() {
         ) : (
           <div className={viewMode === "grid" ? "mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" : "mt-6 grid gap-4"}>
             {filtered.map((d) => {
-              const isExternal = !!d.external_url && !d.file_url;
               const catPath = CATEGORY_TO_PATH[d.category];
               const catLabel = categoryLabel[d.category] ?? d.category;
 
@@ -297,20 +300,7 @@ function DocumentosIndex() {
                     </div>
 
                     <div className="mt-5 flex items-center gap-2 border-t pt-3">
-                      <button
-                        type="button"
-                        onClick={() => handleAction(d, "VIEW")}
-                        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-md border px-3 py-1.5 text-xs font-medium hover:bg-surface"
-                      >
-                        <Eye className="h-3.5 w-3.5" /> Visualizar
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleAction(d, "DOWNLOAD")}
-                        className="inline-flex items-center justify-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground hover:opacity-90"
-                      >
-                        {isExternal ? <ExternalLink className="h-3.5 w-3.5" /> : <Download className="h-3.5 w-3.5" />}
-                      </button>
+                      <DocumentDownloadButton document={d} beforeDownload={() => handleDownload(d)} />
                     </div>
                   </div>
                 );
@@ -353,20 +343,7 @@ function DocumentosIndex() {
                     )}
                   </div>
                   <div className="flex shrink-0 items-center gap-2 self-start">
-                    <button
-                      type="button"
-                      onClick={() => handleAction(d, "VIEW")}
-                      className="inline-flex items-center gap-1.5 rounded-md border px-3 py-2 text-sm font-medium hover:bg-surface"
-                    >
-                      <Eye className="h-4 w-4" /> Visualizar
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleAction(d, "DOWNLOAD")}
-                      className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
-                    >
-                      {isExternal ? (<>Abrir <ExternalLink className="h-4 w-4" /></>) : (<>Baixar <Download className="h-4 w-4" /></>)}
-                    </button>
+                    <DocumentDownloadButton document={d} beforeDownload={() => handleDownload(d)} />
                   </div>
                 </div>
               );
@@ -413,53 +390,7 @@ function DocumentosIndex() {
         </div>
       )}
 
-      {/* Document Preview Modal */}
-      {previewDoc && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
-          <div className="flex h-[90vh] w-[95vw] max-w-5xl flex-col rounded-xl bg-card shadow-2xl overflow-hidden">
-            <div className="flex items-center justify-between border-b px-4 py-3">
-              <div className="flex items-center gap-2 min-w-0 pr-4">
-                <FileText className="h-5 w-5 shrink-0 text-primary" />
-                <span className="font-display font-semibold truncate"><BreakableText text={previewDoc.title} /></span>
-                {previewDoc.is_restricted && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:text-amber-400">
-                    <Lock className="h-3 w-3" /> Restrito
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => handleAction(previewDoc, "DOWNLOAD")}
-                  className="inline-flex items-center gap-1 rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground"
-                >
-                  <Download className="h-3.5 w-3.5" /> Baixar
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setPreviewDoc(null)}
-                  className="rounded-lg p-1.5 text-muted-foreground hover:bg-surface hover:text-foreground"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
-            </div>
-            <div className="flex-1 bg-muted/20 p-2 overflow-hidden">
-              {previewDoc.file_url && /\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(previewDoc.file_url) ? (
-                <div className="flex h-full items-center justify-center p-4">
-                  <img src={previewDoc.file_url} alt="" className="max-h-full max-w-full object-contain rounded-lg" />
-                </div>
-              ) : (
-                <iframe
-                  src={previewDoc.file_url || previewDoc.external_url || "about:blank"}
-                  title="Visualizador de documento"
-                  className="h-full w-full rounded border-0"
-                />
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+
     </>
   );
 }

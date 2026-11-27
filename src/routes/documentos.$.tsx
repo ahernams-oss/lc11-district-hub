@@ -1,8 +1,10 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { PageHero } from "@/components/PageHero";
-import { FileText, ExternalLink, Download } from "lucide-react";
+import { FileText } from "lucide-react";
 import { useDocuments, RGD_YEARS, RGD_ITEMS } from "@/lib/documents";
 import { BreakableText } from "@/components/BreakableText";
+
+import { DocumentDownloadButton } from "@/components/DocumentDownloadButton";
 
 type DocPageMeta = {
   eyebrow: string;
@@ -95,6 +97,10 @@ export const Route = createFileRoute("/documentos/$")({
       meta: [
         { title: `${t} — Distrito LC-11` },
         { name: "description", content: loaderData?.page.description ?? "" },
+        { property: "og:title", content: `${t} — Distrito LC-11` },
+        { property: "og:description", content: loaderData?.page.description ?? "" },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary" },
       ],
     };
   },
@@ -130,8 +136,6 @@ function DocumentoPage() {
         ) : (
           <ul className="grid gap-4">
             {docs.map((d) => {
-              const href = d.file_url || d.external_url || "#";
-              const isExternal = !!d.external_url && !d.file_url;
               return (
                 <li
                   key={d.id}
@@ -146,22 +150,7 @@ function DocumentoPage() {
                       </p>
                     )}
                   </div>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex shrink-0 items-center gap-2 self-start rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
-                  >
-                    {isExternal ? (
-                      <>
-                        Abrir <ExternalLink className="h-4 w-4" />
-                      </>
-                    ) : (
-                      <>
-                        Baixar <Download className="h-4 w-4" />
-                      </>
-                    )}
-                  </a>
+                  <DocumentDownloadButton document={d} />
                 </li>
               );
             })}

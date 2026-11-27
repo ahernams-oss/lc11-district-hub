@@ -10,6 +10,7 @@ import { PixQrCode } from "@/components/PixQrCode";
 import { getStripeEnvironment } from "@/lib/stripe";
 import { createSupporterPortalSession } from "@/utils/payments.functions";
 import { listCampanhas } from "@/lib/campanhas";
+import { STRIPE_PAYMENTS_PAUSED, STRIPE_PAUSE_MESSAGE } from "@/lib/payments-status";
 
 export const Route = createFileRoute("/doar")({
   head: () => ({
@@ -135,6 +136,7 @@ function Doar() {
           </div>
 
           <div className="min-w-0 rounded-lg border border-border bg-primary p-5 text-primary-foreground shadow-elegant sm:p-8">
+            {STRIPE_PAYMENTS_PAUSED && <p role="status" className="mb-5 text-sm">{STRIPE_PAUSE_MESSAGE} As doações via PIX continuam disponíveis.</p>}
             {!checkout ? (
               <>
                 <div className="flex flex-wrap gap-2">
@@ -189,7 +191,7 @@ function Doar() {
                     <Button
                       type="button"
                       onClick={() => setCheckout({ tipo: "doacao", amountInCents })}
-                      disabled={!isValidDonationAmount(amountInCents)}
+                      disabled={STRIPE_PAYMENTS_PAUSED || !isValidDonationAmount(amountInCents)}
                       className="mt-6 h-auto w-full whitespace-normal rounded-lg bg-gold py-3.5 font-display text-lg font-bold text-gold-foreground shadow-card transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       Doar {formatDonationMoney(amountInCents)}
@@ -225,6 +227,7 @@ function Doar() {
                     <Button
                       type="button"
                       onClick={() => setCheckout({ tipo: "apoio_mensal", priceId: plano })}
+                      disabled={STRIPE_PAYMENTS_PAUSED}
                       className="mt-6 h-auto w-full whitespace-normal rounded-lg bg-gold py-3.5 font-display text-lg font-bold text-gold-foreground shadow-card transition-transform hover:scale-[1.02]"
                     >
                       Apoiar mensalmente
@@ -282,7 +285,7 @@ function Doar() {
                               campanhaTitulo: campanhaSelecionada.titulo,
                             })
                           }
-                          disabled={!isValidDonationAmount(amountInCents) || !campanhaSelecionada}
+                          disabled={STRIPE_PAYMENTS_PAUSED || !isValidDonationAmount(amountInCents) || !campanhaSelecionada}
                           className="mt-6 h-auto w-full whitespace-normal rounded-lg bg-gold py-3.5 font-display text-lg font-bold text-gold-foreground shadow-card transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
                         >
                           Doar para {campanhaSelecionada?.titulo ?? "a campanha"}

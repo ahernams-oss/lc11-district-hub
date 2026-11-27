@@ -5,6 +5,7 @@
 - Normalize club region identifiers through the shared region helper for filtering and selectors, while preserving stored descriptive names unless the user changes the region; imported names can include descriptions and whitespace.
 - Group events by their explicitly stored leonistic year, not their date; shared year navigation and list components keep public and administrative subpages consistent while preserving event detail URLs.
 - Keep donation validation and payment-confirmation rules in the shared donation-flow helper so checkout and receipt eligibility remain consistent.
+- Gate new Stripe checkout sessions and payment controls through the shared payment-status switch; preserve receipt reads, webhooks and existing supporter management so pausing does not erase history or prevent cancellations.
 - Read donation tracking through the authenticated browser client with existing administrator-only RLS; never expose donor details through public report functions.
 - Order Grandes Leões through the shared seeded 24-hour shuffle and browser clock hook; stable UTC periods synchronize visitors without scheduled database work or hydration mismatches.
 - Centralize admin report sources and paginated RLS-scoped reads; export nested fields to separate Excel sheets and full-length PDF record layouts, preparing Excel automatically after consultation and all files before download to retain mobile user activation.

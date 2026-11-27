@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Ticket } from "lucide-react";
 import { StripeEmbeddedCheckout } from "@/components/StripeEmbeddedCheckout";
+import { STRIPE_PAYMENTS_PAUSED, STRIPE_PAUSE_MESSAGE } from "@/lib/payments-status";
 
 interface Props {
   eventId: string;
@@ -21,6 +22,12 @@ export function EventRegistrationCard({ eventId, eventTitle, valorCents, encerra
   const [aberto, setAberto] = useState(false);
 
   if (encerrado) return null;
+  if (STRIPE_PAYMENTS_PAUSED) return (
+    <section className="border-t border-border py-6">
+      <h2 className="font-display text-lg font-bold">Inscrição no evento</h2>
+      <p role="status" className="mt-2 text-sm text-muted-foreground">{STRIPE_PAUSE_MESSAGE}</p>
+    </section>
+  );
 
   return (
     <section className="rounded-xl border border-gold/50 bg-primary p-6 text-primary-foreground shadow-elegant">

@@ -5,6 +5,8 @@ import { PageHero } from "@/components/PageHero";
 import { getCampanhaBySlug } from "@/lib/campanhas";
 import { StripeEmbeddedCheckout } from "@/components/StripeEmbeddedCheckout";
 import { PixQrCode } from "@/components/PixQrCode";
+import { Button } from "@/components/ui/button";
+import { STRIPE_PAYMENTS_PAUSED, STRIPE_PAUSE_MESSAGE } from "@/lib/payments-status";
 
 export const Route = createFileRoute("/campanhas/$slug")({
   head: () => ({
@@ -79,6 +81,7 @@ function CampanhaDetalhe() {
             {!checkoutAberto ? (
               <>
                 <h2 className="font-display text-2xl font-bold">Contribuir agora</h2>
+                {STRIPE_PAYMENTS_PAUSED && <p role="status" className="mt-3 text-sm">{STRIPE_PAUSE_MESSAGE} As doações via PIX continuam disponíveis.</p>}
                 <div className="mt-6 grid grid-cols-2 gap-3">
                   {sugestoes.map((v) => (
                     <button
@@ -102,13 +105,13 @@ function CampanhaDetalhe() {
                     className="w-full bg-transparent px-2 py-3 text-lg outline-none placeholder:text-white/50"
                   />
                 </div>
-                <button
+                <Button
                   onClick={() => setCheckoutAberto(true)}
-                  disabled={amountInCents < 500}
+                  disabled={STRIPE_PAYMENTS_PAUSED || amountInCents < 500}
                   className="mt-6 w-full rounded-lg bg-gold py-3.5 font-display text-lg font-bold text-gold-foreground disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Doar
-                </button>
+                </Button>
 
                 <div className="mt-6">
                   <PixQrCode amountInCents={amountInCents} title="Prefere pagar com PIX?" />

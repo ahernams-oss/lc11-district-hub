@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib/stripe.server";
 
 import { isValidDonationAmount } from "@/lib/donation-flow";
+import { checkoutPauseError } from "@/lib/payments-status";
 
 type CheckoutSessionResult = { clientSecret: string } | { error: string };
 
@@ -24,6 +25,8 @@ export const createDonationCheckout = createServerFn({ method: "POST" })
     return data;
   })
   .handler(async ({ data }): Promise<CheckoutSessionResult> => {
+    const pauseError = checkoutPauseError();
+    if (pauseError) return pauseError;
     try {
       const stripe = createStripeClient(data.environment);
       const isCampanha = Boolean(data.campanhaId);
@@ -74,6 +77,8 @@ export const createSubscriptionCheckout = createServerFn({ method: "POST" })
     return data;
   })
   .handler(async ({ data }): Promise<CheckoutSessionResult> => {
+    const pauseError = checkoutPauseError();
+    if (pauseError) return pauseError;
     try {
       const stripe = createStripeClient(data.environment);
       const prices = await stripe.prices.list({ lookup_keys: [data.priceId] });
@@ -117,6 +122,8 @@ export const createEventRegistrationCheckout = createServerFn({ method: "POST" }
     return { ...data, quantidade: q };
   })
   .handler(async ({ data }): Promise<CheckoutSessionResult> => {
+    const pauseError = checkoutPauseError();
+    if (pauseError) return pauseError;
     try {
       const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
       const { data: evento, error } = await supabaseAdmin

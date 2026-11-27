@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Loader2, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getStripe, getStripeEnvironment } from "@/lib/stripe";
+import { STRIPE_PAYMENTS_PAUSED, STRIPE_PAUSE_MESSAGE } from "@/lib/payments-status";
 import {
   createDonationCheckout,
   createEventRegistrationCheckout,
@@ -38,6 +39,7 @@ export function StripeEmbeddedCheckout(props: CheckoutConfig) {
   const serialized = JSON.stringify(props);
 
   useEffect(() => {
+    if (STRIPE_PAYMENTS_PAUSED) return;
     let cancelled = false;
     setClientSecret(null);
     setError(null);
@@ -89,6 +91,8 @@ export function StripeEmbeddedCheckout(props: CheckoutConfig) {
     });
     return () => { cancelled = true; };
   }, [serialized, attempt]);
+
+  if (STRIPE_PAYMENTS_PAUSED) return <p role="status" className="rounded-md bg-background p-6 text-foreground">{STRIPE_PAUSE_MESSAGE}</p>;
 
   if (error) return (
     <div role="alert" className="rounded-md bg-background p-6 text-center text-foreground">

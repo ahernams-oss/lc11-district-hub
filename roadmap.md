@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Pausar novos pagamentos Stripe no site e no servidor, preservando PIX, registros e gerenciamento de apoios existentes; botões bloqueados e ausência de formulário Stripe verificados, 4 testes passaram.
+
 - [x] Simplificar download Excel com preparação automática após consulta; download verificado no computador e celular, 27 abas, 40 clubes e nenhum erro de célula
 
 - [x] Criar central de relatórios Excel/PDF para todos os menus administrativos
@@ -10,7 +12,7 @@
 - [x] Adicionar acompanhamento de doações com filtros, totais e exportação
 - [ ] Configurar emails personalizados (aguarda domínio de envio do usuário)
 - [x] Verificar painel com sessão real e apresentação no celular (sem doações registradas)
-- [ ] Concluir pagamento de teste, confirmar comprovante e leitura no painel (conta de pagamentos bloqueia por configuração tributária pendente)
+- [ ] Concluir pagamento de teste, confirmar comprovante e leitura no painel (aguarda reativação Stripe solicitada pelo usuário e configuração tributária)
 
 - [x] Criar subpáginas anuais dos eventos no site e no painel
 - [x] Transferir os eventos existentes para AL 2026/2027

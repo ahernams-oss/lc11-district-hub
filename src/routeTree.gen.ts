@@ -76,6 +76,7 @@ import { Route as GestaoLoginRouteImport } from './routes/gestao.login'
 import { Route as GestaoNominataRouteImport } from './routes/gestao.nominata'
 import { Route as GestaoUsuariosRouteImport } from './routes/gestao.usuarios'
 import { Route as GrandesLeoesIdRouteImport } from './routes/grandes-leoes.$id'
+import { Route as LideresIdRouteImport } from './routes/lideres.$id'
 import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
 import { Route as NoticiasIdRouteImport } from './routes/noticias.$id'
 import { Route as PaginasSlugRouteImport } from './routes/paginas.$slug'
@@ -477,6 +478,11 @@ const GestaoUsuariosRoute = GestaoUsuariosRouteImport.update({
 const GrandesLeoesIdRoute = GrandesLeoesIdRouteImport.update({
   id: '/grandes-leoes/$id',
   path: '/grandes-leoes/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LideresIdRoute = LideresIdRouteImport.update({
+  id: '/lideres/$id',
+  path: '/lideres/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NoticiasIndexRoute = NoticiasIndexRouteImport.update({
@@ -883,6 +889,7 @@ export interface FileRoutesByFullPath {
   '/gestao/nominata': typeof GestaoNominataRoute
   '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/grandes-leoes/$id': typeof GrandesLeoesIdRoute
+  '/lideres/$id': typeof LideresIdRoute
   '/noticias/$id': typeof NoticiasIdRoute
   '/paginas/$slug': typeof PaginasSlugRoute
   '/projetos/$id': typeof ProjetosIdRoute
@@ -1010,6 +1017,7 @@ export interface FileRoutesByTo {
   '/gestao/nominata': typeof GestaoNominataRoute
   '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/grandes-leoes/$id': typeof GrandesLeoesIdRoute
+  '/lideres/$id': typeof LideresIdRoute
   '/noticias/$id': typeof NoticiasIdRoute
   '/paginas/$slug': typeof PaginasSlugRoute
   '/projetos/$id': typeof ProjetosIdRoute
@@ -1144,6 +1152,7 @@ export interface FileRoutesById {
   '/gestao/nominata': typeof GestaoNominataRoute
   '/gestao/usuarios': typeof GestaoUsuariosRoute
   '/grandes-leoes/$id': typeof GrandesLeoesIdRoute
+  '/lideres/$id': typeof LideresIdRoute
   '/noticias/$id': typeof NoticiasIdRoute
   '/paginas/$slug': typeof PaginasSlugRoute
   '/projetos/$id': typeof ProjetosIdRoute
@@ -1279,6 +1288,7 @@ export interface FileRouteTypes {
     | '/gestao/nominata'
     | '/gestao/usuarios'
     | '/grandes-leoes/$id'
+    | '/lideres/$id'
     | '/noticias/$id'
     | '/paginas/$slug'
     | '/projetos/$id'
@@ -1406,6 +1416,7 @@ export interface FileRouteTypes {
     | '/gestao/nominata'
     | '/gestao/usuarios'
     | '/grandes-leoes/$id'
+    | '/lideres/$id'
     | '/noticias/$id'
     | '/paginas/$slug'
     | '/projetos/$id'
@@ -1539,6 +1550,7 @@ export interface FileRouteTypes {
     | '/gestao/nominata'
     | '/gestao/usuarios'
     | '/grandes-leoes/$id'
+    | '/lideres/$id'
     | '/noticias/$id'
     | '/paginas/$slug'
     | '/projetos/$id'
@@ -1653,6 +1665,7 @@ export interface RootRouteChildren {
   EventosIdRoute: typeof EventosIdRoute
   ExGovernadoresIdRoute: typeof ExGovernadoresIdRoute
   GrandesLeoesIdRoute: typeof GrandesLeoesIdRoute
+  LideresIdRoute: typeof LideresIdRoute
   NoticiasIdRoute: typeof NoticiasIdRoute
   PaginasSlugRoute: typeof PaginasSlugRoute
   ProjetosIdRoute: typeof ProjetosIdRoute
@@ -2142,6 +2155,13 @@ declare module '@tanstack/react-router' {
       path: '/grandes-leoes/$id'
       fullPath: '/grandes-leoes/$id'
       preLoaderRoute: typeof GrandesLeoesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lideres/$id': {
+      id: '/lideres/$id'
+      path: '/lideres/$id'
+      fullPath: '/lideres/$id'
+      preLoaderRoute: typeof LideresIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/noticias/': {
@@ -2862,6 +2882,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventosIdRoute: EventosIdRoute,
   ExGovernadoresIdRoute: ExGovernadoresIdRoute,
   GrandesLeoesIdRoute: GrandesLeoesIdRoute,
+  LideresIdRoute: LideresIdRoute,
   NoticiasIdRoute: NoticiasIdRoute,
   PaginasSlugRoute: PaginasSlugRoute,
   ProjetosIdRoute: ProjetosIdRoute,

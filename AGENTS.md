@@ -11,4 +11,4 @@
 
 - Use the shared document download control on all public document lists: request storage attachments without previews or new tabs, and fetch external files only on demand with an explicit ready-to-download step on touch devices.
 
-- Keep institutional leadership links in separate public and admin menu groups; dedicated public routes share a page renderer backed by existing site_content keys and the standard admin content editor.
+- Manage institutional leadership as categories of the existing leaders table through the shared leader list/editor; public category pages and biography/gallery views read leaders_public, while site_content remains optional page-level copy.

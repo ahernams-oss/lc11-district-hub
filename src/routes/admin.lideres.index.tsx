@@ -1,10 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useAllLeaders, CATEGORY_LABELS, type LeaderCategory } from "@/lib/leaders";
+import { useAllLeaders, CATEGORY_LABELS, type LeaderCategory, isInstitutionalCategory, INSTITUTIONAL_CATEGORIES } from "@/lib/leaders";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { Plus, Trash2, Edit } from "lucide-react";
 
 export const Route = createFileRoute("/admin/lideres/")({
+  validateSearch: (search: Record<string, unknown>): { category?: typeof INSTITUTIONAL_CATEGORIES[number] } => isInstitutionalCategory(search['category']) ? { category: search['category'] } : {},
+  head: () => ({ meta: [
+    { title: "Cadastro de Líderes — Painel Admin LC-11" },
+    { name: "description", content: "Cadastro e edição dos líderes leonísticos." },
+    { property: "og:title", content: "Cadastro de Líderes — Painel Admin LC-11" },
+    { property: "og:description", content: "Cadastro e edição dos líderes leonísticos." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: LeadersList,
 });
 
@@ -22,6 +31,8 @@ const CATEGORY_ORDER: LeaderCategory[] = [
 function LeadersList() {
   const { data: leaders = [], isLoading } = useAllLeaders();
   const qc = useQueryClient();
+  const { category } = Route.useSearch();
+  const categories = category ? [category] : CATEGORY_ORDER;
 
   async function handleDelete(id: string, name: string) {
     if (!confirm(`Excluir "${name}"?`)) return;
@@ -33,9 +44,9 @@ function LeadersList() {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-bold">Líderes</h1>
+        <h1 className="font-display text-2xl font-bold">{category ? CATEGORY_LABELS[category] : "Líderes"}</h1>
         <Link
-          to={"/admin/lideres/novo" as any}
+          to="/admin/lideres/$id" params={{ id: "novo" }} search={category ? { category } : {}}
           className="inline-flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
         >
           <Plus className="h-4 w-4" /> Adicionar líder
@@ -46,9 +57,9 @@ function LeadersList() {
         <p className="mt-6 text-muted-foreground">Carregando...</p>
       ) : (
         <div className="mt-6 space-y-6">
-          {CATEGORY_ORDER.map((cat) => {
+          {categories.map((cat) => {
             const list = leaders.filter((l) => l.category === cat);
-            const multi = cat === "gat" || cat === "assessoria" || cat === "ex_governador";
+            const multi = cat === "gat" || cat === "assessoria" || cat === "ex_governador" || isInstitutionalCategory(cat);
             return (
               <section key={cat}>
                 <div className="flex items-center justify-between gap-3">
@@ -60,12 +71,12 @@ function LeadersList() {
                       </span>
                     )}
                   </h2>
-                  <a
-                    href={`/admin/lideres/novo?category=${cat}`}
+                  <Link
+                    to="/admin/lideres/$id" params={{ id: "novo" }} search={{ category: cat }}
                     className="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-xs font-semibold hover:bg-surface"
                   >
                     <Plus className="h-3.5 w-3.5" /> Adicionar {multi ? "membro" : ""}
-                  </a>
+                  </Link>
                 </div>
                 {list.length === 0 ? (
                   <p className="mt-2 text-sm text-muted-foreground">Nenhum cadastro ainda.</p>

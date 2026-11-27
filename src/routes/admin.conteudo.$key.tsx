@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useParams } from "@tanstack/react-router";
+import { createFileRoute, Link, useParams, redirect } from "@tanstack/react-router";
 import { BreakHint } from "@/components/BreakHint";
 import { useEffect, useState } from "react";
 import { CONTENT_LABELS, type ContentKey, fetchSiteContent, saveSiteContent } from "@/lib/content";
@@ -6,6 +6,12 @@ import { uploadContentImage } from "@/lib/leaders";
 import { ArrowLeft, ChevronLeft, ChevronRight, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/admin/conteudo/$key")({
+  beforeLoad: ({ params }) => {
+    const category = params.key === "lideres-lions-internacional" ? "lions_internacional"
+      : params.key === "lideres-area-iii" ? "area_iii"
+      : params.key === "lideres-dmlc" ? "dmlc" : null;
+    if (category) throw redirect({ to: "/admin/lideres", search: { category }, replace: true });
+  },
   head: ({ params }) => ({ meta: [
     { title: `${CONTENT_LABELS[params.key as ContentKey] ?? "Conteúdo"} — Painel Admin LC-11` },
     { name: "description", content: "Edição de conteúdo das páginas do Distrito LC-11." },

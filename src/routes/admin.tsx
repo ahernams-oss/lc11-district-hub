@@ -13,6 +13,7 @@ export const Route = createFileRoute("/admin")({
 function AdminLayout() {
   const { user, hasPanelAccess, canViewUsers, isAdmin, isAvancado, isIntermediario, loading, signOut, devBypass } = useAuth();
   const navigate = useNavigate();
+  const search = useRouterState({ select: (s) => s.location.search });
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [navOpen, setNavOpen] = useState(false);
 
@@ -97,7 +98,7 @@ function AdminLayout() {
         </div>
         <div className={`${navOpen ? "block" : "hidden"} space-y-1 lg:block`}>
         {navItems.map((item) => {
-          const active = item.exact ? pathname === item.to : pathname.startsWith(item.to) && !pathname.startsWith("/admin/conteudo/lideres-");
+          const active = item.exact ? pathname === item.to : pathname.startsWith(item.to) && !(item.to === "/admin/lideres" && "category" in search);
           return (
             <Link
               key={item.to}
@@ -113,13 +114,13 @@ function AdminLayout() {
         })}
         <div className="mt-3 border-t border-border pt-3" aria-label="Lideranças institucionais">
           {([
-            { key: "lideres-lions-internacional", label: "Líderes Lions Internacional" },
-            { key: "lideres-area-iii", label: "Líderes Área III" },
-            { key: "lideres-dmlc", label: "Líderes DMLC" },
+            { key: "lions_internacional", label: "Líderes Lions Internacional" },
+            { key: "area_iii", label: "Líderes Área III" },
+            { key: "dmlc", label: "Líderes DMLC" },
           ] as const).map((item) => (
-            <Link key={item.key} to="/admin/conteudo/$key" params={{ key: item.key }}
+            <Link key={item.key} to="/admin/lideres" search={{ category: item.key }}
               onClick={() => setNavOpen(false)}
-              className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm ${pathname === `/admin/conteudo/${item.key}` ? "bg-primary text-primary-foreground" : "hover:bg-surface"}`}>
+              className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm ${pathname === "/admin/lideres" && "category" in search && search.category === item.key ? "bg-primary text-primary-foreground" : "hover:bg-surface"}`}>
               <Users className="h-4 w-4 shrink-0" /> {item.label}
             </Link>
           ))}

@@ -10,9 +10,15 @@ export type LeaderCategory =
   | "gat"
   | "assessoria"
   | "ex_governador"
-  | "grande_leao";
+  | "grande_leao"
+  | "lions_internacional"
+  | "area_iii"
+  | "dmlc";
 
 export const CATEGORY_LABELS: Record<LeaderCategory, string> = {
+  lions_internacional: "Líderes Lions Internacional",
+  area_iii: "Líderes Área III",
+  dmlc: "Líderes DMLC",
   governador: "Governador",
   vice1: "1º Vice-Governador",
   vice2: "2º Vice-Governador",
@@ -122,4 +128,9 @@ export async function uploadGrandeLeaoPhoto(file: File): Promise<string> {
   const base64 = await fileToDataUrl(file);
   const res = await uploadGrandeLeaoPhotoToDrive({ data: { file: base64, filename: file.name || "imagem.jpg" } });
   return res.url;
+}
+
+export const INSTITUTIONAL_CATEGORIES = ["lions_internacional", "area_iii", "dmlc"] as const;
+export function isInstitutionalCategory(value: unknown): value is typeof INSTITUTIONAL_CATEGORIES[number] {
+  return INSTITUTIONAL_CATEGORIES.some((category) => category === value);
 }

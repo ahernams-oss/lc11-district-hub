@@ -29,3 +29,5 @@
 - [x] Adicionar bloco separado de líderes Lions Internacional, Área III e DMLC; três páginas e navegação verificadas no computador e celular, sem erros.
 
 - [x] Adicionar menus administrativos dos três grupos; editores e navegação móvel verificados, texto salvo e relido na página pública, conteúdo de teste removido.
+
+- [x] Aplicar cadastro individual aos três grupos; criação, edição, publicação, biografia e exclusão verificadas com sessão real, sem manter cadastros de teste.

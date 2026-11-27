@@ -2,12 +2,21 @@ import { createFileRoute, useNavigate, useParams, Link } from "@tanstack/react-r
 import { BreakHint } from "@/components/BreakHint";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { CATEGORY_LABELS, uploadLeaderPhoto, type LeaderCategory } from "@/lib/leaders";
+import { CATEGORY_LABELS, uploadLeaderPhoto, type LeaderCategory, isInstitutionalCategory, INSTITUTIONAL_CATEGORIES } from "@/lib/leaders";
 import { useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Upload } from "lucide-react";
 import ImageCropModal from "@/components/ImageCropModal";
 
 export const Route = createFileRoute("/admin/lideres/$id")({
+  validateSearch: (search: Record<string, unknown>): { category?: string } => typeof search['category'] === 'string' ? { category: search['category'] } : {},
+  head: () => ({ meta: [
+    { title: "Editar Líder — Painel Admin LC-11" },
+    { name: "description", content: "Dados, biografia e fotos do líder leonístico." },
+    { property: "og:title", content: "Editar Líder — Painel Admin LC-11" },
+    { property: "og:description", content: "Dados, biografia e fotos do líder leonístico." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: LeaderEditor,
 });
 
@@ -20,6 +29,7 @@ const CATEGORIES: LeaderCategory[] = [
   "gat",
   "assessoria",
   "ex_governador",
+  ...INSTITUTIONAL_CATEGORIES,
 ];
 
 interface FormState {
@@ -184,7 +194,7 @@ function LeaderEditor() {
 
   return (
     <div className="max-w-3xl">
-      <Link to="/admin/lideres" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary">
+      <Link to="/admin/lideres" search={isInstitutionalCategory(form.category) ? { category: form.category } : {}} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary">
         <ArrowLeft className="h-4 w-4" /> Voltar
       </Link>
       <h1 className="mt-2 font-display text-2xl font-bold">
@@ -271,7 +281,7 @@ function LeaderEditor() {
           />
         </Field>
 
-        <Field label="Clube do Governador">
+        <Field label="Clube do líder">
           <input
             type="text"
             value={form.club_name}
@@ -290,7 +300,7 @@ function LeaderEditor() {
           />
         </Field>
 
-        {form.category === "ex_governador" && (
+        {(form.category === "ex_governador" || isInstitutionalCategory(form.category)) && (
           <>
             <Field label="Ano de gestão (ex.: 2023–2024)">
               <input
@@ -313,7 +323,7 @@ function LeaderEditor() {
 
         {(form.category === "governador" ||
           form.category === "vice1" ||
-          form.category === "vice2") && (
+          form.category === "vice2" || isInstitutionalCategory(form.category)) && (
           <Field label="Mensagem (citação destaque)">
             <textarea
               rows={4}

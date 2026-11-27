@@ -3,6 +3,8 @@ import { PageHero } from "@/components/PageHero";
 import { useLeaders } from "@/lib/leaders";
 import { Award, Sparkles, Shield, Heart, Landmark, Compass, UserCheck, ArrowRight } from "lucide-react";
 import { BreakableText } from "@/components/BreakableText";
+import { dailyCardOrder } from "@/lib/daily-card-order";
+import { useDailyCardPeriod } from "@/hooks/use-daily-card-period";
 
 export const Route = createFileRoute("/clubes/grandes-leoes")({
   head: () => ({
@@ -12,6 +14,8 @@ export const Route = createFileRoute("/clubes/grandes-leoes")({
       { property: "og:title", content: "Grandes Leões — Distrito LC-11" },
       { property: "og:description", content: "Conheça os Grandes Leões, fundadores e leões de destaque que inspiram nossa jornada de serviço." },
       { property: "og:url", content: "/clubes/grandes-leoes" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/clubes/grandes-leoes" }],
   }),
@@ -91,6 +95,7 @@ const pillars = [
 
 function GrandesLeoes() {
   const { data: dbLeaders = [], isLoading } = useLeaders("grande_leao");
+  const period = useDailyCardPeriod();
 
   const displayFigures: FigureDisplay[] = dbLeaders.length > 0
     ? dbLeaders.map((l) => ({
@@ -107,6 +112,7 @@ function GrandesLeoes() {
         icon: Award,
       }))
     : staticFigures;
+  const orderedFigures = period === null ? [] : dailyCardOrder(displayFigures, (fig) => fig.id ?? fig.name, period);
 
   return (
     <>
@@ -128,11 +134,11 @@ function GrandesLeoes() {
           </p>
         </div>
 
-        {isLoading ? (
+        {isLoading || period === null ? (
           <p className="text-center text-muted-foreground">Carregando...</p>
         ) : (
           <div className="grid gap-8 md:grid-cols-2">
-            {displayFigures.map((fig) => {
+            {orderedFigures.map((fig) => {
               const Icon = fig.icon || Award;
               return (
                 <div

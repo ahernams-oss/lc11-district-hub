@@ -6,3 +6,4 @@
 - Group events by their explicitly stored leonistic year, not their date; shared year navigation and list components keep public and administrative subpages consistent while preserving event detail URLs.
 - Keep donation validation and payment-confirmation rules in the shared donation-flow helper so checkout and receipt eligibility remain consistent.
 - Read donation tracking through the authenticated browser client with existing administrator-only RLS; never expose donor details through public report functions.
+- Order Grandes Leões through the shared seeded 24-hour shuffle and browser clock hook; stable UTC periods synchronize visitors without scheduled database work or hydration mismatches.

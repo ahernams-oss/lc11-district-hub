@@ -8,6 +8,8 @@ export const Route = createFileRoute("/clubes/rj")({
       { name: "description", content: "Clubes Lions do Rio de Janeiro no Distrito LC-11." },
       { property: "og:title", content: "Clubes do Rio de Janeiro — Distrito LC-11" },
       { property: "og:description", content: "Conheça os clubes Lions do Rio de Janeiro." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "/clubes/rj" },
     ],
     links: [{ rel: "canonical", href: "/clubes/rj" }],

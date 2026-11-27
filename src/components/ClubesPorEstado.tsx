@@ -21,6 +21,7 @@ export function ClubesPorEstado({
         .map((c) => ({
           ...c,
           divisao: c.divisions?.code ?? "",
+          regiao: c.divisions?.regions?.letter ?? "",
         })),
     [clubs, estado],
   );
@@ -45,10 +46,19 @@ export function ClubesPorEstado({
               >
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="font-display text-lg font-bold text-foreground">{c.name}</h3>
-                  {c.divisao && (
-                    <span className="rounded-md bg-accent px-2 py-0.5 text-xs font-semibold text-primary">
-                      Div. {c.divisao}
-                    </span>
+                  {(c.regiao || c.divisao) && (
+                    <div className="flex shrink-0 flex-col items-end gap-1">
+                      {c.regiao && (
+                        <span className="rounded-md border border-primary/25 bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
+                          Região {c.regiao}
+                        </span>
+                      )}
+                      {c.divisao && (
+                        <span className="rounded-md bg-accent px-2 py-0.5 text-xs font-semibold text-primary">
+                          Div. {c.divisao}
+                        </span>
+                      )}
+                    </div>
                   )}
                 </div>
                 <div className="mt-3 space-y-2 text-sm text-muted-foreground">

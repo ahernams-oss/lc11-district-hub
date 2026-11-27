@@ -8,6 +8,8 @@ export const Route = createFileRoute("/clubes/es")({
       { name: "description", content: "Clubes Lions do Espírito Santo no Distrito LC-11." },
       { property: "og:title", content: "Clubes do Espírito Santo — Distrito LC-11" },
       { property: "og:description", content: "Conheça os clubes Lions do Espírito Santo." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "/clubes/es" },
     ],
     links: [{ rel: "canonical", href: "/clubes/es" }],

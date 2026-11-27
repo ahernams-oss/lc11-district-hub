@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Corrigir cartões de Clubes do ES e Clubes do RJ para exibir a região acima da divisão; 40 cartões verificados no computador e celular, sem cortes nem erros.
+
 - [x] Pausar novos pagamentos Stripe no site e no servidor, preservando PIX, registros e gerenciamento de apoios existentes; botões bloqueados e ausência de formulário Stripe verificados, 4 testes passaram.
 
 - [x] Simplificar download Excel com preparação automática após consulta; download verificado no computador e celular, 27 abas, 40 clubes e nenhum erro de célula

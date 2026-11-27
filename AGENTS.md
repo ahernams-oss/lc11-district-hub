@@ -7,3 +7,4 @@
 - Keep donation validation and payment-confirmation rules in the shared donation-flow helper so checkout and receipt eligibility remain consistent.
 - Read donation tracking through the authenticated browser client with existing administrator-only RLS; never expose donor details through public report functions.
 - Order Grandes Leões through the shared seeded 24-hour shuffle and browser clock hook; stable UTC periods synchronize visitors without scheduled database work or hydration mismatches.
+- Centralize admin report sources and paginated RLS-scoped reads; export nested fields to separate Excel sheets and full-length PDF record layouts, preparing files before download to retain mobile user activation.

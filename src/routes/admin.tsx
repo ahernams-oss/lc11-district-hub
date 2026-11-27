@@ -69,6 +69,7 @@ function AdminLayout() {
     { to: "/admin/documentos", label: "Documentos", icon: FolderArchive, show: true },
     { to: "/admin/campanhas", label: "Campanhas de Doação", icon: HeartHandshake, show: true },
     { to: "/admin/doacoes", label: "Doações & Comprovantes", icon: Activity, show: isAdmin },
+    { to: "/admin/relatorios", label: "Relatórios Excel / PDF", icon: FileText, show: true },
 
     { to: "/admin/auditoria", label: "Dashboard de Auditoria", icon: Activity, show: canViewUsers },
     { to: "/admin/usuarios", label: "Usuários & Acessos", icon: ShieldCheck, show: canViewUsers },

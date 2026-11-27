@@ -52,9 +52,13 @@ export const listAuthUsers = createServerFn({ method: "GET" })
     await assertCallerCanViewUsers(context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    const { data: usersData, error: usersErr } =
-      await supabaseAdmin.auth.admin.listUsers({ page: 1, perPage: 200 });
-    if (usersErr) throw new Error(usersErr.message);
+    const users: import("@supabase/supabase-js").User[] = [];
+    for (let page = 1; ; page++) {
+      const { data, error } = await supabaseAdmin.auth.admin.listUsers({ page, perPage: 200 });
+      if (error) throw new Error(error.message);
+      users.push(...data.users);
+      if (data.users.length < 200) break;
+    }
 
     const { data: rolesRows, error: rolesErr } = await supabaseAdmin
       .from("user_roles")
@@ -70,7 +74,7 @@ export const listAuthUsers = createServerFn({ method: "GET" })
       rolesByUser.set((r as any).user_id, arr);
     }
 
-    return usersData.users
+    return users
       .map((u) => {
         const roles = rolesByUser.get(u.id) ?? [];
         const highest =

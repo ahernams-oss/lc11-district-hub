@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Criar central de relatórios Excel/PDF para todos os menus administrativos
+- [x] Verificar downloads com sessão administrativa real: 26 áreas, 27 abas Excel, 40 clubes e 1.317 visitas; PDFs revisados sem cortes nas páginas examinadas
+
 - [x] Melhorar seleção de valores e estados de carregamento/erro do checkout
 - [x] Melhorar confirmação e download de comprovantes apenas após pagamento
 - [x] Adicionar acompanhamento de doações com filtros, totais e exportação

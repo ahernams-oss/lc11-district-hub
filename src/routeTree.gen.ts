@@ -24,6 +24,9 @@ import { Route as GestaoRouteImport } from './routes/gestao'
 import { Route as GovernadorRouteImport } from './routes/governador'
 import { Route as HistoriaRouteImport } from './routes/historia'
 import { Route as LcifRouteImport } from './routes/lcif'
+import { Route as LideresAreaIiiRouteImport } from './routes/lideres-area-iii'
+import { Route as LideresDmlcRouteImport } from './routes/lideres-dmlc'
+import { Route as LideresLionsInternacionalRouteImport } from './routes/lideres-lions-internacional'
 import { Route as LionsInternacionalRouteImport } from './routes/lions-internacional'
 import { Route as NossasCategoriasDeParceriaRouteImport } from './routes/nossas-categorias-de-parceria'
 import { Route as ParceiroBronzeRouteImport } from './routes/parceiro-bronze'
@@ -213,6 +216,22 @@ const LcifRoute = LcifRouteImport.update({
   path: '/lcif',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LideresAreaIiiRoute = LideresAreaIiiRouteImport.update({
+  id: '/lideres-area-iii',
+  path: '/lideres-area-iii',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LideresDmlcRoute = LideresDmlcRouteImport.update({
+  id: '/lideres-dmlc',
+  path: '/lideres-dmlc',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LideresLionsInternacionalRoute =
+  LideresLionsInternacionalRouteImport.update({
+    id: '/lideres-lions-internacional',
+    path: '/lideres-lions-internacional',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LionsInternacionalRoute = LionsInternacionalRouteImport.update({
   id: '/lions-internacional',
   path: '/lions-internacional',
@@ -819,6 +838,9 @@ export interface FileRoutesByFullPath {
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
   '/lcif': typeof LcifRoute
+  '/lideres-area-iii': typeof LideresAreaIiiRoute
+  '/lideres-dmlc': typeof LideresDmlcRoute
+  '/lideres-lions-internacional': typeof LideresLionsInternacionalRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/nossas-categorias-de-parceria': typeof NossasCategoriasDeParceriaRoute
   '/parceiro-bronze': typeof ParceiroBronzeRoute
@@ -946,6 +968,9 @@ export interface FileRoutesByTo {
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
   '/lcif': typeof LcifRoute
+  '/lideres-area-iii': typeof LideresAreaIiiRoute
+  '/lideres-dmlc': typeof LideresDmlcRoute
+  '/lideres-lions-internacional': typeof LideresLionsInternacionalRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/nossas-categorias-de-parceria': typeof NossasCategoriasDeParceriaRoute
   '/parceiro-bronze': typeof ParceiroBronzeRoute
@@ -1074,6 +1099,9 @@ export interface FileRoutesById {
   '/governador': typeof GovernadorRoute
   '/historia': typeof HistoriaRoute
   '/lcif': typeof LcifRoute
+  '/lideres-area-iii': typeof LideresAreaIiiRoute
+  '/lideres-dmlc': typeof LideresDmlcRoute
+  '/lideres-lions-internacional': typeof LideresLionsInternacionalRoute
   '/lions-internacional': typeof LionsInternacionalRoute
   '/nossas-categorias-de-parceria': typeof NossasCategoriasDeParceriaRoute
   '/parceiro-bronze': typeof ParceiroBronzeRoute
@@ -1206,6 +1234,9 @@ export interface FileRouteTypes {
     | '/governador'
     | '/historia'
     | '/lcif'
+    | '/lideres-area-iii'
+    | '/lideres-dmlc'
+    | '/lideres-lions-internacional'
     | '/lions-internacional'
     | '/nossas-categorias-de-parceria'
     | '/parceiro-bronze'
@@ -1333,6 +1364,9 @@ export interface FileRouteTypes {
     | '/governador'
     | '/historia'
     | '/lcif'
+    | '/lideres-area-iii'
+    | '/lideres-dmlc'
+    | '/lideres-lions-internacional'
     | '/lions-internacional'
     | '/nossas-categorias-de-parceria'
     | '/parceiro-bronze'
@@ -1460,6 +1494,9 @@ export interface FileRouteTypes {
     | '/governador'
     | '/historia'
     | '/lcif'
+    | '/lideres-area-iii'
+    | '/lideres-dmlc'
+    | '/lideres-lions-internacional'
     | '/lions-internacional'
     | '/nossas-categorias-de-parceria'
     | '/parceiro-bronze'
@@ -1591,6 +1628,9 @@ export interface RootRouteChildren {
   GovernadorRoute: typeof GovernadorRoute
   HistoriaRoute: typeof HistoriaRoute
   LcifRoute: typeof LcifRoute
+  LideresAreaIiiRoute: typeof LideresAreaIiiRoute
+  LideresDmlcRoute: typeof LideresDmlcRoute
+  LideresLionsInternacionalRoute: typeof LideresLionsInternacionalRoute
   LionsInternacionalRoute: typeof LionsInternacionalRoute
   NossasCategoriasDeParceriaRoute: typeof NossasCategoriasDeParceriaRoute
   ParceiroBronzeRoute: typeof ParceiroBronzeRoute
@@ -1738,6 +1778,27 @@ declare module '@tanstack/react-router' {
       path: '/lcif'
       fullPath: '/lcif'
       preLoaderRoute: typeof LcifRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lideres-area-iii': {
+      id: '/lideres-area-iii'
+      path: '/lideres-area-iii'
+      fullPath: '/lideres-area-iii'
+      preLoaderRoute: typeof LideresAreaIiiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lideres-dmlc': {
+      id: '/lideres-dmlc'
+      path: '/lideres-dmlc'
+      fullPath: '/lideres-dmlc'
+      preLoaderRoute: typeof LideresDmlcRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lideres-lions-internacional': {
+      id: '/lideres-lions-internacional'
+      path: '/lideres-lions-internacional'
+      fullPath: '/lideres-lions-internacional'
+      preLoaderRoute: typeof LideresLionsInternacionalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lions-internacional': {
@@ -2776,6 +2837,9 @@ const rootRouteChildren: RootRouteChildren = {
   GovernadorRoute: GovernadorRoute,
   HistoriaRoute: HistoriaRoute,
   LcifRoute: LcifRoute,
+  LideresAreaIiiRoute: LideresAreaIiiRoute,
+  LideresDmlcRoute: LideresDmlcRoute,
+  LideresLionsInternacionalRoute: LideresLionsInternacionalRoute,
   LionsInternacionalRoute: LionsInternacionalRoute,
   NossasCategoriasDeParceriaRoute: NossasCategoriasDeParceriaRoute,
   ParceiroBronzeRoute: ParceiroBronzeRoute,

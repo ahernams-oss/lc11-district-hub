@@ -140,7 +140,7 @@ function GrandesLeoes() {
                   className={`flex flex-col justify-between rounded-2xl border bg-card p-8 shadow-card transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 bg-gradient-to-br ${fig.gradient}`}
                 >
                   <div className="flex flex-col sm:flex-row gap-8 items-start">
-                    <div className="flex shrink-0 flex-col items-center gap-3 self-center sm:self-start">
+                    <div className="flex shrink-0 flex-col items-center gap-[calc(3mm_+_4px)] self-center sm:self-start">
                       {fig.photo_url ? (
                         <img
                           src={fig.photo_url}
